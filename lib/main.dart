@@ -4,8 +4,7 @@ import 'package:MJN/screens/notificationScreen/NotificationScreen.dart';
 import 'package:MJN/screens/paymentScreen/PaymentScreen.dart';
 import 'package:MJN/screens/tabScreens/tabScreens.dart';
 import 'package:flutter/material.dart';
-import 'package:splashscreen/splashscreen.dart';
-
+import 'package:lottie/lottie.dart';
 
 void main() {
   runApp(
@@ -16,6 +15,7 @@ void main() {
           textTheme: ThemeData.light().textTheme.copyWith(
             button: TextStyle(color: Colors.white),
           )),
+      debugShowCheckedModeBanner: false,
       home: MyApp(),
       routes: {
         HomeScreen.routeName: (ctx) => HomeScreen(),
@@ -28,40 +28,59 @@ void main() {
   );
 }
 
-class TabScreen {
-}
-
-class MyApp extends StatefulWidget {
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: SplashScreen(
-        seconds: 3,
-        navigateAfterSeconds: new AfterSplash(),
-        title: Text(
-          'Loading...',
-          style: TextStyle(
-              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20.0),
-        ),
-        image: Image.asset(
-          'assets/images/floating_icon.png',
-        ),
-        photoSize: 50,
-        backgroundColor: Colors.blueAccent,
-        loaderColor: Colors.red,
-      ),
+    return MaterialApp(
+        title: 'Splash Screen with Lottie Animation',
+        theme: ThemeData(
+        primarySwatch: Colors.orange,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+    ),
+      debugShowCheckedModeBanner: false,
+    home: SplashScreen(),
     );
   }
 }
 
-class AfterSplash extends StatelessWidget {
+
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({Key key}) : super(key: key);
+
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen>
+    with TickerProviderStateMixin {
+  AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: Duration(seconds: (5)),
+      vsync: this,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return TabScreens();
+    return Scaffold(
+      body: Lottie.asset(
+        'assets/splash_lottie_network.json',
+        controller: _controller,
+        height: MediaQuery.of(context).size.height * 1,
+        animate: true,
+        onLoaded: (composition) {
+          _controller
+            ..duration = composition.duration
+            ..forward().whenComplete(() => Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => TabScreens()),
+            ));
+        },
+      ),
+    );
   }
 }
