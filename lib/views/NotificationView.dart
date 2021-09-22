@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
-class NotificationScreen extends StatelessWidget {
+class NotificationView extends StatelessWidget {
   static const routeName = '/notification_screen';
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      child: Text('Notification'),
+    );
   }
 }

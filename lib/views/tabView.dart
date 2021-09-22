@@ -1,13 +1,16 @@
+import 'package:MJN/Widgets/main_drawer.dart';
 import 'package:MJN/helpers/shared_pref.dart';
-import 'package:MJN/screens/accountScreen/AccountScreen.dart';
-import 'package:MJN/screens/homeScreen/HomeScreen.dart';
-import 'package:MJN/screens/notificationScreen/NotificationScreen.dart';
-import 'package:MJN/screens/paymentScreen/PaymentScreen.dart';
+import 'package:MJN/views/ContactUsView.dart';
+import 'package:MJN/views/ServiceComplainView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
-class TabScreens extends StatefulWidget {
+import 'AccountView.dart';
+import 'HomeView.dart';
+import 'NotificationView.dart';
+import 'PaymentScreen.dart';
 
+class TabScreens extends StatefulWidget {
   static const routeName = '/tab_screen';
 
   @override
@@ -15,45 +18,40 @@ class TabScreens extends StatefulWidget {
 }
 
 class _TabScreensState extends State<TabScreens> {
-
-
   var _scaffoldKey = GlobalKey<ScaffoldState>();
 
   String selectedLang = 'ENG';
 
   @override
   void initState() {
-
     super.initState();
   }
 
+  int _selectedPageIndex = 2;
 
-  int _selectedPageIndex = 0;
-  void _selectPage(int index){
+  void _selectPage(int index) {
     setState(() {
       _selectedPageIndex = index;
     });
-
   }
 
   Widget getSelectedPage() {
     int pageIndex = 0;
-
-
-
+    pageIndex = _selectedPageIndex;
     switch (pageIndex) {
       case 0:
-        return HomeScreen();
+        return NotificationView();
       case 1:
-        return PaymentScreen();
+        return PaymentView();
+      case 2:
+        return HomeView();
       case 3:
-        return NotificationScreen();
+        return ServiceComplainView();
       case 4:
-        return AccountScreen();
-
+        return ContactUsView();
     }
 
-    return HomeScreen();
+    return HomeView();
   }
 
   @override
@@ -61,6 +59,8 @@ class _TabScreensState extends State<TabScreens> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
+
+
         toolbarHeight: 110,
         backgroundColor: Theme.of(context).primaryColorDark,
         title: Container(
@@ -71,12 +71,8 @@ class _TabScreensState extends State<TabScreens> {
               Container(
                 alignment: Alignment.center,
                 padding: EdgeInsets.all(10),
-                margin: EdgeInsets.only(right: 50),
-                width: 100,
-                child: Image.asset(
-                  'assets/images/mjn_logo.png',
-                  fit: BoxFit.cover,
-                ),
+                margin: EdgeInsets.only(right: 27),
+                child: Text('Welcome to Mojoenet',style: TextStyle(fontSize: 16),)
               ),
             ],
           ),
@@ -84,15 +80,15 @@ class _TabScreensState extends State<TabScreens> {
         actions: [
           Container(
             height: 50,
-            width: 80,
-            margin: EdgeInsets.only(bottom: 37, right: 30, top: 33),
+            width: 70,
+            margin: EdgeInsets.only(bottom: 37, right: 20, top: 33),
             padding: EdgeInsets.all(2),
             child: Neumorphic(
               style: NeumorphicStyle(
                   color: Colors.white,
                   shape: NeumorphicShape.concave,
                   boxShape:
-                  NeumorphicBoxShape.roundRect(BorderRadius.circular(12)),
+                      NeumorphicBoxShape.roundRect(BorderRadius.circular(12)),
                   depth: -4,
                   lightSource: LightSource.topLeft),
               child: DropdownButtonFormField<String>(
@@ -100,12 +96,12 @@ class _TabScreensState extends State<TabScreens> {
                 value: selectedLang,
                 items: ["မြန်မာ", "ENG"]
                     .map((label) => DropdownMenuItem(
-                  child: Text(
-                    label,
-                    style: TextStyle(fontSize: 12),
-                  ),
-                  value: label,
-                ))
+                          child: Text(
+                            label,
+                            style: TextStyle(fontSize: 12),
+                          ),
+                          value: label,
+                        ))
                     .toList(),
                 onChanged: (value) {
                   setState(() {
@@ -121,6 +117,7 @@ class _TabScreensState extends State<TabScreens> {
           ),
         ],
       ),
+      drawer: MainDrawer(),
       body: getSelectedPage(),
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,
@@ -134,32 +131,44 @@ class _TabScreensState extends State<TabScreens> {
         items: [
           BottomNavigationBarItem(
               backgroundColor: Theme.of(context).primaryColor,
-              icon: Icon(Icons.home),
+              icon: Icon(Icons.notifications),
               title: Text(
-                'Home',
+                'Notification',
+                style: TextStyle(fontWeight: FontWeight.bold),
               )),
           BottomNavigationBarItem(
               backgroundColor: Theme.of(context).primaryColor,
               icon: Icon(Icons.payment),
               title: Text(
                 'Payment',
+                style: TextStyle(fontWeight: FontWeight.bold),
               )),
           BottomNavigationBarItem(
               backgroundColor: Theme.of(context).primaryColor,
-              icon: Icon(Icons.notifications),
+              icon: FlutterLogo(size: 40,),
               title: Text(
-                'Notification',
+                '',
+                style: TextStyle(fontWeight: FontWeight.bold,fontSize: 1),
               )),
           BottomNavigationBarItem(
               backgroundColor: Theme.of(context).primaryColor,
-              icon: Icon(Icons.account_circle),
+              icon: Icon(Icons.pending_actions_rounded),
+              title: Container(
+                padding: EdgeInsets.all(8),
+                child: Text(
+                  'Service Complain',
+                  style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold),
+                ),
+              )),
+          BottomNavigationBarItem(
+              backgroundColor: Theme.of(context).primaryColor,
+              icon: Icon(Icons.phone),
               title: Text(
-                'My Account',
+                'Contact Us',
+                style: TextStyle(fontWeight: FontWeight.bold),
               )),
         ],
       ),
     );
   }
 }
-
-

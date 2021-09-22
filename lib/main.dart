@@ -1,8 +1,13 @@
-import 'package:MJN/screens/accountScreen/AccountScreen.dart';
-import 'package:MJN/screens/homeScreen/HomeScreen.dart';
-import 'package:MJN/screens/notificationScreen/NotificationScreen.dart';
-import 'package:MJN/screens/paymentScreen/PaymentScreen.dart';
-import 'package:MJN/screens/tabScreens/tabScreens.dart';
+import 'package:MJN/views/AccountView.dart';
+import 'package:MJN/views/ChangePasswordView.dart';
+import 'package:MJN/views/ContactUsView.dart';
+import 'package:MJN/views/HomeView.dart';
+import 'package:MJN/views/LoginView.dart';
+import 'package:MJN/views/NotificationView.dart';
+import 'package:MJN/views/PaymentScreen.dart';
+import 'package:MJN/views/ServiceComplainView.dart';
+import 'package:MJN/views/SignUpView.dart';
+import 'package:MJN/views/tabView.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -16,14 +21,11 @@ void main() {
             button: TextStyle(color: Colors.white),
           )),
       debugShowCheckedModeBanner: false,
-      home: MyApp(),
       routes: {
-        HomeScreen.routeName: (ctx) => HomeScreen(),
-        PaymentScreen.routeName: (ctx) => PaymentScreen(),
-        NotificationScreen.routeName: (ctx) => NotificationScreen(),
-        AccountScreen.routeName: (ctx) => AccountScreen(),
         TabScreens.routeName: (ctx) => TabScreens(),
+        ChangePasswordView.routeName: (ctx) => ChangePasswordView(),
       },
+   home: LoginView(),
     ),
   );
 }
@@ -38,7 +40,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
     ),
       debugShowCheckedModeBanner: false,
-    home: SplashScreen(),
+    home: LoginView(),
     );
   }
 }
@@ -77,7 +79,7 @@ class _SplashScreenState extends State<SplashScreen>
             ..duration = composition.duration
             ..forward().whenComplete(() => Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => TabScreens()),
+              MaterialPageRoute(builder: (context) => LoginView()),
             ));
         },
       ),

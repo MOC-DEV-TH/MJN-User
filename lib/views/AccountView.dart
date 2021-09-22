@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AccountScreen extends StatelessWidget {
+class AccountView extends StatelessWidget {
   static const routeName = '/account_screen';
 
   @override

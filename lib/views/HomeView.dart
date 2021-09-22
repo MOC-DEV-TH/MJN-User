@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeView extends StatelessWidget {
 
   static const routeName = '/home_screen';
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      child: Text('Home'),
+    );
   }
 }
