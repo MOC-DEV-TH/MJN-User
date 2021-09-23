@@ -26,61 +26,58 @@ class ChangePasswordView extends StatelessWidget {
             SizedBox(
               height: 80,
             ),
-            Neumorphic(
-              style: NeumorphicStyle(
-                shape: NeumorphicShape.concave,
-                boxShape:
-                    NeumorphicBoxShape.roundRect(BorderRadius.circular(12)),
-                depth: -4,
-                lightSource: LightSource.topLeft,
-//                    color: Colors.grey
+            Container(
+              margin: EdgeInsets.only(left: 20, right: 20),
+              height: 40,
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.blueAccent),
               ),
-              child: TextField(
-                controller: currentPasswordText,
-                decoration: InputDecoration(
-                    hintText: "Current Password",
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.only(left: 10)),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Neumorphic(
-              style: NeumorphicStyle(
-                shape: NeumorphicShape.concave,
-                boxShape:
-                    NeumorphicBoxShape.roundRect(BorderRadius.circular(12)),
-                depth: -4,
-                lightSource: LightSource.topLeft,
-//                    color: Colors.grey
-              ),
-              child: TextField(
-                controller: newPasswordText,
-                decoration: InputDecoration(
-                    hintText: "New Password",
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.only(left: 10)),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 5),
+                child: TextField(
+                    controller: currentPasswordText,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: "Current Password",
+                    )),
               ),
             ),
             SizedBox(
               height: 20,
             ),
-            Neumorphic(
-              style: NeumorphicStyle(
-                shape: NeumorphicShape.concave,
-                boxShape:
-                    NeumorphicBoxShape.roundRect(BorderRadius.circular(12)),
-                depth: -4,
-                lightSource: LightSource.topLeft,
-//                    color: Colors.grey
+            Container(
+              margin: EdgeInsets.only(left: 20, right: 20),
+              height: 40,
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.blueAccent),
               ),
-              child: TextField(
-                controller: rewriteNewPasswordText,
-                decoration: InputDecoration(
-                    hintText: "Rewrite New Password",
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.only(left: 10)),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 5),
+                child: TextField(
+                    controller: newPasswordText,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: "New Password",
+                    )),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 20, right: 20),
+              height: 40,
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.blueAccent),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 5),
+                child: TextField(
+                    controller: rewriteNewPasswordText,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: "Rewrite New Password",
+                    )),
               ),
             ),
             SizedBox(

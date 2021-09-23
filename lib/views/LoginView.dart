@@ -22,20 +22,16 @@ class _LoginViewState extends State<LoginView> {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 110,
-        backgroundColor: Theme.of(context).primaryColorDark,
+        backgroundColor: Colors.white70,
         actions: [
           Container(
             height: 50,
-            width: 80,
+            width: 75,
             margin: EdgeInsets.only(bottom: 37, right: 30, top: 33),
-            padding: EdgeInsets.all(2),
+            padding: EdgeInsets.all(3),
             child: Neumorphic(
               style: NeumorphicStyle(
                   color: Colors.white,
-                  shape: NeumorphicShape.concave,
-                  boxShape:
-                  NeumorphicBoxShape.roundRect(BorderRadius.circular(12)),
-                  depth: -4,
                   lightSource: LightSource.topLeft),
               child: DropdownButtonFormField<String>(
                 isExpanded: true,
@@ -50,11 +46,10 @@ class _LoginViewState extends State<LoginView> {
                 ))
                     .toList(),
                 onChanged: (value) {
-                  setState(() {
-                  });
+                  setState(() {});
                 },
                 decoration: InputDecoration(
-                    border: InputBorder.none,
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
                     contentPadding: EdgeInsets.only(left: 10, bottom: 12)),
               ),
             ),
@@ -78,42 +73,41 @@ class _LoginViewState extends State<LoginView> {
             SizedBox(
               height: 80,
             ),
-            Neumorphic(
-              style: NeumorphicStyle(
-                shape: NeumorphicShape.concave,
-                boxShape:
-                    NeumorphicBoxShape.roundRect(BorderRadius.circular(12)),
-                depth: -4,
-                lightSource: LightSource.topLeft,
-//                    color: Colors.grey
+            Container(
+              margin: EdgeInsets.only(left: 20, right: 20),
+              height: 40,
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.blueAccent),
               ),
-              child: TextField(
-                controller: emailText,
-                decoration: InputDecoration(
-                    hintText: "Enter Email",
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.only(left: 10)),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 5),
+                child: TextField(
+                    controller: emailText,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: "Enter Email",
+                    )),
               ),
             ),
             SizedBox(
               height: 20,
             ),
-            Neumorphic(
-              style: NeumorphicStyle(
-                shape: NeumorphicShape.concave,
-                boxShape:
-                    NeumorphicBoxShape.roundRect(BorderRadius.circular(12)),
-                depth: -4,
-                lightSource: LightSource.topLeft,
-//                    color: Colors.grey
+            Container(
+              margin: EdgeInsets.only(left: 20, right: 20),
+              height: 40,
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.blueAccent),
               ),
-              child: TextField(
-                controller: passwordText,
-                decoration: InputDecoration(
-                    hintText: "Enter Password",
+              child: Padding(
+                padding: const EdgeInsets.only(left: 5),
+                child: TextField(
+                  controller: passwordText,
+                  decoration: InputDecoration(
                     border: InputBorder.none,
-                    contentPadding: EdgeInsets.only(left: 10)),
-                obscureText: true,
+                    hintText: "Enter Password",
+                  ),
+                  obscureText: true,
+                ),
               ),
             ),
             SizedBox(
@@ -123,7 +117,8 @@ class _LoginViewState extends State<LoginView> {
               padding: EdgeInsets.only(left: 130, right: 130),
               child: NeumorphicButton(
                 onPressed: () {
-                  Navigator.of(context).pushReplacementNamed(TabScreens.routeName);
+                  Navigator.of(context)
+                      .pushReplacementNamed(TabScreens.routeName);
                 },
                 child: Center(
                   child: Padding(
@@ -150,25 +145,22 @@ class _LoginViewState extends State<LoginView> {
             SizedBox(
               height: 40,
             ),
-
             InkWell(
-              onTap: (){},
-                child: Center(child: Text('Forget Password ?'))),
-
-        SizedBox(
-        height: 30,
-      ),
-
+                onTap: () {}, child: Center(child: Text('Forget Password ?'))),
+            SizedBox(
+              height: 30,
+            ),
             InkWell(
-              onTap: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context){
-                  return SignUpView();
-                }));
-              },
-                  child: Container(
+                onTap: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return SignUpView();
+                  }));
+                },
+                child: Container(
                     alignment: Alignment.center,
-                       width:  MediaQuery.of(context).size.width,
-                      child: Text('Sign Up'))) ,
+                    width: MediaQuery.of(context).size.width,
+                    child: Text('Sign Up'))),
           ],
         ),
       ),

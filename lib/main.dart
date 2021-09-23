@@ -1,6 +1,7 @@
 import 'package:MJN/views/AccountView.dart';
 import 'package:MJN/views/ChangePasswordView.dart';
 import 'package:MJN/views/ContactUsView.dart';
+import 'package:MJN/views/CreateServiceTicketView.dart';
 import 'package:MJN/views/HomeView.dart';
 import 'package:MJN/views/LoginView.dart';
 import 'package:MJN/views/NotificationView.dart';
@@ -24,6 +25,7 @@ void main() {
       routes: {
         TabScreens.routeName: (ctx) => TabScreens(),
         ChangePasswordView.routeName: (ctx) => ChangePasswordView(),
+        CreateServiceTicketView.routeName: (ctx) => CreateServiceTicketView(),
       },
    home: LoginView(),
     ),

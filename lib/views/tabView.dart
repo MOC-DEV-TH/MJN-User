@@ -59,10 +59,9 @@ class _TabScreensState extends State<TabScreens> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-
-
         toolbarHeight: 110,
-        backgroundColor: Theme.of(context).primaryColorDark,
+        elevation: 2,
+        backgroundColor: Colors.white70,
         title: Container(
           width: MediaQuery.of(context).size.width,
           child: Row(
@@ -72,7 +71,7 @@ class _TabScreensState extends State<TabScreens> {
                 alignment: Alignment.center,
                 padding: EdgeInsets.all(10),
                 margin: EdgeInsets.only(right: 27),
-                child: Text('Welcome to Mojoenet',style: TextStyle(fontSize: 16),)
+                child: Text('Welcome to Mojoenet',style: TextStyle(fontSize: 16,color: Colors.black),)
               ),
             ],
           ),
@@ -80,37 +79,30 @@ class _TabScreensState extends State<TabScreens> {
         actions: [
           Container(
             height: 50,
-            width: 70,
-            margin: EdgeInsets.only(bottom: 37, right: 20, top: 33),
-            padding: EdgeInsets.all(2),
+            width: 75,
+            margin: EdgeInsets.only(bottom: 37, right: 30, top: 33),
+            padding: EdgeInsets.all(3),
             child: Neumorphic(
               style: NeumorphicStyle(
                   color: Colors.white,
-                  shape: NeumorphicShape.concave,
-                  boxShape:
-                      NeumorphicBoxShape.roundRect(BorderRadius.circular(12)),
-                  depth: -4,
                   lightSource: LightSource.topLeft),
               child: DropdownButtonFormField<String>(
                 isExpanded: true,
                 value: selectedLang,
                 items: ["မြန်မာ", "ENG"]
                     .map((label) => DropdownMenuItem(
-                          child: Text(
-                            label,
-                            style: TextStyle(fontSize: 12),
-                          ),
-                          value: label,
-                        ))
+                  child: Text(
+                    label,
+                    style: TextStyle(fontSize: 12),
+                  ),
+                  value: label,
+                ))
                     .toList(),
                 onChanged: (value) {
-                  setState(() {
-                    selectedLang = value;
-                    SharedPref.setData(SharedPref.language_status, value);
-                  });
+                  setState(() {});
                 },
                 decoration: InputDecoration(
-                    border: InputBorder.none,
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
                     contentPadding: EdgeInsets.only(left: 10, bottom: 12)),
               ),
             ),
