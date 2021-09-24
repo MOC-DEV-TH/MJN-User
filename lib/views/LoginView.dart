@@ -23,6 +23,7 @@ class _LoginViewState extends State<LoginView> {
       appBar: AppBar(
         toolbarHeight: 110,
         backgroundColor: Colors.white70,
+        iconTheme: IconThemeData(color: Colors.grey),
         actions: [
           Container(
             height: 50,
@@ -56,7 +57,8 @@ class _LoginViewState extends State<LoginView> {
           ),
         ],
       ),
-      drawer: LoginMainDrawer(),
+      drawer: Container(
+          child: LoginMainDrawer()),
       key: _scaffoldKey,
       backgroundColor: Colors.grey.shade100,
       body: SingleChildScrollView(

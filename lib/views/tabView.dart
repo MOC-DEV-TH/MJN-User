@@ -1,5 +1,4 @@
 import 'package:MJN/Widgets/main_drawer.dart';
-import 'package:MJN/helpers/shared_pref.dart';
 import 'package:MJN/views/ContactUsView.dart';
 import 'package:MJN/views/ServiceComplainView.dart';
 import 'package:flutter/material.dart';
@@ -62,6 +61,7 @@ class _TabScreensState extends State<TabScreens> {
         toolbarHeight: 110,
         elevation: 2,
         backgroundColor: Colors.white70,
+        iconTheme: IconThemeData(color: Colors.grey),
         title: Container(
           width: MediaQuery.of(context).size.width,
           child: Row(

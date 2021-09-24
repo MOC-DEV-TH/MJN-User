@@ -49,7 +49,7 @@ class _CreateServiceTicketViewState extends State<CreateServiceTicketView> {
                               },
                               child: Container(
                                   alignment: Alignment.centerLeft,
-                                  child: Icon(Icons.arrow_back))),
+                                  child: Icon(Icons.keyboard_backspace_sharp,size: 40,))),
                           Row(
                             children: [
                               Container(

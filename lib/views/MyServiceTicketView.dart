@@ -35,12 +35,12 @@ class _MyServiceTicketViewState extends State<MyServiceTicketView> {
                         },
                         child: Container(
                             alignment: Alignment.centerLeft,
-                            child: Icon(Icons.arrow_back))),
+                            child: Icon(Icons.keyboard_backspace_sharp,size: 40,))),
                     Container(
                       width: MediaQuery.of(context).size.width,
                       height: 40,
                       alignment: Alignment.centerLeft,
-                      margin: EdgeInsets.only(top: 10, left: 10),
+                      margin: EdgeInsets.only(top: 3, left: 10),
                       child: NeumorphicButton(
                         onPressed: () {},
                         child: Text(

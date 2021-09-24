@@ -17,46 +17,47 @@ class MainDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-      child: Column(
-        children: [
-          Container(
-            height: 145,
-            width: double.infinity,
-            padding: EdgeInsets.all(15),
-            color: Theme.of(context).primaryColorDark,
-            alignment: Alignment.centerLeft,
-            child: Text(
-              'Main Drawer',
-              style: TextStyle(
-                  color: Colors.green,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold),
+    return
+      Drawer(
+        child: Column(
+          children: [
+            Container(
+              height: 145,
+              width: double.infinity,
+              padding: EdgeInsets.all(15),
+              color: Color(0xFFEEEEEE),
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'Main Drawer',
+                style: TextStyle(
+                    color: Colors.green,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold),
+              ),
             ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          buildListTile('Change Password', Icons.arrow_right,
-                  (){
-                    Navigator.of(context).pushNamed(ChangePasswordView.routeName);
-          }),
+            SizedBox(
+              height: 10,
+            ),
+            buildListTile('Change Password', Icons.arrow_right,
+                    (){
+                      Navigator.of(context).pushNamed(ChangePasswordView.routeName);
+            }),
 
-          buildListTile('About us', Icons.arrow_right,
-                  (){
-          }),
-          buildListTile('Terms & Conditions', Icons.arrow_right,
-                  (){
-                // Navigator.of(context).pushReplacementNamed('/');
-              }),
+            buildListTile('About us', Icons.arrow_right,
+                    (){
+            }),
+            buildListTile('Terms & Conditions', Icons.arrow_right,
+                    (){
+                  // Navigator.of(context).pushReplacementNamed('/');
+                }),
 
-          buildListTile('Logout', Icons.arrow_right,
-                  (){
-              }),
+            buildListTile('Logout', Icons.arrow_right,
+                    (){
+                }),
 
 
-        ],
-      ),
-    );
+          ],
+        ),
+      );
   }
 }

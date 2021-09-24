@@ -23,7 +23,7 @@ class LoginMainDrawer extends StatelessWidget {
             height: 145,
             width: double.infinity,
             padding: EdgeInsets.all(15),
-            color: Theme.of(context).primaryColorDark,
+            color: Color(0xFFEEEEEE),
             alignment: Alignment.centerLeft,
             child: Text(
               'Login Drawer',

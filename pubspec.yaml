@@ -56,6 +56,7 @@ flutter:
     - assets/images/floating_icon.png
     - assets/images/hi_internet_logo.png
     - assets/images/mjn_logo.png
+    - assets/images/drawer_header_img.png
     - assets/splash_lottie_network.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
