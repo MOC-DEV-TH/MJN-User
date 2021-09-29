@@ -9,11 +9,16 @@ class ContactUsView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+
+            SizedBox(
+              height: 20,
+            ),
+
             Container(
               width: MediaQuery.of(context).size.width,
               height: 40,
               alignment: Alignment.centerLeft,
-              margin: EdgeInsets.only(top: 10, left: 10),
+              margin: EdgeInsets.only(top: 10, left: 27),
               child: NeumorphicButton(
                 onPressed: () {},
                 child: Text(

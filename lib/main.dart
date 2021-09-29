@@ -1,4 +1,4 @@
-import 'package:MJN/views/AccountView.dart';
+import 'package:MJN/views/AccountDetailView.dart';
 import 'package:MJN/views/ChangePasswordView.dart';
 import 'package:MJN/views/ContactUsView.dart';
 import 'package:MJN/views/CreateServiceTicketView.dart';

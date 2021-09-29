@@ -72,11 +72,16 @@ class _PaymentViewState extends State<PaymentView> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+
+                      SizedBox(
+                        height: 20,
+                      ),
+
                       Container(
                         width: MediaQuery.of(context).size.width,
                         height: 40,
                         alignment: Alignment.centerLeft,
-                        margin: EdgeInsets.only(top: 10, left: 10),
+                        margin: EdgeInsets.only(top: 10, left: 27),
                         child: NeumorphicButton(
                           onPressed: () {},
                           child: Text(
@@ -97,7 +102,7 @@ class _PaymentViewState extends State<PaymentView> {
                         ),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 40,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

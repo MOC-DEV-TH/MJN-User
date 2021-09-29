@@ -4,7 +4,7 @@ import 'package:MJN/views/ServiceComplainView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
-import 'AccountView.dart';
+import 'AccountDetailView.dart';
 import 'HomeView.dart';
 import 'NotificationView.dart';
 import 'PaymentView.dart';

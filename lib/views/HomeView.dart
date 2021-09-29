@@ -1,5 +1,5 @@
 import 'package:MJN/Widgets/current_subscription_items.dart';
-import 'package:MJN/views/AccountView.dart';
+import 'package:MJN/views/AccountDetailView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
