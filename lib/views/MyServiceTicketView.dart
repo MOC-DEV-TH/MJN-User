@@ -1,3 +1,4 @@
+import 'package:MJN/Widgets/my_sevice_ticket_items.dart';
 import 'package:MJN/views/ServiceComplainView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
@@ -9,6 +10,57 @@ class MyServiceTicketView extends StatefulWidget {
 
 class _MyServiceTicketViewState extends State<MyServiceTicketView> {
   int changePageIndex = 0;
+
+  final List<String> serviceRequest = <String>[
+    'Technical',
+    'Technical',
+    'Billing',
+    'Billing',
+    'Technical',
+    'Technical',
+    'Billing',
+    'Billing',
+  ];
+  final List<String> issue = <String>[
+    'Aby',
+    'Aish',
+    'Ayan',
+    'Ben',
+    'Bob',
+    'Charlie',
+    'Cook',
+    'Carline'
+  ];
+  final List<String> status = <String>[
+    'Closed',
+    'Resolved',
+    'Pending',
+    'Closed',
+    'Resolved',
+    'Pending',
+    'Resolved',
+    'Closed'
+  ];
+  final List<String> ticketId = <String>[
+    '234551',
+    '234551',
+    '234551',
+    '234551',
+    '234551',
+    '234551',
+    '234551',
+    '234551'
+  ];
+  final List<String> ticketStartDate = <String>[
+    '19/8/21',
+    '19/8/21',
+    '19/8/21',
+    '19/8/21',
+    '19/8/21',
+    '19/8/21',
+    '19/8/21',
+    '19/8/21'
+  ];
 
   @override
   void initState() {
@@ -35,7 +87,10 @@ class _MyServiceTicketViewState extends State<MyServiceTicketView> {
                         },
                         child: Container(
                             alignment: Alignment.centerLeft,
-                            child: Icon(Icons.keyboard_backspace_sharp,size: 40,))),
+                            child: Icon(
+                              Icons.keyboard_backspace_sharp,
+                              size: 40,
+                            ))),
                     Container(
                       width: MediaQuery.of(context).size.width,
                       height: 40,
@@ -63,6 +118,99 @@ class _MyServiceTicketViewState extends State<MyServiceTicketView> {
                     SizedBox(
                       height: 20,
                     ),
+                    Container(
+                      height: 1,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.grey,
+                      ),
+                    ),
+                    Container(
+                      color: Colors.grey,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 4, right: 4, top: 4, bottom: 4),
+                            child: Text(
+                              'Ticket ID',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 8),
+                            ),
+                          ),
+                          Container(
+                            width: 1,
+                            height: 30,
+                            color: Colors.black,
+                          ),
+                          Text(
+                            'Ticket\nCreated Date',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 8,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          Container(
+                            width: 1,
+                            height: 30,
+                            color: Colors.black,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 4, right: 4, top: 4, bottom: 4),
+                            child: Text(
+                              'Service\nRequest',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 8),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          Container(
+                            width: 1,
+                            height: 30,
+                            color: Colors.black,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 4, right: 4, top: 4, bottom: 4),
+                            child: Text(
+                              'Issue',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 8),
+                            ),
+                          ),
+                          Container(
+                            width: 1,
+                            height: 30,
+                            color: Colors.black,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 5, right: 4, top: 4, bottom: 4),
+                            child: Text(
+                              'Status',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 8),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      itemBuilder: (ctx, index) {
+                        return MyServiceTicketItems(
+                          ticketId[index],
+                          ticketStartDate[index],
+                          issue[index],
+                          serviceRequest[index],
+                          status[index],
+                        );
+                      },
+                      itemCount: ticketId.length,
+                    )
                   ],
                 ),
               ),

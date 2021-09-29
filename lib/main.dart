@@ -5,7 +5,7 @@ import 'package:MJN/views/CreateServiceTicketView.dart';
 import 'package:MJN/views/HomeView.dart';
 import 'package:MJN/views/LoginView.dart';
 import 'package:MJN/views/NotificationView.dart';
-import 'package:MJN/views/PaymentScreen.dart';
+import 'package:MJN/views/PaymentView.dart';
 import 'package:MJN/views/ServiceComplainView.dart';
 import 'package:MJN/views/SignUpView.dart';
 import 'package:MJN/views/tabView.dart';

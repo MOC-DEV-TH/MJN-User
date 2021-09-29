@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class CurrentSubscriptionItems extends StatelessWidget {
   String currentPlan;
@@ -11,7 +12,7 @@ class CurrentSubscriptionItems extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        border: Border.all(color: Colors.black),
+        border: Border.all(color: Colors.grey,),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -27,7 +28,7 @@ class CurrentSubscriptionItems extends StatelessWidget {
           Container(
             width: 1,
             height: 30,
-            color: Colors.black,
+            color: Colors.grey,
           ),
 
           Container(
@@ -41,7 +42,7 @@ class CurrentSubscriptionItems extends StatelessWidget {
           Container(
             width: 1,
             height: 30,
-            color: Colors.black,
+            color: Colors.grey,
           ),
           Container(
             width: 70,

@@ -7,7 +7,7 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'AccountView.dart';
 import 'HomeView.dart';
 import 'NotificationView.dart';
-import 'PaymentScreen.dart';
+import 'PaymentView.dart';
 
 class TabScreens extends StatefulWidget {
   static const routeName = '/tab_screen';

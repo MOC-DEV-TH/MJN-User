@@ -156,10 +156,10 @@ class _HomeViewState extends State<HomeView> {
                           )),
 
                   Container(
-                    height: 1.5,
+                    height: 1,
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: Colors.black,
+                      color: Colors.grey,
                     ),
                   ),
                     Container(
@@ -185,7 +185,7 @@ class _HomeViewState extends State<HomeView> {
                               )),
                         ),
 
-                        Container(width: 1,height: 30,color: Colors.black,),
+                        Container(width: 1,height: 30,color: Colors.grey,),
 
                         Padding(
                           padding: const EdgeInsets.all(4.0),
@@ -206,7 +206,7 @@ class _HomeViewState extends State<HomeView> {
                               )),
                         ),
 
-                        Container(width: 1,height: 30,color: Colors.black,),
+                        Container(width: 1,height: 30,color: Colors.grey,),
 
                         Padding(
                           padding: const EdgeInsets.all(4.0),
