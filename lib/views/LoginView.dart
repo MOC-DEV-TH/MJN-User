@@ -3,6 +3,8 @@ import 'package:MJN/views/SignUpView.dart';
 import 'package:MJN/views/tabView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class LoginView extends StatefulWidget {
   @override
@@ -16,6 +18,32 @@ class _LoginViewState extends State<LoginView> {
   var _scaffoldKey = GlobalKey<ScaffoldState>();
 
   String selectedLang = 'ENG';
+  final langStorage = GetStorage();
+
+  @override
+  void initState() {
+
+    if(langStorage.read('language')=='မြန်မာ') {
+      var locale = Locale('my','MM');
+      Get.updateLocale(locale);
+
+      setState(() {
+        selectedLang = 'မြန်မာ';
+      });
+    }
+    else if(langStorage.read('language')=='ENG'){
+      var locale = Locale('en','US');
+      Get.updateLocale(locale);
+
+      setState(() {
+        selectedLang = 'ENG';
+      });
+    }
+
+    super.initState();
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +75,20 @@ class _LoginViewState extends State<LoginView> {
                 ))
                     .toList(),
                 onChanged: (value) {
-                  setState(() {});
+                  setState(() {
+                     if(value == 'မြန်မာ')
+                       {
+                         langStorage.write('language',value);
+                         var locale = Locale('my','MM');
+                           Get.updateLocale(locale);
+
+                       }
+                     else if(value == 'ENG'){
+                       langStorage.write('language',value);
+                       var locale = Locale('en','US');
+                         Get.updateLocale(locale);
+                     }
+                  });
                 },
                 decoration: InputDecoration(
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
@@ -126,7 +167,7 @@ class _LoginViewState extends State<LoginView> {
                   child: Padding(
                     padding: const EdgeInsets.only(top: 8, bottom: 8),
                     child: Text(
-                      "Login",
+                      "login".tr,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
@@ -148,7 +189,7 @@ class _LoginViewState extends State<LoginView> {
               height: 40,
             ),
             InkWell(
-                onTap: () {}, child: Center(child: Text('Forget Password ?'))),
+                onTap: () {}, child: Center(child: Text('forgetPassword'.tr))),
             SizedBox(
               height: 30,
             ),
@@ -162,7 +203,7 @@ class _LoginViewState extends State<LoginView> {
                 child: Container(
                     alignment: Alignment.center,
                     width: MediaQuery.of(context).size.width,
-                    child: Text('Sign Up'))),
+                    child: Text('signUp'.tr))),
           ],
         ),
       ),

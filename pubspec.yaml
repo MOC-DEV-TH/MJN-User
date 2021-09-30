@@ -26,6 +26,8 @@ dependencies:
   splashscreen: ^1.2.0
   shared_preferences: ^2.0.6
   flutter_neumorphic: ^3.1.0
+  get: 4.3.8
+  get_storage: ^2.0.3
 
 
   # The following adds the Cupertino Icons font to your application.

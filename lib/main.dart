@@ -1,3 +1,4 @@
+import 'package:MJN/LocalString/LocalString.dart';
 import 'package:MJN/views/AccountDetailView.dart';
 import 'package:MJN/views/ChangePasswordView.dart';
 import 'package:MJN/views/ContactUsView.dart';
@@ -10,11 +11,16 @@ import 'package:MJN/views/ServiceComplainView.dart';
 import 'package:MJN/views/SignUpView.dart';
 import 'package:MJN/views/tabView.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:lottie/lottie.dart';
+import 'package:get/get.dart';
 
-void main() {
+void main() async{
+  await GetStorage.init();
   runApp(
-    new MaterialApp(
+    new GetMaterialApp(
+      translations: LocalString(),
+      locale: Locale('en','US'),
       theme: ThemeData(
           primarySwatch: Colors.blue,
           accentColor: Colors.amber,
@@ -35,7 +41,9 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
+      translations: LocalString(),
+      locale: Locale('en','US'),
         title: 'Splash Screen with Lottie Animation',
         theme: ThemeData(
         primarySwatch: Colors.orange,

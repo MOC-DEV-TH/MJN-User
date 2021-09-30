@@ -3,6 +3,7 @@ import 'package:MJN/views/AccountDetailView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:get/get.dart';
 
 class HomeView extends StatefulWidget {
   static const routeName = '/home_screen';
@@ -149,7 +150,7 @@ class _HomeViewState extends State<HomeView> {
                           child: Padding(
                             padding: const EdgeInsets.only(top: 6,bottom: 6,),
                             child: Text(
-                              'Current Subscription',
+                              'currentSubscription'.tr,
                               style: TextStyle(color: Colors.black, fontSize: 12,),
                               textAlign: TextAlign.center,
                             ),

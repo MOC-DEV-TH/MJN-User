@@ -3,7 +3,8 @@ import 'package:MJN/views/ContactUsView.dart';
 import 'package:MJN/views/ServiceComplainView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-
+import 'package:get_storage/get_storage.dart';
+import 'package:get/get.dart';
 import 'AccountDetailView.dart';
 import 'HomeView.dart';
 import 'NotificationView.dart';
@@ -20,10 +21,25 @@ class _TabScreensState extends State<TabScreens> {
   var _scaffoldKey = GlobalKey<ScaffoldState>();
 
   String selectedLang = 'ENG';
+  final langStorage = GetStorage();
 
   @override
   void initState() {
     super.initState();
+
+    if(langStorage.read('language')=='မြန်မာ') {
+
+      setState(() {
+        selectedLang = 'မြန်မာ';
+      });
+    }
+    else if(langStorage.read('language')=='ENG'){
+
+      setState(() {
+        selectedLang = 'ENG';
+      });
+    }
+
   }
 
   int _selectedPageIndex = 2;
@@ -99,7 +115,22 @@ class _TabScreensState extends State<TabScreens> {
                 ))
                     .toList(),
                 onChanged: (value) {
-                  setState(() {});
+                  setState(() {
+
+                    if(value == 'မြန်မာ')
+                    {
+                      langStorage.write('language',value);
+                      var locale = Locale('my','MM');
+                      Get.updateLocale(locale);
+
+                    }
+                    else if(value == 'ENG'){
+                      langStorage.write('language',value);
+                      var locale = Locale('en','US');
+                      Get.updateLocale(locale);
+                    }
+
+                  });
                 },
                 decoration: InputDecoration(
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
