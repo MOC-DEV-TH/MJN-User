@@ -1,4 +1,6 @@
 import 'package:MJN/Widgets/login_main_drawer.dart';
+import 'package:MJN/controllers/login_controller.dart';
+import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/views/SignUpView.dart';
 import 'package:MJN/views/tabView.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +14,9 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
+
+  final  LoginController loginController = Get.put(LoginController());
+
   var emailText = TextEditingController();
   var passwordText = TextEditingController();
 
@@ -158,33 +163,46 @@ class _LoginViewState extends State<LoginView> {
             ),
             Padding(
               padding: EdgeInsets.only(left: 130, right: 130),
-              child: NeumorphicButton(
-                onPressed: () {
-                  Navigator.of(context)
-                      .pushReplacementNamed(TabScreens.routeName);
-                },
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 8, bottom: 8),
-                    child: Text(
-                      "login".tr,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          color: Colors.white),
+              child: Obx(() {
+                if(loginController.isLoading.value){
+                  return Center(child: CircularProgressIndicator());
+                }
+
+                else {
+                  return NeumorphicButton(
+                    onPressed: () {
+                      Map<String,String> map = {
+                        'user_name': emailText.value.text,
+                        'app_version': app_version,
+                        'password': passwordText.value.text,
+                      };
+                      loginController.fetchLoginData(map,context);
+
+                    },
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 8, bottom: 8),
+                        child: Text(
+                          "login".tr,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: Colors.white),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                style: NeumorphicStyle(
-                  shape: NeumorphicShape.flat,
-                  boxShape:
+                    style: NeumorphicStyle(
+                      shape: NeumorphicShape.flat,
+                      boxShape:
                       NeumorphicBoxShape.roundRect(BorderRadius.circular(18)),
-                  color: Colors.amber,
-                  depth: 8,
+                      color: Colors.amber,
+                      depth: 8,
 //                lightSource: LightSource.topLeft,
-                ),
-              ),
-            ),
+                    ),
+                  );
+                }
+              })),
+
             SizedBox(
               height: 40,
             ),
