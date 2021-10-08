@@ -1,4 +1,5 @@
 import 'package:MJN/LocalString/LocalString.dart';
+import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/views/AccountDetailView.dart';
 import 'package:MJN/views/ChangePasswordView.dart';
 import 'package:MJN/views/ContactUsView.dart';
@@ -15,25 +16,25 @@ import 'package:get_storage/get_storage.dart';
 import 'package:lottie/lottie.dart';
 import 'package:get/get.dart';
 
-void main() async{
+void main() async {
   await GetStorage.init();
   runApp(
     new GetMaterialApp(
       translations: LocalString(),
-      locale: Locale('en','US'),
+      locale: Locale('en', 'US'),
       theme: ThemeData(
           primarySwatch: Colors.blue,
           accentColor: Colors.amber,
           textTheme: ThemeData.light().textTheme.copyWith(
-            button: TextStyle(color: Colors.white),
-          )),
+                button: TextStyle(color: Colors.white),
+              )),
       debugShowCheckedModeBanner: false,
       routes: {
         TabScreens.routeName: (ctx) => TabScreens(),
         ChangePasswordView.routeName: (ctx) => ChangePasswordView(),
         CreateServiceTicketView.routeName: (ctx) => CreateServiceTicketView(),
       },
-   home: LoginView(),
+      home: SplashScreen(),
     ),
   );
 }
@@ -43,18 +44,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       translations: LocalString(),
-      locale: Locale('en','US'),
-        title: 'Splash Screen with Lottie Animation',
-        theme: ThemeData(
+      locale: Locale('en', 'US'),
+      title: 'Splash Screen with Lottie Animation',
+      theme: ThemeData(
         primarySwatch: Colors.orange,
         visualDensity: VisualDensity.adaptivePlatformDensity,
-    ),
+      ),
       debugShowCheckedModeBanner: false,
-    home: LoginView(),
+      home: LoginView(),
     );
   }
 }
-
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key key}) : super(key: key);
@@ -66,6 +66,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
   AnimationController _controller;
+  final loginDataStorage = GetStorage();
 
   @override
   void initState() {
@@ -88,9 +89,12 @@ class _SplashScreenState extends State<SplashScreen>
           _controller
             ..duration = composition.duration
             ..forward().whenComplete(() => Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => LoginView()),
-            ));
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => loginDataStorage.read(TOKEN) != null
+                          ? TabScreens()
+                          : LoginView()),
+                ));
         },
       ),
     );

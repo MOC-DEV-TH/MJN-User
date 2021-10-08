@@ -1,6 +1,11 @@
+import 'package:MJN/Network/Request/RequestCreateTicket.dart';
+import 'package:MJN/controllers/createTicketController.dart';
+import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/views/ServiceComplainView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class CreateServiceTicketView extends StatefulWidget {
   static const routeName = '/create_service_ticket';
@@ -18,7 +23,11 @@ class _CreateServiceTicketViewState extends State<CreateServiceTicketView> {
   var nameText = TextEditingController();
   var messageText = TextEditingController();
 
+  final CreateTicketController createTicketController =
+      Get.put(CreateTicketController());
+
   int changePageIndex = 0;
+  final loginDataStorage = GetStorage();
 
   @override
   void initState() {
@@ -32,7 +41,7 @@ class _CreateServiceTicketViewState extends State<CreateServiceTicketView> {
         ? ServiceComplainView()
         : Scaffold(
             body: GestureDetector(
-              onTap: (){
+              onTap: () {
                 FocusManager.instance.primaryFocus?.unfocus();
               },
               child: Padding(
@@ -49,13 +58,17 @@ class _CreateServiceTicketViewState extends State<CreateServiceTicketView> {
                               },
                               child: Container(
                                   alignment: Alignment.centerLeft,
-                                  child: Icon(Icons.keyboard_backspace_sharp,size: 40,))),
+                                  child: Icon(
+                                    Icons.keyboard_backspace_sharp,
+                                    size: 40,
+                                  ))),
                           Row(
                             children: [
                               Container(
                                 width: 150,
                                 child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       SizedBox(
                                         height: 20,
@@ -117,42 +130,39 @@ class _CreateServiceTicketViewState extends State<CreateServiceTicketView> {
                               Expanded(
                                 child: Column(
                                   children: [
-
                                     SizedBox(
                                       height: 20,
                                     ),
-
-                                Container(
-                                  height: 40,
-                                  decoration:
-                                  BoxDecoration(border: Border.all(color: Colors.blueAccent),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(bottom: 5),
-                                    child: TextField(
-                                      textAlign: TextAlign.center,
-                                      controller: nameText,
-                                      decoration: InputDecoration(
-                                        border: InputBorder.none,
+                                    Container(
+                                      height: 40,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: Colors.blueAccent),
+                                      ),
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 5),
+                                        child: TextField(
+                                          textAlign: TextAlign.center,
+                                          controller: nameText,
+                                          decoration: InputDecoration(
+                                            border: InputBorder.none,
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                    ),
-
-
                                     SizedBox(
                                       height: 10,
                                     ),
-
-
-
                                     Container(
                                       height: 40,
-                                      decoration:
-                                      BoxDecoration(border: Border.all(color: Colors.blueAccent),
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: Colors.blueAccent),
                                       ),
                                       child: Padding(
-                                        padding: const EdgeInsets.only(bottom: 5),
+                                        padding:
+                                            const EdgeInsets.only(bottom: 5),
                                         child: TextField(
                                           textAlign: TextAlign.center,
                                           controller: buildingText,
@@ -162,20 +172,18 @@ class _CreateServiceTicketViewState extends State<CreateServiceTicketView> {
                                         ),
                                       ),
                                     ),
-
                                     SizedBox(
                                       height: 10,
                                     ),
-
-
-
                                     Container(
                                       height: 40,
-                                      decoration:
-                                      BoxDecoration(border: Border.all(color: Colors.blueAccent),
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: Colors.blueAccent),
                                       ),
                                       child: Padding(
-                                        padding: const EdgeInsets.only(bottom: 5),
+                                        padding:
+                                            const EdgeInsets.only(bottom: 5),
                                         child: TextField(
                                           textAlign: TextAlign.center,
                                           controller: unitText,
@@ -185,20 +193,18 @@ class _CreateServiceTicketViewState extends State<CreateServiceTicketView> {
                                         ),
                                       ),
                                     ),
-
                                     SizedBox(
                                       height: 10,
                                     ),
-
-
-
                                     Container(
                                       height: 40,
-                                      decoration:
-                                      BoxDecoration(border: Border.all(color: Colors.blueAccent),
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: Colors.blueAccent),
                                       ),
                                       child: Padding(
-                                        padding: const EdgeInsets.only(bottom: 5),
+                                        padding:
+                                            const EdgeInsets.only(bottom: 5),
                                         child: TextField(
                                           textAlign: TextAlign.center,
                                           controller: emailText,
@@ -208,18 +214,18 @@ class _CreateServiceTicketViewState extends State<CreateServiceTicketView> {
                                         ),
                                       ),
                                     ),
-
                                     SizedBox(
                                       height: 10,
                                     ),
-
                                     Container(
                                       height: 40,
-                                      decoration:
-                                      BoxDecoration(border: Border.all(color: Colors.blueAccent),
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: Colors.blueAccent),
                                       ),
                                       child: Padding(
-                                        padding: const EdgeInsets.only(bottom: 5),
+                                        padding:
+                                            const EdgeInsets.only(bottom: 5),
                                         child: TextField(
                                           textAlign: TextAlign.center,
                                           controller: phoneNoText,
@@ -229,21 +235,22 @@ class _CreateServiceTicketViewState extends State<CreateServiceTicketView> {
                                         ),
                                       ),
                                     ),
-
                                     SizedBox(
                                       height: 40,
                                     ),
-
                                     ConstrainedBox(
                                       constraints: BoxConstraints(
-                                        maxHeight: MediaQuery.of(context).size.height,
-                                        maxWidth: MediaQuery.of(context).size.width,
+                                        maxHeight:
+                                            MediaQuery.of(context).size.height,
+                                        maxWidth:
+                                            MediaQuery.of(context).size.width,
                                       ),
                                       child: Neumorphic(
                                         style: NeumorphicStyle(
                                           shape: NeumorphicShape.concave,
-                                          boxShape: NeumorphicBoxShape.roundRect(
-                                              BorderRadius.circular(12)),
+                                          boxShape:
+                                              NeumorphicBoxShape.roundRect(
+                                                  BorderRadius.circular(12)),
                                           depth: -4,
                                           lightSource: LightSource.topLeft,
 //                    color: Colors.grey
@@ -252,13 +259,14 @@ class _CreateServiceTicketViewState extends State<CreateServiceTicketView> {
                                           onChanged: (value) {},
                                           items: [1, 2, 3, 4, 5]
                                               .map((label) => DropdownMenuItem(
-                                            child:
-                                            Text(label.toString()),
-                                            value: label,
-                                          ))
+                                                    child:
+                                                        Text(label.toString()),
+                                                    value: label,
+                                                  ))
                                               .toList(),
                                           hint: Padding(
-                                            padding: const EdgeInsets.only(left: 20),
+                                            padding:
+                                                const EdgeInsets.only(left: 20),
                                             child: Text(
                                               '-Select Service Request-',
                                               style: TextStyle(fontSize: 12),
@@ -267,45 +275,46 @@ class _CreateServiceTicketViewState extends State<CreateServiceTicketView> {
                                         ),
                                       ),
                                     ),
-
                                     SizedBox(
                                       height: 40,
                                     ),
-
                                     ConstrainedBox(
                                       constraints: BoxConstraints(
-                                        maxHeight: MediaQuery.of(context).size.height,
-                                        maxWidth: MediaQuery.of(context).size.width,
+                                        maxHeight:
+                                            MediaQuery.of(context).size.height,
+                                        maxWidth:
+                                            MediaQuery.of(context).size.width,
                                       ),
                                       child: Neumorphic(
                                         style: NeumorphicStyle(
                                           shape: NeumorphicShape.concave,
-                                          boxShape: NeumorphicBoxShape.roundRect(
-                                              BorderRadius.circular(12)),
+                                          boxShape:
+                                              NeumorphicBoxShape.roundRect(
+                                                  BorderRadius.circular(12)),
                                           depth: -4,
                                           lightSource: LightSource.topLeft,
 //                    color: Colors.grey
                                         ),
-                                          child: DropdownButtonFormField<int>(
-                                            onChanged: (value) {},
-                                            items: [1, 2, 3, 4, 5]
-                                                .map((label) => DropdownMenuItem(
-                                              child:
-                                              Text(label.toString()),
-                                              value: label,
-                                            ))
-                                                .toList(),
-                                            hint: Padding(
-                                              padding: const EdgeInsets.only(left: 20),
-                                              child: Text(
-                                                '-Select Topic-',
-                                                style: TextStyle(fontSize: 12),
-                                          ),
+                                        child: DropdownButtonFormField<int>(
+                                          onChanged: (value) {},
+                                          items: [1, 2, 3, 4, 5]
+                                              .map((label) => DropdownMenuItem(
+                                                    child:
+                                                        Text(label.toString()),
+                                                    value: label,
+                                                  ))
+                                              .toList(),
+                                          hint: Padding(
+                                            padding:
+                                                const EdgeInsets.only(left: 20),
+                                            child: Text(
+                                              '-Select Topic-',
+                                              style: TextStyle(fontSize: 12),
                                             ),
+                                          ),
                                         ),
                                       ),
                                     ),
-
                                   ],
                                 ),
                               ),
@@ -329,9 +338,9 @@ class _CreateServiceTicketViewState extends State<CreateServiceTicketView> {
                           ),
                           Container(
                             height: 80,
-                            padding: EdgeInsets.only(left: 4,top: 4,right: 4),
-                            decoration:
-                            BoxDecoration(border: Border.all(color: Colors.blueAccent),
+                            padding: EdgeInsets.only(left: 4, top: 4, right: 4),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.blueAccent),
                             ),
                             child: TextField(
                               controller: messageText,
@@ -340,14 +349,33 @@ class _CreateServiceTicketViewState extends State<CreateServiceTicketView> {
                               ),
                             ),
                           ),
-
                           SizedBox(
                             height: 50,
                           ),
                           Container(
                             width: 200,
                             child: NeumorphicButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                RequestCreateTicket requestCreateTicket =
+                                    new RequestCreateTicket(
+                                        "Tenant Testing",
+                                       "112",
+                                        "889",
+                                         "SC828018@mojoenet.com",
+                                        "09782816883",
+                                        "1",
+                                        "99",
+                                         "Topic Other",
+                                        "Create Ticket From API",
+                                        "T61272b415f65f8.16533061",
+                                        loginDataStorage.read(UID),
+                                         "1.0"
+                                        );
+
+                                createTicketController.createTicket(
+                                    requestCreateTicket,
+                                    loginDataStorage.read(TOKEN));
+                              },
                               child: Center(
                                 child: Padding(
                                   padding:

@@ -1,5 +1,5 @@
 import 'package:MJN/Widgets/login_main_drawer.dart';
-import 'package:MJN/controllers/login_controller.dart';
+import 'package:MJN/controllers/loginController.dart';
 import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/views/SignUpView.dart';
 import 'package:MJN/views/tabView.dart';

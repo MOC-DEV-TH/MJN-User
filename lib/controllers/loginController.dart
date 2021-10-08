@@ -1,5 +1,5 @@
 import 'package:MJN/Network/MjnAPI.dart';
-import 'package:MJN/models/login_response.dart';
+import 'package:MJN/models/loginVO.dart';
 import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/views/tabView.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +8,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
 
 class LoginController extends GetxController {
-  LoginResponse loginResponse;
+  LoginVo loginVo;
   var isLoading = false.obs;
   final loginDataStorage = GetStorage();
 
@@ -18,21 +18,23 @@ class LoginController extends GetxController {
 
       var res = await MjnAPI.fetchLoginData(map);
       if (res != null) {
-        loginResponse = res;
+        loginVo = res;
 
-        if (loginResponse.status == 'Success') {
-          loginDataStorage.write(USER_NAME, loginResponse.userName);
-          loginDataStorage.write(UID, loginResponse.uid);
-          loginDataStorage.write(BUILDING, loginResponse.details[0].building);
-          loginDataStorage.write(UNIT, loginResponse.details[0].unit);
+        if (loginVo.status == 'Success') {
+          loginDataStorage.write(USER_NAME, loginVo.userName);
+          loginDataStorage.write(UID, loginVo.uid);
+          loginDataStorage.write(BUILDING, loginVo.details[0].building);
+          loginDataStorage.write(UNIT, loginVo.details[0].unit);
           loginDataStorage.write(
-              DATA_TENANT_ID, loginResponse.details[0].tenantId);
-          loginDataStorage.write(TOKEN, loginResponse.token);
+              DATA_TENANT_ID, loginVo.details[0].tenantId);
+          loginDataStorage.write(TOKEN, loginVo.token);
 
           Navigator.of(context).pushReplacementNamed(TabScreens.routeName);
         }
 
-        print(loginResponse.status);
+        print(loginVo.status);
+        print(loginVo.description);
+        print(loginVo.uid);
       }
     } finally {
       isLoading(false);

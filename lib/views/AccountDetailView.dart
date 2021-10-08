@@ -1,6 +1,12 @@
+import 'package:MJN/controllers/accountDetailController.dart';
+import 'package:MJN/controllers/loginController.dart';
+import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/views/HomeView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class AccountView extends StatefulWidget {
   static const routeName = '/account_screen';
@@ -11,6 +17,10 @@ class AccountView extends StatefulWidget {
 
 class _AccountViewState extends State<AccountView> {
   int changePageIndex = 0;
+  final AccountDetailController accountDetailController =
+      Get.put(AccountDetailController());
+
+  final loginDataStorage = GetStorage();
 
   @override
   void initState() {
@@ -20,6 +30,9 @@ class _AccountViewState extends State<AccountView> {
 
   @override
   Widget build(BuildContext context) {
+    accountDetailController.fetchAccountInfoData(loginDataStorage.read(TOKEN),
+        loginDataStorage.read(UID), loginDataStorage.read(DATA_TENANT_ID));
+
     return changePageIndex == 1
         ? HomeView()
         : Scaffold(
@@ -49,9 +62,9 @@ class _AccountViewState extends State<AccountView> {
                       ),
                       child: Column(
                         children: [
-
                           Container(
-                            padding: EdgeInsets.only(left: 20, right: 20,bottom: 20),
+                            padding: EdgeInsets.only(
+                                left: 20, right: 20, bottom: 20),
                             width: MediaQuery.of(context).size.width,
                             color: Colors.white,
                             child: Column(
@@ -70,14 +83,17 @@ class _AccountViewState extends State<AccountView> {
                                 SizedBox(
                                   height: 10,
                                 ),
-
                                 Row(
-                                 crossAxisAlignment: CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text('Start date'),
                                     Container(
-                                      margin: EdgeInsets.only(left: 65),
-                                        child: Text('2019-10-15',style: TextStyle(color: Colors.black54),)),
+                                        margin: EdgeInsets.only(left: 65),
+                                        child: Text(
+                                          '2019-10-15',
+                                          style:
+                                              TextStyle(color: Colors.black54),
+                                        )),
                                   ],
                                 ),
                                 SizedBox(
@@ -96,7 +112,11 @@ class _AccountViewState extends State<AccountView> {
                                     Text('End date'),
                                     Container(
                                         margin: EdgeInsets.only(left: 73),
-                                        child: Text('2019-10-15',style: TextStyle(color: Colors.black54),)),
+                                        child: Text(
+                                          '2019-10-15',
+                                          style:
+                                              TextStyle(color: Colors.black54),
+                                        )),
                                   ],
                                 ),
                                 SizedBox(
@@ -129,7 +149,11 @@ class _AccountViewState extends State<AccountView> {
                                     Text('Transaction ID'),
                                     Container(
                                         margin: EdgeInsets.only(left: 38),
-                                        child: Text('2019-10-15',style: TextStyle(color: Colors.black54),)),
+                                        child: Text(
+                                          '2019-10-15',
+                                          style:
+                                              TextStyle(color: Colors.black54),
+                                        )),
                                   ],
                                 ),
                                 SizedBox(
@@ -146,10 +170,13 @@ class _AccountViewState extends State<AccountView> {
                                 Row(
                                   children: [
                                     Text('Transaction date'),
-
                                     Container(
                                         margin: EdgeInsets.only(left: 24),
-                                        child: Text('2019-10-15',style: TextStyle(color: Colors.black54),)),
+                                        child: Text(
+                                          '2019-10-15',
+                                          style:
+                                              TextStyle(color: Colors.black54),
+                                        )),
                                   ],
                                 ),
                                 SizedBox(
@@ -160,8 +187,6 @@ class _AccountViewState extends State<AccountView> {
                                   height: 1,
                                   color: Colors.grey,
                                 ),
-
-
                                 SizedBox(
                                   height: 10,
                                 ),
@@ -170,7 +195,11 @@ class _AccountViewState extends State<AccountView> {
                                     Text('Package'),
                                     Container(
                                         margin: EdgeInsets.only(left: 74),
-                                        child: Text('2019-10-15',style: TextStyle(color: Colors.black54),)),
+                                        child: Text(
+                                          '2019-10-15',
+                                          style:
+                                              TextStyle(color: Colors.black54),
+                                        )),
                                   ],
                                 ),
                                 SizedBox(
@@ -189,7 +218,11 @@ class _AccountViewState extends State<AccountView> {
                                     Text('Total'),
                                     Container(
                                         margin: EdgeInsets.only(left: 95),
-                                        child: Text('2019-10-15',style: TextStyle(color: Colors.black54),)),
+                                        child: Text(
+                                          '2019-10-15',
+                                          style:
+                                              TextStyle(color: Colors.black54),
+                                        )),
                                   ],
                                 ),
                                 SizedBox(
@@ -200,7 +233,6 @@ class _AccountViewState extends State<AccountView> {
                                   height: 1,
                                   color: Colors.grey,
                                 ),
-
                                 SizedBox(
                                   height: 10,
                                 ),
@@ -209,7 +241,11 @@ class _AccountViewState extends State<AccountView> {
                                     Text('Payment'),
                                     Container(
                                         margin: EdgeInsets.only(left: 73),
-                                        child: Text('2019-10-15',style: TextStyle(color: Colors.black54),)),
+                                        child: Text(
+                                          '2019-10-15',
+                                          style:
+                                              TextStyle(color: Colors.black54),
+                                        )),
                                   ],
                                 ),
                                 SizedBox(
@@ -228,7 +264,11 @@ class _AccountViewState extends State<AccountView> {
                                     Text('Paid date'),
                                     Container(
                                         margin: EdgeInsets.only(left: 70),
-                                        child: Text('2019-10-15',style: TextStyle(color: Colors.black54),)),
+                                        child: Text(
+                                          '2019-10-15',
+                                          style:
+                                              TextStyle(color: Colors.black54),
+                                        )),
                                   ],
                                 ),
                                 SizedBox(
@@ -239,8 +279,6 @@ class _AccountViewState extends State<AccountView> {
                                   height: 1,
                                   color: Colors.grey,
                                 ),
-
-
                                 SizedBox(
                                   height: 10,
                                 ),
@@ -249,7 +287,11 @@ class _AccountViewState extends State<AccountView> {
                                     Text('Sales\nrepresentative'),
                                     Container(
                                         margin: EdgeInsets.only(left: 40),
-                                        child: Text('Ko Ko Mg',style: TextStyle(color: Colors.black54),)),
+                                        child: Text(
+                                          'Ko Ko Mg',
+                                          style:
+                                              TextStyle(color: Colors.black54),
+                                        )),
                                   ],
                                 ),
                                 SizedBox(
@@ -260,138 +302,143 @@ class _AccountViewState extends State<AccountView> {
                                   height: 1,
                                   color: Colors.grey,
                                 ),
-
                               ],
                             ),
                           ),
-
-
-
                           SizedBox(
                             height: 40,
                           ),
-
                           Container(
                             width: MediaQuery.of(context).size.width,
                             color: Colors.white,
-                            padding: EdgeInsets.only(left: 20, right: 20,bottom: 20),
-                            child: Column(children: [
-
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-
-                                Text('Account Details',style: TextStyle(color: Colors.lightBlueAccent),),
-
-                            Container(
-                              margin: EdgeInsets.only(top: 4),
-                                    width:120,
-                                    height: 35,
-                                    child: NeumorphicButton(
-                                      onPressed: () {},
-                                      child: Text(
-                                        "Edit Account",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 12,
-                                            color: Colors.white),
-                                      ),
-                                      style: NeumorphicStyle(
-                                        shape: NeumorphicShape.flat,
-                                        color: Colors.blue,
-                                        depth: 8,
+                            padding: EdgeInsets.only(
+                                left: 20, right: 20, bottom: 20),
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Account Details',
+                                      style: TextStyle(
+                                          color: Colors.lightBlueAccent),
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.only(top: 4),
+                                      width: 120,
+                                      height: 35,
+                                      child: NeumorphicButton(
+                                        onPressed: () {},
+                                        child: Text(
+                                          "Edit Account",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 12,
+                                              color: Colors.white),
+                                        ),
+                                        style: NeumorphicStyle(
+                                          shape: NeumorphicShape.flat,
+                                          color: Colors.blue,
+                                          depth: 8,
 //                lightSource: LightSource.topLeft,
+                                        ),
                                       ),
                                     ),
-
+                                  ],
                                 ),
-
-                              ],),
-
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                children: [
-                                  Text('First name'),
-                                  Container(
-                                      margin: EdgeInsets.only(left: 60),
-                                      child: Text('2019-10-15',style: TextStyle(color: Colors.black54),)),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: 1,
-                                color: Colors.grey,
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                children: [
-                                  Text('Last name'),
-                                  Container(
-                                      margin: EdgeInsets.only(left: 60),
-                                      child: Text('2019-10-15',style: TextStyle(color: Colors.black54),)),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: 1,
-                                color: Colors.grey,
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                children: [
-                                  Text('User name'),
-                                  Container(
-                                      margin: EdgeInsets.only(left: 60),
-                                      child: Text('2019-10-15',style: TextStyle(color: Colors.black54),)),
-                                ],
-                              ),
-
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: 1,
-                                color: Colors.grey,
-                              ),
-
-                            ],),
-
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  children: [
+                                    Text('First name'),
+                                    Container(
+                                        margin: EdgeInsets.only(left: 60),
+                                        child: Text(
+                                          '2019-10-15',
+                                          style:
+                                              TextStyle(color: Colors.black54),
+                                        )),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 1,
+                                  color: Colors.grey,
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  children: [
+                                    Text('Last name'),
+                                    Container(
+                                        margin: EdgeInsets.only(left: 60),
+                                        child: Text(
+                                          '2019-10-15',
+                                          style:
+                                              TextStyle(color: Colors.black54),
+                                        )),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 1,
+                                  color: Colors.grey,
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  children: [
+                                    Text('User name'),
+                                    Container(
+                                        margin: EdgeInsets.only(left: 60),
+                                        child: Text(
+                                          '2019-10-15',
+                                          style:
+                                              TextStyle(color: Colors.black54),
+                                        )),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 1,
+                                  color: Colors.grey,
+                                ),
+                              ],
+                            ),
                           ),
-
-
-
                           SizedBox(
                             height: 40,
                           ),
-
-
                           Container(
                             width: MediaQuery.of(context).size.width,
                             color: Colors.white,
-                            padding: EdgeInsets.only(left: 20, right: 20,bottom: 20),
-
-                          child :  Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            padding: EdgeInsets.only(
+                                left: 20, right: 20, bottom: 20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SizedBox(
                                   height: 10,
                                 ),
-                                Text('Contact Information',style: TextStyle(color: Colors.lightBlueAccent),),
-
+                                Text(
+                                  'Contact Information',
+                                  style:
+                                      TextStyle(color: Colors.lightBlueAccent),
+                                ),
                                 SizedBox(
                                   height: 10,
                                 ),
@@ -400,17 +447,16 @@ class _AccountViewState extends State<AccountView> {
                                     Text('Email'),
                                     Container(
                                         margin: EdgeInsets.only(left: 90),
-                                        child: Text('1234@gmail.com',style: TextStyle(color: Colors.black54),)),
+                                        child: Text(
+                                          '1234@gmail.com',
+                                          style:
+                                              TextStyle(color: Colors.black54),
+                                        )),
                                   ],
                                 ),
-
                               ],
                             ),
-
                           ),
-
-
-
                         ],
                       ),
                     )
