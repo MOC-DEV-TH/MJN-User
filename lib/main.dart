@@ -18,7 +18,6 @@ import 'package:get/get.dart';
 
 void main() async {
   await GetStorage.init();
-  // test branch
   runApp(
     new GetMaterialApp(
       translations: LocalString(),
