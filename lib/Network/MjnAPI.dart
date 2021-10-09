@@ -164,4 +164,63 @@ class MjnAPI {
     }
   }
 
+  static Future signUp(
+      Map<String, String> params) async {
+
+    var response = await client.post(
+      SIGN_UP_URL ,
+      body: json.encode(params),
+      headers: {
+        'content-type': 'application/json',
+      },
+    );
+    if (response.statusCode == 200) {
+      var json = response.body;
+      var result = networkResultFromJson(json);
+      return result;
+    } else {
+      return null;
+    }
+  }
+
+  static Future changePassword(
+      Map<String, String> params,String token) async {
+
+    var response = await client.put(
+      CHANGE_PASSWORD_URL ,
+      body: json.encode(params),
+      headers: {
+        'content-type': 'application/json',
+        'token': token
+      },
+    );
+    if (response.statusCode == 200) {
+      var json = response.body;
+      var result = networkResultFromJson(json);
+      return result;
+    } else {
+      return null;
+    }
+  }
+
+  static Future updateAccountInfo(
+      Map<String, String> params,String token) async {
+
+    var response = await client.put(
+      UPDATE_ACCOUNT_URL ,
+      body: json.encode(params),
+      headers: {
+        'content-type': 'application/json',
+        'token': token
+      },
+    );
+    if (response.statusCode == 200) {
+      var json = response.body;
+      var result = networkResultFromJson(json);
+      return result;
+    } else {
+      return null;
+    }
+  }
+
 }

@@ -1,14 +1,20 @@
+import 'package:MJN/controllers/changePasswordController.dart';
+import 'package:MJN/utils/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class ChangePasswordView extends StatelessWidget {
-
   var currentPasswordText = TextEditingController();
   var newPasswordText = TextEditingController();
   var rewriteNewPasswordText = TextEditingController();
 
+  final ChangePasswordController changePasswordController =
+      Get.put(ChangePasswordController());
 
   static const routeName = '/change_password';
+  final loginDataStorage = GetStorage();
 
   @override
   Widget build(BuildContext context) {
@@ -84,31 +90,47 @@ class ChangePasswordView extends StatelessWidget {
               height: 35,
             ),
             Padding(
-              padding: EdgeInsets.only(left: 130, right: 130),
-              child: NeumorphicButton(
-                onPressed: () {},
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 8, bottom: 8),
-                    child: Text(
-                      "Confirm",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          color: Colors.white),
-                    ),
-                  ),
-                ),
-                style: NeumorphicStyle(
-                  shape: NeumorphicShape.flat,
-                  boxShape:
-                      NeumorphicBoxShape.roundRect(BorderRadius.circular(18)),
-                  color: Colors.amber,
-                  depth: 8,
+                padding: EdgeInsets.only(left: 130, right: 130),
+                child: Obx(() {
+                  if (changePasswordController.isLoading.value) {
+                    return Center(child: CircularProgressIndicator());
+                  } else {
+                    return NeumorphicButton(
+                      onPressed: () {
+                        Map<String, String> map = {
+                          'current_password': currentPasswordText.value.text,
+                          'new_password': newPasswordText.value.text,
+                          'confirm_password': rewriteNewPasswordText.value.text,
+                          'app_version': app_version,
+                          'user_name': loginDataStorage.read(USER_NAME),
+                        };
+
+                        changePasswordController.changePassword(
+                            map, loginDataStorage.read(TOKEN));
+                      },
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 8, bottom: 8),
+                          child: Text(
+                            "Confirm",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                color: Colors.white),
+                          ),
+                        ),
+                      ),
+                      style: NeumorphicStyle(
+                        shape: NeumorphicShape.flat,
+                        boxShape: NeumorphicBoxShape.roundRect(
+                            BorderRadius.circular(18)),
+                        color: Colors.amber,
+                        depth: 8,
 //                lightSource: LightSource.topLeft,
-                ),
-              ),
-            ),
+                      ),
+                    );
+                  }
+                }))
           ],
         ),
       ),

@@ -5,7 +5,7 @@ import 'package:get/state_manager.dart';
 class AccountDetailController extends GetxController{
 
   AccountInfoVo accountInfoVo;
-  var isLoading = false.obs;
+  var isLoading = true.obs;
 
   void fetchAccountInfoData(String token,String uid,String tenantID) async {
     try {

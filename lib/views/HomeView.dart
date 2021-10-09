@@ -1,9 +1,11 @@
 import 'package:MJN/Widgets/current_subscription_items.dart';
+import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/views/AccountDetailView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class HomeView extends StatefulWidget {
   static const routeName = '/home_screen';
@@ -19,6 +21,8 @@ class _HomeViewState extends State<HomeView> {
   final List<String> currentPlan = <String>['Aby', 'Aish', 'Ayan', 'Ben', 'Bob', 'Charlie', 'Cook', 'Carline'];
   final List<int> endDate = <int>[2, 0, 10, 6, 52, 4, 0, 2];
   final List<int> startDate = <int>[2, 0, 10, 6, 52, 4, 0, 2];
+
+  final loginDataStorage = GetStorage();
 
   @override
   void initState() {
@@ -113,7 +117,7 @@ class _HomeViewState extends State<HomeView> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              ':Mr.Test',
+                              ':'+loginDataStorage.read(USER_NAME),
                               style: TextStyle(
                                   fontWeight: FontWeight.w500, fontSize: 13),
                             ),
@@ -121,7 +125,7 @@ class _HomeViewState extends State<HomeView> {
                               height: 6,
                             ),
                             Text(
-                              ':A36',
+                              ':'+loginDataStorage.read(BUILDING),
                               style: TextStyle(
                                   fontWeight: FontWeight.w500, fontSize: 13),
                             ),
@@ -129,7 +133,7 @@ class _HomeViewState extends State<HomeView> {
                               height: 6,
                             ),
                             Text(
-                              ':2021',
+                              ':'+loginDataStorage.read(UNIT),
                               style: TextStyle(
                                   fontWeight: FontWeight.w500, fontSize: 13),
                             ),

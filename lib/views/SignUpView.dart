@@ -1,5 +1,7 @@
+import 'package:MJN/controllers/singUpController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:get/get.dart';
 
 class SignUpView extends StatelessWidget {
   static const routeName = '/sign_up';
@@ -10,13 +12,15 @@ class SignUpView extends StatelessWidget {
 
   var _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  final SignUpController signUpController = Get.put(SignUpController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 110,
         backgroundColor: Colors.white70,
-        title: Text('Sign Up'),
+        title: Text('Sign Up',style: TextStyle(color: Colors.black),),
       ),
       key: _scaffoldKey,
       backgroundColor: Colors.grey.shade100,
@@ -135,30 +139,47 @@ class SignUpView extends StatelessWidget {
 
                   Container(
                     width: 200,
-                    child: NeumorphicButton(
-                      onPressed: () {
-                      },
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 8, bottom: 8),
-                          child: Text(
-                            "Sign Up",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                                color: Colors.white),
-                          ),
-                        ),
-                      ),
-                      style: NeumorphicStyle(
-                        shape: NeumorphicShape.flat,
-                        boxShape:
-                        NeumorphicBoxShape.roundRect(BorderRadius.circular(18)),
-                        color: Colors.amber,
-                        depth: 8,
+                    child: Obx(() {
+                      if(signUpController.isLoading.value){
+                        return Center(child: CircularProgressIndicator());
+                      }
+                      else {
+                        return
+                          NeumorphicButton(
+                            onPressed: () {
+
+                              Map<String,String> map = {
+                                'building': buildingText.value.text,
+                                'unit': unitText.value.text,
+                                'phone': contactNumberText.value.text,
+                              };
+
+                              signUpController.signUp(map);
+
+                            },
+                            child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 8, bottom: 8),
+                                child: Text(
+                                  "Sign Up",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                      color: Colors.white),
+                                ),
+                              ),
+                            ),
+                            style: NeumorphicStyle(
+                              shape: NeumorphicShape.flat,
+                              boxShape:
+                              NeumorphicBoxShape.roundRect(BorderRadius.circular(18)),
+                              color: Colors.amber,
+                              depth: 8,
 //                lightSource: LightSource.topLeft,
-                      ),
-                    ),
+                            ),
+                          );
+                      }
+                    })
                   ),
 
                 ],

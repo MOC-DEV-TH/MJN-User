@@ -22,6 +22,9 @@ const BUILDING = 'building';
 
 const API_URL = BASE_URL+'api/';
 const LOGIN_URL = API_URL+"login";
+const SIGN_UP_URL = API_URL+"sign_up";
+const CHANGE_PASSWORD_URL = API_URL+"change_password";
+const UPDATE_ACCOUNT_URL = API_URL+"update_account_info";
 const GET_ACCOUNT_INFO_URL = API_URL+"get_account_info?";
 const CREATE_TICKET_URL = API_URL+"create_ticket";
 const GET_TRANSACTION_LIST_URL = API_URL+"get_transaction_lists?";
