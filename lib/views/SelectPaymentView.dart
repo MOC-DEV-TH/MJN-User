@@ -1,6 +1,12 @@
+import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/views/InvoiceDetailView.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 class SelectPaymentView extends StatefulWidget {
+
+ final String invoiceID;
+  SelectPaymentView(this.invoiceID);
+
   @override
   _SelectPaymentViewState createState() => _SelectPaymentViewState();
 }
@@ -8,6 +14,7 @@ class SelectPaymentView extends StatefulWidget {
 class _SelectPaymentViewState extends State<SelectPaymentView> {
 
   int changePageIndex = 0;
+
   @override
   void initState() {
     changePageIndex = 0;
@@ -17,7 +24,7 @@ class _SelectPaymentViewState extends State<SelectPaymentView> {
 
   @override
   Widget build(BuildContext context) {
-    return  changePageIndex == 1 ? InvoiceDetailView() :SingleChildScrollView(
+    return  changePageIndex == 1 ? InvoiceDetailView(widget.invoiceID) :SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(

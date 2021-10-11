@@ -73,17 +73,44 @@ class SignUpView extends StatelessWidget {
                               height: 50,
                             ),
                             Container(
-                              height: 40,
+                              height: 45,
                               decoration:
-                              BoxDecoration(border: Border.all(color: Colors.greenAccent),
+                              BoxDecoration(
+                                border: Border.all(color: Colors.white,width: 7),
                               ),
-                              child: Padding(
-                                padding: const EdgeInsets.only(bottom: 5),
-                                child: TextField(
-                                  textAlign: TextAlign.center,
-                                  controller: buildingText,
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
+                                child: Container(
+                                  color: Colors.white12,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(bottom: 4),
+                                    child: TextField(
+                                      textAlign: TextAlign.center,
+                                      controller: buildingText,
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              height: 45,
+                              decoration:
+                              BoxDecoration(
+                                border: Border.all(color: Colors.white,width: 7),
+                              ),
+                              child: Container(
+                                color: Colors.white12,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(bottom: 4),
+                                  child: TextField(
+                                    textAlign: TextAlign.center,
+                                    controller: unitText,
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -92,36 +119,21 @@ class SignUpView extends StatelessWidget {
                               height: 10,
                             ),
                             Container(
-                              height: 40,
+                              height: 45,
                               decoration:
-                              BoxDecoration(border: Border.all(color: Colors.greenAccent),
+                              BoxDecoration(
+                                border: Border.all(color: Colors.white,width: 7),
                               ),
-                              child: Padding(
-                                padding: const EdgeInsets.only(bottom: 5),
-                                child: TextField(
-                                  textAlign: TextAlign.center,
-                                  controller: unitText,
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Container(
-                              height: 40,
-                              decoration:
-                              BoxDecoration(border: Border.all(color: Colors.greenAccent),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.only(bottom: 5),
-                                child: TextField(
-                                  textAlign: TextAlign.center,
-                                  controller: contactNumberText,
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
+                              child: Container(
+                                color: Colors.white12,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(bottom: 4),
+                                  child: TextField(
+                                    textAlign: TextAlign.center,
+                                    controller: contactNumberText,
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -173,7 +185,7 @@ class SignUpView extends StatelessWidget {
                               shape: NeumorphicShape.flat,
                               boxShape:
                               NeumorphicBoxShape.roundRect(BorderRadius.circular(18)),
-                              color: Colors.amber,
+                              color: Colors.blue,
                               depth: 8,
 //                lightSource: LightSource.topLeft,
                             ),

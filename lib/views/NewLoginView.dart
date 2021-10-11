@@ -9,23 +9,24 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
-class LoginView extends StatefulWidget {
+import 'SecondLoginView.dart';
+
+class NewLoginView extends StatefulWidget {
   @override
-  _LoginViewState createState() => _LoginViewState();
+  _NewLoginViewState createState() => _NewLoginViewState();
 }
 
-class _LoginViewState extends State<LoginView> {
+class _NewLoginViewState extends State<NewLoginView> {
   final LoginController loginController = Get.put(LoginController());
 
-  var emailText = TextEditingController();
-  var passwordText = TextEditingController();
+  var buildingText = TextEditingController();
+  var unitText = TextEditingController();
 
   var _scaffoldKey = GlobalKey<ScaffoldState>();
 
   String selectedLang = 'ENG';
   final langStorage = GetStorage();
 
-  int _selectedPageIndex = 0;
 
   @override
   void initState() {
@@ -55,18 +56,6 @@ class _LoginViewState extends State<LoginView> {
     super.didChangeDependencies();
   }
 
-  Widget getSelectedPage() {
-    int pageIndex = 0;
-    pageIndex = _selectedPageIndex;
-    switch (pageIndex) {
-      case 0:
-        return loginView();
-      case 1:
-        return SecondLoginVIew();
-    }
-
-    return loginView();
-  }
 
   Widget loginView() {
     return SingleChildScrollView(
@@ -81,43 +70,99 @@ class _LoginViewState extends State<LoginView> {
             size: 100,
           ),
           SizedBox(
-            height: 80,
+            height: 40,
           ),
           Container(
-            margin: EdgeInsets.only(left: 20, right: 20),
-            height: 40,
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.blueAccent),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.only(left: 5),
-              child: TextField(
-                  controller: emailText,
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: "Enter Email",
-                  )),
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Container(
-            margin: EdgeInsets.only(left: 20, right: 20),
-            height: 40,
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.blueAccent),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.only(left: 5),
-              child: TextField(
-                controller: passwordText,
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  hintText: "Enter Password",
-                ),
-                obscureText: true,
+           decoration : BoxDecoration(border: Border.all(color: Colors.grey),
+              borderRadius: BorderRadius.all(
+                  Radius.circular(24.0) //                 <--- border radius here
               ),
+            ),
+            child: Row(
+              children: [
+                Container(
+                  padding: EdgeInsets.all(10),
+                  width: 130,
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 40,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 27),
+                          child: Text(
+                            'Building',
+                            style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 60,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 27),
+                          child: Text(
+                            'Unit',
+                            style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 40,
+                        ),
+                      ]),
+                ),
+                Expanded(
+                  child: Column(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(right: 40),
+                        height: 45,
+                        decoration:
+                        BoxDecoration(
+                          border: Border.all(color: Colors.white,width: 7),
+                        ),
+                        child: Container(
+                          color: Colors.white12,
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 4),
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              controller: buildingText,
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(right: 40),
+                        height: 45,
+                        decoration:
+                        BoxDecoration(
+                          border: Border.all(color: Colors.white,width: 7),
+                        ),
+                        child: Container(
+                          color: Colors.white12,
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 4),
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              controller: unitText,
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
           SizedBox(
@@ -131,12 +176,10 @@ class _LoginViewState extends State<LoginView> {
                 } else {
                   return NeumorphicButton(
                     onPressed: () {
-                      Map<String,String> map = {
-                        'user_name': emailText.value.text,
-                        'app_version': app_version,
-                        'password': passwordText.value.text,
-                      };
-                      loginController.fetchLoginData(map,context);
+                      Future.delayed(Duration.zero, () async {
+                        Navigator.of(context).pushReplacementNamed(SecondLoginVIew.routeName);
+                      });
+
                     },
                     child: Center(
                       child: Padding(
@@ -154,7 +197,7 @@ class _LoginViewState extends State<LoginView> {
                       shape: NeumorphicShape.flat,
                       boxShape: NeumorphicBoxShape.roundRect(
                           BorderRadius.circular(18)),
-                      color: Colors.amber,
+                      color: Colors.blue,
                       depth: 8,
 //                lightSource: LightSource.topLeft,
                     ),
@@ -162,12 +205,7 @@ class _LoginViewState extends State<LoginView> {
                 }
               })),
           SizedBox(
-            height: 40,
-          ),
-          InkWell(
-              onTap: () {}, child: Center(child: Text('forgetPassword'.tr))),
-          SizedBox(
-            height: 30,
+            height: 50,
           ),
           InkWell(
               onTap: () {
@@ -208,12 +246,12 @@ class _LoginViewState extends State<LoginView> {
                   value: selectedLang,
                   items: ["မြန်မာ", "ENG"]
                       .map((label) => DropdownMenuItem(
-                            child: Text(
-                              label,
-                              style: TextStyle(fontSize: 12),
-                            ),
-                            value: label,
-                          ))
+                    child: Text(
+                      label,
+                      style: TextStyle(fontSize: 12),
+                    ),
+                    value: label,
+                  ))
                       .toList(),
                   onChanged: (value) {
                     setState(() {

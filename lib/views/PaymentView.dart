@@ -1,7 +1,12 @@
+import 'package:MJN/controllers/invoiceListController.dart';
+import 'package:MJN/controllers/transactionListController.dart';
+import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/views/InvoiceDetailView.dart';
-import 'package:MJN/views/ReceiptDetailView.dart';
+import 'package:MJN/views/TransactionDetailView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class PaymentView extends StatefulWidget {
   static const routeName = '/payment_screen';
@@ -15,36 +20,15 @@ class _PaymentViewState extends State<PaymentView> {
   var receipt = false;
   int changePageIndex = 0;
 
-  final List<String> endDate = <String>[
-    '19/8/21',
-    '19/8/21',
-    '19/8/21',
-    '19/8/21',
-  ];
-  final List<String> startDate = <String>[
-    '19/8/21',
-    '19/8/21',
-    '19/8/21',
-    '19/8/21',
-  ];
-  final List<int> amount = <int>[
-    2000,
-    4000,
-    5667,
-    4556,
-  ];
-  final List<String> transactionId = <String>[
-    '234551',
-    '234551',
-    '234551',
-    '234551',
-  ];
-  final List<String> status = <String>[
-    'Unpaid',
-    'Unpaid',
-    'Pain',
-    'Paid',
-  ];
+  String currentInvoiceIndex ;
+  String currentTransactionIndex ;
+  final loginDataStorage = GetStorage();
+
+  final InvoiceListController invoiceListController =
+      Get.put(InvoiceListController());
+
+  final TransactionListController transactionListController =
+      Get.put(TransactionListController());
 
   @override
   void initState() {
@@ -63,20 +47,24 @@ class _PaymentViewState extends State<PaymentView> {
 
   @override
   Widget build(BuildContext context) {
+    invoiceListController.fetchPaymentInvoiceList(loginDataStorage.read(TOKEN),
+        loginDataStorage.read(UID), loginDataStorage.read(DATA_TENANT_ID));
+
+    transactionListController.fetchTransactionList(loginDataStorage.read(TOKEN),
+        loginDataStorage.read(UID), loginDataStorage.read(DATA_TENANT_ID));
+
     return changePageIndex == 1
-        ? ReceiptDetailView()
+        ? TransactionDetailView(currentTransactionIndex)
         : changePageIndex == 2
-            ? InvoiceDetailView()
+            ? InvoiceDetailView(currentInvoiceIndex)
             : Scaffold(
                 body: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
                       SizedBox(
                         height: 20,
                       ),
-
                       Container(
                         width: MediaQuery.of(context).size.width,
                         height: 40,
@@ -235,15 +223,23 @@ class _PaymentViewState extends State<PaymentView> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Container(
-                                width: 70,
+                                width: 73,
                                 child: InkWell(
                                   onTap: () {
                                     setState(() {
+                                      currentTransactionIndex =
+                                          transactionListController
+                                              .transactionListVo
+                                              .details[index]
+                                              .transactionId
+                                              .toString();
                                       changePageIndex = 1;
                                     });
                                   },
                                   child: Text(
-                                    transactionId[index],
+                                    transactionListController.transactionListVo
+                                            .details[index].transactionId ??
+                                        'null',
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 10,
@@ -260,7 +256,9 @@ class _PaymentViewState extends State<PaymentView> {
                               Container(
                                 width: 63,
                                 child: Text(
-                                  startDate[index],
+                                  transactionListController.transactionListVo
+                                          .details[index].startDate ??
+                                      'null',
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 10,
@@ -274,9 +272,11 @@ class _PaymentViewState extends State<PaymentView> {
                                 color: Colors.grey,
                               ),
                               Container(
-                                width: 55,
+                                width: 60,
                                 child: Text(
-                                  endDate[index],
+                                  transactionListController.transactionListVo
+                                          .details[index].endDate ??
+                                      'null',
                                   style: TextStyle(
                                       color: Colors.black, fontSize: 10),
                                   textAlign: TextAlign.center,
@@ -288,9 +288,11 @@ class _PaymentViewState extends State<PaymentView> {
                                 color: Colors.grey,
                               ),
                               Container(
-                                width: 55,
+                                width: 56,
                                 child: Text(
-                                  amount[index].toString(),
+                                  transactionListController.transactionListVo
+                                          .details[index].creditAmount ??
+                                      'null',
                                   style: TextStyle(
                                       color: Colors.black, fontSize: 10),
                                   textAlign: TextAlign.center,
@@ -302,7 +304,8 @@ class _PaymentViewState extends State<PaymentView> {
                       ],
                     );
                   },
-                  itemCount: transactionId.length,
+                  itemCount: transactionListController
+                      .transactionListVo.details.length,
                 )
               ],
             ),
@@ -354,19 +357,10 @@ class _PaymentViewState extends State<PaymentView> {
                             height: 30,
                             color: Colors.grey,
                           ),
-                          Text(
-                            'End date',
-                            style: TextStyle(color: Colors.black, fontSize: 10),
-                          ),
-                          Container(
-                            width: 1,
-                            height: 30,
-                            color: Colors.grey,
-                          ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 2),
+                            padding: const EdgeInsets.only(right: 4, left: 4),
                             child: Text(
-                              'Amount',
+                              'End date',
                               style:
                                   TextStyle(color: Colors.black, fontSize: 10),
                             ),
@@ -376,8 +370,17 @@ class _PaymentViewState extends State<PaymentView> {
                             height: 30,
                             color: Colors.grey,
                           ),
+                          Text(
+                            'Amount',
+                            style: TextStyle(color: Colors.black, fontSize: 10),
+                          ),
+                          Container(
+                            width: 1,
+                            height: 30,
+                            color: Colors.grey,
+                          ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 7),
+                            padding: const EdgeInsets.only(left: 1),
                             child: Text(
                               'Status',
                               style:
@@ -404,21 +407,36 @@ class _PaymentViewState extends State<PaymentView> {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Container(
-                                    width: 63,
+                                    width: 67,
                                     child: InkWell(
-                                      onTap: (){
+                                      onTap: () {
                                         setState(() {
+                                          currentInvoiceIndex =
+                                              invoiceListController
+                                                  .invoiceListVo
+                                                  .details[index]
+                                                  .invoiceId
+                                                  .toString();
+
                                           changePageIndex = 2;
                                         });
+
                                       },
                                       child: Text(
-                                        transactionId[index],
+                                        invoiceListController.invoiceListVo
+                                                .details[index].invoiceId ??
+                                            'null',
                                         style: TextStyle(
-                                            color: status[index] == 'Unpaid'
+                                            color: invoiceListController
+                                                        .invoiceListVo
+                                                        .details[index]
+                                                        .paymentStatus ==
+                                                    'Unpaid'
                                                 ? Color(0xffff0000)
                                                 : Color(0xff000000),
                                             fontSize: 10,
-                                            decoration: TextDecoration.underline),
+                                            decoration:
+                                                TextDecoration.underline),
                                         textAlign: TextAlign.center,
                                       ),
                                     ),
@@ -429,11 +447,17 @@ class _PaymentViewState extends State<PaymentView> {
                                     color: Colors.grey,
                                   ),
                                   Container(
-                                    width: 63,
+                                    width: 66,
                                     child: Text(
-                                      startDate[index],
+                                      invoiceListController.invoiceListVo
+                                              .details[index].startDate ??
+                                          'null',
                                       style: TextStyle(
-                                        color: status[index] == 'Unpaid'
+                                        color: invoiceListController
+                                                    .invoiceListVo
+                                                    .details[index]
+                                                    .paymentStatus ==
+                                                'Unpaid'
                                             ? Color(0xffff0000)
                                             : Color(0xff000000),
                                         fontSize: 10,
@@ -447,11 +471,17 @@ class _PaymentViewState extends State<PaymentView> {
                                     color: Colors.grey,
                                   ),
                                   Container(
-                                    width: 55,
+                                    width: 68,
                                     child: Text(
-                                      endDate[index],
+                                      invoiceListController.invoiceListVo
+                                              .details[index].endDate ??
+                                          'null',
                                       style: TextStyle(
-                                          color: status[index] == 'Unpaid'
+                                          color: invoiceListController
+                                                      .invoiceListVo
+                                                      .details[index]
+                                                      .paymentStatus ==
+                                                  'Unpaid'
                                               ? Color(0xffff0000)
                                               : Color(0xff000000),
                                           fontSize: 10),
@@ -464,11 +494,17 @@ class _PaymentViewState extends State<PaymentView> {
                                     color: Colors.grey,
                                   ),
                                   Container(
-                                    width: 55,
+                                    width: 57,
                                     child: Text(
-                                      amount[index].toString(),
+                                      invoiceListController.invoiceListVo
+                                              .details[index].creditAmount ??
+                                          'null',
                                       style: TextStyle(
-                                          color: status[index] == 'Unpaid'
+                                          color: invoiceListController
+                                                      .invoiceListVo
+                                                      .details[index]
+                                                      .paymentStatus ==
+                                                  'Unpaid'
                                               ? Color(0xffff0000)
                                               : Color(0xff000000),
                                           fontSize: 10),
@@ -481,11 +517,17 @@ class _PaymentViewState extends State<PaymentView> {
                                     color: Colors.grey,
                                   ),
                                   Container(
-                                    width: 55,
+                                    width: 52,
                                     child: Text(
-                                      status[index],
+                                      invoiceListController.invoiceListVo
+                                              .details[index].paymentStatus ??
+                                          'null',
                                       style: TextStyle(
-                                          color: status[index] == 'Unpaid'
+                                          color: invoiceListController
+                                                      .invoiceListVo
+                                                      .details[index]
+                                                      .paymentStatus ==
+                                                  'Unpaid'
                                               ? Color(0xffff0000)
                                               : Color(0xff000000),
                                           fontSize: 10),
@@ -498,7 +540,8 @@ class _PaymentViewState extends State<PaymentView> {
                           ],
                         );
                       },
-                      itemCount: transactionId.length,
+                      itemCount:
+                          invoiceListController.invoiceListVo.details.length,
                     )
                   ],
                 ),

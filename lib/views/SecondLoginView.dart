@@ -1,96 +1,196 @@
+import 'package:MJN/Widgets/login_main_drawer.dart';
+import 'package:MJN/controllers/loginController.dart';
+import 'package:MJN/utils/app_constants.dart';
+import 'package:MJN/views/SecondLoginView.dart';
+import 'package:MJN/views/SignUpView.dart';
+import 'package:MJN/views/tabView.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
-class SecondLoginView extends StatefulWidget {
+class SecondLoginVIew extends StatefulWidget {
+
+  static const routeName = '/secondLogin';
+
   @override
-  _SecondLoginViewState createState() => _SecondLoginViewState();
+  _SecondLoginVIewState createState() => _SecondLoginVIewState();
 }
 
-class _SecondLoginViewState extends State<SecondLoginView> {
+class _SecondLoginVIewState extends State<SecondLoginVIew> {
+  final LoginController loginController = Get.put(LoginController());
 
-  var buildingText = TextEditingController();
-  var unitText = TextEditingController();
+  var _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  String selectedLang = 'ENG';
+  final langStorage = GetStorage();
+
+
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    if (langStorage.read('language') == 'မြန်မာ') {
+      var locale = Locale('my', 'MM');
+      Get.updateLocale(locale);
+
+      setState(() {
+        selectedLang = 'မြန်မာ';
+      });
+    } else if (langStorage.read('language') == 'ENG') {
+      var locale = Locale('en', 'US');
+      Get.updateLocale(locale);
+
+      setState(() {
+        selectedLang = 'ENG';
+      });
+    }
+
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+  }
+
+  // ignore: non_constant_identifier_names
+  Widget SecondLoginWidget() {
     return SingleChildScrollView(
-        child: Center(
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                height: 100,
-              ),
-              Text('Select your individual unit'),
-              SizedBox(
-                height: 40,
-              ),
+
+              SizedBox(height: 150,),
+
+              Text('Confirm your unit information',style: TextStyle(fontSize: 16,color: Colors.black),),
+
+              SizedBox(height: 50,),
+
               Container(
-                margin: EdgeInsets.only(left: 50,right: 50),
-                padding: EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.blueAccent),
-                  borderRadius: BorderRadius.all(Radius.circular(
-                      12.0) //                 <--- border radius here
-                  ),
-                ),
+                margin: EdgeInsets.only(left: 30,right: 30),
                 width: MediaQuery.of(context).size.width,
+                height: 50,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.white, width: 7),
+                ),
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Building'),
-                    SizedBox(
-                      width: 10,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 30),
+                      child: Text('Building - XXXXX'),
                     ),
-                    Expanded(
-                      child: Container(
-                        height: 40,
-                        padding: EdgeInsets.only(bottom: 6),
-                        margin: EdgeInsets.only(right: 15),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.blueAccent),
-                          borderRadius: BorderRadius.all(Radius.circular(
-                              12.0) //                 <--- border radius here
-                          ),
-                        ),
-                        child: TextField(
-                            textAlign: TextAlign.center,
-                            controller: buildingText,
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                            )),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Text('Unit'),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                      child: Container(
-                        height: 40,
-                        margin: EdgeInsets.only(right: 15),
-                        padding: EdgeInsets.only(bottom: 6),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.blueAccent),
-                          borderRadius: BorderRadius.all(Radius.circular(
-                              12.0) //                 <--- border radius here
-                          ),
-                        ),
-                        child: TextField(
-                            controller: unitText,
-                            textAlign: TextAlign.center,
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                            )),
-                      ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 30),
+                      child: Text('Unit - XXXXX'),
                     ),
                   ],
                 ),
               ),
+
+              SizedBox(height: 20,),
+
+              Container(
+                alignment: Alignment.centerLeft,
+                margin: EdgeInsets.only(left: 30,right: 30),
+                width: MediaQuery.of(context).size.width,
+                height: 50,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.white, width: 7),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 30),
+                  child: Text('Tenant Name - XXXXXXX'),
+                ),
+              ),
+
+              SizedBox(height: 50,),
+
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: 40,
+                alignment: Alignment.center,
+                child: NeumorphicButton(
+                  onPressed: () {},
+                  child: Text(
+                    "Confirm",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                        color: Colors.white),
+                  ),
+                  style: NeumorphicStyle(
+                    shape: NeumorphicShape.flat,
+                    boxShape: NeumorphicBoxShape.roundRect(
+                        BorderRadius.circular(14)),
+                    color: Colors.blue,
+                    depth: 8,
+//                lightSource: LightSource.topLeft,
+                  ),
+                ),
+              ),
             ],
           ),
-        ));
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          toolbarHeight: 110,
+          backgroundColor: Colors.white70,
+          iconTheme: IconThemeData(color: Colors.grey),
+          actions: [
+            Container(
+              height: 50,
+              width: 75,
+              margin: EdgeInsets.only(bottom: 37, right: 30, top: 33),
+              padding: EdgeInsets.all(3),
+              child: Neumorphic(
+                style: NeumorphicStyle(
+                    color: Colors.white, lightSource: LightSource.topLeft),
+                child: DropdownButtonFormField<String>(
+                  isExpanded: true,
+                  value: selectedLang,
+                  items: ["မြန်မာ", "ENG"]
+                      .map((label) => DropdownMenuItem(
+                            child: Text(
+                              label,
+                              style: TextStyle(fontSize: 12),
+                            ),
+                            value: label,
+                          ))
+                      .toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      if (value == 'မြန်မာ') {
+                        langStorage.write('language', value);
+                        var locale = Locale('my', 'MM');
+                        Get.updateLocale(locale);
+                      } else if (value == 'ENG') {
+                        langStorage.write('language', value);
+                        var locale = Locale('en', 'US');
+                        Get.updateLocale(locale);
+                      }
+                    });
+                  },
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0)),
+                      contentPadding: EdgeInsets.only(left: 10, bottom: 12)),
+                ),
+              ),
+            ),
+          ],
+        ),
+        drawer: Container(child: LoginMainDrawer()),
+        key: _scaffoldKey,
+        backgroundColor: Colors.grey.shade100,
+        body: SecondLoginWidget());
   }
 }

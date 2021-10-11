@@ -11,13 +11,15 @@ const UID = 'uid=';
 const APP_VERSION = '&app_version=';
 const TENANT_ID = '&tenant_id=';
 const TICKET_ID = '&ticket_id=';
-
+const INVOICE_ID = '&inv_id=';
+const TRANSACTION_ID = '&trxn_id=';
 //get storage key
 const USER_NAME = 'user_name';
 const TOKEN = 'token';
 const DATA_TENANT_ID = 'tenant_id';
 const UNIT = 'unit';
 const BUILDING = 'building';
+const DATA_INVOICE_ID = 'invoiceID';
 
 
 const API_URL = BASE_URL+'api/';
@@ -31,4 +33,6 @@ const GET_TRANSACTION_LIST_URL = API_URL+"get_transaction_lists?";
 const GET_INVOICE_LIST_URL = API_URL+"get_invoice_lists?";
 const GET_TICKET_LIST_URL = API_URL+"get_ticket_lists?";
 const GET_TICKET_URL = API_URL+"get_ticket?";
+const GET_INVOICE_URL = API_URL+"get_invoice?";
+const GET_TRANSACTION_URL = API_URL+"get_transaction?";
 

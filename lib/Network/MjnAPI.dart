@@ -4,10 +4,12 @@ import 'package:MJN/Network/Request/RequestCreateTicket.dart';
 import 'package:MJN/models/NetworkResultVO.dart';
 import 'package:MJN/models/accountInfoVO.dart';
 import 'package:MJN/models/invoiceListVO.dart';
+import 'package:MJN/models/invoiceVO.dart';
 import 'package:MJN/models/loginVO.dart';
 import 'package:MJN/models/ticketListVO.dart';
 import 'package:MJN/models/ticketVO.dart';
 import 'package:MJN/models/transactionListVO.dart';
+import 'package:MJN/models/transactionVO.dart';
 import 'package:MJN/utils/app_constants.dart';
 import 'package:http/http.dart' as http;
 
@@ -217,6 +219,53 @@ class MjnAPI {
     if (response.statusCode == 200) {
       var json = response.body;
       var result = networkResultFromJson(json);
+      return result;
+    } else {
+      return null;
+    }
+  }
+
+
+  static Future fetchInvoiceData(
+      String token, String uid, String invoiceID) async {
+
+    var response = await client.get(
+      GET_INVOICE_URL +
+          UID + uid +
+          APP_VERSION + app_version +
+          INVOICE_ID + invoiceID,
+
+      headers: {
+        'content-type': 'application/json',
+        'token': token
+      },
+    );
+    if (response.statusCode == 200) {
+      var json = response.body;
+      var result = invoiceVoFromJson(json);
+      return result;
+    } else {
+      return null;
+    }
+  }
+
+  static Future fetchTransactionData(
+      String token, String uid, String transactionID) async {
+
+    var response = await client.get(
+      GET_TRANSACTION_URL +
+          UID + uid +
+          APP_VERSION + app_version +
+          TRANSACTION_ID + transactionID,
+
+      headers: {
+        'content-type': 'application/json',
+        'token': token
+      },
+    );
+    if (response.statusCode == 200) {
+      var json = response.body;
+      var result = transactionVoFromJson(json);
       return result;
     } else {
       return null;

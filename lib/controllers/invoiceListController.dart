@@ -3,7 +3,7 @@ import 'package:MJN/models/invoiceListVO.dart';
 import 'package:get/state_manager.dart';
 
 
-class PaymentInvoiceController extends GetxController{
+class InvoiceListController extends GetxController{
   InvoiceListVo invoiceListVo;
   var isLoading = true.obs;
 

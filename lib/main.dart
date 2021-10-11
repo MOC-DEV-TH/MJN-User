@@ -6,8 +6,10 @@ import 'package:MJN/views/ContactUsView.dart';
 import 'package:MJN/views/CreateServiceTicketView.dart';
 import 'package:MJN/views/HomeView.dart';
 import 'package:MJN/views/LoginView.dart';
+import 'package:MJN/views/NewLoginView.dart';
 import 'package:MJN/views/NotificationView.dart';
 import 'package:MJN/views/PaymentView.dart';
+import 'package:MJN/views/SecondLoginView.dart';
 import 'package:MJN/views/ServiceComplainView.dart';
 import 'package:MJN/views/SignUpView.dart';
 import 'package:MJN/views/tabView.dart';
@@ -33,6 +35,7 @@ void main() async {
         TabScreens.routeName: (ctx) => TabScreens(),
         ChangePasswordView.routeName: (ctx) => ChangePasswordView(),
         CreateServiceTicketView.routeName: (ctx) => CreateServiceTicketView(),
+        SecondLoginVIew.routeName: (ctx) => SecondLoginVIew(),
       },
       home: SplashScreen(),
     ),
@@ -88,7 +91,9 @@ class _SplashScreenState extends State<SplashScreen>
         onLoaded: (composition) {
           _controller
             ..duration = composition.duration
-            ..forward().whenComplete(() => Navigator.pushReplacement(
+            ..forward().whenComplete(() =>
+
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                       builder: (context) => loginDataStorage.read(TOKEN) != null
