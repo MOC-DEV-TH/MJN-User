@@ -20,8 +20,6 @@ class _LoginViewState extends State<LoginView> {
   var emailText = TextEditingController();
   var passwordText = TextEditingController();
 
-
-
   var _scaffoldKey = GlobalKey<ScaffoldState>();
 
   String selectedLang = 'ENG';
@@ -133,6 +131,8 @@ class _LoginViewState extends State<LoginView> {
                 } else {
                   return NeumorphicButton(
                     onPressed: () {
+
+
                       Map<String,String> map = {
                         'user_name': emailText.value.text,
                         'app_version': app_version,

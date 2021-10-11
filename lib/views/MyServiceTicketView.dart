@@ -1,7 +1,11 @@
 import 'package:MJN/Widgets/my_sevice_ticket_items.dart';
+import 'package:MJN/controllers/ticketListController.dart';
+import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/views/ServiceComplainView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class MyServiceTicketView extends StatefulWidget {
   @override
@@ -11,56 +15,10 @@ class MyServiceTicketView extends StatefulWidget {
 class _MyServiceTicketViewState extends State<MyServiceTicketView> {
   int changePageIndex = 0;
 
-  final List<String> serviceRequest = <String>[
-    'Technical',
-    'Technical',
-    'Billing',
-    'Billing',
-    'Technical',
-    'Technical',
-    'Billing',
-    'Billing',
-  ];
-  final List<String> issue = <String>[
-    'Aby',
-    'Aish',
-    'Ayan',
-    'Ben',
-    'Bob',
-    'Charlie',
-    'Cook',
-    'Carline'
-  ];
-  final List<String> status = <String>[
-    'Closed',
-    'Resolved',
-    'Pending',
-    'Closed',
-    'Resolved',
-    'Pending',
-    'Resolved',
-    'Closed'
-  ];
-  final List<String> ticketId = <String>[
-    '234551',
-    '234551',
-    '234551',
-    '234551',
-    '234551',
-    '234551',
-    '234551',
-    '234551'
-  ];
-  final List<String> ticketStartDate = <String>[
-    '19/8/21',
-    '19/8/21',
-    '19/8/21',
-    '19/8/21',
-    '19/8/21',
-    '19/8/21',
-    '19/8/21',
-    '19/8/21'
-  ];
+
+  final TicketListController ticketListController = Get.put(TicketListController());
+  final loginDataStorage = GetStorage();
+
 
   @override
   void initState() {
@@ -70,6 +28,10 @@ class _MyServiceTicketViewState extends State<MyServiceTicketView> {
 
   @override
   Widget build(BuildContext context) {
+
+    ticketListController.fetchTicketList(loginDataStorage.read(TOKEN),
+        loginDataStorage.read(UID), loginDataStorage.read(DATA_TENANT_ID));
+
     return changePageIndex == 1
         ? ServiceComplainView()
         : Scaffold(
@@ -126,6 +88,7 @@ class _MyServiceTicketViewState extends State<MyServiceTicketView> {
                       ),
                     ),
                     Container(
+                      height: 45,
                       color: Colors.grey,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -141,7 +104,7 @@ class _MyServiceTicketViewState extends State<MyServiceTicketView> {
                           ),
                           Container(
                             width: 1,
-                            height: 30,
+                            height: 45,
                             color: Colors.black,
                           ),
                           Text(
@@ -154,7 +117,7 @@ class _MyServiceTicketViewState extends State<MyServiceTicketView> {
                           ),
                           Container(
                             width: 1,
-                            height: 30,
+                            height: 45,
                             color: Colors.black,
                           ),
                           Padding(
@@ -169,7 +132,7 @@ class _MyServiceTicketViewState extends State<MyServiceTicketView> {
                           ),
                           Container(
                             width: 1,
-                            height: 30,
+                            height: 45,
                             color: Colors.black,
                           ),
                           Padding(
@@ -183,7 +146,7 @@ class _MyServiceTicketViewState extends State<MyServiceTicketView> {
                           ),
                           Container(
                             width: 1,
-                            height: 30,
+                            height: 45,
                             color: Colors.black,
                           ),
                           Padding(
@@ -202,14 +165,10 @@ class _MyServiceTicketViewState extends State<MyServiceTicketView> {
                       shrinkWrap: true,
                       itemBuilder: (ctx, index) {
                         return MyServiceTicketItems(
-                          ticketId[index],
-                          ticketStartDate[index],
-                          issue[index],
-                          serviceRequest[index],
-                          status[index],
+                          ticketListController.ticketListVo.details[index]
                         );
                       },
-                      itemCount: ticketId.length,
+                      itemCount: ticketListController.ticketListVo.details.length,
                     )
                   ],
                 ),

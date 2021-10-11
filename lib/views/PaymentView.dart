@@ -175,6 +175,7 @@ class _PaymentViewState extends State<PaymentView> {
                   ),
                 ),
                 Container(
+                  height: 45,
                   decoration: BoxDecoration(
                     border: Border.all(
                       color: Colors.grey,
@@ -190,7 +191,7 @@ class _PaymentViewState extends State<PaymentView> {
                       ),
                       Container(
                         width: 1,
-                        height: 30,
+                        height: 45,
                         color: Colors.grey,
                       ),
                       Text(
@@ -199,7 +200,7 @@ class _PaymentViewState extends State<PaymentView> {
                       ),
                       Container(
                         width: 1,
-                        height: 30,
+                        height: 45,
                         color: Colors.grey,
                       ),
                       Text(
@@ -208,7 +209,7 @@ class _PaymentViewState extends State<PaymentView> {
                       ),
                       Container(
                         width: 1,
-                        height: 30,
+                        height: 45,
                         color: Colors.grey,
                       ),
                       Text(
@@ -253,7 +254,7 @@ class _PaymentViewState extends State<PaymentView> {
                               ),
                               Container(
                                 width: 1,
-                                height: 30,
+                                height: 45,
                                 color: Colors.grey,
                               ),
                               Container(
@@ -269,7 +270,7 @@ class _PaymentViewState extends State<PaymentView> {
                               ),
                               Container(
                                 width: 1,
-                                height: 30,
+                                height: 45,
                                 color: Colors.grey,
                               ),
                               Container(
@@ -283,7 +284,7 @@ class _PaymentViewState extends State<PaymentView> {
                               ),
                               Container(
                                 width: 1,
-                                height: 30,
+                                height: 45,
                                 color: Colors.grey,
                               ),
                               Container(

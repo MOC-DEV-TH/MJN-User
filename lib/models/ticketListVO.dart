@@ -19,7 +19,7 @@ class TicketListVo {
   String description;
   bool isRequieredUpdate;
   bool isforceUpdate;
-  List<Detail> details;
+  List<TicketDetail> details;
 
   factory TicketListVo.fromJson(Map<String, dynamic> json) => TicketListVo(
     status: json["status"],
@@ -27,7 +27,7 @@ class TicketListVo {
     description: json["description"],
     isRequieredUpdate: json["is_requiered_update"],
     isforceUpdate: json["isforce_update"],
-    details: List<Detail>.from(json["details"].map((x) => Detail.fromJson(x))),
+    details: List<TicketDetail>.from(json["details"].map((x) => TicketDetail.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
@@ -40,8 +40,8 @@ class TicketListVo {
   };
 }
 
-class Detail {
-  Detail({
+class TicketDetail {
+  TicketDetail({
     this.ticketId,
     this.serviceRequest,
     this.serviceRequestOther,
@@ -63,7 +63,7 @@ class Detail {
   String resolvedTime;
   String creationDate;
 
-  factory Detail.fromJson(Map<String, dynamic> json) => Detail(
+  factory TicketDetail.fromJson(Map<String, dynamic> json) => TicketDetail(
     ticketId: json["ticket_id"],
     serviceRequest: json["service_request"],
     serviceRequestOther: json["service_request_other"],

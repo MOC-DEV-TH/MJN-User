@@ -1,13 +1,13 @@
+import 'package:MJN/models/ticketListVO.dart';
 import 'package:flutter/material.dart';
 class MyServiceTicketItems extends StatelessWidget {
+  TicketDetail ticketDetailVO;
 
-  String ticketID,ticketCreateDate,issue,serviceRequest,status;
-  MyServiceTicketItems(
-      this.ticketID,this.ticketCreateDate,this.issue,this.serviceRequest,this.status
-      );
+  MyServiceTicketItems(this.ticketDetailVO);
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 45,
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(color: Colors.black),
@@ -20,7 +20,7 @@ class MyServiceTicketItems extends StatelessWidget {
             child: InkWell(
               onTap: (){},
               child: Text(
-                ticketID,
+                ticketDetailVO.ticketId??'null',
                 style: TextStyle(color: Colors.black, fontSize: 8,decoration: TextDecoration.underline,),
                 textAlign: TextAlign.center,
               ),
@@ -28,53 +28,53 @@ class MyServiceTicketItems extends StatelessWidget {
           ),
           Container(
             width: 1,
-            height: 30,
+            height: 45,
             color: Colors.black,
           ),
 
           Container(
             width: 50,
             child: Text(
-              ticketCreateDate,
+              ticketDetailVO.creationDate??'null',
               style: TextStyle(color: Colors.black, fontSize: 8),
               textAlign: TextAlign.center,
             ),
           ),
           Container(
             width: 1,
-            height: 30,
+            height: 45,
             color: Colors.black,
           ),
           Container(
             width: 40,
             child: Text(
-              serviceRequest,
+              ticketDetailVO.serviceRequest??'null',
               style: TextStyle(color: Colors.black, fontSize: 8),
               textAlign: TextAlign.center,
             ),
           ),
           Container(
             width: 1,
-            height: 30,
+            height: 45,
             color: Colors.black,
           ),
           Container(
             width: 30,
             child: Text(
-              issue,
+              ticketDetailVO.serviceRequestOther??'null',
               style: TextStyle(color: Colors.black, fontSize: 8),
               textAlign: TextAlign.center,
             ),
           ),
           Container(
             width: 1,
-            height: 30,
+            height: 45,
             color: Colors.black,
           ),
           Container(
             width: 34,
             child: Text(
-              status,
+              ticketDetailVO.status??'null',
               style: TextStyle(color: Colors.black, fontSize: 8),
               textAlign: TextAlign.center,
             ),

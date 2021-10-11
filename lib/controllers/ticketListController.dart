@@ -20,6 +20,7 @@ class TicketListController extends GetxController{
       if (res != null) {
         ticketListVo = res;
         print(ticketListVo.status);
+        print(ticketListVo.details[0].status);
       }
     } finally {
       isLoading(false);

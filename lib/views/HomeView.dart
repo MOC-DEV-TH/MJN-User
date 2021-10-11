@@ -1,4 +1,5 @@
 import 'package:MJN/Widgets/current_subscription_items.dart';
+import 'package:MJN/Widgets/package_and_service_items.dart';
 import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/views/AccountDetailView.dart';
 import 'package:flutter/material.dart';
@@ -18,12 +19,15 @@ class _HomeViewState extends State<HomeView> {
   int changePageIndex = 0;
 
   //test list
-  final List<String> currentPlan = <String>['Aby', 'Aish', 'Ayan', 'Ben', 'Bob', 'Charlie', 'Cook', 'Carline'];
-  final List<int> endDate = <int>[2, 0, 10, 6, 52, 4, 0, 2];
-  final List<int> startDate = <int>[2, 0, 10, 6, 52, 4, 0, 2];
+  final List<String> currentPlan = <String>['Aby', 'Aish',];
+  final List<int> endDate = <int>[2, 0,];
+  final List<int> startDate = <int>[2, 0,];
+
+  final List<int> imgList = <int>[2, 0, 10, 6,6,6];
 
   final loginDataStorage = GetStorage();
-
+  double itemHeight = 0;
+  double itemWidth = 0;
   @override
   void initState() {
     changePageIndex = 0;
@@ -32,6 +36,13 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+
+    var size = MediaQuery.of(context).size;
+
+    /*24 is for notification bar on Android*/
+    itemHeight = (size.height - kToolbarHeight - 24) / 4;
+    itemWidth = size.width / 2;
+
     return changePageIndex == 1
         ? AccountView()
         : Scaffold(
@@ -239,7 +250,26 @@ class _HomeViewState extends State<HomeView> {
                     shrinkWrap: true,
                     itemBuilder: (ctx,index){
                     return CurrentSubscriptionItems(startDate[index], endDate[index], currentPlan[index]);
-                  },itemCount: startDate.length,)
+                  },itemCount: startDate.length,),
+
+
+              GridView(
+                   shrinkWrap:true,
+                   physics: new NeverScrollableScrollPhysics(),
+                   primary: false,
+                   padding: const EdgeInsets.all(10),
+                   children: imgList
+                      .map((imgData) =>
+                       PackageAndServiceItems()
+                   )
+                       .toList(),
+                   gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                       maxCrossAxisExtent: 200,
+                       mainAxisSpacing: 20,
+                       crossAxisSpacing: 20,
+                     childAspectRatio: (1 / .6),
+                 )
+              ),
 
                 ],
               ),
