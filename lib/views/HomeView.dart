@@ -19,15 +19,25 @@ class _HomeViewState extends State<HomeView> {
   int changePageIndex = 0;
 
   //test list
-  final List<String> currentPlan = <String>['Aby', 'Aish',];
-  final List<int> endDate = <int>[2, 0,];
-  final List<int> startDate = <int>[2, 0,];
+  final List<String> currentPlan = <String>[
+    'Aby',
+    'Aish',
+  ];
+  final List<int> endDate = <int>[
+    2,
+    0,
+  ];
+  final List<int> startDate = <int>[
+    2,
+    0,
+  ];
 
-  final List<int> imgList = <int>[2, 0, 10, 6,6,6];
+  final List<int> imgList = <int>[2, 0, 10, 6, 6, 6];
 
   final loginDataStorage = GetStorage();
   double itemHeight = 0;
   double itemWidth = 0;
+
   @override
   void initState() {
     changePageIndex = 0;
@@ -36,7 +46,6 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-
     var size = MediaQuery.of(context).size;
 
     /*24 is for notification bar on Android*/
@@ -128,7 +137,7 @@ class _HomeViewState extends State<HomeView> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              ':'+loginDataStorage.read(USER_NAME),
+                              ':' + loginDataStorage.read(USER_NAME) ?? 'null',
                               style: TextStyle(
                                   fontWeight: FontWeight.w500, fontSize: 13),
                             ),
@@ -136,7 +145,7 @@ class _HomeViewState extends State<HomeView> {
                               height: 6,
                             ),
                             Text(
-                              ':'+loginDataStorage.read(BUILDING),
+                              ':' + loginDataStorage.read(BUILDING) ?? 'null',
                               style: TextStyle(
                                   fontWeight: FontWeight.w500, fontSize: 13),
                             ),
@@ -144,7 +153,7 @@ class _HomeViewState extends State<HomeView> {
                               height: 6,
                             ),
                             Text(
-                              ':'+loginDataStorage.read(UNIT),
+                              ':' + loginDataStorage.read(UNIT) ?? 'null',
                               style: TextStyle(
                                   fontWeight: FontWeight.w500, fontSize: 13),
                             ),
@@ -153,24 +162,26 @@ class _HomeViewState extends State<HomeView> {
                       ],
                     ),
                   ),
-
                   SizedBox(
                     height: 10,
                   ),
-
-
-                      Container(
-                        width: 136,
-                          color: Colors.blueAccent,
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 6,bottom: 6,),
-                            child: Text(
-                              'currentSubscription'.tr,
-                              style: TextStyle(color: Colors.black, fontSize: 12,),
-                              textAlign: TextAlign.center,
-                            ),
-                          )),
-
+                  Container(
+                      width: 136,
+                      color: Colors.blueAccent,
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          top: 6,
+                          bottom: 6,
+                        ),
+                        child: Text(
+                          'currentSubscription'.tr,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 12,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      )),
                   Container(
                     height: 1,
                     width: double.infinity,
@@ -178,7 +189,7 @@ class _HomeViewState extends State<HomeView> {
                       color: Colors.grey,
                     ),
                   ),
-                    Container(
+                  Container(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -193,16 +204,20 @@ class _HomeViewState extends State<HomeView> {
                                     ),
                               ),
                               child: Padding(
-                                padding: const EdgeInsets.only(left: 8,right: 8,top: 4,bottom: 4),
+                                padding: const EdgeInsets.only(
+                                    left: 8, right: 8, top: 4, bottom: 4),
                                 child: Text(
                                   'Start date',
-                                  style: TextStyle(color: Colors.white, fontSize: 10),
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 10),
                                 ),
                               )),
                         ),
-
-                        Container(width: 1,height: 30,color: Colors.grey,),
-
+                        Container(
+                          width: 1,
+                          height: 30,
+                          color: Colors.grey,
+                        ),
                         Padding(
                           padding: const EdgeInsets.all(4.0),
                           child: Container(
@@ -214,16 +229,20 @@ class _HomeViewState extends State<HomeView> {
                                     ),
                               ),
                               child: Padding(
-                                padding: const EdgeInsets.only(left: 8,right: 8,top: 4,bottom: 4),
+                                padding: const EdgeInsets.only(
+                                    left: 8, right: 8, top: 4, bottom: 4),
                                 child: Text(
                                   'End date',
-                                  style: TextStyle(color: Colors.white, fontSize: 10),
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 10),
                                 ),
                               )),
                         ),
-
-                        Container(width: 1,height: 30,color: Colors.grey,),
-
+                        Container(
+                          width: 1,
+                          height: 30,
+                          color: Colors.grey,
+                        ),
                         Padding(
                           padding: const EdgeInsets.all(4.0),
                           child: Container(
@@ -235,42 +254,40 @@ class _HomeViewState extends State<HomeView> {
                                     ),
                               ),
                               child: Padding(
-                                padding: const EdgeInsets.only(left: 8,right: 8,top: 4,bottom: 4),
+                                padding: const EdgeInsets.only(
+                                    left: 8, right: 8, top: 4, bottom: 4),
                                 child: Text(
                                   'Current Plan',
-                                  style: TextStyle(color: Colors.white, fontSize: 10),
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 10),
                                 ),
                               )),
                         ),
                       ],
                     ),
-                    ),
-
+                  ),
                   ListView.builder(
                     shrinkWrap: true,
-                    itemBuilder: (ctx,index){
-                    return CurrentSubscriptionItems(startDate[index], endDate[index], currentPlan[index]);
-                  },itemCount: startDate.length,),
-
-
-              GridView(
-                   shrinkWrap:true,
-                   physics: new NeverScrollableScrollPhysics(),
-                   primary: false,
-                   padding: const EdgeInsets.all(10),
-                   children: imgList
-                      .map((imgData) =>
-                       PackageAndServiceItems()
-                   )
-                       .toList(),
-                   gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                       maxCrossAxisExtent: 200,
-                       mainAxisSpacing: 20,
-                       crossAxisSpacing: 20,
-                     childAspectRatio: (1 / .6),
-                 )
-              ),
-
+                    itemBuilder: (ctx, index) {
+                      return CurrentSubscriptionItems(
+                          startDate[index], endDate[index], currentPlan[index]);
+                    },
+                    itemCount: startDate.length,
+                  ),
+                  GridView(
+                      shrinkWrap: true,
+                      physics: new NeverScrollableScrollPhysics(),
+                      primary: false,
+                      padding: const EdgeInsets.all(10),
+                      children: imgList
+                          .map((imgData) => PackageAndServiceItems())
+                          .toList(),
+                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 200,
+                        mainAxisSpacing: 20,
+                        crossAxisSpacing: 20,
+                        childAspectRatio: (1 / .6),
+                      )),
                 ],
               ),
             ),

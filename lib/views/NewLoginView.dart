@@ -12,6 +12,9 @@ import 'package:get_storage/get_storage.dart';
 import 'SecondLoginView.dart';
 
 class NewLoginView extends StatefulWidget {
+
+  static const routeName = '/new_login_screen';
+
   @override
   _NewLoginViewState createState() => _NewLoginViewState();
 }
@@ -30,23 +33,15 @@ class _NewLoginViewState extends State<NewLoginView> {
 
   @override
   void initState() {
-
     if (langStorage.read('language') == 'မြန်မာ') {
       var locale = Locale('my', 'MM');
       Get.updateLocale(locale);
 
-      setState(() {
-        selectedLang = 'မြန်မာ';
-      });
     } else if (langStorage.read('language') == 'ENG') {
       var locale = Locale('en', 'US');
       Get.updateLocale(locale);
 
-      setState(() {
-        selectedLang = 'ENG';
-      });
     }
-
     super.initState();
   }
 
@@ -55,6 +50,7 @@ class _NewLoginViewState extends State<NewLoginView> {
 
     super.didChangeDependencies();
   }
+
 
 
   Widget loginView() {
@@ -227,6 +223,8 @@ class _NewLoginViewState extends State<NewLoginView> {
 
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
         appBar: AppBar(
           toolbarHeight: 110,

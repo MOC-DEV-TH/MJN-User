@@ -29,16 +29,13 @@ class _SecondLoginVIewState extends State<SecondLoginVIew> {
 
   @override
   void initState() {
-    if (langStorage.read('language') == 'မြန်မာ') {
-      var locale = Locale('my', 'MM');
-      Get.updateLocale(locale);
+    if(langStorage.read('language')=='မြန်မာ') {
 
       setState(() {
         selectedLang = 'မြန်မာ';
       });
-    } else if (langStorage.read('language') == 'ENG') {
-      var locale = Locale('en', 'US');
-      Get.updateLocale(locale);
+    }
+    else if(langStorage.read('language')=='ENG'){
 
       setState(() {
         selectedLang = 'ENG';
@@ -113,7 +110,9 @@ class _SecondLoginVIewState extends State<SecondLoginVIew> {
                 height: 40,
                 alignment: Alignment.center,
                 child: NeumorphicButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).pushReplacementNamed(TabScreens.routeName);
+                  },
                   child: Text(
                     "Confirm",
                     style: TextStyle(

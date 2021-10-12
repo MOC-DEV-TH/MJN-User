@@ -42,7 +42,12 @@ void main() async {
   );
 }
 
+
+
 class MyApp extends StatelessWidget {
+
+
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -68,6 +73,8 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
+
+
   AnimationController _controller;
   final loginDataStorage = GetStorage();
 
@@ -78,6 +85,8 @@ class _SplashScreenState extends State<SplashScreen>
       duration: Duration(seconds: (5)),
       vsync: this,
     );
+
+
   }
 
   @override
