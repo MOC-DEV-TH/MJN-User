@@ -20,8 +20,8 @@ class _PaymentViewState extends State<PaymentView> {
   var receipt = false;
   int changePageIndex = 0;
 
-  String currentInvoiceIndex ;
-  String currentTransactionIndex ;
+   String currentInvoiceIndex ;
+   String currentTransactionIndex ;
   final loginDataStorage = GetStorage();
 
   final InvoiceListController invoiceListController =

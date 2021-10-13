@@ -13,6 +13,7 @@ import 'package:MJN/models/transactionVO.dart';
 import 'package:MJN/utils/app_constants.dart';
 import 'package:http/http.dart' as http;
 
+
 class MjnAPI {
   static final String securityKey = 'moJoENEt2021sECuriTYkEy';
   static var client = http.Client();
@@ -20,7 +21,7 @@ class MjnAPI {
   static Future<LoginVo> fetchLoginData(
       Map<String, String> params) async {
     var response = await client.post(
-      LOGIN_URL,
+      Uri.parse(LOGIN_URL),
       body: json.encode(params),
       headers: {
         'content-type': 'application/json',
@@ -39,10 +40,11 @@ class MjnAPI {
   static Future<AccountInfoVo> fetchAccountInfoData(
       String token, String uid, String tenantID) async {
     var response = await client.get(
-      GET_ACCOUNT_INFO_URL +
+      Uri.parse(GET_ACCOUNT_INFO_URL +
           UID + uid +
           APP_VERSION + app_version +
-          TENANT_ID + tenantID,
+          TENANT_ID + tenantID)
+      ,
       headers: {
         'content-type': 'application/json',
         'token': token
@@ -61,10 +63,11 @@ class MjnAPI {
   static Future<InvoiceListVo> fetchPaymentInvoiceList(
       String token, String uid, String tenantID) async {
     var response = await client.get(
-      GET_INVOICE_LIST_URL +
+      Uri.parse(GET_INVOICE_LIST_URL +
           UID + uid +
           APP_VERSION + app_version +
-          TENANT_ID + tenantID,
+          TENANT_ID + tenantID)
+      ,
       headers: {
         'content-type': 'application/json',
         'token': token
@@ -83,10 +86,11 @@ class MjnAPI {
   static Future<TransactionListVo> fetchTransactionList(
       String token, String uid, String tenantID) async {
     var response = await client.get(
-      GET_TRANSACTION_LIST_URL +
+      Uri.parse(GET_TRANSACTION_LIST_URL +
           UID + uid +
           APP_VERSION + app_version +
-          TENANT_ID + tenantID,
+          TENANT_ID + tenantID)
+      ,
       headers: {
         'content-type': 'application/json',
         'token': token
@@ -105,10 +109,11 @@ class MjnAPI {
   static Future<TicketListVo> fetchTicketList(
       String token, String uid, String tenantID) async {
     var response = await client.get(
-      GET_TICKET_LIST_URL +
+      Uri.parse( GET_TICKET_LIST_URL +
           UID + uid +
           APP_VERSION + app_version +
-          TENANT_ID + tenantID,
+          TENANT_ID + tenantID)
+     ,
       headers: {
         'content-type': 'application/json',
         'token': token
@@ -126,10 +131,10 @@ class MjnAPI {
   static Future<TicketVo> fetchTicketByTicketID(
       String token, String uid, String ticketID) async {
     var response = await client.get(
-      GET_TICKET_URL +
+      Uri.parse(GET_TICKET_URL +
           UID + uid +
           APP_VERSION + app_version +
-          TICKET_ID + ticketID,
+          TICKET_ID + ticketID),
       headers: {
         'content-type': 'application/json',
         'token': token
@@ -150,7 +155,7 @@ class MjnAPI {
     var bodyValue = requestCreateTicket.toJson();
     var bodyData = json.encode(bodyValue);
     var response = await client.post(
-      CREATE_TICKET_URL ,
+      Uri.parse(CREATE_TICKET_URL) ,
       body: bodyData,
       headers: {
         'content-type': 'application/json',
@@ -170,7 +175,7 @@ class MjnAPI {
       Map<String, String> params) async {
 
     var response = await client.post(
-      SIGN_UP_URL ,
+      Uri.parse(SIGN_UP_URL) ,
       body: json.encode(params),
       headers: {
         'content-type': 'application/json',
@@ -189,7 +194,7 @@ class MjnAPI {
       Map<String, String> params,String token) async {
 
     var response = await client.put(
-      CHANGE_PASSWORD_URL ,
+      Uri.parse(CHANGE_PASSWORD_URL) ,
       body: json.encode(params),
       headers: {
         'content-type': 'application/json',
@@ -209,7 +214,7 @@ class MjnAPI {
       Map<String, String> params,String token) async {
 
     var response = await client.put(
-      UPDATE_ACCOUNT_URL ,
+      Uri.parse(UPDATE_ACCOUNT_URL),
       body: json.encode(params),
       headers: {
         'content-type': 'application/json',
@@ -230,10 +235,11 @@ class MjnAPI {
       String token, String uid, String invoiceID) async {
 
     var response = await client.get(
-      GET_INVOICE_URL +
+      Uri.parse(GET_INVOICE_URL +
           UID + uid +
           APP_VERSION + app_version +
-          INVOICE_ID + invoiceID,
+          INVOICE_ID + invoiceID)
+      ,
 
       headers: {
         'content-type': 'application/json',
@@ -253,11 +259,11 @@ class MjnAPI {
       String token, String uid, String transactionID) async {
 
     var response = await client.get(
-      GET_TRANSACTION_URL +
+
+      Uri.parse( GET_TRANSACTION_URL +
           UID + uid +
           APP_VERSION + app_version +
-          TRANSACTION_ID + transactionID,
-
+          TRANSACTION_ID + transactionID),
       headers: {
         'content-type': 'application/json',
         'token': token

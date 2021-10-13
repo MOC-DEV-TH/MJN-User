@@ -23,12 +23,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  splashscreen: ^1.2.0
+  splashscreen:
   shared_preferences: ^2.0.6
-  flutter_neumorphic: ^3.1.0
   get: 4.3.8
   get_storage: ^2.0.3
-  http: ^0.12.2
+  http: ^0.13.4
+  floor: ^1.2.0
+  flutter_neumorphic:
+    git:
+      url: "https://github.com/alionour/Flutter-Neumorphic"
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -39,6 +42,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  floor_generator: ^1.2.0
+  build_runner:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

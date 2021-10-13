@@ -1,4 +1,5 @@
 import 'package:MJN/LocalString/LocalString.dart';
+import 'package:MJN/presistence/db/MJNDatabase.dart';
 import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/views/AccountDetailView.dart';
 import 'package:MJN/views/ChangePasswordView.dart';
@@ -36,18 +37,29 @@ void main() async {
         ChangePasswordView.routeName: (ctx) => ChangePasswordView(),
         CreateServiceTicketView.routeName: (ctx) => CreateServiceTicketView(),
         SecondLoginVIew.routeName: (ctx) => SecondLoginVIew(),
+        NewLoginView.routeName: (ctx) => NewLoginView(),
       },
-      home: SplashScreen(),
+      home: FutureBuilder(
+        future: $FloorMJNDatabase.databaseBuilder('notification.db').build(),
+        // ignore: missing_return
+        builder: (context,data){
+          if(data.hasData){
+            print('Database Init Success');
+           return SplashScreen();
+          }
+          else if(data.hasError){
+            return Text('Error');
+          }
+          else {
+            return Text('');
+          }
+        },
+      ),
     ),
   );
 }
 
-
-
 class MyApp extends StatelessWidget {
-
-
-
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -107,7 +119,7 @@ class _SplashScreenState extends State<SplashScreen>
                   MaterialPageRoute(
                       builder: (context) => loginDataStorage.read(TOKEN) != null
                           ? TabScreens()
-                          : LoginView()),
+                          : NewLoginView()),
                 ));
         },
       ),
