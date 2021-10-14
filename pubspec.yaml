@@ -24,7 +24,6 @@ dependencies:
   flutter:
     sdk: flutter
   splashscreen:
-  shared_preferences: ^2.0.6
   get: 4.3.8
   get_storage: ^2.0.3
   http: ^0.13.4
