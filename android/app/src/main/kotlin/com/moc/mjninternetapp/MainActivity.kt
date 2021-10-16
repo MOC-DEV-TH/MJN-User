@@ -1,4 +1,4 @@
-package com.example.mjn_client
+package com.moc.mjninternetapp
 
 import io.flutter.embedding.android.FlutterActivity
 
