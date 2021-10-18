@@ -1,28 +1,80 @@
 import 'package:MJN/LocalString/LocalString.dart';
+import 'package:MJN/models/notificationModelVO.dart';
+import 'package:MJN/presistence/dao/NotificationDao.dart';
 import 'package:MJN/presistence/db/MJNDatabase.dart';
 import 'package:MJN/utils/app_constants.dart';
-import 'package:MJN/views/AccountDetailView.dart';
 import 'package:MJN/views/ChangePasswordView.dart';
-import 'package:MJN/views/ContactUsView.dart';
 import 'package:MJN/views/CreateServiceTicketView.dart';
-import 'package:MJN/views/HomeView.dart';
 import 'package:MJN/views/LoginView.dart';
 import 'package:MJN/views/NewLoginView.dart';
-import 'package:MJN/views/NotificationView.dart';
-import 'package:MJN/views/PaymentView.dart';
 import 'package:MJN/views/SecondLoginView.dart';
-import 'package:MJN/views/ServiceComplainView.dart';
-import 'package:MJN/views/SignUpView.dart';
 import 'package:MJN/views/tabView.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:lottie/lottie.dart';
 import 'package:get/get.dart';
 
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  print('Handling a background message ${message.messageId}');
+
+  NotificationModelVO notiModel = NotificationModelVO.fromJson(message.data);
+
+  if(notiModel != null){
+    final database = await $FloorMJNDatabase.databaseBuilder('notification.db').build();
+    final notificationDao=database.notificationDao;
+    await notificationDao.insertNotification(notiModel);
+  }
+
+}
+
+const AndroidNotificationChannel channel = const AndroidNotificationChannel(
+  'high_importance_channel', // id
+  'High Importance Notifications', // title
+  'This channel is used for important notifications.', // description
+  importance: Importance.high,
+);
+
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
+
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
-  runApp(
-    new GetMaterialApp(
+  await Firebase.initializeApp();
+
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+  await flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()
+      ?.createNotificationChannel(channel);
+
+  runApp(MyApp());
+}
+
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
+
+  @override
+  void initState() {
+    FirebaseMessaging.instance.subscribeToTopic('mjn');
+
+    getToken();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GetMaterialApp(
       translations: LocalString(),
       locale: Locale('en', 'US'),
       theme: ThemeData(
@@ -39,45 +91,28 @@ void main() async {
         SecondLoginVIew.routeName: (ctx) => SecondLoginVIew(),
         NewLoginView.routeName: (ctx) => NewLoginView(),
       },
-      home: FutureBuilder(
+      home: FutureBuilder<MJNDatabase>(
         future: $FloorMJNDatabase.databaseBuilder('notification.db').build(),
         // ignore: missing_return
-        builder: (context,data){
-          if(data.hasData){
+        builder: (context, data) {
+          if (data.hasData) {
             print('Database Init Success');
-           return SplashScreen();
-          }
-          else if(data.hasError){
+            return SplashScreen(data.data.notificationDao);
+          } else if (data.hasError) {
             return Text('Error');
-          }
-          else {
+          } else {
             return Text('');
           }
         },
       ),
-    ),
-  );
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return GetMaterialApp(
-      translations: LocalString(),
-      locale: Locale('en', 'US'),
-      title: 'Splash Screen with Lottie Animation',
-      theme: ThemeData(
-        primarySwatch: Colors.orange,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      debugShowCheckedModeBanner: false,
-      home: LoginView(),
     );
   }
 }
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key key}) : super(key: key);
+  final NotificationDao notificationDao;
+
+  SplashScreen(this.notificationDao);
 
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -85,20 +120,41 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
-
-
   AnimationController _controller;
   final loginDataStorage = GetStorage();
 
   @override
   void initState() {
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      NotificationModelVO notificationModelVO =
+      NotificationModelVO.fromJson(message.data);
+      if (notificationModelVO != null) {
+
+        widget.notificationDao.insertNotification(notificationModelVO);
+
+        flutterLocalNotificationsPlugin.show(
+            notificationModelVO.hashCode,
+            notificationModelVO.title,
+            notificationModelVO.body,
+            NotificationDetails(
+              android: AndroidNotificationDetails(
+                channel.id,
+                channel.name,
+                channel.description,
+                //      one that already exists in example app.
+                icon: 'launch_background',
+              ),
+            ));
+      }
+    });
+
+
     super.initState();
     _controller = AnimationController(
       duration: Duration(seconds: (5)),
       vsync: this,
     );
-
-
   }
 
   @override
@@ -112,17 +168,22 @@ class _SplashScreenState extends State<SplashScreen>
         onLoaded: (composition) {
           _controller
             ..duration = composition.duration
-            ..forward().whenComplete(() =>
-
-                Navigator.pushReplacement(
+            ..forward().whenComplete(() => Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                       builder: (context) => loginDataStorage.read(TOKEN) != null
                           ? TabScreens()
-                          : NewLoginView()),
+                          : LoginView()),
                 ));
         },
       ),
     );
   }
 }
+
+getToken() async {
+  String token = await FirebaseMessaging.instance.getToken();
+  print(token);
+}
+
+

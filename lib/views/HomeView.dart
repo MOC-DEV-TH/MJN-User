@@ -1,5 +1,6 @@
 import 'package:MJN/Widgets/current_subscription_items.dart';
 import 'package:MJN/Widgets/package_and_service_items.dart';
+import 'package:MJN/Widgets/promotion_items.dart';
 import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/views/AccountDetailView.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +31,13 @@ class _HomeViewState extends State<HomeView> {
   final List<int> startDate = <int>[
     2,
     0,
+  ];
+
+  final List<String> promotionNews = <String>[
+    'Aby',
+    'Aish',
+    'Aby',
+    'Aish',
   ];
 
   final List<int> imgList = <int>[2, 0, 10, 6, 6, 6];
@@ -64,17 +72,11 @@ class _HomeViewState extends State<HomeView> {
                     width: double.infinity,
                     alignment: Alignment.center,
                     height: 150,
-                    child: Text(
-                      'Promotion News',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24,
-                          color: Colors.white),
-                    ),
+                    child: PromotionItems(promotionNews)
                   ),
                   Container(
+                    height: 34,
                     width: MediaQuery.of(context).size.width,
-                    height: 40,
                     alignment: Alignment.centerLeft,
                     margin: EdgeInsets.only(top: 10, left: 10),
                     child: NeumorphicButton(
@@ -87,13 +89,13 @@ class _HomeViewState extends State<HomeView> {
                         "My Account",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 15,
+                            fontSize: 14,
                             color: Colors.white),
                       ),
                       style: NeumorphicStyle(
                         shape: NeumorphicShape.flat,
                         boxShape: NeumorphicBoxShape.roundRect(
-                            BorderRadius.circular(14)),
+                            BorderRadius.circular(12)),
                         color: Colors.amber,
                         depth: 8,
 //                lightSource: LightSource.topLeft,
@@ -177,7 +179,7 @@ class _HomeViewState extends State<HomeView> {
                           'currentSubscription'.tr,
                           style: TextStyle(
                             color: Colors.black,
-                            fontSize: 12,
+                            fontSize: 10,
                           ),
                           textAlign: TextAlign.center,
                         ),
@@ -274,6 +276,34 @@ class _HomeViewState extends State<HomeView> {
                     },
                     itemCount: startDate.length,
                   ),
+
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    alignment: Alignment.centerLeft,
+                    height: 33,
+                    margin: EdgeInsets.only(top: 10, left: 10),
+                    child: NeumorphicButton(
+                      onPressed: () {
+                      },
+                      child: Text(
+                        "Package Plan & Other Service",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                      style: NeumorphicStyle(
+                        shape: NeumorphicShape.flat,
+                        boxShape: NeumorphicBoxShape.roundRect(
+                            BorderRadius.circular(12)),
+                        color: Colors.amber,
+                        depth: 8,
+//                lightSource: LightSource.topLeft,
+                      ),
+                    ),
+                  ),
+
                   GridView(
                       shrinkWrap: true,
                       physics: new NeverScrollableScrollPhysics(),

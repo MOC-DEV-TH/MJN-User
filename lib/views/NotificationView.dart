@@ -1,9 +1,15 @@
+import 'package:MJN/Widgets/notification_items.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 class NotificationView extends StatelessWidget {
   static const routeName = '/notification_screen';
-
+  final List<String> notificationLists = <String>[
+    '',
+    '',
+    '',
+    '',
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,6 +45,19 @@ class NotificationView extends StatelessWidget {
                 ),
               ),
             ),
+
+            SizedBox(
+              height: 20,
+            ),
+
+            ListView.builder(
+              shrinkWrap: true,
+              itemBuilder: (ctx, index) {
+                return NotificationItems(notificationLists[index]);
+              },
+              itemCount: notificationLists.length,
+            ),
+
           ],
         ),
       ),

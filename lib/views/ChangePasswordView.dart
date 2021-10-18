@@ -90,7 +90,7 @@ class ChangePasswordView extends StatelessWidget {
               height: 35,
             ),
             Padding(
-                padding: EdgeInsets.only(left: 130, right: 130),
+                padding: EdgeInsets.only(left: 120, right: 120),
                 child: Obx(() {
                   if (changePasswordController.isLoading.value) {
                     return Center(child: CircularProgressIndicator());
@@ -109,8 +109,7 @@ class ChangePasswordView extends StatelessWidget {
                             map, loginDataStorage.read(TOKEN));
                       },
                       child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 8, bottom: 8),
+
                           child: Text(
                             "Confirm",
                             style: TextStyle(
@@ -118,7 +117,7 @@ class ChangePasswordView extends StatelessWidget {
                                 fontSize: 16,
                                 color: Colors.white),
                           ),
-                        ),
+
                       ),
                       style: NeumorphicStyle(
                         shape: NeumorphicShape.flat,

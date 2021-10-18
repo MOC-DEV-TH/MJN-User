@@ -60,7 +60,7 @@ class _NewLoginViewState extends State<NewLoginView> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           SizedBox(
-            height: 80,
+            height: 40,
           ),
           FlutterLogo(
             size: 100,

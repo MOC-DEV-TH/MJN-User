@@ -103,4 +103,17 @@ class _$NotificationDao extends NotificationDao {
   final sqflite.DatabaseExecutor database;
 
   final StreamController<String> changeListener;
+
+  @override
+  Future<List<NotificationModelVO>> getAllNotifications() {
+    // TODO: implement getAllNotifications
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> insertNotification(NotificationModelVO notificationModelVO) {
+    // TODO: implement insertNotification
+    throw UnimplementedError();
+  }
+
 }

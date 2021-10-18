@@ -28,12 +28,16 @@ class MainDrawer extends StatelessWidget {
               padding: EdgeInsets.all(15),
               color: Color(0xFFEEEEEE),
               alignment: Alignment.centerLeft,
-              child: Text(
-                'Main Drawer',
-                style: TextStyle(
-                    color: Colors.green,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 12,top: 25),
+                child: Text(
+                  'Welcome To Mojoenet',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Colors.blueAccent,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold),
+                ),
               ),
             ),
             SizedBox(
