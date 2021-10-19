@@ -1,9 +1,10 @@
+import 'package:MJN/models/notificationModelVO.dart';
 import 'package:flutter/material.dart';
 
 class NotificationItems extends StatelessWidget {
 
- String notilists;
- NotificationItems(this.notilists);
+ String notiText;
+ NotificationItems(this.notiText);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class NotificationItems extends StatelessWidget {
            ), child : Padding(
              padding: const EdgeInsets.all(18.0),
              child: Text(
-               'Showroom Off Days Announcement',
+               notiText ?? null,
                textAlign: TextAlign.center,
                style: TextStyle(
                 fontSize: 16,

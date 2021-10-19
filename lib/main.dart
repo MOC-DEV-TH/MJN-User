@@ -1,7 +1,9 @@
+import 'dart:convert';
+
 import 'package:MJN/LocalString/LocalString.dart';
 import 'package:MJN/models/notificationModelVO.dart';
 import 'package:MJN/presistence/dao/NotificationDao.dart';
-import 'package:MJN/presistence/db/MJNDatabase.dart';
+import 'package:MJN/presistence/db/database_util.dart';
 import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/views/ChangePasswordView.dart';
 import 'package:MJN/views/CreateServiceTicketView.dart';
@@ -23,12 +25,13 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
   NotificationModelVO notiModel = NotificationModelVO.fromJson(message.data);
 
-  if(notiModel != null){
-    final database = await $FloorMJNDatabase.databaseBuilder('notification.db').build();
-    final notificationDao=database.notificationDao;
-    await notificationDao.insertNotification(notiModel);
-  }
+  NotificationModelVO notificationModelVO = NotificationModelVO.fromJson(message.data);
 
+  if (notiModel != null) {
+    DatabaseUtil().InitDatabase().then((value) {
+      DatabaseUtil().insertNotification(notificationModelVO);
+    });
+  }
 }
 
 const AndroidNotificationChannel channel = const AndroidNotificationChannel(
@@ -41,10 +44,32 @@ const AndroidNotificationChannel channel = const AndroidNotificationChannel(
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
+
+void onReceivedFirebaseMsg(RemoteMessage message) {
+  if (message.notification != null) {
+    print('Message also contained a notification: ${message.notification}');
+    print('notification.body' + message.notification.body + ', notification.body' + message.notification.title);
+  }
+
+  if (message.data != null) {
+    print('Message also contained a data: ' + jsonEncode(message.data));
+  }
+
+  NotificationModelVO notiModel = NotificationModelVO.fromJson(message.data);
+
+  if (notiModel != null) {
+
+    DatabaseUtil().insertNotification(notiModel);
+  }
+}
+
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
   await Firebase.initializeApp();
+
+  DatabaseUtil().InitDatabase();
 
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
@@ -91,28 +116,27 @@ class _MyAppState extends State<MyApp> {
         SecondLoginVIew.routeName: (ctx) => SecondLoginVIew(),
         NewLoginView.routeName: (ctx) => NewLoginView(),
       },
-      home: FutureBuilder<MJNDatabase>(
-        future: $FloorMJNDatabase.databaseBuilder('notification.db').build(),
-        // ignore: missing_return
-        builder: (context, data) {
-          if (data.hasData) {
-            print('Database Init Success');
-            return SplashScreen(data.data.notificationDao);
-          } else if (data.hasError) {
-            return Text('Error');
-          } else {
-            return Text('');
-          }
-        },
-      ),
+      // home: FutureBuilder<MJNDatabase>(
+      //   future: $FloorMJNDatabase.databaseBuilder('notification.db').build(),
+      //   // ignore: missing_return
+      //   builder: (context, data) {
+      //     if (data.hasData) {
+      //       print('Database Init Success');
+      //       return SplashScreen(data.data.notificationDao);
+      //     } else if (data.hasError) {
+      //       return Text('Error');
+      //     } else {
+      //       return Text('');
+      //     }
+      //   },
+      // ),
+      home: SplashScreen()
     );
   }
 }
 
 class SplashScreen extends StatefulWidget {
-  final NotificationDao notificationDao;
-
-  SplashScreen(this.notificationDao);
+  const SplashScreen({Key key}) : super(key: key);
 
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -127,12 +151,12 @@ class _SplashScreenState extends State<SplashScreen>
   void initState() {
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+
+      onReceivedFirebaseMsg(message);
+
       NotificationModelVO notificationModelVO =
       NotificationModelVO.fromJson(message.data);
       if (notificationModelVO != null) {
-
-        widget.notificationDao.insertNotification(notificationModelVO);
-
         flutterLocalNotificationsPlugin.show(
             notificationModelVO.hashCode,
             notificationModelVO.title,

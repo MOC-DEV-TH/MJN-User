@@ -15,9 +15,9 @@ class NotificationModelVO {
   NotificationModelVO(this.id, this.title, this.body, this.message, this.type_name, this.action_url, this.created);
 
   NotificationModelVO.fromJson(Map<String, dynamic> json)
-      : title = json['title'],
+      : id = json['id'],
+        title = json['title'],
         body = json['body'],
-        id = json['id'],
         message = json['message'],
         type_name = json['type_name'],
         action_url = json['action_url'],

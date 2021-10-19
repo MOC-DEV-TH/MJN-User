@@ -1,7 +1,6 @@
 import 'package:MJN/Widgets/login_main_drawer.dart';
 import 'package:MJN/controllers/loginController.dart';
 import 'package:MJN/models/notificationModelVO.dart';
-import 'package:MJN/presistence/db/MJNDatabase.dart';
 import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/views/SecondLoginView.dart';
 import 'package:MJN/views/SignUpView.dart';
@@ -28,7 +27,6 @@ class _LoginViewState extends State<LoginView> {
   final langStorage = GetStorage();
 
   int _selectedPageIndex = 0;
-  MJNDatabase database;
 
   @override
   void initState() {
@@ -192,7 +190,6 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    getUserList();
     return Scaffold(
         appBar: AppBar(
           toolbarHeight: 110,
@@ -246,11 +243,4 @@ class _LoginViewState extends State<LoginView> {
         backgroundColor: Colors.grey.shade100,
         body: loginView());
   }
-}
-
-void getUserList() async{
-  final database = await $FloorMJNDatabase.databaseBuilder('notification.db').build();
-  final notificationDao=database.notificationDao;
-  final result = await notificationDao.getAllNotifications();
-
 }
