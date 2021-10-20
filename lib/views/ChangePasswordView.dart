@@ -27,123 +27,128 @@ class ChangePasswordView extends StatelessWidget {
             .primaryColorDark,
       ),
       backgroundColor: Colors.grey.shade100,
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            SizedBox(
-              height: 80,
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 20, right: 20),
-              height: 40,
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.blueAccent),
+      body: GestureDetector(
+        onTap: (){
+          FocusManager.instance.primaryFocus?.unfocus();
+        },
+        child: SingleChildScrollView(
+          padding: EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SizedBox(
+                height: 80,
               ),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 5),
-                child: TextField(
-                    controller: currentPasswordText,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: "Current Password",
-                    )),
+              Container(
+                margin: EdgeInsets.only(left: 20, right: 20),
+                height: 40,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.blueAccent),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 5),
+                  child: TextField(
+                      controller: currentPasswordText,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Current Password",
+                      )),
+                ),
               ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 20, right: 20),
-              height: 40,
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.blueAccent),
+              SizedBox(
+                height: 20,
               ),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 5),
-                child: TextField(
-                    controller: newPasswordText,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: "New Password",
-                    )),
+              Container(
+                margin: EdgeInsets.only(left: 20, right: 20),
+                height: 40,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.blueAccent),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 5),
+                  child: TextField(
+                      controller: newPasswordText,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "New Password",
+                      )),
+                ),
               ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 20, right: 20),
-              height: 40,
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.blueAccent),
+              SizedBox(
+                height: 20,
               ),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 5),
-                child: TextField(
-                    controller: rewriteNewPasswordText,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: "Rewrite New Password",
-                    )),
+              Container(
+                margin: EdgeInsets.only(left: 20, right: 20),
+                height: 40,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.blueAccent),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 5),
+                  child: TextField(
+                      controller: rewriteNewPasswordText,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Rewrite New Password",
+                      )),
+                ),
               ),
-            ),
-            SizedBox(
-              height: 35,
-            ),
-            Padding(
-                padding: EdgeInsets.only(left: 120, right: 120),
-                child: Obx(() {
-                  if (changePasswordController.isLoading.value) {
-                    return Center(child: CircularProgressIndicator());
-                  } else {
-                    return NeumorphicButton(
-                      onPressed: () {
-                        if (currentPasswordText.text == '' ||
-                            newPasswordText.text == '' ||
-                            rewriteNewPasswordText.text == '') {
+              SizedBox(
+                height: 35,
+              ),
+              Padding(
+                  padding: EdgeInsets.only(left: 120, right: 120),
+                  child: Obx(() {
+                    if (changePasswordController.isLoading.value) {
+                      return Center(child: CircularProgressIndicator());
+                    } else {
+                      return NeumorphicButton(
+                        onPressed: () {
+                          if (currentPasswordText.text == '' ||
+                              newPasswordText.text == '' ||
+                              rewriteNewPasswordText.text == '') {
 
-                          AppUtils.showSnackBar("Error!!", 'Data must not empty!!');
-                        }
-                        else {
-                          Map<String, String> map = {
-                            'current_password': currentPasswordText.value.text,
-                            'new_password': newPasswordText.value.text,
-                            'confirm_password': rewriteNewPasswordText.value
-                                .text,
-                            'app_version': app_version,
-                            'user_name': loginDataStorage.read(USER_NAME),
-                          };
+                            AppUtils.showErrorSnackBar("Error!!", 'Data must not empty!!');
+                          }
+                          else {
+                            Map<String, String> map = {
+                              'current_password': currentPasswordText.value.text,
+                              'new_password': newPasswordText.value.text,
+                              'confirm_password': rewriteNewPasswordText.value
+                                  .text,
+                              'app_version': app_version,
+                              'user_name': loginDataStorage.read(USER_NAME),
+                            };
 
-                          changePasswordController.changePassword(
-                              map, loginDataStorage.read(TOKEN));
-                        }
+                            changePasswordController.changePassword(
+                                map, loginDataStorage.read(TOKEN));
+                          }
 
-                      },
-                      child: Center(
+                        },
+                        child: Center(
 
-                        child: Text(
-                          "Confirm",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                              color: Colors.white),
+                          child: Text(
+                            "Confirm",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                color: Colors.white),
+                          ),
+
                         ),
-
-                      ),
-                      style: NeumorphicStyle(
-                        shape: NeumorphicShape.flat,
-                        boxShape: NeumorphicBoxShape.roundRect(
-                            BorderRadius.circular(18)),
-                        color: Colors.amber,
-                        depth: 8,
+                        style: NeumorphicStyle(
+                          shape: NeumorphicShape.flat,
+                          boxShape: NeumorphicBoxShape.roundRect(
+                              BorderRadius.circular(18)),
+                          color: Colors.amber,
+                          depth: 8,
 //                lightSource: LightSource.topLeft,
-                      ),
-                    );
-                  }
-                }))
-          ],
+                        ),
+                      );
+                    }
+                  }))
+            ],
+          ),
         ),
       ),
     );

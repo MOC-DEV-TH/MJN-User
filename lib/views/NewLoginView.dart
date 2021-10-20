@@ -175,7 +175,7 @@ class _NewLoginViewState extends State<NewLoginView> {
                     onPressed: () {
 
                       if(buildingText.text == '' || unitText.text == ''){
-                        AppUtils.showSnackBar('Error!!', 'Data must not empty!!');
+                        AppUtils.showErrorSnackBar('Error!!', 'Data must not empty!!');
                       }
                       else{
                         Future.delayed(Duration.zero, () async {
@@ -231,7 +231,6 @@ class _NewLoginViewState extends State<NewLoginView> {
   @override
   Widget build(BuildContext context) {
 
-
     return Scaffold(
         appBar: AppBar(
           toolbarHeight: 110,
@@ -283,6 +282,10 @@ class _NewLoginViewState extends State<NewLoginView> {
         drawer: Container(child: LoginMainDrawer()),
         key: _scaffoldKey,
         backgroundColor: Colors.grey.shade100,
-        body: loginView());
+        body: GestureDetector(
+          onTap: (){
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
+            child: loginView()));
   }
 }

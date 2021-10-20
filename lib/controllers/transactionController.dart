@@ -5,11 +5,11 @@ import 'package:get/state_manager.dart';
 class TransactionController extends GetxController{
 
   TransactionVo transactionVo;
-  var isLoading = false.obs;
+  var isLoading = true.obs;
 
   void fetchTransactionDataByID(String token,String uid,String transactionID) async {
     try {
-      isLoading(false);
+      isLoading(true);
 
       var res = await MjnAPI.fetchTransactionData(token,uid,transactionID);
 

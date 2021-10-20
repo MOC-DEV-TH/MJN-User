@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 class AppUtils{
 
-static void showSnackBar(String title,String message){
+static void showErrorSnackBar(String title,String message){
     Get.snackbar(
       title,
       message,
@@ -12,4 +12,15 @@ static void showSnackBar(String title,String message){
       snackPosition: SnackPosition.BOTTOM,
     );
   }
+
+static void showSuccessSnackBar(String title,String message){
+  Get.snackbar(
+    title,
+    message,
+    icon: Icon(Icons.done, color: Colors.black),
+    backgroundColor: Colors.green,
+    snackPosition: SnackPosition.BOTTOM,
+  );
 }
+}
+

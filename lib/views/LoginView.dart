@@ -136,14 +136,14 @@ class _LoginViewState extends State<LoginView> {
                     onPressed: () {
 
                       if(emailText.text == '' && passwordText.text == ''){
-                        AppUtils.showSnackBar('Error!!', 'Email and Password must not empty!!');
+                        AppUtils.showErrorSnackBar('Error!!', 'Email and Password must not empty!!');
                       }
 
                      else if(emailText.text == ''){
-                        AppUtils.showSnackBar('Error!!', 'Email must not empty!!');
+                        AppUtils.showErrorSnackBar('Error!!', 'Email must not empty!!');
                       }
                       else if(passwordText.text == ''){
-                        AppUtils.showSnackBar('Error!!', 'Password must not empty!!');
+                        AppUtils.showErrorSnackBar('Error!!', 'Password must not empty!!');
                       }
 
                       else {

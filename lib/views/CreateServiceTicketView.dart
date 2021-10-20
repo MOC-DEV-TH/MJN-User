@@ -25,7 +25,7 @@ class _CreateServiceTicketViewState extends State<CreateServiceTicketView> {
   var messageText = TextEditingController();
 
   var selectServiceRequestIndex;
-  var selectIssueIndex;
+  var selectIssueIndex ;
 
   final CreateTicketController createTicketController =
       Get.put(CreateTicketController());
@@ -362,61 +362,77 @@ class _CreateServiceTicketViewState extends State<CreateServiceTicketView> {
                           ),
                           Container(
                             width: 200,
-                            child: NeumorphicButton(
-                              onPressed: () {
-                                if (buildingText.text == '' ||
-                                    unitText.text == '' ||
-                                    emailText.text == '' ||
-                                    phoneNoText.text == '' ||
-                                    nameText.text == '' ||
-                                    messageText.text == '') {
-                                  AppUtils.showSnackBar(
-                                      'Error!!', 'Data must not empty!!');
-                                }
+                            child:
 
-                                else {
-                                  RequestCreateTicket requestCreateTicket =
-                                  new RequestCreateTicket(
-                                      nameText.value.text,
-                                      buildingText.value.text,
-                                      unitText.value.text,
-                                      emailText.value.text,
-                                      phoneNoText.value.text,
-                                      selectServiceRequestIndex.toString(),
-                                      selectIssueIndex.toString(),
-                                      "Topic Other",
-                                      messageText.value.text,
-                                      loginDataStorage.read(DATA_TENANT_ID),
-                                      loginDataStorage.read(UID),
-                                      app_version);
+                               Obx((){
+                                 if (createTicketController.isLoading.value) {
+                                   return Center(
+                                     child: CircularProgressIndicator(),
+                                   );
+                                 }
+                                 else {
+                                   return
+                                     NeumorphicButton(
+                                       onPressed: () {
+                                         if (buildingText.text == '' ||
+                                             unitText.text == '' ||
+                                             emailText.text == '' ||
+                                             phoneNoText.text == '' ||
+                                             nameText.text == '' ||
+                                             messageText.text == '' ||
+                                             selectServiceRequestIndex == null ||
+                                             selectIssueIndex == null
+                                         ) {
+                                           AppUtils.showErrorSnackBar(
+                                               'Error!!', 'Data must not empty!!');
+                                         }
 
-                                  createTicketController.createTicket(
-                                      requestCreateTicket,
-                                      loginDataStorage.read(TOKEN));
-                                }
-                              },
-                              child: Center(
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.only(top: 8, bottom: 8),
-                                  child: Text(
-                                    "Submit",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16,
-                                        color: Colors.white),
-                                  ),
-                                ),
-                              ),
-                              style: NeumorphicStyle(
-                                shape: NeumorphicShape.flat,
-                                boxShape: NeumorphicBoxShape.roundRect(
-                                    BorderRadius.circular(18)),
-                                color: Colors.amber,
-                                depth: 0,
+                                         else {
+                                           RequestCreateTicket requestCreateTicket =
+                                           new RequestCreateTicket(
+                                               nameText.value.text,
+                                               buildingText.value.text,
+                                               unitText.value.text,
+                                               emailText.value.text,
+                                               phoneNoText.value.text,
+                                               selectServiceRequestIndex.toString(),
+                                               selectIssueIndex.toString(),
+                                               "Topic Other",
+                                               messageText.value.text,
+                                               loginDataStorage.read(DATA_TENANT_ID),
+                                               loginDataStorage.read(UID),
+                                               app_version);
+
+                                           createTicketController.createTicket(
+                                               requestCreateTicket,
+                                               loginDataStorage.read(TOKEN));
+
+                                         }
+                                       },
+                                       child: Center(
+                                         child: Padding(
+                                           padding:
+                                           const EdgeInsets.only(top: 8, bottom: 8),
+                                           child: Text(
+                                             "Submit",
+                                             style: TextStyle(
+                                                 fontWeight: FontWeight.bold,
+                                                 fontSize: 16,
+                                                 color: Colors.white),
+                                           ),
+                                         ),
+                                       ),
+                                       style: NeumorphicStyle(
+                                         shape: NeumorphicShape.flat,
+                                         boxShape: NeumorphicBoxShape.roundRect(
+                                             BorderRadius.circular(18)),
+                                         color: Colors.amber,
+                                         depth: 0,
 //                lightSource: LightSource.topLeft,
-                              ),
-                            ),
+                                       ),
+                                     );
+                                 }
+                               })
                           ),
                         ],
                       ),

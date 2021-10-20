@@ -25,71 +25,98 @@ class SignUpView extends StatelessWidget {
       ),
       key: _scaffoldKey,
       backgroundColor: Colors.grey.shade100,
-      body: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: SingleChildScrollView(
-            child: Container(
-              child: Column(
-                children: [
+      body: GestureDetector(
+        onTap: (){
+          FocusManager.instance.primaryFocus?.unfocus();
+        },
+        child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: SingleChildScrollView(
+              child: Container(
+                child: Column(
+                  children: [
 
-                  SizedBox(
-                    height: 50,
-                  ),
+                    SizedBox(
+                      height: 50,
+                    ),
 
-                  Text(
-                    'Please fill up required information',
-                    style: TextStyle(fontSize: 18),
-                  ),
+                    Text(
+                      'Please fill up required information',
+                      style: TextStyle(fontSize: 18),
+                    ),
 
-                  Row(
-                    children: [
-                      Container(
-                        width: 150,
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                    Row(
+                      children: [
+                        Container(
+                          width: 150,
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: 45,
+                                ),
+                                Text(
+                                  'Building',
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                                SizedBox(
+                                  height: 45,
+                                ),
+                                Text(
+                                  'Unit',
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                                SizedBox(
+                                  height: 40,
+                                ),
+                                Text(
+                                  'Contact Number',
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                              ]),
+                        ),
+                        Expanded(
+                          child: Column(
                             children: [
                               SizedBox(
+                                height: 50,
+                              ),
+                              Container(
                                 height: 45,
-                              ),
-                              Text(
-                                'Building',
-                                style: TextStyle(fontSize: 16),
-                              ),
+                                decoration:
+                                BoxDecoration(
+                                  border: Border.all(color: Colors.white,width: 7),
+                                ),
+                                  child: Container(
+                                    color: Colors.white12,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(bottom: 4),
+                                      child: TextField(
+                                        textAlign: TextAlign.center,
+                                        controller: buildingText,
+                                        decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               SizedBox(
+                                height: 10,
+                              ),
+                              Container(
                                 height: 45,
-                              ),
-                              Text(
-                                'Unit',
-                                style: TextStyle(fontSize: 16),
-                              ),
-                              SizedBox(
-                                height: 40,
-                              ),
-                              Text(
-                                'Contact Number',
-                                style: TextStyle(fontSize: 16),
-                              ),
-                            ]),
-                      ),
-                      Expanded(
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 50,
-                            ),
-                            Container(
-                              height: 45,
-                              decoration:
-                              BoxDecoration(
-                                border: Border.all(color: Colors.white,width: 7),
-                              ),
+                                decoration:
+                                BoxDecoration(
+                                  border: Border.all(color: Colors.white,width: 7),
+                                ),
                                 child: Container(
                                   color: Colors.white12,
                                   child: Padding(
                                     padding: const EdgeInsets.only(bottom: 4),
                                     child: TextField(
                                       textAlign: TextAlign.center,
-                                      controller: buildingText,
+                                      controller: unitText,
                                       decoration: InputDecoration(
                                         border: InputBorder.none,
                                       ),
@@ -97,119 +124,97 @@ class SignUpView extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Container(
-                              height: 45,
-                              decoration:
-                              BoxDecoration(
-                                border: Border.all(color: Colors.white,width: 7),
+                              SizedBox(
+                                height: 10,
                               ),
-                              child: Container(
-                                color: Colors.white12,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(bottom: 4),
-                                  child: TextField(
-                                    textAlign: TextAlign.center,
-                                    controller: unitText,
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
+                              Container(
+                                height: 45,
+                                decoration:
+                                BoxDecoration(
+                                  border: Border.all(color: Colors.white,width: 7),
+                                ),
+                                child: Container(
+                                  color: Colors.white12,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(bottom: 4),
+                                    child: TextField(
+                                      textAlign: TextAlign.center,
+                                      controller: contactNumberText,
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Container(
-                              height: 45,
-                              decoration:
-                              BoxDecoration(
-                                border: Border.all(color: Colors.white,width: 7),
-                              ),
-                              child: Container(
-                                color: Colors.white12,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(bottom: 4),
-                                  child: TextField(
-                                    textAlign: TextAlign.center,
-                                    controller: contactNumberText,
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
+                      ],
+                    ),
 
 
-                  SizedBox(
-                    height: 50,
-                  ),
+                    SizedBox(
+                      height: 50,
+                    ),
 
-                  Container(
-                    width: 200,
-                    child: Obx(() {
-                      if(signUpController.isLoading.value){
-                        return Center(child: CircularProgressIndicator());
-                      }
-                      else {
-                        return
-                          NeumorphicButton(
-                            onPressed: () {
+                    Container(
+                      width: 200,
+                      child: Obx(() {
+                        if(signUpController.isLoading.value){
+                          return Center(child: CircularProgressIndicator());
+                        }
+                        else {
+                          return
+                            NeumorphicButton(
+                              onPressed: () {
 
-                              if(buildingText.text == '' || unitText.text == '' || contactNumberText.text == ''){
-                                AppUtils.showSnackBar('Error!!', 'Data must not empty!!');
-                              }
-                              else{
-                                Map<String,String> map = {
-                                  'building': buildingText.value.text,
-                                  'unit': unitText.value.text,
-                                  'phone': contactNumberText.value.text,
-                                };
+                                if(buildingText.text == '' || unitText.text == '' || contactNumberText.text == ''){
+                                  AppUtils.showErrorSnackBar('Error!!', 'Data must not empty!!');
+                                }
+                                else{
+                                  Map<String,String> map = {
+                                    'building': buildingText.value.text,
+                                    'unit': unitText.value.text,
+                                    'phone': contactNumberText.value.text,
+                                  };
 
-                                signUpController.signUp(map);
-                              }
+                                  signUpController.signUp(map);
+                                }
 
 
-                            },
-                            child: Center(
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 8, bottom: 8),
-                                child: Text(
-                                  "Sign Up",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                      color: Colors.white),
+                              },
+                              child: Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 8, bottom: 8),
+                                  child: Text(
+                                    "Sign Up",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                        color: Colors.white),
+                                  ),
                                 ),
                               ),
-                            ),
-                            style: NeumorphicStyle(
-                              shape: NeumorphicShape.flat,
-                              boxShape:
-                              NeumorphicBoxShape.roundRect(BorderRadius.circular(18)),
-                              color: Colors.blue,
-                              depth: 8,
+                              style: NeumorphicStyle(
+                                shape: NeumorphicShape.flat,
+                                boxShape:
+                                NeumorphicBoxShape.roundRect(BorderRadius.circular(18)),
+                                color: Colors.blue,
+                                depth: 8,
 //                lightSource: LightSource.topLeft,
-                            ),
-                          );
-                      }
-                    })
-                  ),
+                              ),
+                            );
+                        }
+                      })
+                    ),
 
-                ],
+                  ],
 
+                ),
               ),
-            ),
-          )),
+            )),
+      ),
     );
   }
 }
