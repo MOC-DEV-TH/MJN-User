@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:MJN/LocalString/LocalString.dart';
 import 'package:MJN/models/notificationModelVO.dart';
-import 'package:MJN/presistence/dao/NotificationDao.dart';
 import 'package:MJN/presistence/db/database_util.dart';
 import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/views/ChangePasswordView.dart';
@@ -18,6 +17,8 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:lottie/lottie.dart';
 import 'package:get/get.dart';
+
+import 'controllers/sendFirebaseTokenController.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -88,13 +89,32 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 
-
+  final SendFirebaseTokenController sendFirebaseTokenController = Get.put(SendFirebaseTokenController());
+  final dataStorage = GetStorage();
   @override
   void initState() {
     FirebaseMessaging.instance.subscribeToTopic('mjn');
 
-    getToken();
+    getFirebaseToken();
+
+    FirebaseMessaging.instance.getToken().then((token) {
+      sendFirebaseTokenToServer(token);
+    });
+
     super.initState();
+  }
+
+  sendFirebaseTokenToServer(String token){
+    if(dataStorage.read(UID).toString() != null)  {
+      Map<String, String> map = {
+        'user_id': dataStorage.read(UID),
+        'app_version': app_version,
+        'firebase_token': token
+      };
+
+      sendFirebaseTokenController.sendFirebaseTokenToServer(map);
+
+    }
   }
 
   @override
@@ -116,20 +136,6 @@ class _MyAppState extends State<MyApp> {
         SecondLoginVIew.routeName: (ctx) => SecondLoginVIew(),
         NewLoginView.routeName: (ctx) => NewLoginView(),
       },
-      // home: FutureBuilder<MJNDatabase>(
-      //   future: $FloorMJNDatabase.databaseBuilder('notification.db').build(),
-      //   // ignore: missing_return
-      //   builder: (context, data) {
-      //     if (data.hasData) {
-      //       print('Database Init Success');
-      //       return SplashScreen(data.data.notificationDao);
-      //     } else if (data.hasError) {
-      //       return Text('Error');
-      //     } else {
-      //       return Text('');
-      //     }
-      //   },
-      // ),
       home: SplashScreen()
     );
   }
@@ -150,10 +156,10 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
 
+
+
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-
       onReceivedFirebaseMsg(message);
-
       NotificationModelVO notificationModelVO =
       NotificationModelVO.fromJson(message.data);
       if (notificationModelVO != null) {
@@ -205,9 +211,10 @@ class _SplashScreenState extends State<SplashScreen>
   }
 }
 
-getToken() async {
+ getFirebaseToken() async {
   String token = await FirebaseMessaging.instance.getToken();
-  print(token);
+  return token;
+
 }
 
 

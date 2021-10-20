@@ -2,6 +2,7 @@ import 'package:MJN/Widgets/login_main_drawer.dart';
 import 'package:MJN/controllers/loginController.dart';
 import 'package:MJN/models/notificationModelVO.dart';
 import 'package:MJN/utils/app_constants.dart';
+import 'package:MJN/utils/app_utils.dart';
 import 'package:MJN/views/SecondLoginView.dart';
 import 'package:MJN/views/SignUpView.dart';
 import 'package:MJN/views/tabView.dart';
@@ -69,6 +70,7 @@ class _LoginViewState extends State<LoginView> {
     return loginView();
   }
 
+
   Widget loginView() {
     return SingleChildScrollView(
       padding: EdgeInsets.all(16),
@@ -132,12 +134,27 @@ class _LoginViewState extends State<LoginView> {
                 } else {
                   return NeumorphicButton(
                     onPressed: () {
-                      Map<String,String> map = {
-                        'user_name': emailText.value.text,
-                        'app_version': app_version,
-                        'password': passwordText.value.text,
-                      };
-                      loginController.fetchLoginData(map,context);
+
+                      if(emailText.text == '' && passwordText.text == ''){
+                        AppUtils.showSnackBar('Error!!', 'Email and Password must not empty!!');
+                      }
+
+                     else if(emailText.text == ''){
+                        AppUtils.showSnackBar('Error!!', 'Email must not empty!!');
+                      }
+                      else if(passwordText.text == ''){
+                        AppUtils.showSnackBar('Error!!', 'Password must not empty!!');
+                      }
+
+                      else {
+                        Map<String,String> map = {
+                          'user_name': emailText.value.text,
+                          'app_version': app_version,
+                          'password': passwordText.value.text,
+                        };
+                        loginController.fetchLoginData(map,context);
+                      }
+
                     },
                     child: Center(
                       child: Padding(
@@ -244,3 +261,4 @@ class _LoginViewState extends State<LoginView> {
         body: loginView());
   }
 }
+

@@ -1,4 +1,5 @@
 import 'package:MJN/controllers/singUpController.dart';
+import 'package:MJN/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
@@ -30,6 +31,10 @@ class SignUpView extends StatelessWidget {
             child: Container(
               child: Column(
                 children: [
+
+                  SizedBox(
+                    height: 50,
+                  ),
 
                   Text(
                     'Please fill up required information',
@@ -160,13 +165,19 @@ class SignUpView extends StatelessWidget {
                           NeumorphicButton(
                             onPressed: () {
 
-                              Map<String,String> map = {
-                                'building': buildingText.value.text,
-                                'unit': unitText.value.text,
-                                'phone': contactNumberText.value.text,
-                              };
+                              if(buildingText.text == '' || unitText.text == '' || contactNumberText.text == ''){
+                                AppUtils.showSnackBar('Error!!', 'Data must not empty!!');
+                              }
+                              else{
+                                Map<String,String> map = {
+                                  'building': buildingText.value.text,
+                                  'unit': unitText.value.text,
+                                  'phone': contactNumberText.value.text,
+                                };
 
-                              signUpController.signUp(map);
+                                signUpController.signUp(map);
+                              }
+
 
                             },
                             child: Center(

@@ -37,6 +37,24 @@ class MjnAPI {
     }
   }
 
+  static Future<NetworkResult> sendFirebaseTokenToSever(
+      Map<String, String> params) async {
+    var response = await client.post(
+      Uri.parse(FIREBASE_TOKEN_URL),
+      body: json.encode(params),
+      headers: {
+        'content-type': 'application/json',
+      },
+    );
+    if (response.statusCode == 200) {
+      var json = response.body;
+      var login = networkResultFromJson(json);
+      return login;
+    } else {
+      return null;
+    }
+  }
+
   static Future<AccountInfoVo> fetchAccountInfoData(
       String token, String uid, String tenantID) async {
     var response = await client.get(
@@ -264,6 +282,30 @@ class MjnAPI {
           UID + uid +
           APP_VERSION + app_version +
           TRANSACTION_ID + transactionID),
+      headers: {
+        'content-type': 'application/json',
+        'token': token
+      },
+    );
+    if (response.statusCode == 200) {
+      var json = response.body;
+      var result = transactionVoFromJson(json);
+      return result;
+    } else {
+      return null;
+    }
+  }
+
+
+  static Future fetchLastTransactionData(
+      String token, String uid, String tenantID) async {
+
+    var response = await client.get(
+
+      Uri.parse( GET_LAST_TRANSACTION_URL +
+          UID + uid +
+          APP_VERSION + app_version +
+          TENANT_ID + tenantID),
       headers: {
         'content-type': 'application/json',
         'token': token

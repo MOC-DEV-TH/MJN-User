@@ -2,16 +2,16 @@ import 'package:MJN/Network/MjnAPI.dart';
 import 'package:MJN/models/transactionVO.dart';
 import 'package:get/state_manager.dart';
 
-class TransactionController extends GetxController{
+class LastTransactionController extends GetxController{
 
   TransactionVo transactionVo;
-  var isLoading = false.obs;
+  var isLoading = true.obs;
 
-  void fetchTransactionDataByID(String token,String uid,String transactionID) async {
+  void fetchLastTransactionData(String token,String uid,String tenantID) async {
     try {
-      isLoading(false);
+      isLoading(true);
 
-      var res = await MjnAPI.fetchTransactionData(token,uid,transactionID);
+      var res = await MjnAPI.fetchLastTransactionData(token,uid,tenantID);
 
       if (res != null) {
         transactionVo = res;

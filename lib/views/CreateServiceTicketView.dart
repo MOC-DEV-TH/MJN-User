@@ -1,6 +1,7 @@
 import 'package:MJN/Network/Request/RequestCreateTicket.dart';
 import 'package:MJN/controllers/createTicketController.dart';
 import 'package:MJN/utils/app_constants.dart';
+import 'package:MJN/utils/app_utils.dart';
 import 'package:MJN/views/ServiceComplainView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
@@ -22,6 +23,9 @@ class _CreateServiceTicketViewState extends State<CreateServiceTicketView> {
   var phoneNoText = TextEditingController();
   var nameText = TextEditingController();
   var messageText = TextEditingController();
+
+  var selectServiceRequestIndex;
+  var selectIssueIndex;
 
   final CreateTicketController createTicketController =
       Get.put(CreateTicketController());
@@ -256,7 +260,9 @@ class _CreateServiceTicketViewState extends State<CreateServiceTicketView> {
 //                    color: Colors.grey
                                         ),
                                         child: DropdownButtonFormField<int>(
-                                          onChanged: (value) {},
+                                          onChanged: (value) {
+                                            selectServiceRequestIndex = value;
+                                          },
                                           items: [1, 2, 3, 4, 5]
                                               .map((label) => DropdownMenuItem(
                                                     child:
@@ -296,7 +302,9 @@ class _CreateServiceTicketViewState extends State<CreateServiceTicketView> {
 //                    color: Colors.grey
                                         ),
                                         child: DropdownButtonFormField<int>(
-                                          onChanged: (value) {},
+                                          onChanged: (value) {
+                                            selectIssueIndex = value;
+                                          },
                                           items: [1, 2, 3, 4, 5]
                                               .map((label) => DropdownMenuItem(
                                                     child:
@@ -356,25 +364,36 @@ class _CreateServiceTicketViewState extends State<CreateServiceTicketView> {
                             width: 200,
                             child: NeumorphicButton(
                               onPressed: () {
-                                RequestCreateTicket requestCreateTicket =
-                                    new RequestCreateTicket(
-                                        "Tenant Testing",
-                                       "112",
-                                        "889",
-                                         "SC828018@mojoenet.com",
-                                        "09782816883",
-                                        "1",
-                                        "99",
-                                         "Topic Other",
-                                        "Create Ticket From API",
-                                        "T61272b415f65f8.16533061",
-                                        loginDataStorage.read(UID),
-                                         "1.0"
-                                        );
+                                if (buildingText.text == '' ||
+                                    unitText.text == '' ||
+                                    emailText.text == '' ||
+                                    phoneNoText.text == '' ||
+                                    nameText.text == '' ||
+                                    messageText.text == '') {
+                                  AppUtils.showSnackBar(
+                                      'Error!!', 'Data must not empty!!');
+                                }
 
-                                createTicketController.createTicket(
-                                    requestCreateTicket,
-                                    loginDataStorage.read(TOKEN));
+                                else {
+                                  RequestCreateTicket requestCreateTicket =
+                                  new RequestCreateTicket(
+                                      nameText.value.text,
+                                      buildingText.value.text,
+                                      unitText.value.text,
+                                      emailText.value.text,
+                                      phoneNoText.value.text,
+                                      selectServiceRequestIndex.toString(),
+                                      selectIssueIndex.toString(),
+                                      "Topic Other",
+                                      messageText.value.text,
+                                      loginDataStorage.read(DATA_TENANT_ID),
+                                      loginDataStorage.read(UID),
+                                      app_version);
+
+                                  createTicketController.createTicket(
+                                      requestCreateTicket,
+                                      loginDataStorage.read(TOKEN));
+                                }
                               },
                               child: Center(
                                 child: Padding(

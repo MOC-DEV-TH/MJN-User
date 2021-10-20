@@ -22,8 +22,10 @@ const BUILDING = 'building';
 const DATA_INVOICE_ID = 'invoiceID';
 
 
+
 const API_URL = BASE_URL+'api/';
 const LOGIN_URL = API_URL+"login";
+const FIREBASE_TOKEN_URL = API_URL+"send_firebase_token";
 const SIGN_UP_URL = API_URL+"sign_up";
 const CHANGE_PASSWORD_URL = API_URL+"change_password";
 const UPDATE_ACCOUNT_URL = API_URL+"update_account_info";
@@ -35,4 +37,5 @@ const GET_TICKET_LIST_URL = API_URL+"get_ticket_lists?";
 const GET_TICKET_URL = API_URL+"get_ticket?";
 const GET_INVOICE_URL = API_URL+"get_invoice?";
 const GET_TRANSACTION_URL = API_URL+"get_transaction?";
+const GET_LAST_TRANSACTION_URL = API_URL+"get_last_transaction?";
 

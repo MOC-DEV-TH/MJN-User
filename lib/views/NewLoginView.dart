@@ -1,6 +1,7 @@
 import 'package:MJN/Widgets/login_main_drawer.dart';
 import 'package:MJN/controllers/loginController.dart';
 import 'package:MJN/utils/app_constants.dart';
+import 'package:MJN/utils/app_utils.dart';
 import 'package:MJN/views/SecondLoginView.dart';
 import 'package:MJN/views/SignUpView.dart';
 import 'package:MJN/views/tabView.dart';
@@ -172,9 +173,15 @@ class _NewLoginViewState extends State<NewLoginView> {
                 } else {
                   return NeumorphicButton(
                     onPressed: () {
-                      Future.delayed(Duration.zero, () async {
-                        Navigator.of(context).pushReplacementNamed(SecondLoginVIew.routeName);
-                      });
+
+                      if(buildingText.text == '' || unitText.text == ''){
+                        AppUtils.showSnackBar('Error!!', 'Data must not empty!!');
+                      }
+                      else{
+                        Future.delayed(Duration.zero, () async {
+                          Navigator.of(context).pushReplacementNamed(SecondLoginVIew.routeName);
+                        });
+                      }
 
                     },
                     child: Center(

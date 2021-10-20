@@ -131,8 +131,7 @@ class _EditAccountInfoDialogState extends State<EditAccountInfoDialog> {
                   height: 20,
                 ),
                 Container(
-                  width: 100,
-                  height: 50,
+                  width: 200,
                   child: Obx(() {
                     if(updateAccountInfoController.isLoading.value){
                       return Center(child: CircularProgressIndicator(),);
@@ -141,7 +140,6 @@ class _EditAccountInfoDialogState extends State<EditAccountInfoDialog> {
                       return
                         NeumorphicButton(
                           onPressed: () {
-
                             Map<String, String> map = {
                               'uid': loginDataStorage.read(UID),
                               'app_version': app_version,

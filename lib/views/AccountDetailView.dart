@@ -1,5 +1,6 @@
 import 'package:MJN/CustomDialog/EditAccountInfoDialog.dart';
 import 'package:MJN/controllers/accountDetailController.dart';
+import 'package:MJN/controllers/lastTransactionController.dart';
 import 'package:MJN/controllers/loginController.dart';
 import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/views/HomeView.dart';
@@ -21,14 +22,22 @@ class _AccountViewState extends State<AccountView> {
   final AccountDetailController accountDetailController =
       Get.put(AccountDetailController());
 
-  final loginDataStorage = GetStorage();
+  final LastTransactionController lastTransactionController =
+      Get.put(LastTransactionController());
 
+  final loginDataStorage = GetStorage();
 
   @override
   void initState() {
     changePageIndex = 0;
     accountDetailController.fetchAccountInfoData(loginDataStorage.read(TOKEN),
         loginDataStorage.read(UID), loginDataStorage.read(DATA_TENANT_ID));
+
+    lastTransactionController.fetchLastTransactionData(
+        loginDataStorage.read(TOKEN),
+        loginDataStorage.read(UID),
+        loginDataStorage.read(DATA_TENANT_ID));
+
     super.initState();
   }
 
@@ -38,29 +47,29 @@ class _AccountViewState extends State<AccountView> {
     super.didChangeDependencies();
   }
 
-  Future refreshData() async{
+  Future refreshData() async {
     accountDetailController.fetchAccountInfoData(loginDataStorage.read(TOKEN),
         loginDataStorage.read(UID), loginDataStorage.read(DATA_TENANT_ID));
   }
-
 
   @override
   Widget build(BuildContext context) {
     return changePageIndex == 1
         ? HomeView()
         : RefreshIndicator(
-        onRefresh: refreshData,
-          child: Scaffold(
+            onRefresh: refreshData,
+            child: Scaffold(
               body: SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child:
-                    Obx((){
-                      if(accountDetailController.isLoading.value){
-                        return Center(child: CircularProgressIndicator(),);
-                      }
-                      else{
-                        return  Column(
+                    padding: const EdgeInsets.all(10),
+                    child: Obx(() {
+                      if (accountDetailController.isLoading.value) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else {
+
+                        return Column(
                           children: [
                             InkWell(
                                 onTap: () {
@@ -92,7 +101,8 @@ class _AccountViewState extends State<AccountView> {
                                       children: [
                                         Container(
                                           height: 40,
-                                          width: MediaQuery.of(context).size.width,
+                                          width:
+                                              MediaQuery.of(context).size.width,
                                           color: Colors.grey,
                                           child: Padding(
                                               padding: const EdgeInsets.all(10),
@@ -105,15 +115,17 @@ class _AccountViewState extends State<AccountView> {
                                           height: 10,
                                         ),
                                         Row(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Text('Start date'),
                                             Container(
-                                                margin: EdgeInsets.only(left: 65),
+                                                margin:
+                                                    EdgeInsets.only(left: 65),
                                                 child: Text(
                                                   '2019-10-15',
-                                                  style:
-                                                  TextStyle(color: Colors.black54),
+                                                  style: TextStyle(
+                                                      color: Colors.black54),
                                                 )),
                                           ],
                                         ),
@@ -121,7 +133,8 @@ class _AccountViewState extends State<AccountView> {
                                           height: 10,
                                         ),
                                         Container(
-                                          width: MediaQuery.of(context).size.width,
+                                          width:
+                                              MediaQuery.of(context).size.width,
                                           height: 1,
                                           color: Colors.grey,
                                         ),
@@ -132,11 +145,12 @@ class _AccountViewState extends State<AccountView> {
                                           children: [
                                             Text('End date'),
                                             Container(
-                                                margin: EdgeInsets.only(left: 73),
+                                                margin:
+                                                    EdgeInsets.only(left: 73),
                                                 child: Text(
                                                   '2019-10-15',
-                                                  style:
-                                                  TextStyle(color: Colors.black54),
+                                                  style: TextStyle(
+                                                      color: Colors.black54),
                                                 )),
                                           ],
                                         ),
@@ -144,182 +158,270 @@ class _AccountViewState extends State<AccountView> {
                                           height: 10,
                                         ),
                                         Container(
-                                          width: MediaQuery.of(context).size.width,
+                                          width:
+                                              MediaQuery.of(context).size.width,
                                           height: 1,
                                           color: Colors.grey,
                                         ),
                                         SizedBox(
                                           height: 4,
                                         ),
+
+
+                                        Obx(() {
+                                          if (lastTransactionController
+                                              .isLoading.value) {
+
+
+                                            return Center(
+                                              child:
+                                                  CircularProgressIndicator(),
+                                            );
+                                          } else {
+                                            return Column(
+                                              children: [
+                                                Container(
+                                                  height: 40,
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width,
+                                                  color: Colors.grey,
+                                                  child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              10),
+                                                      child: Text(
+                                                        'LAST TRANSACTION DETAILS',
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                      )),
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Text('Transaction ID'),
+                                                    Container(
+                                                        margin: EdgeInsets.only(
+                                                            left: 38),
+                                                        child: Text(
+                                                          lastTransactionController
+                                                                  .transactionVo
+                                                                  .details
+                                                                  .transactionId ??
+                                                              null,
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                  .black54),
+                                                        )),
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Container(
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width,
+                                                  height: 1,
+                                                  color: Colors.grey,
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Text('Transaction date'),
+                                                    Container(
+                                                        margin: EdgeInsets.only(
+                                                            left: 24),
+                                                        child: Text(
+                                                          lastTransactionController
+                                                                  .transactionVo
+                                                                  .details
+                                                                  .startDate ??
+                                                              null,
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                  .black54),
+                                                        )),
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Container(
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width,
+                                                  height: 1,
+                                                  color: Colors.grey,
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Text('Package'),
+                                                    Container(
+                                                        margin: EdgeInsets.only(
+                                                            left: 74),
+                                                        child: Text(
+                                                          '2019-10-15',
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                  .black54),
+                                                        )),
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Container(
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width,
+                                                  height: 1,
+                                                  color: Colors.grey,
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Text('Total'),
+                                                    Container(
+                                                        margin: EdgeInsets.only(
+                                                            left: 95),
+                                                        child: Text(
+                                                          (lastTransactionController
+                                                                      .transactionVo
+                                                                      .details
+                                                                      .paymentTotal ??
+                                                                  null) +
+                                                              ' ' +
+                                                              (lastTransactionController
+                                                                      .transactionVo
+                                                                      .details
+                                                                      .currencyType ??
+                                                                  null),
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                  .black54),
+                                                        )),
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Container(
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width,
+                                                  height: 1,
+                                                  color: Colors.grey,
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Text('Payment'),
+                                                    Container(
+                                                        margin: EdgeInsets.only(
+                                                            left: 73),
+                                                        child: Text(
+                                                          (lastTransactionController
+                                                                      .transactionVo
+                                                                      .details
+                                                                      .paymentTotal ??
+                                                                  null) +
+                                                              ' ' +
+                                                              (lastTransactionController
+                                                                      .transactionVo
+                                                                      .details
+                                                                      .currencyType ??
+                                                                  null),
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                  .black54),
+                                                        )),
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Container(
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width,
+                                                  height: 1,
+                                                  color: Colors.grey,
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Text('Paid date'),
+                                                    Container(
+                                                        margin: EdgeInsets.only(
+                                                            left: 70),
+                                                        child: Text(
+                                                          lastTransactionController
+                                                                  .transactionVo
+                                                                  .details
+                                                                  .paidDate ??
+                                                              null,
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                  .black54),
+                                                        )),
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Container(
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width,
+                                                  height: 1,
+                                                  color: Colors.grey,
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                        'Sales\nrepresentative'),
+                                                    Container(
+                                                        margin: EdgeInsets.only(
+                                                            left: 40),
+                                                        child: Text(
+                                                          accountDetailController
+                                                                  .accountInfoVo
+                                                                  .details
+                                                                  .firstname ??
+                                                              null,
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                  .black54),
+                                                        )),
+                                                  ],
+                                                ),
+                                              ],
+                                            );
+                                          }
+                                        }),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
                                         Container(
-                                          height: 40,
-                                          width: MediaQuery.of(context).size.width,
-                                          color: Colors.grey,
-                                          child: Padding(
-                                              padding: const EdgeInsets.all(10),
-                                              child: Text(
-                                                'LAST TRANSACTION DETAILS',
-                                                textAlign: TextAlign.center,
-                                              )),
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text('Transaction ID'),
-                                            Container(
-                                                margin: EdgeInsets.only(left: 38),
-                                                child: Text(
-                                                  '2019-10-15',
-                                                  style:
-                                                  TextStyle(color: Colors.black54),
-                                                )),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Container(
-                                          width: MediaQuery.of(context).size.width,
-                                          height: 1,
-                                          color: Colors.grey,
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text('Transaction date'),
-                                            Container(
-                                                margin: EdgeInsets.only(left: 24),
-                                                child: Text(
-                                                  '2019-10-15',
-                                                  style:
-                                                  TextStyle(color: Colors.black54),
-                                                )),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Container(
-                                          width: MediaQuery.of(context).size.width,
-                                          height: 1,
-                                          color: Colors.grey,
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text('Package'),
-                                            Container(
-                                                margin: EdgeInsets.only(left: 74),
-                                                child: Text(
-                                                  '2019-10-15',
-                                                  style:
-                                                  TextStyle(color: Colors.black54),
-                                                )),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Container(
-                                          width: MediaQuery.of(context).size.width,
-                                          height: 1,
-                                          color: Colors.grey,
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text('Total'),
-                                            Container(
-                                                margin: EdgeInsets.only(left: 95),
-                                                child: Text(
-                                                  '2019-10-15',
-                                                  style:
-                                                  TextStyle(color: Colors.black54),
-                                                )),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Container(
-                                          width: MediaQuery.of(context).size.width,
-                                          height: 1,
-                                          color: Colors.grey,
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text('Payment'),
-                                            Container(
-                                                margin: EdgeInsets.only(left: 73),
-                                                child: Text(
-                                                  '2019-10-15',
-                                                  style:
-                                                  TextStyle(color: Colors.black54),
-                                                )),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Container(
-                                          width: MediaQuery.of(context).size.width,
-                                          height: 1,
-                                          color: Colors.grey,
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text('Paid date'),
-                                            Container(
-                                                margin: EdgeInsets.only(left: 70),
-                                                child: Text(
-                                                  '2019-10-15',
-                                                  style:
-                                                  TextStyle(color: Colors.black54),
-                                                )),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Container(
-                                          width: MediaQuery.of(context).size.width,
-                                          height: 1,
-                                          color: Colors.grey,
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text('Sales\nrepresentative'),
-                                            Container(
-                                                margin: EdgeInsets.only(left: 40),
-                                                child: Text(
-                                                  'Ko Ko Mg',
-                                                  style:
-                                                  TextStyle(color: Colors.black54),
-                                                )),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Container(
-                                          width: MediaQuery.of(context).size.width,
+                                          width:
+                                              MediaQuery.of(context).size.width,
                                           height: 1,
                                           color: Colors.grey,
                                         ),
@@ -338,12 +440,13 @@ class _AccountViewState extends State<AccountView> {
                                       children: [
                                         Row(
                                           mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
                                               'Account Details',
                                               style: TextStyle(
-                                                  color: Colors.lightBlueAccent),
+                                                  color:
+                                                      Colors.lightBlueAccent),
                                             ),
                                             Container(
                                               margin: EdgeInsets.only(top: 4),
@@ -351,19 +454,20 @@ class _AccountViewState extends State<AccountView> {
                                               height: 35,
                                               child: NeumorphicButton(
                                                 onPressed: () {
-
-                                                  showDialog(context: context,
-                                                      barrierDismissible: false,
-                                                      builder: (BuildContext context){
+                                                  showDialog(
+                                                      context: context,
+                                                      // barrierDismissible: false,
+                                                      builder: (BuildContext
+                                                          context) {
                                                         return EditAccountInfoDialog();
-                                                      }
-                                                  );
+                                                      });
                                                 },
                                                 child: Text(
                                                   "Edit Account",
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
-                                                      fontWeight: FontWeight.bold,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                       fontSize: 12,
                                                       color: Colors.white),
                                                 ),
@@ -384,11 +488,15 @@ class _AccountViewState extends State<AccountView> {
                                           children: [
                                             Text('First name'),
                                             Container(
-                                                margin: EdgeInsets.only(left: 60),
+                                                margin:
+                                                    EdgeInsets.only(left: 60),
                                                 child: Text(
-                                                  accountDetailController.accountInfoVo.details.firstname,
-                                                  style:
-                                                  TextStyle(color: Colors.black54),
+                                                  accountDetailController
+                                                      .accountInfoVo
+                                                      .details
+                                                      .firstname,
+                                                  style: TextStyle(
+                                                      color: Colors.black54),
                                                 )),
                                           ],
                                         ),
@@ -396,7 +504,8 @@ class _AccountViewState extends State<AccountView> {
                                           height: 10,
                                         ),
                                         Container(
-                                          width: MediaQuery.of(context).size.width,
+                                          width:
+                                              MediaQuery.of(context).size.width,
                                           height: 1,
                                           color: Colors.grey,
                                         ),
@@ -407,11 +516,15 @@ class _AccountViewState extends State<AccountView> {
                                           children: [
                                             Text('Last name'),
                                             Container(
-                                                margin: EdgeInsets.only(left: 60),
+                                                margin:
+                                                    EdgeInsets.only(left: 60),
                                                 child: Text(
-                                                  accountDetailController.accountInfoVo.details.lastname,
-                                                  style:
-                                                  TextStyle(color: Colors.black54),
+                                                  accountDetailController
+                                                      .accountInfoVo
+                                                      .details
+                                                      .lastname,
+                                                  style: TextStyle(
+                                                      color: Colors.black54),
                                                 )),
                                           ],
                                         ),
@@ -419,7 +532,8 @@ class _AccountViewState extends State<AccountView> {
                                           height: 10,
                                         ),
                                         Container(
-                                          width: MediaQuery.of(context).size.width,
+                                          width:
+                                              MediaQuery.of(context).size.width,
                                           height: 1,
                                           color: Colors.grey,
                                         ),
@@ -430,11 +544,15 @@ class _AccountViewState extends State<AccountView> {
                                           children: [
                                             Text('User name'),
                                             Container(
-                                                margin: EdgeInsets.only(left: 60),
+                                                margin:
+                                                    EdgeInsets.only(left: 60),
                                                 child: Text(
-                                                  accountDetailController.accountInfoVo.details.name,
-                                                  style:
-                                                  TextStyle(color: Colors.black54),
+                                                  accountDetailController
+                                                      .accountInfoVo
+                                                      .details
+                                                      .name,
+                                                  style: TextStyle(
+                                                      color: Colors.black54),
                                                 )),
                                           ],
                                         ),
@@ -442,7 +560,8 @@ class _AccountViewState extends State<AccountView> {
                                           height: 10,
                                         ),
                                         Container(
-                                          width: MediaQuery.of(context).size.width,
+                                          width:
+                                              MediaQuery.of(context).size.width,
                                           height: 1,
                                           color: Colors.grey,
                                         ),
@@ -458,15 +577,16 @@ class _AccountViewState extends State<AccountView> {
                                     padding: EdgeInsets.only(
                                         left: 20, right: 20, bottom: 20),
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         SizedBox(
                                           height: 10,
                                         ),
                                         Text(
                                           'Contact Information',
-                                          style:
-                                          TextStyle(color: Colors.lightBlueAccent),
+                                          style: TextStyle(
+                                              color: Colors.lightBlueAccent),
                                         ),
                                         SizedBox(
                                           height: 10,
@@ -475,11 +595,15 @@ class _AccountViewState extends State<AccountView> {
                                           children: [
                                             Text('Email'),
                                             Container(
-                                                margin: EdgeInsets.only(left: 90),
+                                                margin:
+                                                    EdgeInsets.only(left: 90),
                                                 child: Text(
-                                                  accountDetailController.accountInfoVo.details.mail,
-                                                  style:
-                                                  TextStyle(color: Colors.black54),
+                                                  accountDetailController
+                                                      .accountInfoVo
+                                                      .details
+                                                      .mail,
+                                                  style: TextStyle(
+                                                      color: Colors.black54),
                                                 )),
                                           ],
                                         ),
@@ -492,11 +616,9 @@ class _AccountViewState extends State<AccountView> {
                           ],
                         );
                       }
-                  }
-                    )
-                ),
+                    })),
               ),
             ),
-        );
+          );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:MJN/controllers/changePasswordController.dart';
 import 'package:MJN/utils/app_constants.dart';
+import 'package:MJN/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
@@ -11,7 +12,7 @@ class ChangePasswordView extends StatelessWidget {
   var rewriteNewPasswordText = TextEditingController();
 
   final ChangePasswordController changePasswordController =
-      Get.put(ChangePasswordController());
+  Get.put(ChangePasswordController());
 
   static const routeName = '/change_password';
   final loginDataStorage = GetStorage();
@@ -21,7 +22,9 @@ class ChangePasswordView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 110,
-        backgroundColor: Theme.of(context).primaryColorDark,
+        backgroundColor: Theme
+            .of(context)
+            .primaryColorDark,
       ),
       backgroundColor: Colors.grey.shade100,
       body: SingleChildScrollView(
@@ -97,26 +100,36 @@ class ChangePasswordView extends StatelessWidget {
                   } else {
                     return NeumorphicButton(
                       onPressed: () {
-                        Map<String, String> map = {
-                          'current_password': currentPasswordText.value.text,
-                          'new_password': newPasswordText.value.text,
-                          'confirm_password': rewriteNewPasswordText.value.text,
-                          'app_version': app_version,
-                          'user_name': loginDataStorage.read(USER_NAME),
-                        };
+                        if (currentPasswordText.text == '' ||
+                            newPasswordText.text == '' ||
+                            rewriteNewPasswordText.text == '') {
 
-                        changePasswordController.changePassword(
-                            map, loginDataStorage.read(TOKEN));
+                          AppUtils.showSnackBar("Error!!", 'Data must not empty!!');
+                        }
+                        else {
+                          Map<String, String> map = {
+                            'current_password': currentPasswordText.value.text,
+                            'new_password': newPasswordText.value.text,
+                            'confirm_password': rewriteNewPasswordText.value
+                                .text,
+                            'app_version': app_version,
+                            'user_name': loginDataStorage.read(USER_NAME),
+                          };
+
+                          changePasswordController.changePassword(
+                              map, loginDataStorage.read(TOKEN));
+                        }
+
                       },
                       child: Center(
 
-                          child: Text(
-                            "Confirm",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                                color: Colors.white),
-                          ),
+                        child: Text(
+                          "Confirm",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: Colors.white),
+                        ),
 
                       ),
                       style: NeumorphicStyle(

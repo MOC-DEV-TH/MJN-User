@@ -150,401 +150,423 @@ class _PaymentViewState extends State<PaymentView> {
     return receipt
         ? Padding(
             padding: const EdgeInsets.all(12.0),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  height: 1,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.grey,
-                  ),
-                ),
-                Container(
-                  height: 45,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.grey,
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text(
-                        'Transaction\nID',
-                        style: TextStyle(color: Colors.black, fontSize: 10),
-                        textAlign: TextAlign.center,
-                      ),
-                      Container(
-                        width: 1,
-                        height: 45,
-                        color: Colors.grey,
-                      ),
-                      Text(
-                        'Start date',
-                        style: TextStyle(color: Colors.black, fontSize: 10),
-                      ),
-                      Container(
-                        width: 1,
-                        height: 45,
-                        color: Colors.grey,
-                      ),
-                      Text(
-                        'End date',
-                        style: TextStyle(color: Colors.black, fontSize: 10),
-                      ),
-                      Container(
-                        width: 1,
-                        height: 45,
-                        color: Colors.grey,
-                      ),
-                      Text(
-                        'Amount',
-                        style: TextStyle(color: Colors.black, fontSize: 10),
-                      ),
-                    ],
-                  ),
-                ),
-                ListView.builder(
-                  shrinkWrap: true,
-                  itemBuilder: (ctx, index) {
-                    return Column(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            border: Border.all(
-                              color: Colors.grey,
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Container(
-                                width: 73,
-                                child: InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      currentTransactionIndex =
-                                          transactionListController
-                                              .transactionListVo
-                                              .details[index]
-                                              .transactionId
-                                              .toString();
-                                      changePageIndex = 1;
-                                    });
-                                  },
-                                  child: Text(
-                                    transactionListController.transactionListVo
-                                            .details[index].transactionId ??
-                                        'null',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 10,
-                                        decoration: TextDecoration.underline),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                width: 1,
-                                height: 45,
-                                color: Colors.grey,
-                              ),
-                              Container(
-                                width: 63,
-                                child: Text(
-                                  transactionListController.transactionListVo
-                                          .details[index].startDate ??
-                                      'null',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 10,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                              Container(
-                                width: 1,
-                                height: 45,
-                                color: Colors.grey,
-                              ),
-                              Container(
-                                width: 60,
-                                child: Text(
-                                  transactionListController.transactionListVo
-                                          .details[index].endDate ??
-                                      'null',
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 10),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                              Container(
-                                width: 1,
-                                height: 45,
-                                color: Colors.grey,
-                              ),
-                              Container(
-                                width: 56,
-                                child: Text(
-                                  transactionListController.transactionListVo
-                                          .details[index].creditAmount ??
-                                      'null',
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 10),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    );
-                  },
-                  itemCount: transactionListController
-                      .transactionListVo.details.length,
-                )
-              ],
-            ),
+            child:
+                Obx((){
+                 if (transactionListController.isLoading.value) {
+                   return Center(
+                     child: CircularProgressIndicator(),
+                   );
+                 }
+                 else {
+                   return
+                     Column(
+                       children: [
+                         SizedBox(
+                           height: 20,
+                         ),
+                         Container(
+                           height: 1,
+                           width: double.infinity,
+                           decoration: BoxDecoration(
+                             color: Colors.grey,
+                           ),
+                         ),
+                         Container(
+                           height: 45,
+                           decoration: BoxDecoration(
+                             border: Border.all(
+                               color: Colors.grey,
+                             ),
+                           ),
+                           child: Row(
+                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                             children: [
+                               Text(
+                                 'Transaction\nID',
+                                 style: TextStyle(color: Colors.black, fontSize: 10),
+                                 textAlign: TextAlign.center,
+                               ),
+                               Container(
+                                 width: 1,
+                                 height: 45,
+                                 color: Colors.grey,
+                               ),
+                               Text(
+                                 'Start date',
+                                 style: TextStyle(color: Colors.black, fontSize: 10),
+                               ),
+                               Container(
+                                 width: 1,
+                                 height: 45,
+                                 color: Colors.grey,
+                               ),
+                               Text(
+                                 'End date',
+                                 style: TextStyle(color: Colors.black, fontSize: 10),
+                               ),
+                               Container(
+                                 width: 1,
+                                 height: 45,
+                                 color: Colors.grey,
+                               ),
+                               Text(
+                                 'Amount',
+                                 style: TextStyle(color: Colors.black, fontSize: 10),
+                               ),
+                             ],
+                           ),
+                         ),
+                         ListView.builder(
+                           shrinkWrap: true,
+                           itemBuilder: (ctx, index) {
+                             return Column(
+                               children: [
+                                 Container(
+                                   decoration: BoxDecoration(
+                                     color: Colors.white,
+                                     border: Border.all(
+                                       color: Colors.grey,
+                                     ),
+                                   ),
+                                   child: Row(
+                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                     children: [
+                                       Container(
+                                         width: 73,
+                                         child: InkWell(
+                                           onTap: () {
+                                             setState(() {
+                                               currentTransactionIndex =
+                                                   transactionListController
+                                                       .transactionListVo
+                                                       .details[index]
+                                                       .transactionId
+                                                       .toString();
+                                               changePageIndex = 1;
+                                             });
+                                           },
+                                           child: Text(
+                                             transactionListController.transactionListVo
+                                                 .details[index].transactionId ??
+                                                 'null',
+                                             style: TextStyle(
+                                                 color: Colors.black,
+                                                 fontSize: 10,
+                                                 decoration: TextDecoration.underline),
+                                             textAlign: TextAlign.center,
+                                           ),
+                                         ),
+                                       ),
+                                       Container(
+                                         width: 1,
+                                         height: 45,
+                                         color: Colors.grey,
+                                       ),
+                                       Container(
+                                         width: 63,
+                                         child: Text(
+                                           transactionListController.transactionListVo
+                                               .details[index].startDate ??
+                                               'null',
+                                           style: TextStyle(
+                                             color: Colors.black,
+                                             fontSize: 10,
+                                           ),
+                                           textAlign: TextAlign.center,
+                                         ),
+                                       ),
+                                       Container(
+                                         width: 1,
+                                         height: 45,
+                                         color: Colors.grey,
+                                       ),
+                                       Container(
+                                         width: 60,
+                                         child: Text(
+                                           transactionListController.transactionListVo
+                                               .details[index].endDate ??
+                                               'null',
+                                           style: TextStyle(
+                                               color: Colors.black, fontSize: 10),
+                                           textAlign: TextAlign.center,
+                                         ),
+                                       ),
+                                       Container(
+                                         width: 1,
+                                         height: 45,
+                                         color: Colors.grey,
+                                       ),
+                                       Container(
+                                         width: 56,
+                                         child: Text(
+                                           transactionListController.transactionListVo
+                                               .details[index].creditAmount ??
+                                               'null',
+                                           style: TextStyle(
+                                               color: Colors.black, fontSize: 10),
+                                           textAlign: TextAlign.center,
+                                         ),
+                                       ),
+                                     ],
+                                   ),
+                                 ),
+                               ],
+                             );
+                           },
+                           itemCount: transactionListController
+                               .transactionListVo.details.length,
+                         )
+                       ],
+                     );
+                 }
+                })
           )
         : invoice
             ? Padding(
                 padding: const EdgeInsets.all(12.0),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      height: 1,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Colors.grey,
-                      ),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.grey,
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 2),
-                            child: Text(
-                              'Invoice ID',
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 10),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                          Container(
-                            width: 1,
-                            height: 30,
-                            color: Colors.grey,
-                          ),
-                          Text(
-                            'Start date',
-                            style: TextStyle(color: Colors.black, fontSize: 10),
-                          ),
-                          Container(
-                            width: 1,
-                            height: 30,
-                            color: Colors.grey,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 4, left: 4),
-                            child: Text(
-                              'End date',
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 10),
-                            ),
-                          ),
-                          Container(
-                            width: 1,
-                            height: 30,
-                            color: Colors.grey,
-                          ),
-                          Text(
-                            'Amount',
-                            style: TextStyle(color: Colors.black, fontSize: 10),
-                          ),
-                          Container(
-                            width: 1,
-                            height: 30,
-                            color: Colors.grey,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 1),
-                            child: Text(
-                              'Status',
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 10),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    ListView.builder(
-                      shrinkWrap: true,
-                      itemBuilder: (ctx, index) {
-                        return Column(
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                border: Border.all(
+                child:
+                    Obx((){
+                      if (invoiceListController.isLoading.value) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      else {
+                        return
+                          Column(
+                            children: [
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Container(
+                                height: 1,
+                                width: double.infinity,
+                                decoration: BoxDecoration(
                                   color: Colors.grey,
                                 ),
                               ),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Container(
-                                    width: 67,
-                                    child: InkWell(
-                                      onTap: () {
-                                        setState(() {
-                                          currentInvoiceIndex =
-                                              invoiceListController
-                                                  .invoiceListVo
-                                                  .details[index]
-                                                  .invoiceId
-                                                  .toString();
-
-                                          changePageIndex = 2;
-                                        });
-
-                                      },
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 2),
                                       child: Text(
-                                        invoiceListController.invoiceListVo
-                                                .details[index].invoiceId ??
-                                            'null',
-                                        style: TextStyle(
-                                            color: invoiceListController
-                                                        .invoiceListVo
-                                                        .details[index]
-                                                        .paymentStatus ==
-                                                    'Unpaid'
-                                                ? Color(0xffff0000)
-                                                : Color(0xff000000),
-                                            fontSize: 10,
-                                            decoration:
-                                                TextDecoration.underline),
+                                        'Invoice ID',
+                                        style:
+                                        TextStyle(color: Colors.black, fontSize: 10),
                                         textAlign: TextAlign.center,
                                       ),
                                     ),
-                                  ),
-                                  Container(
-                                    width: 1,
-                                    height: 30,
-                                    color: Colors.grey,
-                                  ),
-                                  Container(
-                                    width: 66,
-                                    child: Text(
-                                      invoiceListController.invoiceListVo
-                                              .details[index].startDate ??
-                                          'null',
-                                      style: TextStyle(
-                                        color: invoiceListController
-                                                    .invoiceListVo
-                                                    .details[index]
-                                                    .paymentStatus ==
-                                                'Unpaid'
-                                            ? Color(0xffff0000)
-                                            : Color(0xff000000),
-                                        fontSize: 10,
+                                    Container(
+                                      width: 1,
+                                      height: 30,
+                                      color: Colors.grey,
+                                    ),
+                                    Text(
+                                      'Start date',
+                                      style: TextStyle(color: Colors.black, fontSize: 10),
+                                    ),
+                                    Container(
+                                      width: 1,
+                                      height: 30,
+                                      color: Colors.grey,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 4, left: 4),
+                                      child: Text(
+                                        'End date',
+                                        style:
+                                        TextStyle(color: Colors.black, fontSize: 10),
                                       ),
-                                      textAlign: TextAlign.center,
                                     ),
-                                  ),
-                                  Container(
-                                    width: 1,
-                                    height: 30,
-                                    color: Colors.grey,
-                                  ),
-                                  Container(
-                                    width: 68,
-                                    child: Text(
-                                      invoiceListController.invoiceListVo
-                                              .details[index].endDate ??
-                                          'null',
-                                      style: TextStyle(
-                                          color: invoiceListController
-                                                      .invoiceListVo
-                                                      .details[index]
-                                                      .paymentStatus ==
-                                                  'Unpaid'
-                                              ? Color(0xffff0000)
-                                              : Color(0xff000000),
-                                          fontSize: 10),
-                                      textAlign: TextAlign.center,
+                                    Container(
+                                      width: 1,
+                                      height: 30,
+                                      color: Colors.grey,
                                     ),
-                                  ),
-                                  Container(
-                                    width: 1,
-                                    height: 30,
-                                    color: Colors.grey,
-                                  ),
-                                  Container(
-                                    width: 57,
-                                    child: Text(
-                                      invoiceListController.invoiceListVo
-                                              .details[index].creditAmount ??
-                                          'null',
-                                      style: TextStyle(
-                                          color: invoiceListController
-                                                      .invoiceListVo
-                                                      .details[index]
-                                                      .paymentStatus ==
-                                                  'Unpaid'
-                                              ? Color(0xffff0000)
-                                              : Color(0xff000000),
-                                          fontSize: 10),
-                                      textAlign: TextAlign.center,
+                                    Text(
+                                      'Amount',
+                                      style: TextStyle(color: Colors.black, fontSize: 10),
                                     ),
-                                  ),
-                                  Container(
-                                    width: 1,
-                                    height: 30,
-                                    color: Colors.grey,
-                                  ),
-                                  Container(
-                                    width: 52,
-                                    child: Text(
-                                      invoiceListController.invoiceListVo
-                                              .details[index].paymentStatus ??
-                                          'null',
-                                      style: TextStyle(
-                                          color: invoiceListController
-                                                      .invoiceListVo
-                                                      .details[index]
-                                                      .paymentStatus ==
-                                                  'Unpaid'
-                                              ? Color(0xffff0000)
-                                              : Color(0xff000000),
-                                          fontSize: 10),
-                                      textAlign: TextAlign.center,
+                                    Container(
+                                      width: 1,
+                                      height: 30,
+                                      color: Colors.grey,
                                     ),
-                                  ),
-                                ],
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 1),
+                                      child: Text(
+                                        'Status',
+                                        style:
+                                        TextStyle(color: Colors.black, fontSize: 10),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
-                        );
-                      },
-                      itemCount:
-                          invoiceListController.invoiceListVo.details.length,
-                    )
-                  ],
-                ),
+                              ListView.builder(
+                                shrinkWrap: true,
+                                itemBuilder: (ctx, index) {
+                                  return Column(
+                                    children: [
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          border: Border.all(
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Container(
+                                              width: 67,
+                                              child: InkWell(
+                                                onTap: () {
+                                                  setState(() {
+                                                    currentInvoiceIndex =
+                                                        invoiceListController
+                                                            .invoiceListVo
+                                                            .details[index]
+                                                            .invoiceId
+                                                            .toString();
+
+                                                    changePageIndex = 2;
+                                                  });
+
+                                                },
+                                                child: Text(
+                                                  invoiceListController.invoiceListVo
+                                                      .details[index].invoiceId ??
+                                                      'null',
+                                                  style: TextStyle(
+                                                      color: invoiceListController
+                                                          .invoiceListVo
+                                                          .details[index]
+                                                          .paymentStatus ==
+                                                          'Unpaid'
+                                                          ? Color(0xffff0000)
+                                                          : Color(0xff000000),
+                                                      fontSize: 10,
+                                                      decoration:
+                                                      TextDecoration.underline),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              width: 1,
+                                              height: 30,
+                                              color: Colors.grey,
+                                            ),
+                                            Container(
+                                              width: 66,
+                                              child: Text(
+                                                invoiceListController.invoiceListVo
+                                                    .details[index].startDate ??
+                                                    'null',
+                                                style: TextStyle(
+                                                  color: invoiceListController
+                                                      .invoiceListVo
+                                                      .details[index]
+                                                      .paymentStatus ==
+                                                      'Unpaid'
+                                                      ? Color(0xffff0000)
+                                                      : Color(0xff000000),
+                                                  fontSize: 10,
+                                                ),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                            Container(
+                                              width: 1,
+                                              height: 30,
+                                              color: Colors.grey,
+                                            ),
+                                            Container(
+                                              width: 68,
+                                              child: Text(
+                                                invoiceListController.invoiceListVo
+                                                    .details[index].endDate ??
+                                                    'null',
+                                                style: TextStyle(
+                                                    color: invoiceListController
+                                                        .invoiceListVo
+                                                        .details[index]
+                                                        .paymentStatus ==
+                                                        'Unpaid'
+                                                        ? Color(0xffff0000)
+                                                        : Color(0xff000000),
+                                                    fontSize: 10),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                            Container(
+                                              width: 1,
+                                              height: 30,
+                                              color: Colors.grey,
+                                            ),
+                                            Container(
+                                              width: 57,
+                                              child: Text(
+                                                invoiceListController.invoiceListVo
+                                                    .details[index].creditAmount ??
+                                                    'null',
+                                                style: TextStyle(
+                                                    color: invoiceListController
+                                                        .invoiceListVo
+                                                        .details[index]
+                                                        .paymentStatus ==
+                                                        'Unpaid'
+                                                        ? Color(0xffff0000)
+                                                        : Color(0xff000000),
+                                                    fontSize: 10),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                            Container(
+                                              width: 1,
+                                              height: 30,
+                                              color: Colors.grey,
+                                            ),
+                                            Container(
+                                              width: 52,
+                                              child: Text(
+                                                invoiceListController.invoiceListVo
+                                                    .details[index].paymentStatus ??
+                                                    'null',
+                                                style: TextStyle(
+                                                    color: invoiceListController
+                                                        .invoiceListVo
+                                                        .details[index]
+                                                        .paymentStatus ==
+                                                        'Unpaid'
+                                                        ? Color(0xffff0000)
+                                                        : Color(0xff000000),
+                                                    fontSize: 10),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                },
+                                itemCount:
+                                invoiceListController.invoiceListVo.details.length,
+                              )
+                            ],
+                          );
+                      }
+                    })
               )
             : Container();
   }
