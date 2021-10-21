@@ -9,7 +9,7 @@ import 'package:MJN/views/CreateServiceTicketView.dart';
 import 'package:MJN/views/LoginView.dart';
 import 'package:MJN/views/NewLoginView.dart';
 import 'package:MJN/views/SecondLoginView.dart';
-import 'package:MJN/views/tabView.dart';
+import 'package:MJN/views/TabView.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -135,6 +135,7 @@ class _MyAppState extends State<MyApp> {
         CreateServiceTicketView.routeName: (ctx) => CreateServiceTicketView(),
         SecondLoginVIew.routeName: (ctx) => SecondLoginVIew(),
         NewLoginView.routeName: (ctx) => NewLoginView(),
+        SplashScreen.routeName: (ctx) => SplashScreen(),
       },
       home: SplashScreen()
     );
@@ -142,6 +143,7 @@ class _MyAppState extends State<MyApp> {
 }
 
 class SplashScreen extends StatefulWidget {
+  static const routeName = '/splash_screen';
   const SplashScreen({Key key}) : super(key: key);
 
   @override
@@ -155,7 +157,6 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   void initState() {
-
 
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {

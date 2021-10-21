@@ -13,6 +13,7 @@ const TENANT_ID = '&tenant_id=';
 const TICKET_ID = '&ticket_id=';
 const INVOICE_ID = '&inv_id=';
 const TRANSACTION_ID = '&trxn_id=';
+
 //get storage key
 const USER_NAME = 'user_name';
 const TOKEN = 'token';
@@ -20,7 +21,7 @@ const DATA_TENANT_ID = 'tenant_id';
 const UNIT = 'unit';
 const BUILDING = 'building';
 const DATA_INVOICE_ID = 'invoiceID';
-
+const LANGUAGE = 'language';
 
 
 const API_URL = BASE_URL+'api/';

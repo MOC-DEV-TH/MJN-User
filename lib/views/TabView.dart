@@ -1,4 +1,5 @@
 import 'package:MJN/Widgets/main_drawer.dart';
+import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/views/ContactUsView.dart';
 import 'package:MJN/views/ServiceComplainView.dart';
 import 'package:flutter/material.dart';
@@ -27,13 +28,13 @@ class _TabScreensState extends State<TabScreens> {
   void initState() {
     super.initState();
 
-    if(langStorage.read('language')=='မြန်မာ') {
+    if(langStorage.read(LANGUAGE)=='မြန်မာ') {
 
       setState(() {
         selectedLang = 'မြန်မာ';
       });
     }
-    else if(langStorage.read('language')=='ENG'){
+    else if(langStorage.read(LANGUAGE)=='ENG'){
 
       setState(() {
         selectedLang = 'ENG';
@@ -119,13 +120,13 @@ class _TabScreensState extends State<TabScreens> {
 
                     if(value == 'မြန်မာ')
                     {
-                      langStorage.write('language',value);
+                      langStorage.write(LANGUAGE,value);
                       var locale = Locale('my','MM');
                       Get.updateLocale(locale);
 
                     }
                     else if(value == 'ENG'){
-                      langStorage.write('language',value);
+                      langStorage.write(LANGUAGE,value);
                       var locale = Locale('en','US');
                       Get.updateLocale(locale);
                     }

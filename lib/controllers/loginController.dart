@@ -1,7 +1,7 @@
 import 'package:MJN/Network/MjnAPI.dart';
 import 'package:MJN/models/loginVO.dart';
 import 'package:MJN/utils/app_constants.dart';
-import 'package:MJN/views/tabView.dart';
+import 'package:MJN/views/TabView.dart';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'package:get_storage/get_storage.dart';

@@ -1,6 +1,6 @@
 import 'package:MJN/Network/MjnAPI.dart';
 import 'package:MJN/models/NetworkResultVO.dart';
-import 'package:MJN/views/tabView.dart';
+import 'package:MJN/views/TabView.dart';
 import 'package:get/state_manager.dart';
 import 'package:get/get.dart';
 

@@ -1,3 +1,4 @@
+import 'package:MJN/utils/app_utils.dart';
 import 'package:MJN/views/ChangePasswordView.dart';
 import 'package:MJN/views/NewLoginView.dart';
 import 'package:flutter/material.dart';
@@ -58,8 +59,9 @@ class MainDrawer extends StatelessWidget {
 
             buildListTile('Logout', Icons.arrow_right,
                     (){
-                      Navigator.of(context).pushNamed(NewLoginView.routeName);
-
+              
+              AppUtils.showLogoutDialog('Logout', 'Are you sure you want to exit\nthis application?',context);
+              
                 }),
 
           ],

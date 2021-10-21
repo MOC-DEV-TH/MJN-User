@@ -3,7 +3,7 @@ import 'package:MJN/controllers/loginController.dart';
 import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/views/SecondLoginView.dart';
 import 'package:MJN/views/SignUpView.dart';
-import 'package:MJN/views/tabView.dart';
+import 'package:MJN/views/TabView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
@@ -29,18 +29,23 @@ class _SecondLoginVIewState extends State<SecondLoginVIew> {
 
   @override
   void initState() {
-    if(langStorage.read('language')=='မြန်မာ') {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (langStorage.read(LANGUAGE) == 'မြန်မာ') {
+        var locale = Locale('my', 'MM');
+        Get.updateLocale(locale);
 
-      setState(() {
-        selectedLang = 'မြန်မာ';
-      });
-    }
-    else if(langStorage.read('language')=='ENG'){
+        setState(() {
+          selectedLang = 'မြန်မာ';
+        });
+      } else if (langStorage.read(LANGUAGE) == 'ENG') {
+        var locale = Locale('en', 'US');
+        Get.updateLocale(locale);
 
-      setState(() {
-        selectedLang = 'ENG';
-      });
-    }
+        setState(() {
+          selectedLang = 'ENG';
+        });
+      }
+    });
 
     super.initState();
   }
@@ -168,11 +173,11 @@ class _SecondLoginVIewState extends State<SecondLoginVIew> {
                   onChanged: (value) {
                     setState(() {
                       if (value == 'မြန်မာ') {
-                        langStorage.write('language', value);
+                        langStorage.write(LANGUAGE, value);
                         var locale = Locale('my', 'MM');
                         Get.updateLocale(locale);
                       } else if (value == 'ENG') {
-                        langStorage.write('language', value);
+                        langStorage.write(LANGUAGE, value);
                         var locale = Locale('en', 'US');
                         Get.updateLocale(locale);
                       }

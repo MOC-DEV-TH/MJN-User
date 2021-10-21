@@ -1,9 +1,9 @@
 import 'package:MJN/models/ticketListVO.dart';
 import 'package:flutter/material.dart';
-class MyServiceTicketItems extends StatelessWidget {
+class MyServiceTicketItem extends StatelessWidget {
   TicketDetail ticketDetailVO;
 
-  MyServiceTicketItems(this.ticketDetailVO);
+  MyServiceTicketItem(this.ticketDetailVO);
   @override
   Widget build(BuildContext context) {
     return Container(
