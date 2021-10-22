@@ -21,6 +21,9 @@ class SignUpView extends StatelessWidget {
       appBar: AppBar(
         toolbarHeight: 110,
         backgroundColor: Colors.white70,
+        iconTheme: IconThemeData(
+          color: Colors.black,
+        ),
         title: Text('Sign Up',style: TextStyle(color: Colors.black),),
       ),
       key: _scaffoldKey,

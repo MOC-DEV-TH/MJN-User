@@ -22,9 +22,11 @@ class ChangePasswordView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 110,
-        backgroundColor: Theme
-            .of(context)
-            .primaryColorDark,
+        backgroundColor: Colors.white70,
+        iconTheme: IconThemeData(
+          color: Colors.black,
+        ),
+        title: Text('Change Password',style: TextStyle(color: Colors.black),),
       ),
       backgroundColor: Colors.grey.shade100,
       body: GestureDetector(

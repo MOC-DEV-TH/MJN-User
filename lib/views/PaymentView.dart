@@ -1,6 +1,7 @@
 import 'package:MJN/controllers/invoiceListController.dart';
 import 'package:MJN/controllers/transactionListController.dart';
 import 'package:MJN/utils/app_constants.dart';
+import 'package:MJN/utils/app_utils.dart';
 import 'package:MJN/views/InvoiceDetailView.dart';
 import 'package:MJN/views/TransactionDetailView.dart';
 import 'package:flutter/material.dart';
@@ -431,14 +432,25 @@ class _PaymentViewState extends State<PaymentView> {
                                               child: InkWell(
                                                 onTap: () {
                                                   setState(() {
-                                                    currentInvoiceIndex =
-                                                        invoiceListController
-                                                            .invoiceListVo
-                                                            .details[index]
-                                                            .invoiceId
-                                                            .toString();
 
-                                                    changePageIndex = 2;
+                                                    if(invoiceListController
+                                                        .invoiceListVo
+                                                        .details[index]
+                                                        .paymentStatus ==
+                                                        'Unpaid'){
+
+                                                      currentInvoiceIndex =
+                                                          invoiceListController
+                                                              .invoiceListVo
+                                                              .details[index]
+                                                              .invoiceId
+                                                              .toString();
+
+                                                      changePageIndex = 2;
+                                                    }
+                                                    else {
+                                                      AppUtils.showSuccessSnackBar('Paid!!', 'Already Paid');
+                                                    }
                                                   });
 
                                                 },

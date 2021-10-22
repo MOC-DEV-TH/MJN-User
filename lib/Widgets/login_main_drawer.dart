@@ -1,4 +1,8 @@
+import 'package:MJN/views/AboutUsView.dart';
+import 'package:MJN/views/ProductAndServiceView.dart';
+import 'package:MJN/views/TermAndConditionView.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class LoginMainDrawer extends StatelessWidget {
 
@@ -29,11 +33,11 @@ class LoginMainDrawer extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(left: 12,top: 25),
               child: Text(
-                'Welcome To Mojoene',
+                'Welcome To Mojoenet',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     color: Colors.blueAccent,
-                    fontSize: 24,
+                    fontSize: 22,
                     fontWeight: FontWeight.bold),
               ),
             ),
@@ -43,15 +47,16 @@ class LoginMainDrawer extends StatelessWidget {
           ),
           buildListTile('Products and Services', Icons.arrow_right,
                   (){
-            // Navigator.of(context).pushReplacementNamed('/');
+            Get.to(ProductAndServiceView());
           }),
 
           buildListTile('About us', Icons.arrow_right,
                   (){
+                    Get.to(AboutUsView());
           }),
           buildListTile('Terms & Conditions', Icons.arrow_right,
                   (){
-                // Navigator.of(context).pushReplacementNamed('/');
+                    Get.to(TermAndConditionView());
               }),
 
           buildListTile('Contact us', Icons.arrow_right,

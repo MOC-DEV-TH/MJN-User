@@ -74,12 +74,8 @@ class _HomeViewState extends State<HomeView> {
                     height: 150,
                     child: PromotionItems(promotionNews)
                   ),
-                  Container(
-                    height: 34,
-                    width: MediaQuery.of(context).size.width,
-                    alignment: Alignment.centerLeft,
-                    margin: EdgeInsets.only(top: 10, left: 10),
-                    child: NeumorphicButton(
+                     NeumorphicButton(
+                       margin: EdgeInsets.only(top: 10, left: 10),
                       onPressed: () {
                         setState(() {
                           changePageIndex = 1;
@@ -101,7 +97,6 @@ class _HomeViewState extends State<HomeView> {
 //                lightSource: LightSource.topLeft,
                       ),
                     ),
-                  ),
                   Padding(
                     padding: const EdgeInsets.only(top: 8, left: 12),
                     child: Row(

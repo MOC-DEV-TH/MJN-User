@@ -9,6 +9,7 @@ import 'package:MJN/views/CreateServiceTicketView.dart';
 import 'package:MJN/views/LoginView.dart';
 import 'package:MJN/views/NewLoginView.dart';
 import 'package:MJN/views/SecondLoginView.dart';
+import 'package:MJN/views/ServiceComplainView.dart';
 import 'package:MJN/views/TabView.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -136,6 +137,7 @@ class _MyAppState extends State<MyApp> {
         SecondLoginVIew.routeName: (ctx) => SecondLoginVIew(),
         NewLoginView.routeName: (ctx) => NewLoginView(),
         SplashScreen.routeName: (ctx) => SplashScreen(),
+        ServiceComplainView.routeName: (ctx) => ServiceComplainView(),
       },
       home: SplashScreen()
     );
