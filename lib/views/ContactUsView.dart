@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ContactUsView extends StatelessWidget {
   @override
@@ -56,7 +57,11 @@ class ContactUsView extends StatelessWidget {
                   SizedBox(
                     height: 20,
                   ),
-                  Text('01-4709977',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
+                  InkWell(
+                    onTap: (){
+                      launch(('tel://01-4709977'));
+                    },
+                      child: Text('01-4709977',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,decoration: TextDecoration.underline,),)),
                   SizedBox(
                     height: 20,
                   ),

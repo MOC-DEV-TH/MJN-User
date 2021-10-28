@@ -172,6 +172,7 @@ class _MyServiceTicketViewState extends State<MyServiceTicketView> {
                               ),
                             ),
                             ListView.builder(
+                              physics: new NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
                               itemBuilder: (ctx, index) {
                                 return MyServiceTicketItems(ticketListController

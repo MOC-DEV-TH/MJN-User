@@ -218,6 +218,7 @@ class _PaymentViewState extends State<PaymentView> {
                            ),
                          ),
                          ListView.builder(
+                           physics: new NeverScrollableScrollPhysics(),
                            shrinkWrap: true,
                            itemBuilder: (ctx, index) {
                              return Column(
@@ -412,6 +413,7 @@ class _PaymentViewState extends State<PaymentView> {
                                 ),
                               ),
                               ListView.builder(
+                                physics: new NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
                                 itemBuilder: (ctx, index) {
                                   return Column(

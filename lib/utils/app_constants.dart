@@ -22,6 +22,7 @@ const UNIT = 'unit';
 const BUILDING = 'building';
 const DATA_INVOICE_ID = 'invoiceID';
 const LANGUAGE = 'language';
+const PHONE_NO = 'phone_no';
 
 
 const API_URL = BASE_URL+'api/';

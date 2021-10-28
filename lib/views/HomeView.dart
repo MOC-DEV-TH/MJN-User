@@ -3,6 +3,7 @@ import 'package:MJN/Widgets/package_and_service_items.dart';
 import 'package:MJN/Widgets/promotion_items.dart';
 import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/views/AccountDetailView.dart';
+import 'package:MJN/views/PackagePlanDetailView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
@@ -62,260 +63,291 @@ class _HomeViewState extends State<HomeView> {
 
     return changePageIndex == 1
         ? AccountView()
-        : Scaffold(
-            body: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    color: Colors.blueAccent,
-                    width: double.infinity,
-                    alignment: Alignment.center,
-                    height: 150,
-                    child: PromotionItems(promotionNews)
-                  ),
-                     NeumorphicButton(
-                       margin: EdgeInsets.only(top: 10, left: 10),
-                      onPressed: () {
-                        setState(() {
-                          changePageIndex = 1;
-                        });
-                      },
-                      child: Text(
-                        "My Account",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                            color: Colors.white),
-                      ),
-                      style: NeumorphicStyle(
-                        shape: NeumorphicShape.flat,
-                        boxShape: NeumorphicBoxShape.roundRect(
-                            BorderRadius.circular(12)),
-                        color: Colors.amber,
-                        depth: 8,
-//                lightSource: LightSource.topLeft,
-                      ),
-                    ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8, left: 12),
-                    child: Row(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Name',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500, fontSize: 13),
-                            ),
-                            SizedBox(
-                              height: 6,
-                            ),
-                            Text(
-                              'Building',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500, fontSize: 13),
-                            ),
-                            SizedBox(
-                              height: 6,
-                            ),
-                            Text(
-                              'Unit',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500, fontSize: 13),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              ':' + loginDataStorage.read(USER_NAME) ?? 'null',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500, fontSize: 13),
-                            ),
-                            SizedBox(
-                              height: 6,
-                            ),
-                            Text(
-                              ':' + loginDataStorage.read(BUILDING) ?? 'null',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500, fontSize: 13),
-                            ),
-                            SizedBox(
-                              height: 6,
-                            ),
-                            Text(
-                              ':' + loginDataStorage.read(UNIT) ?? 'null',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500, fontSize: 13),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                      width: 136,
-                      color: Colors.blueAccent,
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                          top: 6,
-                          bottom: 6,
-                        ),
+        : changePageIndex == 2
+            ? PackagePlanDetailView()
+            : Scaffold(
+                body: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                          color: Colors.blueAccent,
+                          width: double.infinity,
+                          alignment: Alignment.center,
+                          height: 150,
+                          child: PromotionItems(promotionNews)),
+                      NeumorphicButton(
+                        margin: EdgeInsets.only(top: 10, left: 10),
+                        onPressed: () {
+                          setState(() {
+                            changePageIndex = 1;
+                          });
+                        },
                         child: Text(
-                          'currentSubscription'.tr,
+                          "My Account",
                           style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 10,
-                          ),
-                          textAlign: TextAlign.center,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                              color: Colors.white),
                         ),
-                      )),
-                  Container(
-                    height: 1,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: Colors.grey,
-                    ),
-                  ),
-                  Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.blueAccent,
-                                border: Border.all(color: Colors.blueAccent),
-                                borderRadius: BorderRadius.all(Radius.circular(
-                                        8.0) //                 <--- border radius here
-                                    ),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 8, right: 8, top: 4, bottom: 4),
-                                child: Text(
-                                  'Start date',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 10),
-                                ),
-                              )),
-                        ),
-                        Container(
-                          width: 1,
-                          height: 30,
-                          color: Colors.grey,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.blueAccent,
-                                border: Border.all(color: Colors.blueAccent),
-                                borderRadius: BorderRadius.all(Radius.circular(
-                                        8.0) //                 <--- border radius here
-                                    ),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 8, right: 8, top: 4, bottom: 4),
-                                child: Text(
-                                  'End date',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 10),
-                                ),
-                              )),
-                        ),
-                        Container(
-                          width: 1,
-                          height: 30,
-                          color: Colors.grey,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.blueAccent,
-                                border: Border.all(color: Colors.blueAccent),
-                                borderRadius: BorderRadius.all(Radius.circular(
-                                        8.0) //                 <--- border radius here
-                                    ),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 8, right: 8, top: 4, bottom: 4),
-                                child: Text(
-                                  'Current Plan',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 10),
-                                ),
-                              )),
-                        ),
-                      ],
-                    ),
-                  ),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    itemBuilder: (ctx, index) {
-                      return CurrentSubscriptionItems(
-                          startDate[index], endDate[index], currentPlan[index]);
-                    },
-                    itemCount: startDate.length,
-                  ),
-
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    alignment: Alignment.centerLeft,
-                    height: 33,
-                    margin: EdgeInsets.only(top: 10, left: 10),
-                    child: NeumorphicButton(
-                      onPressed: () {
-                      },
-                      child: Text(
-                        "Package Plan & Other Service",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
-                      ),
-                      style: NeumorphicStyle(
-                        shape: NeumorphicShape.flat,
-                        boxShape: NeumorphicBoxShape.roundRect(
-                            BorderRadius.circular(12)),
-                        color: Colors.amber,
-                        depth: 8,
+                        style: NeumorphicStyle(
+                          shape: NeumorphicShape.flat,
+                          boxShape: NeumorphicBoxShape.roundRect(
+                              BorderRadius.circular(12)),
+                          color: Colors.amber,
+                          depth: 8,
 //                lightSource: LightSource.topLeft,
+                        ),
                       ),
-                    ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8, left: 12),
+                        child: Row(
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Name',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 13),
+                                ),
+                                SizedBox(
+                                  height: 6,
+                                ),
+                                Text(
+                                  'Building',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 13),
+                                ),
+                                SizedBox(
+                                  height: 6,
+                                ),
+                                Text(
+                                  'Unit',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 13),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  ':' + loginDataStorage.read(USER_NAME) ??
+                                      'null',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 13),
+                                ),
+                                SizedBox(
+                                  height: 6,
+                                ),
+                                Text(
+                                  ':' + loginDataStorage.read(BUILDING) ??
+                                      'null',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 13),
+                                ),
+                                SizedBox(
+                                  height: 6,
+                                ),
+                                Text(
+                                  ':' + loginDataStorage.read(UNIT) ?? 'null',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 13),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                          width: 136,
+                          color: Colors.blueAccent,
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                              top: 6,
+                              bottom: 6,
+                            ),
+                            child: Text(
+                              'currentSubscription'.tr,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 10,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          )),
+                      Container(
+                        height: 1,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Colors.grey,
+                        ),
+                      ),
+                      Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.blueAccent,
+                                    border:
+                                        Border.all(color: Colors.blueAccent),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(
+                                            8.0) //                 <--- border radius here
+                                        ),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 8, right: 8, top: 4, bottom: 4),
+                                    child: Text(
+                                      'Start date',
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 10),
+                                    ),
+                                  )),
+                            ),
+                            Container(
+                              width: 1,
+                              height: 30,
+                              color: Colors.grey,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.blueAccent,
+                                    border:
+                                        Border.all(color: Colors.blueAccent),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(
+                                            8.0) //                 <--- border radius here
+                                        ),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 8, right: 8, top: 4, bottom: 4),
+                                    child: Text(
+                                      'End date',
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 10),
+                                    ),
+                                  )),
+                            ),
+                            Container(
+                              width: 1,
+                              height: 30,
+                              color: Colors.grey,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.blueAccent,
+                                    border:
+                                        Border.all(color: Colors.blueAccent),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(
+                                            8.0) //                 <--- border radius here
+                                        ),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 8, right: 8, top: 4, bottom: 4),
+                                    child: Text(
+                                      'Current Plan',
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 10),
+                                    ),
+                                  )),
+                            ),
+                          ],
+                        ),
+                      ),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        itemBuilder: (ctx, index) {
+                          return CurrentSubscriptionItems(startDate[index],
+                              endDate[index], currentPlan[index]);
+                        },
+                        itemCount: startDate.length,
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        alignment: Alignment.centerLeft,
+                        height: 33,
+                        margin: EdgeInsets.only(top: 10, left: 10),
+                        child: NeumorphicButton(
+                          onPressed: () {},
+                          child: Text(
+                            "Package Plan & Other Service",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                          style: NeumorphicStyle(
+                            shape: NeumorphicShape.flat,
+                            boxShape: NeumorphicBoxShape.roundRect(
+                                BorderRadius.circular(12)),
+                            color: Colors.amber,
+                            depth: 8,
+//                lightSource: LightSource.topLeft,
+                          ),
+                        ),
+                      ),
+                      GridView(
+                          shrinkWrap: true,
+                          physics: new NeverScrollableScrollPhysics(),
+                          primary: false,
+                          padding: const EdgeInsets.all(10),
+                          children: imgList
+                              .map((imgData) => PackageAndServiceItems())
+                              .toList(),
+                          gridDelegate:
+                              SliverGridDelegateWithMaxCrossAxisExtent(
+                            maxCrossAxisExtent: 200,
+                            mainAxisSpacing: 20,
+                            crossAxisSpacing: 20,
+                            childAspectRatio: (1 / .6),
+                          )),
+                    ],
                   ),
+                ),
+              );
+  }
 
-                  GridView(
-                      shrinkWrap: true,
-                      physics: new NeverScrollableScrollPhysics(),
-                      primary: false,
-                      padding: const EdgeInsets.all(10),
-                      children: imgList
-                          .map((imgData) => PackageAndServiceItems())
-                          .toList(),
-                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: 200,
-                        mainAxisSpacing: 20,
-                        crossAxisSpacing: 20,
-                        childAspectRatio: (1 / .6),
-                      )),
-                ],
+  Widget PackageAndServiceItems() {
+    return InkWell(
+      onTap: () {
+        setState(() {
+          changePageIndex = 2;
+        });
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.blueAccent),
+          borderRadius: BorderRadius.all(
+              Radius.circular(24.0) //                 <--- border radius here
               ),
-            ),
-          );
+        ),
+      ),
+    );
   }
 }

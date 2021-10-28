@@ -42,6 +42,10 @@ class _CreateServiceTicketViewState extends State<CreateServiceTicketView> {
   @override
   Widget build(BuildContext context) {
 
+    nameText.text = loginDataStorage.read(USER_NAME);
+    buildingText.text =loginDataStorage.read(BUILDING);
+    unitText.text =  loginDataStorage.read(UNIT);
+    phoneNoText.text = loginDataStorage.read(PHONE_NO);
 
     return changePageIndex == 1
         ? ServiceComplainView()
@@ -366,12 +370,14 @@ class _CreateServiceTicketViewState extends State<CreateServiceTicketView> {
                             width: 200,
                             child:
 
+                               // ignore: missing_return
                                Obx((){
                                  if (createTicketController.isLoading.value) {
                                    return Center(
                                      child: CircularProgressIndicator(),
                                    );
                                  }
+
                                  else {
                                    return
                                      NeumorphicButton(
@@ -392,11 +398,11 @@ class _CreateServiceTicketViewState extends State<CreateServiceTicketView> {
                                          else {
                                            RequestCreateTicket requestCreateTicket =
                                            new RequestCreateTicket(
-                                               nameText.value.text,
-                                               buildingText.value.text,
-                                               unitText.value.text,
+                                               loginDataStorage.read(USER_NAME),
+                                               loginDataStorage.read(BUILDING),
+                                               loginDataStorage.read(UNIT),
                                                emailText.value.text,
-                                               phoneNoText.value.text,
+                                               loginDataStorage.read(PHONE_NO),
                                                selectServiceRequestIndex.toString(),
                                                selectIssueIndex.toString(),
                                                "Topic Other",

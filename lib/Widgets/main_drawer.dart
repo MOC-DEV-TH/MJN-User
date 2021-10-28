@@ -54,9 +54,9 @@ class MainDrawer extends StatelessWidget {
             Get.to(AboutUsView());
           }),
           buildListTile('Terms & Conditions', Icons.arrow_right, () {
-            // Get.to(TermAndConditionView());
-            AppUtils.showRequireUpdateDialog('Application Update',
-                'A new update is available!!', context);
+             Get.to(TermAndConditionView());
+            // AppUtils.showRequireUpdateDialog('Application Update',
+            //     'A new update is available!!', context);
           }),
           buildListTile('Logout', Icons.arrow_right, () {
             AppUtils.showLogoutDialog('Logout',
