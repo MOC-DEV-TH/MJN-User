@@ -201,4 +201,97 @@ class AppUtils {
               ));
     });
   }
+
+
+  static void showRequireUpdateDialog(
+      String title, String message, BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      showDialog(
+          context: context,
+          builder: (_) => Center(
+            child: Container(
+              height: 270,
+              width: double.infinity,
+              margin: EdgeInsets.all(10),
+              //child: Material(
+              //child: Container(
+              padding: EdgeInsets.all(4),
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/dialog_card_bg.png"),
+                  fit: BoxFit.fill,
+                ),
+              ),
+              //color: Colors.white,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Icon(
+                    Icons.update_outlined,
+                    size: 60,
+                  ),
+                  Center(
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 20.0),
+                    ),
+                  ),
+                  Center(
+                    child: Text(message,textAlign: TextAlign.center,),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Container(
+                          width: 100,
+                          height: 40,
+                          child: RaisedButton(
+                              color: Theme.of(context).primaryColorDark,
+                              child: Text(
+                                'OK',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16),
+                              ),
+                              onPressed: () {
+
+                              }),
+                        ),
+                      ),
+
+                      SizedBox(width: 40,),
+
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Container(
+                          width: 100,
+                          height: 40,
+                          child: RaisedButton(
+                              color: Theme.of(context).primaryColorDark,
+                              child: Text(
+                                'Cancel',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              }),
+                        ),
+                      ),
+
+                    ],)
+
+                ],
+              ),
+            ),
+          ));
+    });
+  }
+
 }
