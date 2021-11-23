@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:MJN/LocalString/LocalString.dart';
+import 'package:MJN/NewViews/LoginView1.dart';
 import 'package:MJN/models/notificationModelVO.dart';
 import 'package:MJN/presistence/db/database_util.dart';
 import 'package:MJN/utils/app_constants.dart';
@@ -18,6 +19,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:lottie/lottie.dart';
 import 'package:get/get.dart';
+import 'package:splashscreen/splashscreen.dart';
 
 import 'controllers/sendFirebaseTokenController.dart';
 
@@ -136,30 +138,26 @@ class _MyAppState extends State<MyApp> {
         CreateServiceTicketView.routeName: (ctx) => CreateServiceTicketView(),
         SecondLoginVIew.routeName: (ctx) => SecondLoginVIew(),
         NewLoginView.routeName: (ctx) => NewLoginView(),
-        SplashScreen.routeName: (ctx) => SplashScreen(),
+        LoginView1.routeName: (ctx) => LoginView1(),
+        Splash2.routeName: (ctx) => Splash2(),
         ServiceComplainView.routeName: (ctx) => ServiceComplainView(),
       },
-      home: SplashScreen()
+      home: Splash2()
     );
   }
 }
 
-class SplashScreen extends StatefulWidget {
-  static const routeName = '/splash_screen';
-  const SplashScreen({Key key}) : super(key: key);
 
+class Splash2 extends StatefulWidget {
+  static const routeName = '/splash_screen';
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  _Splash2State createState() => _Splash2State();
 }
 
-class _SplashScreenState extends State<SplashScreen>
-    with TickerProviderStateMixin {
-  AnimationController _controller;
-  final loginDataStorage = GetStorage();
+class _Splash2State extends State<Splash2> {
 
   @override
   void initState() {
-
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       onReceivedFirebaseMsg(message);
@@ -182,38 +180,96 @@ class _SplashScreenState extends State<SplashScreen>
       }
     });
 
-
     super.initState();
-    _controller = AnimationController(
-      duration: Duration(seconds: (5)),
-      vsync: this,
-    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Lottie.asset(
-        'assets/splash_lottie_network.json',
-        controller: _controller,
-        height: MediaQuery.of(context).size.height * 1,
-        animate: true,
-        onLoaded: (composition) {
-          _controller
-            ..duration = composition.duration
-            ..forward().whenComplete(() => Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => loginDataStorage.read(TOKEN) != null
-                          ? TabScreens()
-                          : LoginView()),
-                ));
-        },
+    return SplashScreen(
+      backgroundColor: Color(0xff242527),
+      seconds: 6,
+      navigateAfterSeconds: new TabScreens(),
+      image: Image.asset(
+        'assets/images/mjn_logo.png',
       ),
+      loadingText: Text("Loading....",
+        style: TextStyle(
+            color: Color(0xff659EC7), fontWeight: FontWeight.bold, fontSize: 20.0),),
+      photoSize: 80.0,
+      loaderColor: Color(0xff659EC7),
     );
   }
 }
 
+
+// class SplashScreen extends StatefulWidget {
+//   static const routeName = '/splash_screen';
+//   const SplashScreen({Key key}) : super(key: key);
+//
+//   @override
+//   _SplashScreenState createState() => _SplashScreenState();
+// }
+//
+// class _SplashScreenState extends State<SplashScreen>
+//     with TickerProviderStateMixin {
+//   AnimationController _controller;
+//   final loginDataStorage = GetStorage();
+//
+//   @override
+//   void initState() {
+//
+//     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+//       onReceivedFirebaseMsg(message);
+//       NotificationModelVO notificationModelVO =
+//       NotificationModelVO.fromJson(message.data);
+//       if (notificationModelVO != null) {
+//         flutterLocalNotificationsPlugin.show(
+//             notificationModelVO.hashCode,
+//             notificationModelVO.title,
+//             notificationModelVO.body,
+//             NotificationDetails(
+//               android: AndroidNotificationDetails(
+//                 channel.id,
+//                 channel.name,
+//                 channel.description,
+//                 //      one that already exists in example app.
+//                 icon: 'launch_background',
+//               ),
+//             ));
+//       }
+//     });
+//
+//
+//     super.initState();
+//     _controller = AnimationController(
+//       duration: Duration(seconds: (5)),
+//       vsync: this,
+//     );
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Lottie.asset(
+//         'assets/splash_lottie_network.json',
+//         controller: _controller,
+//         height: MediaQuery.of(context).size.height * 1,
+//         animate: true,
+//         onLoaded: (composition) {
+//           _controller
+//             ..duration = composition.duration
+//             ..forward().whenComplete(() => Navigator.pushReplacement(
+//                   context,
+//                   MaterialPageRoute(
+//                       builder: (context) => loginDataStorage.read(TOKEN) != null
+//                           ? TabScreens()
+//                           : LoginView()),
+//                 ));
+//         },
+//       ),
+//     );
+//   }
+// }
  getFirebaseToken() async {
   String token = await FirebaseMessaging.instance.getToken();
   return token;

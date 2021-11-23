@@ -69,12 +69,17 @@ class AppUtils {
                       Center(
                         child: Text(
                           title,
+
                           style: TextStyle(
+                            decoration: TextDecoration.none,
+                            color: Colors.black,
                               fontWeight: FontWeight.bold, fontSize: 20.0),
                         ),
                       ),
                       Center(
-                        child: Text(message,textAlign: TextAlign.center,),
+                        child: Text(message,textAlign: TextAlign.center,style: TextStyle(
+                            decoration: TextDecoration.none,
+                            fontSize: 14,color: Colors.black),),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -96,8 +101,8 @@ class AppUtils {
                                   onPressed: () {
                                     AppUtils.removeDataFromGetStorage();
                                     Navigator.of(context).pop();
-                                    Navigator.of(context).pushReplacementNamed(
-                                        SplashScreen.routeName);
+                                     Navigator.of(context).pushReplacementNamed(
+                                         Splash2.routeName);
                                   }),
                             ),
                           ),
@@ -189,8 +194,8 @@ class AppUtils {
                               onPressed: () {
                                 AppUtils.removeDataFromGetStorage();
                                 Navigator.of(context).pop();
-                                Navigator.of(context).pushReplacementNamed(
-                                    SplashScreen.routeName);
+                                // Navigator.of(context).pushReplacementNamed(
+                                //     SplashScreen.routeName);
                               }),
                         ),
                       ),

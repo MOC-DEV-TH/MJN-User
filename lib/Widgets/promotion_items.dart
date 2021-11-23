@@ -8,7 +8,7 @@ class PromotionItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(child: SizedBox(
-      height: MediaQuery.of(context).size.width * 0.5,//180.0,
+      height: MediaQuery.of(context).size.width * 0.7,//180.0,
       width: MediaQuery.of(context).size.width,
       child: Carousel(
         boxFit: BoxFit.fill,
@@ -16,7 +16,7 @@ class PromotionItems extends StatelessWidget {
         animationCurve: Curves.fastOutSlowIn,
         animationDuration: Duration(milliseconds: 1000),
         dotSize: 6.0,
-        dotIncreasedColor: Color(0xFFFF335C),
+        dotIncreasedColor: Color(0xFFFFFFFF),
         dotBgColor: Colors.transparent,
         dotColor: Colors.grey,
         dotPosition: DotPosition.bottomCenter,
