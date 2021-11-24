@@ -28,15 +28,27 @@ class TabScreens extends StatefulWidget {
 
 class _TabScreensState extends State<TabScreens> {
   var _scaffoldKey = GlobalKey<ScaffoldState>();
-  final GlobalKey<PopupMenuButtonState<int>> _key = GlobalKey();
+
   bool isOpened = false;
-  AnimationController _animationController;
+
+  bool visible = false;
 
   String selectedLang = 'ENG';
   final langStorage = GetStorage();
 
+  String dropdownvalue = 'Apple';
+  var items = [
+    'Apple',
+    'Banana',
+    'Grapes',
+    'Orange',
+    'watermelon',
+    'Pineapple'
+  ];
+
   @override
   void initState() {
+    visible = false;
     super.initState();
 
     if (langStorage.read(LANGUAGE) == 'မြန်မာ') {
@@ -59,8 +71,6 @@ class _TabScreensState extends State<TabScreens> {
       _selectedPageIndex = index;
     });
   }
-
-
 
   _showPopupMenu() {
     showMenu<String>(
@@ -91,16 +101,88 @@ class _TabScreensState extends State<TabScreens> {
             child:
                 const Text('My Account', style: TextStyle(color: Colors.white)),
             value: '5'),
-
         PopupMenuItem<String>(
-            child: const Text('User Manuals',
-                style: TextStyle(color: Colors.white)),
+            child: visible
+                ? Container(
+                    alignment: Alignment.topLeft,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              visible = false;
+                              Navigator.pop(context);
+                              _showPopupMenu();
+                            });
+                          },
+                          child: const Text('User Manual',
+                              style: TextStyle(color: Colors.white)),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 4),
+                          child: InkWell(
+                            onTap: () {
+                              print('Login Manual');
+                            },
+                            child: const Text('Login Manual',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                )),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 4),
+                          child: InkWell(
+                            onTap: () {
+                              print('Service Ticket Manual');
+                            },
+                            child: const Text('Service Ticket Manual',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                )),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 4),
+                          child: InkWell(
+                            onTap: () {
+                              print('Online Payment Manual');
+                            },
+                            child: const Text('Online Payment Manual',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                )),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                : Text('User Manual', style: TextStyle(color: Colors.white)),
             value: '6'),
         PopupMenuItem<String>(
-          child: Text(langStorage.read(TOKEN) != null ? 'Logout' : 'Login',
-              style: TextStyle(color: Colors.white)),
-          value: '7',
-        ),
+            child: visible
+                ? Column(
+                    children: [
+                      Text(langStorage.read(TOKEN) != null ? 'Logout' : 'Login',
+                          style: TextStyle(color: Colors.white)),
+                    ],
+                  )
+                : Text(langStorage.read(TOKEN) != null ? 'Logout' : 'Login',
+                    style: TextStyle(color: Colors.white)),
+            value: '7'),
       ],
       elevation: 8.0,
     ).then<void>((String itemSelected) {
@@ -127,9 +209,10 @@ class _TabScreensState extends State<TabScreens> {
           changePageIndex = 9;
         });
       } else if (itemSelected == "6") {
-
-        _showUserManualPopupMenu();
-
+        setState(() {
+          visible = true;
+          _showPopupMenu();
+        });
       } else if (itemSelected == '7') {
         langStorage.read(TOKEN) != null
             ? AppUtils.showLogoutDialog('Logout',
@@ -141,12 +224,14 @@ class _TabScreensState extends State<TabScreens> {
 
   _showUserManualPopupMenu() {
     return Container(
-       color: Color(0xff242527),
-        child: Column(children: [
-          Text('Login Manual'),
-          Text('Login Manual'),
-          Text('Login Manual'),
-        ],));
+        color: Color(0xff242527),
+        child: Column(
+          children: [
+            Text('Login Manual'),
+            Text('Login Manual'),
+            Text('Login Manual'),
+          ],
+        ));
   }
 
   Widget getSelectedPage() {
