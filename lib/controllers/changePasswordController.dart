@@ -14,7 +14,7 @@ class ChangePasswordController extends GetxController{
       if (res != null) {
         networkResult = res;
         if (networkResult.status == 'Success'){
-          Get.to(TabScreens());
+          //Get.to(TabScreens());
         }
         print(networkResult.status);
         print(networkResult.description);

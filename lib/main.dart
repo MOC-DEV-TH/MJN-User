@@ -133,7 +133,7 @@ class _MyAppState extends State<MyApp> {
               )),
       debugShowCheckedModeBanner: false,
       routes: {
-        TabScreens.routeName: (ctx) => TabScreens(),
+        TabScreens.routeName: (ctx) => TabScreens(0),
         ChangePasswordView.routeName: (ctx) => ChangePasswordView(),
         CreateServiceTicketView.routeName: (ctx) => CreateServiceTicketView(),
         SecondLoginVIew.routeName: (ctx) => SecondLoginVIew(),
@@ -188,7 +188,7 @@ class _Splash2State extends State<Splash2> {
     return SplashScreen(
       backgroundColor: Color(0xff242527),
       seconds: 6,
-      navigateAfterSeconds: new TabScreens(),
+      navigateAfterSeconds: new TabScreens(0),
       image: Image(
           image: AssetImage('assets/images/splash_screen_logo.png')),
       loadingText: Text("Loading....",
