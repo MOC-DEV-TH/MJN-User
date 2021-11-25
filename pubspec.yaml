@@ -91,6 +91,8 @@ flutter:
     - assets/images/email.png
     - assets/images/fb_icon.png
     - assets/images/web_icon.png
+    - assets/images/search_icon.png
+    - assets/images/outage_icon.png
 
 
         # An image asset can refer to one or more resolution-specific "variants", see

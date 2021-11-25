@@ -219,6 +219,7 @@ class _LoginView1State extends State<LoginView1> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           toolbarHeight: 90,
           backgroundColor: Color(0xff242527),
           iconTheme: IconThemeData(color: Colors.grey),

@@ -59,7 +59,7 @@ class _NewContactUsViewState extends State<NewContactUsView> {
                           ],
                         ),
 
-                        SizedBox(height: 60,),
+                        SizedBox(height: 80,),
 
                         Text(
                           'Visit to us online :',
