@@ -189,13 +189,12 @@ class _Splash2State extends State<Splash2> {
       backgroundColor: Color(0xff242527),
       seconds: 6,
       navigateAfterSeconds: new TabScreens(),
-      image: Image.asset(
-        'assets/images/mjn_logo.png',
-      ),
+      image: Image(
+          image: AssetImage('assets/images/splash_screen_logo.png')),
       loadingText: Text("Loading....",
         style: TextStyle(
-            color: Color(0xff659EC7), fontWeight: FontWeight.bold, fontSize: 20.0),),
-      photoSize: 80.0,
+            color: Color(0xff659EC7), fontWeight: FontWeight.bold, fontSize: 18.0),),
+      photoSize: 140.0,
       loaderColor: Color(0xff659EC7),
     );
   }

@@ -76,6 +76,16 @@ flutter:
     - assets/images/drawer_header_img.png
     - assets/splash_lottie_network.json
     - assets/images/dialog_card_bg.png
+    - assets/images/promo_item.png
+    - assets/images/package_one.png
+    - assets/images/package_two.png
+    - assets/images/package_three.png
+    - assets/images/package_four.png
+    - assets/images/splash_screen_logo.png
+    - assets/images/login.png
+    - assets/images/home.png
+    - assets/images/about_us.png
+    - assets/images/menu.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

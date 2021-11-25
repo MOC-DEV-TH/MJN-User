@@ -20,8 +20,15 @@ class NewHomeView extends StatefulWidget {
 class _NewHomeViewState extends State<NewHomeView> {
   int changePageIndex = 0;
 
-
-  final List<int> imgList = <int>[2, 0, 10, 6, 6, 6];
+  final List<String> imgList = <String>[
+    'assets/images/package_one.png',
+    'assets/images/package_one.png',
+    'assets/images/package_two.png',
+    'assets/images/package_three.png',
+    'assets/images/package_four.png',
+    'assets/images/package_one.png',
+    'assets/images/package_two.png'
+  ];
   final List<String> promotionNews = <String>[
     'Aby',
     'Aish',
@@ -57,12 +64,13 @@ class _NewHomeViewState extends State<NewHomeView> {
                 alignment: Alignment.center,
                 height: 200,
                 child: PromotionItems(promotionNews)),
-
             Container(
-              color:  Color(0xff188FC5),
+              color: Color(0xff188FC5),
               child: Column(
                 children: [
-                  SizedBox(height: 10,),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Text(
                     "Package Plan & Other Service",
                     textAlign: TextAlign.center,
@@ -71,22 +79,28 @@ class _NewHomeViewState extends State<NewHomeView> {
                         fontWeight: FontWeight.bold,
                         color: Colors.white),
                   ),
-
-                  SizedBox(height: 10,),
-
-              GridView(
-                        shrinkWrap: true,
-                        physics: new NeverScrollableScrollPhysics(),
-                        primary: false,
-                        padding: const EdgeInsets.all(10),
-                        children:
-                        imgList.map((imgData) => PackageAndServiceItems()).toList(),
-                        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: 200,
-                          mainAxisSpacing: 20,
-                          crossAxisSpacing: 20,
-                          childAspectRatio: (1 / .8),
-                        )),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  GridView(
+                      shrinkWrap: true,
+                      physics: new NeverScrollableScrollPhysics(),
+                      primary: false,
+                      padding: const EdgeInsets.all(10),
+                      children: [
+                        Image(image: AssetImage('assets/images/package_one.png')),
+                        Image(image: AssetImage('assets/images/package_two.png')),
+                        Image(image: AssetImage( 'assets/images/package_three.png')),
+                        Image(image: AssetImage('assets/images/package_four.png')),
+                        Image(image: AssetImage( 'assets/images/package_one.png')),
+                        Image(image: AssetImage('assets/images/package_two.png')),
+                      ],
+                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 200,
+                        mainAxisSpacing: 20,
+                        crossAxisSpacing: 20,
+                        childAspectRatio: (1 / .8),
+                      )),
                 ],
               ),
             )
@@ -96,11 +110,10 @@ class _NewHomeViewState extends State<NewHomeView> {
     );
   }
 
-  Widget PackageAndServiceItems() {
+  Widget PackageAndServiceItems(String imageData) {
     return InkWell(
       onTap: () {
-        setState(() {
-        });
+        setState(() {});
       },
       child: Container(
         decoration: BoxDecoration(
@@ -109,6 +122,7 @@ class _NewHomeViewState extends State<NewHomeView> {
               Radius.circular(24.0) //                 <--- border radius here
               ),
         ),
+        child: Container(child: Image(image: AssetImage(imageData.toString()))),
       ),
     );
   }

@@ -24,9 +24,7 @@ class PromotionItems extends StatelessWidget {
         showIndicator: true,
         indicatorBgPadding: 7.0,
         images: images.map((imgData) =>
-            NetworkImage(
-               'https://alexasprings.com/wp-content/uploads/2017/05/promotion.jpg'
-            )).toList(),
+            AssetImage('assets/images/promo_item.png'),).toList(),
       ),
     ),);
   }

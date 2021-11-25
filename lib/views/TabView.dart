@@ -1,4 +1,5 @@
 import 'package:MJN/NewViews/LoginView1.dart';
+import 'package:MJN/NewViews/NewAboutUsView.dart';
 import 'package:MJN/NewViews/NewHomeView.dart';
 import 'package:MJN/Widgets/main_drawer.dart';
 import 'package:MJN/utils/app_constants.dart';
@@ -32,6 +33,11 @@ class _TabScreensState extends State<TabScreens> {
   bool isOpened = false;
 
   bool visible = false;
+  bool pageSelectedIndex = false;
+  bool navSelectedIndex = true;
+
+
+  List<bool> isSelected;
 
   String selectedLang = 'ENG';
   final langStorage = GetStorage();
@@ -49,15 +55,16 @@ class _TabScreensState extends State<TabScreens> {
   @override
   void initState() {
     visible = false;
+    isSelected = [true, false];
     super.initState();
 
-    if (langStorage.read(LANGUAGE) == 'မြန်မာ') {
+    if (langStorage.read(LANGUAGE) == 'MY') {
       setState(() {
-        selectedLang = 'မြန်မာ';
+        isSelected = [false, true];
       });
-    } else if (langStorage.read(LANGUAGE) == 'ENG') {
+    } else if (langStorage.read(LANGUAGE) == 'EN') {
       setState(() {
-        selectedLang = 'ENG';
+        isSelected = [true, false];
       });
     }
   }
@@ -69,6 +76,7 @@ class _TabScreensState extends State<TabScreens> {
     setState(() {
       changePageIndex = 0;
       _selectedPageIndex = index;
+      navSelectedIndex = true;
     });
   }
 
@@ -123,7 +131,7 @@ class _TabScreensState extends State<TabScreens> {
                           height: 15,
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 4),
+                          padding: const EdgeInsets.only(left: 6),
                           child: InkWell(
                             onTap: () {
                               print('Login Manual');
@@ -131,6 +139,7 @@ class _TabScreensState extends State<TabScreens> {
                             child: const Text('Login Manual',
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
+                                  fontSize: 13,
                                   color: Colors.grey,
                                 )),
                           ),
@@ -139,7 +148,7 @@ class _TabScreensState extends State<TabScreens> {
                           height: 10,
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 4),
+                          padding: const EdgeInsets.only(left: 6),
                           child: InkWell(
                             onTap: () {
                               print('Service Ticket Manual');
@@ -147,6 +156,7 @@ class _TabScreensState extends State<TabScreens> {
                             child: const Text('Service Ticket Manual',
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
+                                  fontSize: 13,
                                   color: Colors.grey,
                                 )),
                           ),
@@ -155,7 +165,7 @@ class _TabScreensState extends State<TabScreens> {
                           height: 10,
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 4),
+                          padding: const EdgeInsets.only(left: 6),
                           child: InkWell(
                             onTap: () {
                               print('Online Payment Manual');
@@ -163,6 +173,7 @@ class _TabScreensState extends State<TabScreens> {
                             child: const Text('Online Payment Manual',
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
+                                  fontSize: 13,
                                   color: Colors.grey,
                                 )),
                           ),
@@ -191,22 +202,27 @@ class _TabScreensState extends State<TabScreens> {
       if (itemSelected == "1") {
         setState(() {
           changePageIndex = 5;
+          navSelectedIndex = false;
         });
       } else if (itemSelected == "2") {
         setState(() {
           changePageIndex = 6;
+          navSelectedIndex = false;
         });
       } else if (itemSelected == "3") {
         setState(() {
           changePageIndex = 7;
+          navSelectedIndex = false;
         });
       } else if (itemSelected == "4") {
         setState(() {
           changePageIndex = 8;
+          navSelectedIndex = false;
         });
       } else if (itemSelected == "5") {
         setState(() {
           changePageIndex = 9;
+          navSelectedIndex = false;
         });
       } else if (itemSelected == "6") {
         setState(() {
@@ -222,25 +238,14 @@ class _TabScreensState extends State<TabScreens> {
     });
   }
 
-  _showUserManualPopupMenu() {
-    return Container(
-        color: Color(0xff242527),
-        child: Column(
-          children: [
-            Text('Login Manual'),
-            Text('Login Manual'),
-            Text('Login Manual'),
-          ],
-        ));
-  }
-
   Widget getSelectedPage() {
     int pageIndex = 0;
     pageIndex = (changePageIndex == 5 ||
             changePageIndex == 6 ||
             changePageIndex == 7 ||
             changePageIndex == 8 ||
-            changePageIndex == 9)
+            changePageIndex == 9 ||
+            changePageIndex == 10)
         ? changePageIndex
         : _selectedPageIndex;
     switch (pageIndex) {
@@ -255,7 +260,7 @@ class _TabScreensState extends State<TabScreens> {
       case 4:
         return ContactUsView();
       case 5:
-        return AboutUsView();
+        return NewAboutUsView();
       case 6:
         return ProductAndServiceView();
       case 7:
@@ -264,86 +269,269 @@ class _TabScreensState extends State<TabScreens> {
         return ContactUsView();
       case 9:
         return AccountView();
+      case 10:
+        return NewHomeView();
     }
 
-    return HomeView();
+    return NewHomeView();
+  }
+
+  double _buttonWidth(BuildContext context) {
+    final maxWidth = 20.0;
+    final buttonCount = 2;
+
+    final width = (MediaQuery.of(context).size.width - 200) / buttonCount;
+    if (width < maxWidth) {
+      return width;
+    } else {
+      return maxWidth;
+    }
+  }
+
+  Widget logoAndNavTitleAppBar(int navSelectPage) {
+    return AppBar(
+      toolbarHeight: 90,
+      elevation: 2,
+      backgroundColor: Color(0xff242527),
+      iconTheme: IconThemeData(color: Colors.grey),
+      title: Container(
+        width: MediaQuery.of(context).size.width,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+                margin: EdgeInsets.only(right: 40),
+                child: GestureDetector(
+                    onTap: () {
+                      _showPopupMenu();
+                    },
+                    child: Icon((Icons.dehaze_rounded)))),
+            navSelectPage == 0
+                ? Container(
+                    padding: EdgeInsets.only(right: 80),
+                    child: Text(
+                      'Notification',
+                      style: TextStyle(fontSize: 14),
+                    ),
+                  )
+                : navSelectPage == 1
+                    ? Container(
+                        padding: EdgeInsets.only(right: 80),
+                        child: Text(
+                          'Payment',
+                          style: TextStyle(fontSize: 14),
+                        ),
+                      )
+                    : navSelectPage == 3
+                        ? Container(
+                            padding: EdgeInsets.only(right: 60),
+                            child: Text(
+                              'Service Complain',
+                              style: TextStyle(fontSize: 14),
+                            ),
+                          )
+                        : navSelectPage == 4
+                            ? Container(
+                                padding: EdgeInsets.only(right: 80),
+                                child: Text(
+                                  'Contact Us',
+                                  style: TextStyle(fontSize: 14),
+                                ),
+                              )
+                            : Container(
+                                margin: EdgeInsets.only(left: 65, right: 50),
+                                width: 100,
+                                child: Image(
+                                    image: AssetImage(
+                                        'assets/images/splash_screen_logo.png'))),
+          ],
+        ),
+      ),
+      actions: [
+        Container(
+          margin: EdgeInsets.only(right: 20, top: 30, bottom: 30),
+          padding: EdgeInsets.zero,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(color: Colors.black, width: 1.0),
+            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+          ),
+          child: ToggleButtons(
+            constraints: BoxConstraints.tight(Size(35, 35)),
+            selectedColor: Colors.white,
+            borderRadius: BorderRadius.circular(5),
+            fillColor: Colors.blue,
+            children: [
+              Container(
+                alignment: Alignment.center,
+                width: _buttonWidth(context),
+                child: Text(
+                  'EN',
+                  style: TextStyle(fontSize: 10),
+                ),
+              ),
+              Container(
+                alignment: Alignment.center,
+                width: _buttonWidth(context),
+                child: Text(
+                  'MY',
+                  style: TextStyle(fontSize: 10),
+                ),
+              ),
+            ],
+            onPressed: (int index) {
+              setState(() {
+                for (int i = 0; i < isSelected.length; i++) {
+                  isSelected[i] = i == index;
+                }
+
+                if (index == 0) {
+                  langStorage.write(LANGUAGE, 'EN');
+                  var locale = Locale('en', 'US');
+                  Get.updateLocale(locale);
+                } else {
+                  langStorage.write(LANGUAGE, 'MY');
+                  var locale = Locale('my', 'MM');
+                  Get.updateLocale(locale);
+                }
+              });
+            },
+            isSelected: isSelected,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget titleAppBar(int pageIndex) {
+    return AppBar(
+      toolbarHeight: 90,
+      elevation: 2,
+      backgroundColor: Color(0xff242527),
+      iconTheme: IconThemeData(color: Colors.grey),
+      title: Container(
+        width: MediaQuery.of(context).size.width,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+                child: GestureDetector(
+                    onTap: () {
+                      _showPopupMenu();
+                    },
+                    child: Icon((Icons.dehaze_rounded)))),
+            pageIndex == 5
+                ? Container(
+                    padding: EdgeInsets.only(right: 80),
+                    child: Text(
+                      'About Us',
+                      style: TextStyle(fontSize: 14),
+                    ),
+                  )
+                : pageIndex == 6
+                    ? Container(
+                        padding: EdgeInsets.only(right: 40),
+                        child: Text(
+                          'Product And Services',
+                          style: TextStyle(fontSize: 14),
+                        ),
+                      )
+                    : pageIndex == 7
+                        ? Container(
+                            padding: EdgeInsets.only(right: 40),
+                            child: Text(
+                              'Terms & Conditions',
+                              style: TextStyle(fontSize: 14),
+                            ),
+                          )
+                        : pageIndex == 8
+                            ? Container(
+                                padding: EdgeInsets.only(right: 80),
+                                child: Text(
+                                  'Contact Us',
+                                  style: TextStyle(fontSize: 14),
+                                ),
+                              )
+                            : pageIndex == 9
+                                ? Container(
+                                    padding: EdgeInsets.only(right: 80),
+                                    child: Text(
+                                      'My Account',
+                                      style: TextStyle(fontSize: 14),
+                                    ),
+                                  )
+                                : Container(
+                                    margin:
+                                        EdgeInsets.only(left: 65, right: 50),
+                                    child: Text(''),
+                                  ),
+          ],
+        ),
+      ),
+      actions: [
+        Container(
+          margin: EdgeInsets.only(right: 20, top: 30, bottom: 30),
+          padding: EdgeInsets.zero,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(color: Colors.black, width: 1.0),
+            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+          ),
+          child: ToggleButtons(
+            constraints: BoxConstraints.tight(Size(35, 35)),
+            selectedColor: Colors.white,
+            borderRadius: BorderRadius.circular(5),
+            fillColor: Colors.blue,
+            children: [
+              Container(
+                alignment: Alignment.center,
+                width: _buttonWidth(context),
+                child: Text(
+                  'EN',
+                  style: TextStyle(fontSize: 10),
+                ),
+              ),
+              Container(
+                alignment: Alignment.center,
+                width: _buttonWidth(context),
+                child: Text(
+                  'MY',
+                  style: TextStyle(fontSize: 10),
+                ),
+              ),
+            ],
+            onPressed: (int index) {
+              setState(() {
+                for (int i = 0; i < isSelected.length; i++) {
+                  isSelected[i] = i == index;
+                }
+
+                if (index == 0) {
+                  langStorage.write(LANGUAGE, 'EN');
+                  var locale = Locale('en', 'US');
+                  Get.updateLocale(locale);
+                } else {
+                  langStorage.write(LANGUAGE, 'MY');
+                  var locale = Locale('my', 'MM');
+                  Get.updateLocale(locale);
+                }
+              });
+            },
+            isSelected: isSelected,
+          ),
+        ),
+      ],
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      appBar: AppBar(
-        toolbarHeight: 110,
-        elevation: 2,
-        backgroundColor: Color(0xff242527),
-        iconTheme: IconThemeData(color: Colors.grey),
-        title: Container(
-          width: MediaQuery.of(context).size.width,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Container(
-                  margin: EdgeInsets.only(right: 27),
-                  child: GestureDetector(
-                      onTap: () {
-                        _showPopupMenu();
-                      },
-                      child: Icon((Icons.dehaze_rounded)))),
-              Container(
-                  alignment: Alignment.center,
-                  padding: EdgeInsets.all(10),
-                  margin: EdgeInsets.only(right: 27),
-                  child: Text(
-                    'Welcome to Mojoenet',
-                    style: TextStyle(fontSize: 16, color: Colors.white),
-                  )),
-            ],
-          ),
-        ),
-        actions: [
-          Container(
-            height: 50,
-            width: 75,
-            margin: EdgeInsets.only(bottom: 37, right: 30, top: 33),
-            padding: EdgeInsets.all(3),
-            child: Neumorphic(
-              style: NeumorphicStyle(
-                  color: Colors.white, lightSource: LightSource.topLeft),
-              child: DropdownButtonFormField<String>(
-                isExpanded: true,
-                value: selectedLang,
-                items: ["မြန်မာ", "ENG"]
-                    .map((label) => DropdownMenuItem(
-                          child: Text(
-                            label,
-                            style: TextStyle(fontSize: 12),
-                          ),
-                          value: label,
-                        ))
-                    .toList(),
-                onChanged: (value) {
-                  setState(() {
-                    if (value == 'မြန်မာ') {
-                      langStorage.write(LANGUAGE, value);
-                      var locale = Locale('my', 'MM');
-                      Get.updateLocale(locale);
-                    } else if (value == 'ENG') {
-                      langStorage.write(LANGUAGE, value);
-                      var locale = Locale('en', 'US');
-                      Get.updateLocale(locale);
-                    }
-                  });
-                },
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0)),
-                    contentPadding: EdgeInsets.only(left: 10, bottom: 12)),
-              ),
-            ),
-          ),
-        ],
-      ),
+      appBar:  navSelectedIndex
+          ? logoAndNavTitleAppBar(_selectedPageIndex)
+          : titleAppBar(changePageIndex),
       body: getSelectedPage(),
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,
@@ -360,23 +548,25 @@ class _TabScreensState extends State<TabScreens> {
               icon: Icon(Icons.notifications),
               title: Text(
                 'Notification',
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold),
               )),
           BottomNavigationBarItem(
               backgroundColor: Colors.white,
               icon: Icon(Icons.payment),
               title: Text(
                 'Payment',
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold),
               )),
           BottomNavigationBarItem(
               backgroundColor: Colors.white,
-              icon: FlutterLogo(
-                size: 40,
+              icon: Icon(
+                Icons.notifications,
+                size: 5.0,
+                color: Color(0x00FFFFFF),
               ),
               title: Text(
                 '',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 1),
+                style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold),
               )),
           BottomNavigationBarItem(
               backgroundColor: Colors.white,
@@ -393,9 +583,28 @@ class _TabScreensState extends State<TabScreens> {
               icon: Icon(Icons.phone),
               title: Text(
                 'Contact Us',
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold),
               )),
         ],
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: Container(
+        height: 68,
+        width: 68,
+        child: FloatingActionButton(
+          backgroundColor: Color(0xff242527),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 4),
+            child: Image(image: AssetImage('assets/images/home.png')),
+          ),
+          onPressed: () {
+            setState(() {
+              changePageIndex = 10;
+              _selectedPageIndex = 2;
+              getSelectedPage();
+            });
+          },
+        ),
       ),
     );
   }

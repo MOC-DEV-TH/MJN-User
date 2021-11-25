@@ -10,9 +10,7 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
-
 class LoginView1 extends StatefulWidget {
-
   static const routeName = '/new_login_view1';
 
   @override
@@ -29,24 +27,19 @@ class _LoginView1State extends State<LoginView1> {
 
   String selectedLang = 'ENG';
   final langStorage = GetStorage();
+  List<bool> isSelected = [true, false];
 
 
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (langStorage.read(LANGUAGE) == 'မြန်မာ') {
-        var locale = Locale('my', 'MM');
-        Get.updateLocale(locale);
-
+      if (langStorage.read(LANGUAGE) == 'MY') {
         setState(() {
-          selectedLang = 'မြန်မာ';
+          isSelected = [false, true];
         });
-      } else if (langStorage.read(LANGUAGE) == 'ENG') {
-        var locale = Locale('en', 'US');
-        Get.updateLocale(locale);
-
+      } else if (langStorage.read(LANGUAGE) == 'EN') {
         setState(() {
-          selectedLang = 'ENG';
+          isSelected = [true, false];
         });
       }
     });
@@ -56,10 +49,21 @@ class _LoginView1State extends State<LoginView1> {
   @override
   void didChangeDependencies() {
 
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (langStorage.read(LANGUAGE) == 'MY') {
+        setState(() {
+          isSelected = [false, true];
+        });
+      } else if (langStorage.read(LANGUAGE) == 'EN') {
+        setState(() {
+          isSelected = [true, false];
+        });
+      }
+    });
+
     super.didChangeDependencies();
+
   }
-
-
 
   Widget loginView() {
     return SingleChildScrollView(
@@ -70,84 +74,93 @@ class _LoginView1State extends State<LoginView1> {
           SizedBox(
             height: 40,
           ),
-          Text('𝕃𝕆𝔾𝕀ℕ',style: TextStyle(fontSize: 64,color: Colors.white),
-          textAlign: TextAlign.center,),
+          Image(image: AssetImage('assets/images/login.png')),
           SizedBox(
-            height: 40,
+            height: 20,
           ),
-           Row(
-              children: [
-                Container(
-                  padding: EdgeInsets.all(10),
-                  width: 130,
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 40,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 27),
-                          child: Text(
-                            'Building:',
-                            style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: Colors.white),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 60,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 27),
-                          child: Text(
-                            'Unit:',
-                            style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: Colors.white),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 40,
-                        ),
-                      ]),
-                ),
-                Expanded(
-                  child: Column(
+          Row(
+            children: [
+              Container(
+                width: 130,
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                       Container(
-                          color: Colors.white,
-                          height: 40,
-                          padding: EdgeInsets.only(bottom: 6),
-                            child: TextField(
-                              textAlign: TextAlign.center,
-                              controller: buildingText,
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                              ),
-                            ),
-                          ),
-
                       SizedBox(
-                        height: 30,
+                        height: 40,
                       ),
-                       Container(
-                          color: Colors.white,
-                         height: 40,
-                          child: Padding(
-                            padding: const EdgeInsets.only(bottom: 4),
-                            child: TextField(
-                              textAlign: TextAlign.center,
-                              controller: unitText,
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                              ),
-                            ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 27),
+                        child: Text(
+                          'Building:',
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 60,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 27),
+                        child: Text(
+                          'Unit:',
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 40,
+                      ),
+                    ]),
+              ),
+              Expanded(
+                child: Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                      ),
+                      height: 40,
+                      padding: EdgeInsets.only(bottom: 6),
+                      margin: EdgeInsets.only(right: 27),
+                      child: TextField(
+                        textAlign: TextAlign.center,
+                        controller: buildingText,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(right: 27),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                      ),
+                      height: 40,
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 4),
+                        child: TextField(
+                          textAlign: TextAlign.center,
+                          controller: unitText,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
                           ),
-
+                        ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-
+              ),
+            ],
+          ),
           SizedBox(
             height: 35,
           ),
@@ -159,19 +172,17 @@ class _LoginView1State extends State<LoginView1> {
                 } else {
                   return NeumorphicButton(
                     onPressed: () {
-
-                      if(buildingText.text == '' || unitText.text == ''){
-                        AppUtils.showErrorSnackBar('Error!!', 'Data must not empty!!');
-                      }
-                      else{
-                        Map<String,String> map = {
+                      if (buildingText.text == '' || unitText.text == '') {
+                        AppUtils.showErrorSnackBar(
+                            'Error!!', 'Data must not empty!!');
+                      } else {
+                        Map<String, String> map = {
                           'user_name': buildingText.value.text,
                           'app_version': app_version,
                           'password': unitText.value.text,
                         };
-                        loginController.fetchLoginData(map,context);
+                        loginController.fetchLoginData(map, context);
                       }
-
                     },
                     child: Center(
                       child: Padding(
@@ -204,66 +215,92 @@ class _LoginView1State extends State<LoginView1> {
     );
   }
 
-
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         appBar: AppBar(
-          toolbarHeight: 110,
-          backgroundColor:Color(0xff242527),
+          toolbarHeight: 90,
+          backgroundColor: Color(0xff242527),
           iconTheme: IconThemeData(color: Colors.grey),
+          title: Container(
+            width: MediaQuery.of(context).size.width,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                    margin: EdgeInsets.only(right: 40),
+                    child: GestureDetector(
+                        onTap: () {}, child: Icon((Icons.dehaze_rounded)))),
+                Container(
+                    margin: EdgeInsets.only(left: 65),
+                    width: 100,
+                    child: Image(
+                        image: AssetImage(
+                            'assets/images/splash_screen_logo.png'))),
+              ],
+            ),
+          ),
           actions: [
             Container(
-              height: 50,
-              width: 75,
-              margin: EdgeInsets.only(bottom: 37, right: 30, top: 33),
-              padding: EdgeInsets.all(3),
-              child: Neumorphic(
-                style: NeumorphicStyle(
-                    color: Colors.white, lightSource: LightSource.topLeft),
-                child: DropdownButtonFormField<String>(
-                  isExpanded: true,
-                  value: selectedLang,
-                  items: ["မြန်မာ", "ENG"]
-                      .map((label) => DropdownMenuItem(
+              margin: EdgeInsets.only(right: 20, top: 30, bottom: 30),
+              padding: EdgeInsets.zero,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(color: Colors.black, width: 1.0),
+                borderRadius: BorderRadius.all(Radius.circular(5.0)),
+              ),
+              child: ToggleButtons(
+                constraints: BoxConstraints.tight(Size(35, 35)),
+                selectedColor: Colors.white,
+                borderRadius: BorderRadius.circular(5),
+                fillColor: Colors.blue,
+                children: [
+                  Container(
+                    alignment: Alignment.center,
                     child: Text(
-                      label,
-                      style: TextStyle(fontSize: 12),
+                      'EN',
+                      style: TextStyle(fontSize: 10),
                     ),
-                    value: label,
-                  ))
-                      .toList(),
-                  onChanged: (value) {
-                    setState(() {
-                      if (value == 'မြန်မာ') {
-                        langStorage.write(LANGUAGE, value);
-                        var locale = Locale('my', 'MM');
-                        Get.updateLocale(locale);
-                      } else if (value == 'ENG') {
-                        langStorage.write(LANGUAGE, value);
-                        var locale = Locale('en', 'US');
-                        Get.updateLocale(locale);
-                      }
-                    });
-                  },
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0)),
-                      contentPadding: EdgeInsets.only(left: 10, bottom: 12)),
-                ),
+                  ),
+                  Container(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'MY',
+                      style: TextStyle(fontSize: 10),
+                    ),
+                  ),
+                ],
+
+                onPressed: (int index) {
+                  setState(() {
+                    for (int i = 0; i < isSelected.length; i++) {
+                      isSelected[i] = i == index;
+                    }
+
+                    if (index == 0) {
+                      langStorage.write(LANGUAGE, 'EN');
+                      var locale = Locale('en', 'US');
+                      Get.updateLocale(locale);
+                    } else {
+                      langStorage.write(LANGUAGE, 'MY');
+                      var locale = Locale('my', 'MM');
+                      Get.updateLocale(locale);
+                    }
+                  });
+                },
+                isSelected: isSelected,
+
+                //             var locale = Locale('my', 'MM');
               ),
             ),
           ],
         ),
-        drawer: Container(child: LoginMainDrawer()),
         key: _scaffoldKey,
         backgroundColor: Color(0xff188FC5),
         body: GestureDetector(
-          onTap: (){
-            FocusManager.instance.primaryFocus?.unfocus();
-          },
+            onTap: () {
+              FocusManager.instance.primaryFocus?.unfocus();
+            },
             child: loginView()));
   }
 }
