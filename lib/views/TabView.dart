@@ -1,6 +1,9 @@
 import 'package:MJN/NewViews/LoginView1.dart';
 import 'package:MJN/NewViews/NewAboutUsView.dart';
+import 'package:MJN/NewViews/NewContactUsView.dart';
 import 'package:MJN/NewViews/NewHomeView.dart';
+import 'package:MJN/NewViews/NewProductAndServiceView.dart';
+import 'package:MJN/NewViews/NewTermAndConditionView.dart';
 import 'package:MJN/Widgets/main_drawer.dart';
 import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/utils/app_utils.dart';
@@ -52,6 +55,8 @@ class _TabScreensState extends State<TabScreens> {
     'Pineapple'
   ];
 
+
+
   @override
   void initState() {
     visible = false;
@@ -79,6 +84,7 @@ class _TabScreensState extends State<TabScreens> {
       navSelectedIndex = true;
     });
   }
+
 
   _showPopupMenu() {
     showMenu<String>(
@@ -196,7 +202,9 @@ class _TabScreensState extends State<TabScreens> {
             value: '7'),
       ],
       elevation: 8.0,
-    ).then<void>((String itemSelected) {
+
+    ).
+    then<void>((String itemSelected) {
       if (itemSelected == null) return;
 
       if (itemSelected == "1") {
@@ -258,15 +266,15 @@ class _TabScreensState extends State<TabScreens> {
       case 3:
         return ServiceComplainView();
       case 4:
-        return ContactUsView();
+        return NewContactUsView();
       case 5:
         return NewAboutUsView();
       case 6:
-        return ProductAndServiceView();
+        return NewProductAndServiceView();
       case 7:
-        return TermAndConditionView();
+        return NewTermAndConditionView();
       case 8:
-        return ContactUsView();
+        return NewContactUsView();
       case 9:
         return AccountView();
       case 10:

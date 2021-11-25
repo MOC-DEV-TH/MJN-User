@@ -86,8 +86,14 @@ flutter:
     - assets/images/home.png
     - assets/images/about_us.png
     - assets/images/menu.png
+    - assets/images/offer.png
+    - assets/images/contact_us.png
+    - assets/images/email.png
+    - assets/images/fb_icon.png
+    - assets/images/web_icon.png
 
-  # An image asset can refer to one or more resolution-specific "variants", see
+
+        # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 
   # For details regarding adding assets from package dependencies, see
