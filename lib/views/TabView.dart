@@ -5,6 +5,7 @@ import 'package:MJN/NewViews/NewContactUsView.dart';
 import 'package:MJN/NewViews/NewHomeView.dart';
 import 'package:MJN/NewViews/NewNotificationView.dart';
 import 'package:MJN/NewViews/NewProductAndServiceView.dart';
+import 'package:MJN/NewViews/NewServiceComplainView.dart';
 import 'package:MJN/NewViews/NewTermAndConditionView.dart';
 import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/utils/app_utils.dart';
@@ -20,8 +21,8 @@ class TabScreens extends StatefulWidget {
   static const routeName = '/tab_screen';
 
   int pageIndex;
-  TabScreens(this.pageIndex);
 
+  TabScreens(this.pageIndex);
 
   @override
   _TabScreensState createState() => _TabScreensState();
@@ -42,7 +43,6 @@ class _TabScreensState extends State<TabScreens> {
   String manualTwo = '';
   String manualThree = '';
 
-
   int menuPageIndex;
   List<bool> isSelected;
 
@@ -59,8 +59,6 @@ class _TabScreensState extends State<TabScreens> {
     'Pineapple'
   ];
 
-
-
   @override
   void initState() {
     visible = false;
@@ -74,32 +72,27 @@ class _TabScreensState extends State<TabScreens> {
           changePageIndex = 5;
           navSelectedIndex = false;
         });
-      }
-      else if (menuPageIndex == 2) {
+      } else if (menuPageIndex == 2) {
         setState(() {
           changePageIndex = 6;
           navSelectedIndex = false;
         });
-      }
-      else if (menuPageIndex == 3) {
+      } else if (menuPageIndex == 3) {
         setState(() {
           changePageIndex = 7;
           navSelectedIndex = false;
         });
-      }
-      else if (menuPageIndex == 4) {
+      } else if (menuPageIndex == 4) {
         setState(() {
           changePageIndex = 8;
           navSelectedIndex = false;
         });
-      }
-      else if (menuPageIndex == 5) {
+      } else if (menuPageIndex == 5) {
         setState(() {
           changePageIndex = 9;
           navSelectedIndex = false;
         });
-      }
-      else{
+      } else {
         setState(() {
           navSelectedIndex = true;
         });
@@ -119,7 +112,6 @@ class _TabScreensState extends State<TabScreens> {
 
   int _selectedPageIndex = 2;
   int changePageIndex = 0;
-
 
   void _selectPage(int index) {
     setState(() {
@@ -291,11 +283,11 @@ class _TabScreensState extends State<TabScreens> {
     int pageIndex = 0;
     print(changePageIndex);
     pageIndex = (changePageIndex == 5 ||
-        changePageIndex == 6 ||
-        changePageIndex == 7 ||
-        changePageIndex == 8 ||
-        changePageIndex == 9 ||
-        changePageIndex == 10)
+            changePageIndex == 6 ||
+            changePageIndex == 7 ||
+            changePageIndex == 8 ||
+            changePageIndex == 9 ||
+            changePageIndex == 10)
         ? changePageIndex
         : _selectedPageIndex;
     switch (pageIndex) {
@@ -306,7 +298,7 @@ class _TabScreensState extends State<TabScreens> {
       case 2:
         return NewHomeView();
       case 3:
-        return ServiceComplainView();
+        return NewServiceComplainView();
       case 4:
         return NewContactUsView();
       case 5:
@@ -330,10 +322,7 @@ class _TabScreensState extends State<TabScreens> {
     final maxWidth = 20.0;
     final buttonCount = 2;
 
-    final width = (MediaQuery
-        .of(context)
-        .size
-        .width - 200) / buttonCount;
+    final width = (MediaQuery.of(context).size.width - 200) / buttonCount;
     if (width < maxWidth) {
       return width;
     } else {
@@ -374,22 +363,18 @@ class _TabScreensState extends State<TabScreens> {
     showGeneralDialog(
         context: context,
         barrierDismissible: true,
-        barrierLabel: MaterialLocalizations
-            .of(context)
-            .modalBarrierDismissLabel,
+        barrierLabel:
+            MaterialLocalizations.of(context).modalBarrierDismissLabel,
         barrierColor: Colors.black45,
         transitionDuration: const Duration(milliseconds: 200),
-        pageBuilder: (BuildContext buildContext,
-            Animation animation,
+        pageBuilder: (BuildContext buildContext, Animation animation,
             Animation secondaryAnimation) {
           return SafeArea(
-            child: Container(
-                margin: EdgeInsets.only(top: 56),
-                child: DialogUI()),
+            child:
+                Container(margin: EdgeInsets.only(top: 56), child: DialogUI()),
           );
         });
   }
-
 
   // Widget _buildMenuItems(BuildContext context) {
   //   return Scaffold(
@@ -558,7 +543,6 @@ class _TabScreensState extends State<TabScreens> {
   //   );
   // }
 
-
   Widget logoAndNavTitleAppBar(int navSelectPage) {
     return AppBar(
       automaticallyImplyLeading: false,
@@ -567,10 +551,7 @@ class _TabScreensState extends State<TabScreens> {
       backgroundColor: Color(0xff242527),
       iconTheme: IconThemeData(color: Colors.grey),
       title: Container(
-        width: MediaQuery
-            .of(context)
-            .size
-            .width,
+        width: MediaQuery.of(context).size.width,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -578,47 +559,48 @@ class _TabScreensState extends State<TabScreens> {
                 margin: EdgeInsets.only(right: 40),
                 child: GestureDetector(
                     onTap: () {
-                      showMenuDialog(context);
+
+                        showMenuDialog(context);
                     },
                     child: Icon((Icons.dehaze_rounded)))),
             navSelectPage == 0
                 ? Container(
-              padding: EdgeInsets.only(right: 80),
-              child: Text(
-                'Notification',
-                style: TextStyle(fontSize: 14),
-              ),
-            )
+                    padding: EdgeInsets.only(right: 80),
+                    child: Text(
+                      'Notification',
+                      style: TextStyle(fontSize: 14),
+                    ),
+                  )
                 : navSelectPage == 1
-                ? Container(
-              padding: EdgeInsets.only(right: 80),
-              child: Text(
-                'Payment',
-                style: TextStyle(fontSize: 14),
-              ),
-            )
-                : navSelectPage == 3
-                ? Container(
-              padding: EdgeInsets.only(right: 60),
-              child: Text(
-                'Service Complain',
-                style: TextStyle(fontSize: 14),
-              ),
-            )
-                : navSelectPage == 4
-                ? Container(
-              padding: EdgeInsets.only(right: 80),
-              child: Text(
-                'Contact Us',
-                style: TextStyle(fontSize: 14),
-              ),
-            )
-                : Container(
-                margin: EdgeInsets.only(left: 65, right: 50),
-                width: 100,
-                child: Image(
-                    image: AssetImage(
-                        'assets/images/splash_screen_logo.png'))),
+                    ? Container(
+                        padding: EdgeInsets.only(right: 80),
+                        child: Text(
+                          'Payment',
+                          style: TextStyle(fontSize: 14),
+                        ),
+                      )
+                    : navSelectPage == 3
+                        ? Container(
+                            padding: EdgeInsets.only(right: 60),
+                            child: Text(
+                              'Service Complain',
+                              style: TextStyle(fontSize: 14),
+                            ),
+                          )
+                        : navSelectPage == 4
+                            ? Container(
+                                padding: EdgeInsets.only(right: 80),
+                                child: Text(
+                                  'Contact Us',
+                                  style: TextStyle(fontSize: 14),
+                                ),
+                              )
+                            : Container(
+                                margin: EdgeInsets.only(left: 65, right: 50),
+                                width: 100,
+                                child: Image(
+                                    image: AssetImage(
+                                        'assets/images/splash_screen_logo.png'))),
           ],
         ),
       ),
@@ -686,10 +668,7 @@ class _TabScreensState extends State<TabScreens> {
       backgroundColor: Color(0xff242527),
       iconTheme: IconThemeData(color: Colors.grey),
       title: Container(
-        width: MediaQuery
-            .of(context)
-            .size
-            .width,
+        width: MediaQuery.of(context).size.width,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -697,54 +676,55 @@ class _TabScreensState extends State<TabScreens> {
             Container(
                 child: GestureDetector(
                     onTap: () {
-                      showMenuDialog(context);
+
+                        showMenuDialog(context);
                     },
                     child: Icon((Icons.dehaze_rounded)))),
             pageIndex == 5
                 ? Container(
-              padding: EdgeInsets.only(right: 80),
-              child: Text(
-                'About Us',
-                style: TextStyle(fontSize: 14),
-              ),
-            )
+                    padding: EdgeInsets.only(right: 80),
+                    child: Text(
+                      'About Us',
+                      style: TextStyle(fontSize: 14),
+                    ),
+                  )
                 : pageIndex == 6
-                ? Container(
-              padding: EdgeInsets.only(right: 40),
-              child: Text(
-                'Product And Services',
-                style: TextStyle(fontSize: 14),
-              ),
-            )
-                : pageIndex == 7
-                ? Container(
-              padding: EdgeInsets.only(right: 40),
-              child: Text(
-                'Terms & Conditions',
-                style: TextStyle(fontSize: 14),
-              ),
-            )
-                : pageIndex == 8
-                ? Container(
-              padding: EdgeInsets.only(right: 80),
-              child: Text(
-                'Contact Us',
-                style: TextStyle(fontSize: 14),
-              ),
-            )
-                : pageIndex == 9
-                ? Container(
-              padding: EdgeInsets.only(right: 80),
-              child: Text(
-                'My Account',
-                style: TextStyle(fontSize: 14),
-              ),
-            )
-                : Container(
-              margin:
-              EdgeInsets.only(left: 65, right: 50),
-              child: Text(''),
-            ),
+                    ? Container(
+                        padding: EdgeInsets.only(right: 40),
+                        child: Text(
+                          'Product And Services',
+                          style: TextStyle(fontSize: 14),
+                        ),
+                      )
+                    : pageIndex == 7
+                        ? Container(
+                            padding: EdgeInsets.only(right: 40),
+                            child: Text(
+                              'Terms & Conditions',
+                              style: TextStyle(fontSize: 14),
+                            ),
+                          )
+                        : pageIndex == 8
+                            ? Container(
+                                padding: EdgeInsets.only(right: 80),
+                                child: Text(
+                                  'Contact Us',
+                                  style: TextStyle(fontSize: 14),
+                                ),
+                              )
+                            : pageIndex == 9
+                                ? Container(
+                                    padding: EdgeInsets.only(right: 80),
+                                    child: Text(
+                                      'My Account',
+                                      style: TextStyle(fontSize: 14),
+                                    ),
+                                  )
+                                : Container(
+                                    margin:
+                                        EdgeInsets.only(left: 65, right: 50),
+                                    child: Text(''),
+                                  ),
           ],
         ),
       ),
@@ -805,98 +785,91 @@ class _TabScreensState extends State<TabScreens> {
 
   @override
   Widget build(BuildContext context) {
-
     print(widget.pageIndex);
 
-      bool keyboardIsOpen = MediaQuery
-          .of(context)
-          .viewInsets
-          .bottom != 0;
-      return Scaffold(
-        key: _scaffoldKey,
-        appBar: navSelectedIndex
-            ? logoAndNavTitleAppBar(_selectedPageIndex)
-            : titleAppBar(changePageIndex),
-        body: getSelectedPage(),
-        bottomNavigationBar: BottomNavigationBar(
-          onTap: _selectPage,
-          backgroundColor: Color(0xff242527),
-          unselectedItemColor: Colors.grey,
-          selectedItemColor: Theme
-              .of(context)
-              .primaryColor,
-          currentIndex: _selectedPageIndex,
-          type: BottomNavigationBarType.fixed,
-          selectedFontSize: (selectedLang == "ENG") ? 12 : 10,
-          unselectedFontSize: (selectedLang == "ENG") ? 12 : 10,
-          items: [
-            BottomNavigationBarItem(
-                backgroundColor: Colors.white,
-                icon: Icon(Icons.notifications),
-                title: Text(
-                  'Notification',
-                  style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold),
-                )),
-            BottomNavigationBarItem(
-                backgroundColor: Colors.white,
-                icon: Icon(Icons.payment),
-                title: Text(
-                  'Payment',
-                  style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold),
-                )),
-            BottomNavigationBarItem(
-                backgroundColor: Colors.white,
-                icon: Icon(
-                  Icons.notifications,
-                  size: 5.0,
-                  color: Color(0x00FFFFFF),
-                ),
-                title: Text(
-                  '',
-                  style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold),
-                )),
-            BottomNavigationBarItem(
-                backgroundColor: Colors.white,
-                icon: Icon(Icons.pending_actions_rounded),
-                title: Container(
-                  padding: EdgeInsets.all(8),
-                  child: Text(
-                    'Service Complain',
-                    style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold),
-                  ),
-                )),
-            BottomNavigationBarItem(
-                backgroundColor: Colors.white,
-                icon: Icon(Icons.phone),
-                title: Text(
-                  'Contact Us',
-                  style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold),
-                )),
-          ],
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: Container(
-          height: 68,
-          width: 68,
-          child: Visibility(
-            visible: !keyboardIsOpen,
-            child: FloatingActionButton(
-              backgroundColor: Color(0xff242527),
-              child: Padding(
-                padding: const EdgeInsets.only(top: 4),
-                child: Image(image: AssetImage('assets/images/home.png')),
+    bool keyboardIsOpen = MediaQuery.of(context).viewInsets.bottom != 0;
+    return Scaffold(
+      key: _scaffoldKey,
+      appBar: navSelectedIndex
+          ? logoAndNavTitleAppBar(_selectedPageIndex)
+          : titleAppBar(changePageIndex),
+      body: getSelectedPage(),
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: _selectPage,
+        backgroundColor: Color(0xff242527),
+        unselectedItemColor: Colors.grey,
+        selectedItemColor: Theme.of(context).primaryColor,
+        currentIndex: _selectedPageIndex,
+        type: BottomNavigationBarType.fixed,
+        selectedFontSize: (selectedLang == "ENG") ? 12 : 10,
+        unselectedFontSize: (selectedLang == "ENG") ? 12 : 10,
+        items: [
+          BottomNavigationBarItem(
+              backgroundColor: Colors.white,
+              icon: Icon(Icons.notifications),
+              title: Text(
+                'Notification',
+                style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold),
+              )),
+          BottomNavigationBarItem(
+              backgroundColor: Colors.white,
+              icon: Icon(Icons.payment),
+              title: Text(
+                'Payment',
+                style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold),
+              )),
+          BottomNavigationBarItem(
+              backgroundColor: Colors.white,
+              icon: Icon(
+                Icons.notifications,
+                size: 5.0,
+                color: Color(0x00FFFFFF),
               ),
-              onPressed: () {
-                setState(() {
-                  changePageIndex = 10;
-                  _selectedPageIndex = 2;
-                  getSelectedPage();
-                });
-              },
+              title: Text(
+                '',
+                style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold),
+              )),
+          BottomNavigationBarItem(
+              backgroundColor: Colors.white,
+              icon: Icon(Icons.pending_actions_rounded),
+              title: Container(
+                padding: EdgeInsets.all(8),
+                child: Text(
+                  'Service Complain',
+                  style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold),
+                ),
+              )),
+          BottomNavigationBarItem(
+              backgroundColor: Colors.white,
+              icon: Icon(Icons.phone),
+              title: Text(
+                'Contact Us',
+                style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold),
+              )),
+        ],
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: Container(
+        height: 68,
+        width: 68,
+        child: Visibility(
+          visible: !keyboardIsOpen,
+          child: FloatingActionButton(
+            backgroundColor: Color(0xff242527),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 4),
+              child: Image(image: AssetImage('assets/images/home.png')),
             ),
+            onPressed: () {
+              setState(() {
+                changePageIndex = 10;
+                _selectedPageIndex = 2;
+                getSelectedPage();
+              });
+            },
           ),
         ),
-      );
-    }
+      ),
+    );
+  }
 }
-

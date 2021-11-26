@@ -12,6 +12,7 @@ class DialogUI extends StatefulWidget {
   _DialogUIState createState() => _DialogUIState();
 }
 
+
 class _DialogUIState extends State<DialogUI> {
   String manualOne = 'Login Manual';
   String manualTwo = 'Service Ticket Manual';
@@ -25,7 +26,6 @@ class _DialogUIState extends State<DialogUI> {
     return Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
-      //margin: EdgeInsets.only(top: 80),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -40,12 +40,13 @@ class _DialogUIState extends State<DialogUI> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+
                 GestureDetector(
                     onTap: () {
-                      setState(() {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => TabScreens(1)));
-                      });
+                      Navigator.pop(context);
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => TabScreens(1)));
+
                     },
 
                       child: Text('About Us',
@@ -60,8 +61,10 @@ class _DialogUIState extends State<DialogUI> {
 
                 GestureDetector(
                   onTap: () {
+                    Navigator.pop(context);
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) => TabScreens(2)));
+
                   },
                   child: Text('Product and Services',
                       style: TextStyle(
@@ -75,8 +78,11 @@ class _DialogUIState extends State<DialogUI> {
 
                 GestureDetector(
                   onTap: () {
+                    Navigator.pop(context);
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) => TabScreens(3)));
+
+
                   },
                   child: Text('Terms & Conditions',
                       style: TextStyle(
@@ -89,9 +95,13 @@ class _DialogUIState extends State<DialogUI> {
                 SizedBox(height: 20,),
 
                 GestureDetector(
+
                     onTap: () {
+                      Navigator.pop(context);
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => TabScreens(4)));
+
+
                     },
                     child: Text('Contact Us',
                         style: TextStyle(
@@ -104,8 +114,11 @@ class _DialogUIState extends State<DialogUI> {
 
                 GestureDetector(
                     onTap: () {
+                      Navigator.pop(context);
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => TabScreens(5)));
+
+
                     },
                     child: Text('My Account',
                         style: TextStyle(
@@ -190,13 +203,15 @@ class _DialogUIState extends State<DialogUI> {
 
                 GestureDetector(
                   onTap: () {
-                    langStorage.read(TOKEN) != ''
+                    langStorage.read(TOKEN) != null
                         ? AppUtils.showLogoutDialog(
                             'Logout',
                             'Are you sure you want to exit\nthis application?',
                             context)
                         : Navigator.of(context)
                             .pushReplacementNamed(LoginView1.routeName);
+
+
                   },
                   child: Text(
                       langStorage.read(TOKEN) != null ? 'Logout' : 'Login',

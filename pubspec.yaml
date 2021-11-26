@@ -97,6 +97,7 @@ flutter:
     - assets/images/web_icon.png
     - assets/images/search_icon.png
     - assets/images/outage_icon.png
+    - assets/images/create_service.png
 
 
         # An image asset can refer to one or more resolution-specific "variants", see
