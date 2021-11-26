@@ -25,7 +25,9 @@ class _NewNotificationViewState extends State<NewNotificationView> {
     'Aish',
   ];
 
+  bool isExpanded = false;
 
+  String text = "Flutter has its own UI components, along with an engine to render them on both the Android and iOS platforms. Most of those UI components, right out of the box, conform to the guidelines of Material Design.";
 
   void retrieveNotiFromDatabase() {
     Future<List<NotificationModelVO>> notimodels = DatabaseUtil().getAllNotiModels();
@@ -50,6 +52,8 @@ class _NewNotificationViewState extends State<NewNotificationView> {
       retrieveNotiFromDatabase();
     }
   }
+
+
 
 
   @override
@@ -100,7 +104,7 @@ class _NewNotificationViewState extends State<NewNotificationView> {
                   ),
 
                   SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
 
                   Row(
@@ -168,7 +172,7 @@ class _NewNotificationViewState extends State<NewNotificationView> {
                     physics: NeverScrollableScrollPhysics(),
                     itemBuilder: (ctx, index) {
 
-                      return NewNotificationItems();
+                      return NewNotificationItems(text);
                     },
                     itemCount: notilists.length,
                   ),
@@ -186,3 +190,5 @@ class _NewNotificationViewState extends State<NewNotificationView> {
 
   }
 }
+
+
