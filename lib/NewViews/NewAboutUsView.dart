@@ -24,7 +24,7 @@ class _NewAboutUsViewState extends State<NewAboutUsView> {
                           margin: EdgeInsets.only(left: 20,right: 20,top: 55,bottom: 40),
                           height: MediaQuery.of(context).size.height,
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: Color(0xffC0C0C0),
                             borderRadius: BorderRadius.all(Radius.circular(5.0)),
                           ),
                         ),

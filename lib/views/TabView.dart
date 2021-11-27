@@ -1,21 +1,18 @@
 import 'package:MJN/CustomDialog/CustomDialogUI.dart';
-import 'package:MJN/NewViews/LoginView1.dart';
 import 'package:MJN/NewViews/NewAboutUsView.dart';
 import 'package:MJN/NewViews/NewContactUsView.dart';
 import 'package:MJN/NewViews/NewHomeView.dart';
 import 'package:MJN/NewViews/NewNotificationView.dart';
+import 'package:MJN/NewViews/NewPaymentView.dart';
 import 'package:MJN/NewViews/NewProductAndServiceView.dart';
 import 'package:MJN/NewViews/NewServiceComplainView.dart';
 import 'package:MJN/NewViews/NewTermAndConditionView.dart';
 import 'package:MJN/utils/app_constants.dart';
-import 'package:MJN/utils/app_utils.dart';
-import 'package:MJN/views/ServiceComplainView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
 import 'AccountDetailView.dart';
-import 'PaymentView.dart';
 
 class TabScreens extends StatefulWidget {
   static const routeName = '/tab_screen';
@@ -61,6 +58,7 @@ class _TabScreensState extends State<TabScreens> {
 
   @override
   void initState() {
+    changePageIndex = 0;
     visible = false;
     isSelected = [true, false];
     super.initState();
@@ -294,7 +292,7 @@ class _TabScreensState extends State<TabScreens> {
       case 0:
         return NewNotificationView();
       case 1:
-        return PaymentView();
+        return NewPaymentView();
       case 2:
         return NewHomeView();
       case 3:

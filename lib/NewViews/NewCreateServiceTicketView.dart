@@ -1,4 +1,5 @@
 import 'package:MJN/Network/Request/RequestCreateTicket.dart';
+import 'package:MJN/NewViews/SuccessCreateTicketView.dart';
 import 'package:MJN/controllers/createTicketController.dart';
 import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/utils/app_utils.dart';
@@ -34,8 +35,15 @@ class _NewCreateServiceTicketViewState
   final loginDataStorage = GetStorage();
 
   @override
+  void initState() {
+    changePageIndex = 0;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return changePageIndex == 1 ? SuccessCreateTicketView()
+        :Scaffold(
       backgroundColor: Color(0xff188FC5),
       body: GestureDetector(
         onTap: () {
@@ -372,36 +380,40 @@ class _NewCreateServiceTicketViewState
                           } else {
                             return NeumorphicButton(
                               onPressed: () {
-                                if (buildingText.text == '' ||
-                                    unitText.text == '' ||
-                                    emailText.text == '' ||
-                                    phoneNoText.text == '' ||
-                                    nameText.text == '' ||
-                                    messageText.text == '' ||
-                                    selectServiceRequestIndex == null) {
-                                  AppUtils.showErrorSnackBar(
-                                      'Error!!', 'Data must not empty!!');
-                                } else {
-                                  RequestCreateTicket requestCreateTicket =
-                                      new RequestCreateTicket(
-                                          loginDataStorage.read(USER_NAME),
-                                          loginDataStorage.read(BUILDING),
-                                          loginDataStorage.read(UNIT),
-                                          emailText.value.text,
-                                          loginDataStorage.read(PHONE_NO),
-                                          selectServiceRequestIndex.toString(),
-                                          '',
-                                          "Topic Other",
-                                          messageText.value.text,
-                                          loginDataStorage.read(DATA_TENANT_ID),
-                                          loginDataStorage.read(UID),
-                                          app_version);
+                                setState(() {
+                                  changePageIndex = 1;
+                                });
+                                // if (buildingText.text == '' ||
+                                //     unitText.text == '' ||
+                                //     emailText.text == '' ||
+                                //     phoneNoText.text == '' ||
+                                //     nameText.text == '' ||
+                                //     messageText.text == '' ||
+                                //     selectServiceRequestIndex == null) {
+                                //   AppUtils.showErrorSnackBar(
+                                //       'Error!!', 'Data must not empty!!');
+                                // } else {
+                                //   RequestCreateTicket requestCreateTicket =
+                                //       new RequestCreateTicket(
+                                //           loginDataStorage.read(USER_NAME),
+                                //           loginDataStorage.read(BUILDING),
+                                //           loginDataStorage.read(UNIT),
+                                //           emailText.value.text,
+                                //           loginDataStorage.read(PHONE_NO),
+                                //           selectServiceRequestIndex.toString(),
+                                //           '',
+                                //           "Topic Other",
+                                //           messageText.value.text,
+                                //           loginDataStorage.read(DATA_TENANT_ID),
+                                //           loginDataStorage.read(UID),
+                                //           app_version);
+                                //
+                                //   createTicketController.createTicket(
+                                //       requestCreateTicket,
+                                //       loginDataStorage.read(TOKEN),
+                                //       context);
+                                // }
 
-                                  createTicketController.createTicket(
-                                      requestCreateTicket,
-                                      loginDataStorage.read(TOKEN),
-                                      context);
-                                }
                               },
                               child: Center(
                                 child: Text(

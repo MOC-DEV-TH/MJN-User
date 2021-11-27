@@ -98,7 +98,8 @@ flutter:
     - assets/images/search_icon.png
     - assets/images/outage_icon.png
     - assets/images/create_service.png
-
+    - assets/images/thank_icon.png
+    - assets/images/online_payment_icon.png
 
         # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
