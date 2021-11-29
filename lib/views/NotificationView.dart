@@ -19,9 +19,9 @@ class _NotificationViewState extends State<NotificationView> {
   final _height = 100.0;
 
   void retrieveNotiFromDatabase() {
-    Future<List<NotificationModelVO>> notimodels = DatabaseUtil().getAllNotiModels();
+    Future<List<NotificationModelVO>?> notimodels = DatabaseUtil().getAllNotiModels();
     notimodels.then((value) {
-      notificationLists = value;
+      notificationLists = value!;
       setState(() {
         bDataRetrievedLately = true;
       });

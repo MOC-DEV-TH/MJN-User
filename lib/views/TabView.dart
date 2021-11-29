@@ -40,8 +40,8 @@ class _TabScreensState extends State<TabScreens> {
   String manualTwo = '';
   String manualThree = '';
 
-  int menuPageIndex;
-  List<bool> isSelected;
+  late int menuPageIndex;
+  late List<bool> isSelected;
 
   String selectedLang = 'ENG';
   final langStorage = GetStorage();
@@ -63,7 +63,7 @@ class _TabScreensState extends State<TabScreens> {
     isSelected = [true, false];
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
       menuPageIndex = widget.pageIndex;
       if (menuPageIndex == 1) {
         setState(() {
@@ -369,7 +369,7 @@ class _TabScreensState extends State<TabScreens> {
             Animation secondaryAnimation) {
           return SafeArea(
             child:
-                Container(margin: EdgeInsets.only(top: 56), child: DialogUI()),
+                Container(margin: EdgeInsets.only(top: 56), child: DialogUI(key: _scaffoldKey,)),
           );
         });
   }
@@ -788,9 +788,12 @@ class _TabScreensState extends State<TabScreens> {
     bool keyboardIsOpen = MediaQuery.of(context).viewInsets.bottom != 0;
     return Scaffold(
       key: _scaffoldKey,
-      appBar: navSelectedIndex
-          ? logoAndNavTitleAppBar(_selectedPageIndex)
-          : titleAppBar(changePageIndex),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(100),
+        child :navSelectedIndex
+            ? logoAndNavTitleAppBar(_selectedPageIndex)
+            : titleAppBar(changePageIndex),
+      ),
       body: getSelectedPage(),
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,

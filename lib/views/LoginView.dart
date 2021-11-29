@@ -32,7 +32,7 @@ class _LoginViewState extends State<LoginView> {
   @override
   void initState() {
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
       if (langStorage.read(LANGUAGE) == 'မြန်မာ') {
         var locale = Locale('my', 'MM');
         Get.updateLocale(locale);

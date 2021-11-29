@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 
 class DialogUI extends StatefulWidget {
-  const DialogUI({Key key}) : super(key: key);
+  const DialogUI({required Key key}) : super(key: key);
 
   @override
   _DialogUIState createState() => _DialogUIState();

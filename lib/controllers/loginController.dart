@@ -8,7 +8,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
 
 class LoginController extends GetxController {
-  LoginVo loginVo;
+  late LoginVo loginVo;
   var isLoading = false.obs;
   final loginDataStorage = GetStorage();
 

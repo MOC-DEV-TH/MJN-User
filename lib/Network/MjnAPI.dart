@@ -18,7 +18,7 @@ class MjnAPI {
   static final String securityKey = 'moJoENEt2021sECuriTYkEy';
   static var client = http.Client();
 
-  static Future<LoginVo> fetchLoginData(
+  static Future<LoginVo?> fetchLoginData(
       Map<String, String> params) async {
     var response = await client.post(
       Uri.parse(LOGIN_URL),
@@ -37,7 +37,7 @@ class MjnAPI {
     }
   }
 
-  static Future<NetworkResult> sendFirebaseTokenToSever(
+  static Future<NetworkResult?> sendFirebaseTokenToSever(
       Map<String, String> params) async {
     var response = await client.post(
       Uri.parse(FIREBASE_TOKEN_URL),
@@ -55,7 +55,7 @@ class MjnAPI {
     }
   }
 
-  static Future<AccountInfoVo> fetchAccountInfoData(
+  static Future<AccountInfoVo?> fetchAccountInfoData(
       String token, String uid, String tenantID) async {
     var response = await client.get(
       Uri.parse(GET_ACCOUNT_INFO_URL +
@@ -78,7 +78,7 @@ class MjnAPI {
   }
 
 
-  static Future<InvoiceListVo> fetchPaymentInvoiceList(
+  static Future<InvoiceListVo?> fetchPaymentInvoiceList(
       String token, String uid, String tenantID) async {
     var response = await client.get(
       Uri.parse(GET_INVOICE_LIST_URL +
@@ -101,7 +101,7 @@ class MjnAPI {
   }
 
 
-  static Future<TransactionListVo> fetchTransactionList(
+  static Future<TransactionListVo?> fetchTransactionList(
       String token, String uid, String tenantID) async {
     var response = await client.get(
       Uri.parse(GET_TRANSACTION_LIST_URL +
@@ -124,7 +124,7 @@ class MjnAPI {
   }
 
 
-  static Future<TicketListVo> fetchTicketList(
+  static Future<TicketListVo?> fetchTicketList(
       String token, String uid, String tenantID) async {
     var response = await client.get(
       Uri.parse( GET_TICKET_LIST_URL +
@@ -146,7 +146,7 @@ class MjnAPI {
     }
   }
 
-  static Future<TicketVo> fetchTicketByTicketID(
+  static Future<TicketVo?> fetchTicketByTicketID(
       String token, String uid, String ticketID) async {
     var response = await client.get(
       Uri.parse(GET_TICKET_URL +

@@ -4,7 +4,7 @@ import 'package:get/state_manager.dart';
 
 class TicketByIdController extends GetxController{
 
-  TicketVo ticketVo;
+ late TicketVo ticketVo;
   var isLoading = true.obs;
 
   void fetchTicketByTicketID(String token,String uid,String ticketID) async {

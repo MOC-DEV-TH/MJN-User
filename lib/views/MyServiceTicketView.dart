@@ -16,7 +16,7 @@ class MyServiceTicketView extends StatefulWidget {
 
 class _MyServiceTicketViewState extends State<MyServiceTicketView> {
   int changePageIndex = 0;
-  String currentTicketIndex;
+  late String currentTicketIndex;
 
   final TicketListController ticketListController =
       Get.put(TicketListController());
@@ -211,7 +211,7 @@ class _MyServiceTicketViewState extends State<MyServiceTicketView> {
                 });
               },
               child: Text(
-                ticketDetailVO.ticketId ?? 'null',
+                ticketDetailVO.ticketId ,
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 8,
@@ -229,7 +229,7 @@ class _MyServiceTicketViewState extends State<MyServiceTicketView> {
           Container(
             width: 50,
             child: Text(
-              ticketDetailVO.creationDate ?? 'null',
+              ticketDetailVO.creationDate,
               style: TextStyle(color: Colors.black, fontSize: 8),
               textAlign: TextAlign.center,
             ),
@@ -242,7 +242,7 @@ class _MyServiceTicketViewState extends State<MyServiceTicketView> {
           Container(
             width: 40,
             child: Text(
-              ticketDetailVO.serviceRequest ?? 'null',
+              ticketDetailVO.serviceRequest ,
               style: TextStyle(color: Colors.black, fontSize: 8),
               textAlign: TextAlign.center,
             ),
@@ -255,7 +255,7 @@ class _MyServiceTicketViewState extends State<MyServiceTicketView> {
           Container(
             width: 30,
             child: Text(
-              ticketDetailVO.serviceRequestOther ?? 'null',
+              ticketDetailVO.serviceRequestOther,
               style: TextStyle(color: Colors.black, fontSize: 8),
               textAlign: TextAlign.center,
             ),
@@ -268,7 +268,7 @@ class _MyServiceTicketViewState extends State<MyServiceTicketView> {
           Container(
             width: 34,
             child: Text(
-              ticketDetailVO.status ?? 'null',
+              ticketDetailVO.status ,
               style: TextStyle(color: Colors.black, fontSize: 8),
               textAlign: TextAlign.center,
             ),

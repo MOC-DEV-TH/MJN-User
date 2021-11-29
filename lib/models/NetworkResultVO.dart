@@ -6,11 +6,11 @@ String networkResultToJson(NetworkResult data) => json.encode(data.toJson());
 
 class NetworkResult {
   NetworkResult({
-    this.status,
-    this.responseCode,
-    this.description,
-    this.isRequieredUpdate,
-    this.isforceUpdate,
+    required  this.status,
+    required this.responseCode,
+    required this.description,
+    required this.isRequieredUpdate,
+    required this.isforceUpdate,
   });
 
   String status;

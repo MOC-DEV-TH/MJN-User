@@ -22,7 +22,7 @@ class NotificationItems extends StatelessWidget {
            ), child : Padding(
              padding: const EdgeInsets.all(18.0),
              child: Text(
-               notiText ?? null,
+               notiText,
                textAlign: TextAlign.center,
                style: TextStyle(
                 fontSize: 16,

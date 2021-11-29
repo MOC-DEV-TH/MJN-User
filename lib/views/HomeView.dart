@@ -139,8 +139,8 @@ class _HomeViewState extends State<HomeView> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  ':' + loginDataStorage.read(USER_NAME) ??
-                                      'null',
+                                  ':' + loginDataStorage.read(USER_NAME)
+                                      ,
                                   style: TextStyle(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 13),
@@ -149,8 +149,8 @@ class _HomeViewState extends State<HomeView> {
                                   height: 6,
                                 ),
                                 Text(
-                                  ':' + loginDataStorage.read(BUILDING) ??
-                                      'null',
+                                  ':' + loginDataStorage.read(BUILDING)
+                                      ,
                                   style: TextStyle(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 13),
@@ -159,7 +159,7 @@ class _HomeViewState extends State<HomeView> {
                                   height: 6,
                                 ),
                                 Text(
-                                  ':' + loginDataStorage.read(UNIT) ?? 'null',
+                                  ':' + loginDataStorage.read(UNIT) ,
                                   style: TextStyle(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 13),

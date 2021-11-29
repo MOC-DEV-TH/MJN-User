@@ -3,7 +3,7 @@ import 'package:MJN/models/NetworkResultVO.dart';
 import 'package:get/state_manager.dart';
 
 class SendFirebaseTokenController extends GetxController{
-  NetworkResult networkResult;
+ late NetworkResult networkResult;
   var isLoading = true.obs;
   void sendFirebaseTokenToServer( Map<String, String> params) async {
     try {

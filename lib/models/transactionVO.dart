@@ -6,12 +6,12 @@ String transactionVoToJson(TransactionVo data) => json.encode(data.toJson());
 
 class TransactionVo {
   TransactionVo({
-    this.status,
-    this.responseCode,
-    this.description,
-    this.isRequieredUpdate,
-    this.isforceUpdate,
-    this.details,
+   required this.status,
+    required this.responseCode,
+    required this.description,
+    required this.isRequieredUpdate,
+    required this.isforceUpdate,
+    required this.details,
   });
 
   String status;
@@ -42,14 +42,14 @@ class TransactionVo {
 
 class Details {
   Details({
-    this.transactionId,
-    this.paymentTotal,
-    this.currencyType,
-    this.startDate,
-    this.endDate,
-    this.paidDate,
-    this.creationDate,
-    this.modifiedDate,
+    required this.transactionId,
+    required this.paymentTotal,
+    required  this.currencyType,
+    required this.startDate,
+    required this.endDate,
+    required this.paidDate,
+    required  this.creationDate,
+    required this.modifiedDate,
   });
 
   String transactionId;

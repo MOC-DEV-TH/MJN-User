@@ -20,7 +20,7 @@ class MyServiceTicketItem extends StatelessWidget {
             child: InkWell(
               onTap: (){},
               child: Text(
-                ticketDetailVO.ticketId??'null',
+                ticketDetailVO.ticketId,
                 style: TextStyle(color: Colors.black, fontSize: 8,decoration: TextDecoration.underline,),
                 textAlign: TextAlign.center,
               ),
@@ -35,7 +35,7 @@ class MyServiceTicketItem extends StatelessWidget {
           Container(
             width: 50,
             child: Text(
-              ticketDetailVO.creationDate??'null',
+              ticketDetailVO.creationDate,
               style: TextStyle(color: Colors.black, fontSize: 8),
               textAlign: TextAlign.center,
             ),
@@ -48,7 +48,7 @@ class MyServiceTicketItem extends StatelessWidget {
           Container(
             width: 40,
             child: Text(
-              ticketDetailVO.serviceRequest??'null',
+              ticketDetailVO.serviceRequest,
               style: TextStyle(color: Colors.black, fontSize: 8),
               textAlign: TextAlign.center,
             ),
@@ -61,7 +61,7 @@ class MyServiceTicketItem extends StatelessWidget {
           Container(
             width: 30,
             child: Text(
-              ticketDetailVO.serviceRequestOther??'null',
+              ticketDetailVO.serviceRequestOther,
               style: TextStyle(color: Colors.black, fontSize: 8),
               textAlign: TextAlign.center,
             ),
@@ -74,7 +74,7 @@ class MyServiceTicketItem extends StatelessWidget {
           Container(
             width: 34,
             child: Text(
-              ticketDetailVO.status??'null',
+              ticketDetailVO.status,
               style: TextStyle(color: Colors.black, fontSize: 8),
               textAlign: TextAlign.center,
             ),

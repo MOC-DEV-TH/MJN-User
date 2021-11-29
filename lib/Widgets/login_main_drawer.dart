@@ -14,7 +14,7 @@ class LoginMainDrawer extends StatelessWidget {
           size: 26,
         ),
         title: Text(title,style: TextStyle(color: Colors.black,fontSize: 18,fontWeight: FontWeight.normal),),
-        onTap: tabsHandler,
+        // onTap: tabsHandler,
       );
   }
 

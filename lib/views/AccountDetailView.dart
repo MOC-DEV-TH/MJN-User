@@ -209,8 +209,8 @@ class _AccountViewState extends State<AccountView> {
                                                           lastTransactionController
                                                                   .transactionVo
                                                                   .details
-                                                                  .transactionId ??
-                                                              null,
+                                                                  .transactionId
+                                                             ,
                                                           style: TextStyle(
                                                               color: Colors
                                                                   .black54),
@@ -240,8 +240,8 @@ class _AccountViewState extends State<AccountView> {
                                                           lastTransactionController
                                                                   .transactionVo
                                                                   .details
-                                                                  .startDate ??
-                                                              null,
+                                                                  .startDate
+                                                              ,
                                                           style: TextStyle(
                                                               color: Colors
                                                                   .black54),
@@ -298,14 +298,14 @@ class _AccountViewState extends State<AccountView> {
                                                           (lastTransactionController
                                                                       .transactionVo
                                                                       .details
-                                                                      .paymentTotal ??
-                                                                  null) +
+                                                                      .paymentTotal
+                                                                  ) +
                                                               ' ' +
                                                               (lastTransactionController
                                                                       .transactionVo
                                                                       .details
-                                                                      .currencyType ??
-                                                                  null),
+                                                                      .currencyType
+                                                                  ),
                                                           style: TextStyle(
                                                               color: Colors
                                                                   .black54),
@@ -335,14 +335,14 @@ class _AccountViewState extends State<AccountView> {
                                                           (lastTransactionController
                                                                       .transactionVo
                                                                       .details
-                                                                      .paymentTotal ??
-                                                                  null) +
+                                                                      .paymentTotal
+                                                                  ) +
                                                               ' ' +
                                                               (lastTransactionController
                                                                       .transactionVo
                                                                       .details
-                                                                      .currencyType ??
-                                                                  null),
+                                                                      .currencyType
+                                                                  ),
                                                           style: TextStyle(
                                                               color: Colors
                                                                   .black54),
@@ -372,8 +372,8 @@ class _AccountViewState extends State<AccountView> {
                                                           lastTransactionController
                                                                   .transactionVo
                                                                   .details
-                                                                  .paidDate ??
-                                                              null,
+                                                                  .paidDate
+                                                              ,
                                                           style: TextStyle(
                                                               color: Colors
                                                                   .black54),
@@ -404,8 +404,8 @@ class _AccountViewState extends State<AccountView> {
                                                           accountDetailController
                                                                   .accountInfoVo
                                                                   .details
-                                                                  .firstname ??
-                                                              null,
+                                                                  .firstname
+                                                              ,
                                                           style: TextStyle(
                                                               color: Colors
                                                                   .black54),

@@ -33,7 +33,7 @@ class _LoginView1State extends State<LoginView1> {
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
       if (langStorage.read(LANGUAGE) == 'MY') {
         setState(() {
           isSelected = [false, true];
@@ -50,7 +50,7 @@ class _LoginView1State extends State<LoginView1> {
   @override
   void didChangeDependencies() {
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
       if (langStorage.read(LANGUAGE) == 'MY') {
         setState(() {
           isSelected = [false, true];
@@ -228,7 +228,7 @@ class _LoginView1State extends State<LoginView1> {
             Animation secondaryAnimation) {
           return SafeArea(
             child:
-            Container(margin: EdgeInsets.only(top: 56), child: DialogUI()),
+            Container(margin: EdgeInsets.only(top: 56), child: DialogUI(key: _scaffoldKey,)),
           );
         });
   }

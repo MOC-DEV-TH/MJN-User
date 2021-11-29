@@ -30,9 +30,9 @@ class _NewNotificationViewState extends State<NewNotificationView> {
   String text = "Flutter has its own UI components, along with an engine to render them on both the Android and iOS platforms. Most of those UI components, right out of the box, conform to the guidelines of Material Design.";
 
   void retrieveNotiFromDatabase() {
-    Future<List<NotificationModelVO>> notimodels = DatabaseUtil().getAllNotiModels();
+    Future<List<NotificationModelVO>?> notimodels = DatabaseUtil().getAllNotiModels();
     notimodels.then((value) {
-      notificationLists = value;
+      notificationLists = value!;
       setState(() {
         bDataRetrievedLately = true;
       });
@@ -143,7 +143,7 @@ class _NewNotificationViewState extends State<NewNotificationView> {
                           enabled: true,
                           onSelected: (value) {
                             setState(() {
-                              _value = value;
+                              _value = value.toString();
                             });
                             if(_value == 'one'){
                               AppUtils.showErrorSnackBar('Success', 'Mark all as read');

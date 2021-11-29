@@ -6,12 +6,12 @@ String ticketVoToJson(TicketVo data) => json.encode(data.toJson());
 
 class TicketVo {
   TicketVo({
-    this.status,
-    this.responseCode,
-    this.description,
-    this.isRequieredUpdate,
-    this.isforceUpdate,
-    this.details,
+    required  this.status,
+    required  this.responseCode,
+    required  this.description,
+    required this.isRequieredUpdate,
+    required this.isforceUpdate,
+    required this.details,
   });
 
   String status;
@@ -42,15 +42,15 @@ class TicketVo {
 
 class Details {
   Details({
-    this.ticketId,
-    this.serviceRequest,
-    this.serviceRequestOther,
-    this.topic,
-    this.topicOther,
-    this.status,
-    this.message,
-    this.resolvedTime,
-    this.creationDate,
+    required  this.ticketId,
+    required this.serviceRequest,
+    required this.serviceRequestOther,
+    required this.topic,
+    required this.topicOther,
+    required this.status,
+    required this.message,
+    required this.resolvedTime,
+    required this.creationDate,
   });
 
   String ticketId;

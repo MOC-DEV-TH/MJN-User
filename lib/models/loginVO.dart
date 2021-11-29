@@ -6,16 +6,16 @@ String loginVoToJson(LoginVo data) => json.encode(data.toJson());
 
 class LoginVo {
   LoginVo({
-    this.status,
-    this.responseCode,
-    this.description,
-    this.isRequieredUpdate,
-    this.isforceUpdate,
-    this.uid,
-    this.userName,
-    this.phone,
-    this.token,
-    this.details,
+    required  this.status,
+    required this.responseCode,
+    required this.description,
+    required this.isRequieredUpdate,
+    required this.isforceUpdate,
+    required  this.uid,
+    required this.userName,
+    required  this.phone,
+    required this.token,
+    required this.details,
   });
 
   String status;
@@ -58,9 +58,9 @@ class LoginVo {
 
 class Detail {
   Detail({
-    this.tenantId,
-    this.building,
-    this.unit,
+    required  this.tenantId,
+    required this.building,
+    required this.unit,
   });
 
   String tenantId;

@@ -52,7 +52,7 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 void onReceivedFirebaseMsg(RemoteMessage message) {
   if (message.notification != null) {
     print('Message also contained a notification: ${message.notification}');
-    print('notification.body' + message.notification.body + ', notification.body' + message.notification.title);
+    print('notification.body' + message.notification!.body.toString() + ', notification.body' + message.notification!.title.toString());
   }
 
   if (message.data != null) {
@@ -101,7 +101,7 @@ class _MyAppState extends State<MyApp> {
     getFirebaseToken();
 
     FirebaseMessaging.instance.getToken().then((token) {
-      sendFirebaseTokenToServer(token);
+      sendFirebaseTokenToServer(token!);
     });
 
     super.initState();
@@ -270,7 +270,7 @@ class _Splash2State extends State<Splash2> {
 //   }
 // }
  getFirebaseToken() async {
-  String token = await FirebaseMessaging.instance.getToken();
+  String? token = await FirebaseMessaging.instance.getToken();
   return token;
 
 }

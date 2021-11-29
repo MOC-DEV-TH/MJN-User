@@ -6,12 +6,12 @@ String invoiceListVoToJson(InvoiceListVo data) => json.encode(data.toJson());
 
 class InvoiceListVo {
   InvoiceListVo({
-    this.status,
-    this.responseCode,
-    this.description,
-    this.isRequieredUpdate,
-    this.isforceUpdate,
-    this.details,
+    required  this.status,
+    required this.responseCode,
+    required this.description,
+    required this.isRequieredUpdate,
+    required this.isforceUpdate,
+    required  this.details,
   });
 
   String status;
@@ -42,21 +42,21 @@ class InvoiceListVo {
 
 class Detail {
   Detail({
-    this.invoiceId,
-    this.paymentTotal,
-    this.currencyType,
-    this.startDate,
-    this.endDate,
-    this.creationDate,
-    this.modifiedDate,
-    this.transactionId,
-    this.paidDate,
-    this.isCreditNote,
+    required  this.invoiceId,
+    required  this.paymentTotal,
+    required this.currencyType,
+    required this.startDate,
+    required this.endDate,
+    required this.creationDate,
+    required this.modifiedDate,
+    required this.transactionId,
+    required  this.paidDate,
+    required  this.isCreditNote,
     this.creditWith,
     this.creditAmount,
     this.creditCurrency,
     this.creditDate,
-    this.paymentStatus,
+    required  this.paymentStatus,
   });
 
   String invoiceId;

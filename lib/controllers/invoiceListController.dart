@@ -4,7 +4,7 @@ import 'package:get/state_manager.dart';
 
 
 class InvoiceListController extends GetxController{
-  InvoiceListVo invoiceListVo;
+ late InvoiceListVo invoiceListVo;
   var isLoading = true.obs;
 
   void fetchPaymentInvoiceList(String token,String uid,String tenantID) async {

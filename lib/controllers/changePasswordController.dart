@@ -5,7 +5,7 @@ import 'package:get/state_manager.dart';
 import 'package:get/get.dart';
 
 class ChangePasswordController extends GetxController{
-  NetworkResult networkResult;
+  late NetworkResult networkResult;
   var isLoading = false.obs;
   void changePassword( Map<String, String> params,String token) async {
     try {

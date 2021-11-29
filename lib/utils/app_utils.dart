@@ -41,7 +41,7 @@ class AppUtils {
 
   static void showLogoutDialog(
       String title, String message, BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
       showDialog(
           context: context,
           builder: (_) => Center(
@@ -140,7 +140,7 @@ class AppUtils {
 
   static void showSessionExpireDialog(
       String title, String message, BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
       showDialog(
           barrierDismissible: false,
           context: context,
@@ -210,7 +210,7 @@ class AppUtils {
 
   static void showRequireUpdateDialog(
       String title, String message, BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
       showDialog(
           context: context,
           builder: (_) => Center(

@@ -17,7 +17,7 @@ class MainDrawer extends StatelessWidget {
         style: TextStyle(
             color: Colors.black, fontSize: 18, fontWeight: FontWeight.normal),
       ),
-      onTap: tabsHandler,
+      // onTap: tabsHandler,
     );
   }
 

@@ -14,7 +14,7 @@ class DatabaseUtil {
 
   static final DatabaseUtil _databaseUtil = DatabaseUtil._internal();
 
-  Database databaseRef = null;
+  Database? databaseRef = null;
 
   Future<Database> InitDatabase() async {
     print("InitDatabase");
@@ -43,7 +43,7 @@ class DatabaseUtil {
     print("insertNotification");
     if(databaseRef != null) {
       print("adding into DB");
-      await databaseRef.insert(
+      await databaseRef!.insert(
         'notifications',
         notiModel.toJson(),
         conflictAlgorithm: ConflictAlgorithm.replace,
@@ -52,16 +52,16 @@ class DatabaseUtil {
 
   }
 
-  Future<List<NotificationModelVO>> getAllNotiModels() async {
+  Future<List<NotificationModelVO>?> getAllNotiModels() async {
     if(databaseRef != null) {
       // Query the table for all notifications.
-      final List<Map<String, dynamic>> maps = await databaseRef.query('notifications');
+      final List<Map<String, dynamic>> maps = await databaseRef!.query('notifications');
 
       return List.generate(maps.length, (i) {
         return NotificationModelVO.fromJson(maps[i]);
       });
     }
-
+   return null;
   }
 
 }

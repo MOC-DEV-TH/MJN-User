@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 
 class UpdateAccountInfoController extends GetxController{
 
-  NetworkResult networkResult;
+ late NetworkResult networkResult;
   var isLoading = false.obs;
 
   void updateAccountInfo( Map<String, String> params,String token,BuildContext context) async {

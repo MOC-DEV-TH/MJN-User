@@ -4,7 +4,7 @@ import 'package:get/state_manager.dart';
 
 class LastTransactionController extends GetxController{
 
-  TransactionVo transactionVo;
+  late TransactionVo transactionVo;
   var isLoading = true.obs;
 
   void fetchLastTransactionData(String token,String uid,String tenantID) async {

@@ -97,26 +97,19 @@ class _TicketDetailViewState extends State<TicketDetailView> {
                                 children: [
                                   Text(':' + loginDataStorage.read(USER_NAME)),
                                   Text(':' +
-                                      ticketByIdController.ticketVo.details.ticketId ??
-                                      'null'),
+                                      ticketByIdController.ticketVo.details.ticketId ),
                                   Text(':' +
-                                      ticketByIdController.ticketVo.details.serviceRequest ??
-                                      'null'),
+                                      ticketByIdController.ticketVo.details.serviceRequest),
                                   Text(':' +
-                                      ticketByIdController.ticketVo.details.topic ??
-                                      'null'),
+                                      ticketByIdController.ticketVo.details.topic ),
                                   Text(':' +
-                                      ticketByIdController.ticketVo.details.status ??
-                                      'null'),
+                                      ticketByIdController.ticketVo.details.status),
                                   Text(':' +
-                                      ticketByIdController.ticketVo.details.message ??
-                                      'null'),
+                                      ticketByIdController.ticketVo.details.message ),
                                   Text(':' +
-                                      ticketByIdController.ticketVo.details.resolvedTime ??
-                                      'null'),
+                                      ticketByIdController.ticketVo.details.resolvedTime ),
                                   Text(':' +
-                                      ticketByIdController.ticketVo.details.creationDate ??
-                                      'null'),
+                                      ticketByIdController.ticketVo.details.creationDate ),
 
                                 ],
                               ),

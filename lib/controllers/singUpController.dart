@@ -5,7 +5,7 @@ import 'package:get/state_manager.dart';
 import 'package:get/get.dart';
 
 class SignUpController extends GetxController{
-  NetworkResult networkResult;
+ late NetworkResult networkResult;
   var isLoading = false.obs;
   void signUp( Map<String, String> params) async {
     try {

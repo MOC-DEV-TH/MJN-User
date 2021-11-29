@@ -6,12 +6,12 @@ String accountInfoVoToJson(AccountInfoVo data) => json.encode(data.toJson());
 
 class AccountInfoVo {
   AccountInfoVo({
-    this.status,
-    this.responseCode,
-    this.description,
-    this.isRequieredUpdate,
-    this.isforceUpdate,
-    this.details,
+    required this.status,
+    required this.responseCode,
+    required this.description,
+    required this.isRequieredUpdate,
+    required this.isforceUpdate,
+    required this.details,
   });
 
   String status;
@@ -42,21 +42,21 @@ class AccountInfoVo {
 
 class Details {
   Details({
-    this.tenantId,
-    this.name,
-    this.status,
-    this.mail,
-    this.uid,
-    this.profileId,
-    this.firstname,
-    this.lastname,
-    this.phone1,
-    this.phone2,
-    this.phone3,
-    this.creationDate,
-    this.modifiedDate,
-    this.building,
-    this.unit,
+    required  this.tenantId,
+    required this.name,
+    required this.status,
+    required  this.mail,
+    required this.uid,
+    required this.profileId,
+    required this.firstname,
+    required this.lastname,
+    required this.phone1,
+    required this.phone2,
+    required this.phone3,
+    required this.creationDate,
+    required this.modifiedDate,
+    required this.building,
+    required this.unit,
   });
 
   String tenantId;

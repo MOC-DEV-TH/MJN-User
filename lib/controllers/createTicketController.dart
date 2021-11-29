@@ -8,7 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/state_manager.dart';
 
 class CreateTicketController extends GetxController{
-  NetworkResult networkResult;
+  late NetworkResult networkResult;
   var isLoading = false.obs;
   void createTicket(RequestCreateTicket requestCreateTicket,String token,BuildContext context) async {
     try {
