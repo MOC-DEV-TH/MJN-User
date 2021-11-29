@@ -1,4 +1,3 @@
-
 import 'package:floor/floor.dart';
 
 @Entity(tableName: 'notification')
