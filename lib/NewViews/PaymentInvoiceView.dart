@@ -1,4 +1,4 @@
-import 'package:MJN/NewViews/OnlinePaymentChannelView.dart';
+import 'package:MJN/NewViews/ChannelOnlinePaymentView.dart';
 import 'package:flutter/material.dart';
 
 class PaymentInvoiceView extends StatefulWidget {
@@ -22,7 +22,7 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
   @override
   Widget build(BuildContext context) {
     return changePageIndex == 1
-        ? OnlinePaymentChannelView()
+        ? ChannelOnlinePaymentView()
         : Scaffold(
             backgroundColor: Color(0xff188FC5),
             body: SingleChildScrollView(
@@ -61,7 +61,7 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
                 style: TextStyle(color: Color(0xffe9e9e9)),
               ),
               Text(
-                'XXXXXX',
+                'xxxxxx',
                 style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
               ),
             ],
@@ -87,7 +87,7 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
                 ),
               ),
               Text(
-                'XXXXXX',
+                'xxxxxx',
                 style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
               ),
             ],
@@ -113,7 +113,7 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
                 ),
               ),
               Text(
-                'XXXXXX',
+                'xxxxxx',
                 style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
               ),
             ],
@@ -136,7 +136,7 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
                 style: TextStyle(color: Color(0xffe9e9e9)),
               ),
               Text(
-                'XXXXXX',
+                'xxxxxx',
                 style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
               ),
             ],
@@ -162,7 +162,7 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
                 ),
               ),
               Text(
-                'XXXXXX',
+                'xxxxxx',
                 style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
               ),
             ],
@@ -188,7 +188,7 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
                 ),
               ),
               Text(
-                'XXXXXX',
+                'xxxxxx',
                 style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
               ),
             ],
@@ -214,7 +214,7 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
                 ),
               ),
               Text(
-                'XXXXXX',
+                'xxxxxx',
                 style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
               ),
             ],
@@ -240,7 +240,7 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
                 ),
               ),
               Text(
-                'XXXXXX',
+                'xxxxxx',
                 style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
               ),
             ],
@@ -266,7 +266,7 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
                 ),
               ),
               Text(
-                'XXXXXX',
+                'xxxxxx',
                 style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
               ),
             ],
@@ -292,7 +292,7 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
                 ),
               ),
               Text(
-                'XXXXXX',
+                'xxxxxx',
                 style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
               ),
             ],
@@ -318,7 +318,7 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
                 ),
               ),
               Text(
-                'XXXXXX',
+                'xxxxxx',
                 style: TextStyle(fontSize: 14, color: Colors.black),
               ),
             ],
@@ -344,7 +344,7 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
                 ),
               ),
               Text(
-                'XXXXXX',
+                'xxxxxx',
                 style: TextStyle(fontSize: 14, color: Colors.black),
               ),
             ],
@@ -378,7 +378,7 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
                 ),
               ),
               Text(
-                'XXXXXX',
+                'xxxxxx',
                 style: TextStyle(fontSize: 14, color: Colors.black),
               ),
             ],

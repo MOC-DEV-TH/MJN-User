@@ -1,3 +1,4 @@
+import 'package:MJN/CustomDialog/CustomDialogUI.dart';
 import 'package:MJN/Widgets/login_main_drawer.dart';
 import 'package:MJN/controllers/loginController.dart';
 import 'package:MJN/utils/app_constants.dart';
@@ -215,6 +216,23 @@ class _LoginView1State extends State<LoginView1> {
     );
   }
 
+  void showMenuDialog(BuildContext context) {
+    showGeneralDialog(
+        context: context,
+        barrierDismissible: true,
+        barrierLabel:
+        MaterialLocalizations.of(context).modalBarrierDismissLabel,
+        barrierColor: Colors.black45,
+        transitionDuration: const Duration(milliseconds: 200),
+        pageBuilder: (BuildContext buildContext, Animation animation,
+            Animation secondaryAnimation) {
+          return SafeArea(
+            child:
+            Container(margin: EdgeInsets.only(top: 56), child: DialogUI()),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -231,7 +249,9 @@ class _LoginView1State extends State<LoginView1> {
                 Container(
                     margin: EdgeInsets.only(right: 40),
                     child: GestureDetector(
-                        onTap: () {}, child: Icon((Icons.dehaze_rounded)))),
+                        onTap: () {
+                          showMenuDialog(context);
+                        }, child: Icon((Icons.dehaze_rounded)))),
                 Container(
                     margin: EdgeInsets.only(left: 65),
                     width: 100,
