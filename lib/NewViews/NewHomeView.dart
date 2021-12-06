@@ -72,7 +72,7 @@ class _NewHomeViewState extends State<NewHomeView> {
                     height: 10,
                   ),
                   Text(
-                    "Package Plan & Other Service",
+                    "Offers",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 14,

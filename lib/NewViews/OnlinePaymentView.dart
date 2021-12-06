@@ -1,3 +1,4 @@
+import 'package:MJN/NewViews/NewPaymentView.dart';
 import 'package:flutter/material.dart';
 
 class OnlinePaymentView extends StatefulWidget {
@@ -10,9 +11,17 @@ class _OnlinePaymentViewState extends State<OnlinePaymentView> {
   var unitTextController = TextEditingController();
   var contactNumberController = TextEditingController();
 
+  int changePageIndex = 0;
+
+  @override
+  void initState() {
+    changePageIndex = 0;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return changePageIndex == 1 ? NewPaymentView() : Scaffold(
       backgroundColor: Color(0xff188FC5),
       body: GestureDetector(
         onTap: () {
@@ -133,7 +142,7 @@ class _OnlinePaymentViewState extends State<OnlinePaymentView> {
                   width: 110,
                   child: RaisedButton(onPressed: (){
                     setState(() {
-
+                         changePageIndex = 1;
                     });
                   },
                     child: Text('Next'),

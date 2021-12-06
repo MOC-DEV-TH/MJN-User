@@ -33,6 +33,7 @@ dependencies:
   flutter_local_notifications: ^5.0.0+4
   url_launcher: ^6.0.12
   readmore: ^2.1.0
+  event_bus: ^2.0.0
   flutter_neumorphic:
     git:
       url: "https://github.com/alionour/Flutter-Neumorphic"
@@ -105,6 +106,11 @@ flutter:
     - assets/images/counter_icon.png
     - assets/images/counter_icon2.png
     - assets/images/wallet_icon.png
+    - assets/images/vertical_banking_icon.png
+    - assets/images/banking.png
+    - assets/images/wallet.png
+    - assets/images/counter.png
+    - assets/images/cards.png
 
 
         # An image asset can refer to one or more resolution-specific "variants", see

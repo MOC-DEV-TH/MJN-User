@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:MJN/Network/Request/RequestCreateTicket.dart';
 import 'package:MJN/models/NetworkResultVO.dart';
+import 'package:MJN/models/NewLoginVO.dart';
 import 'package:MJN/models/accountInfoVO.dart';
 import 'package:MJN/models/invoiceListVO.dart';
 import 'package:MJN/models/invoiceVO.dart';
@@ -18,7 +19,7 @@ class MjnAPI {
   static final String securityKey = 'moJoENEt2021sECuriTYkEy';
   static var client = http.Client();
 
-  static Future<LoginVo?> fetchLoginData(
+  static Future<NewLoginVo?> fetchLoginData(
       Map<String, String> params) async {
     var response = await client.post(
       Uri.parse(LOGIN_URL),
@@ -30,7 +31,7 @@ class MjnAPI {
     );
     if (response.statusCode == 200) {
       var json = response.body;
-      var login = loginVoFromJson(json);
+      var login = newLoginVoFromJson(json);
       return login;
     } else {
       return null;

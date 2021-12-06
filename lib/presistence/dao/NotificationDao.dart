@@ -7,11 +7,11 @@ abstract class NotificationDao {
   @insert
   Future<void> insertNotification(NotificationModelVO notification);
 
-  @delete
-  Future<void> deleteNote(NotificationModelVO notification);
+  @Query('DELETE FROM notification')
+  Future<void> deleteAllNotifications();
 
   @Query('SELECT * FROM notification')
-  Future<List<NotificationModelVO>> findAllNoti();
+  Future<List<NotificationModelVO>> fetchAllNotifications();
 
   @update
   Future<int> updateNotification(NotificationModelVO notification);

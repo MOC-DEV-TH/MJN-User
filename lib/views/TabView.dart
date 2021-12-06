@@ -7,6 +7,7 @@ import 'package:MJN/NewViews/NewPaymentView.dart';
 import 'package:MJN/NewViews/NewProductAndServiceView.dart';
 import 'package:MJN/NewViews/NewServiceComplainView.dart';
 import 'package:MJN/NewViews/NewTermAndConditionView.dart';
+import 'package:MJN/NewViews/OnlinePaymentView.dart';
 import 'package:MJN/utils/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
@@ -292,7 +293,7 @@ class _TabScreensState extends State<TabScreens> {
       case 0:
         return NewNotificationView();
       case 1:
-        return NewPaymentView();
+        return OnlinePaymentView();
       case 2:
         return NewHomeView();
       case 3:

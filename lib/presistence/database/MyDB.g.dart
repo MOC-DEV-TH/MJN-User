@@ -123,19 +123,6 @@ class _$NotificationDao extends NotificationDao {
                   'type_name': item.type_name,
                   'action_url': item.action_url,
                   'created': item.created
-                }),
-        _notificationModelVODeletionAdapter = DeletionAdapter(
-            database,
-            'notification',
-            ['id'],
-            (NotificationModelVO item) => <String, Object?>{
-                  'id': item.id,
-                  'title': item.title,
-                  'body': item.body,
-                  'message': item.message,
-                  'type_name': item.type_name,
-                  'action_url': item.action_url,
-                  'created': item.created
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -149,11 +136,13 @@ class _$NotificationDao extends NotificationDao {
 
   final UpdateAdapter<NotificationModelVO> _notificationModelVOUpdateAdapter;
 
-  final DeletionAdapter<NotificationModelVO>
-      _notificationModelVODeletionAdapter;
+  @override
+  Future<void> deleteAllNotifications() async {
+    await _queryAdapter.queryNoReturn('DELETE FROM notification');
+  }
 
   @override
-  Future<List<NotificationModelVO>> findAllNoti() async {
+  Future<List<NotificationModelVO>> fetchAllNotifications() async {
     return _queryAdapter.queryList('SELECT * FROM notification',
         mapper: (Map<String, Object?> row) => NotificationModelVO(
             row['id'] as int,
@@ -175,10 +164,5 @@ class _$NotificationDao extends NotificationDao {
   Future<int> updateNotification(NotificationModelVO notification) {
     return _notificationModelVOUpdateAdapter.updateAndReturnChangedRows(
         notification, OnConflictStrategy.abort);
-  }
-
-  @override
-  Future<void> deleteNote(NotificationModelVO notification) async {
-    await _notificationModelVODeletionAdapter.delete(notification);
   }
 }

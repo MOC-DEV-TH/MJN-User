@@ -178,9 +178,9 @@ class _LoginView1State extends State<LoginView1> {
                             'Error!!', 'Data must not empty!!');
                       } else {
                         Map<String, String> map = {
-                          'user_name': buildingText.value.text,
+                          'building': buildingText.value.text,
+                          'unit': unitText.value.text,
                           'app_version': app_version,
-                          'password': unitText.value.text,
                         };
                         loginController.fetchLoginData(map, context);
                       }

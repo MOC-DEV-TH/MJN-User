@@ -3,8 +3,10 @@ import 'dart:convert';
 import 'package:MJN/LocalString/LocalString.dart';
 import 'package:MJN/NewViews/LoginView1.dart';
 import 'package:MJN/models/notificationModelVO.dart';
+import 'package:MJN/presistence/database/MyDB.dart';
 import 'package:MJN/presistence/db/database_util.dart';
 import 'package:MJN/utils/app_constants.dart';
+import 'package:MJN/utils/eventbus_util.dart';
 import 'package:MJN/views/ChangePasswordView.dart';
 import 'package:MJN/views/CreateServiceTicketView.dart';
 import 'package:MJN/views/LoginView.dart';
@@ -30,11 +32,16 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   NotificationModelVO notiModel = NotificationModelVO.fromJson(message.data);
 
   NotificationModelVO notificationModelVO = NotificationModelVO.fromJson(message.data);
+  final database = await $FloorMyDatabase.databaseBuilder('app_database.db').build();
+  final notificationDao = database.notiDao;
 
   if (notiModel != null) {
-    DatabaseUtil().InitDatabase().then((value) {
-      DatabaseUtil().insertNotification(notificationModelVO);
-    });
+    // DatabaseUtil().InitDatabase().then((value) {
+    //   DatabaseUtil().insertNotification(notificationModelVO);
+    // });
+    EventBusUtils.getInstance().fire(notiModel);
+    print(message.data);
+    notificationDao.insertNotification(notificationModelVO).then((value) => print('Success'));
   }
 }
 
@@ -49,7 +56,7 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
 
-void onReceivedFirebaseMsg(RemoteMessage message) {
+void onReceivedFirebaseMsg(RemoteMessage message) async{
   if (message.notification != null) {
     print('Message also contained a notification: ${message.notification}');
     print('notification.body' + message.notification!.body.toString() + ', notification.body' + message.notification!.title.toString());
@@ -60,20 +67,25 @@ void onReceivedFirebaseMsg(RemoteMessage message) {
   }
 
   NotificationModelVO notiModel = NotificationModelVO.fromJson(message.data);
+  final database = await $FloorMyDatabase.databaseBuilder('app_database.db').build();
+  final notificationDao = database.notiDao;
 
   if (notiModel != null) {
-
-    DatabaseUtil().insertNotification(notiModel);
+    print(message.data);
+    EventBusUtils.getInstance().fire(notiModel);
+    //DatabaseUtil().insertNotification(notiModel);
+    notificationDao.insertNotification(notiModel).then((value) => print('Success'));
   }
 }
 
 
 void main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
   await Firebase.initializeApp();
 
-  DatabaseUtil().InitDatabase();
+  //DatabaseUtil().InitDatabase();
 
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
@@ -91,6 +103,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+
 
   final SendFirebaseTokenController sendFirebaseTokenController = Get.put(SendFirebaseTokenController());
   final dataStorage = GetStorage();

@@ -81,11 +81,13 @@ class _ChannelOnlinePaymentViewState extends State<ChannelOnlinePaymentView> {
                                     SizedBox(
                                       width: 20,
                                     ),
-                                    Icon(
-                                      Icons.credit_card,
-                                      color: Color(0xff188FC5),
-                                      size: 40,
+
+                                    Padding(
+                                      padding: const EdgeInsets.all(6.0),
+                                      child: Image(image: AssetImage('assets/images/cards.png')),
                                     ),
+
+
                                     SizedBox(
                                       width: 10,
                                     ),
@@ -160,11 +162,12 @@ class _ChannelOnlinePaymentViewState extends State<ChannelOnlinePaymentView> {
                                     SizedBox(
                                       width: 20,
                                     ),
-                                    Icon(
-                                      Icons.credit_card,
-                                      color: Color(0xff188FC5),
-                                      size: 40,
+
+                                    Padding(
+                                      padding: const EdgeInsets.all(6.0),
+                                      child: Image(image: AssetImage('assets/images/wallet.png')),
                                     ),
+
                                     SizedBox(
                                       width: 10,
                                     ),
@@ -239,11 +242,12 @@ class _ChannelOnlinePaymentViewState extends State<ChannelOnlinePaymentView> {
                                     SizedBox(
                                       width: 20,
                                     ),
-                                    Icon(
-                                      Icons.credit_card,
-                                      color: Color(0xff188FC5),
-                                      size: 40,
+
+                                    Padding(
+                                      padding: const EdgeInsets.all(6.0),
+                                      child: Image(image: AssetImage('assets/images/counter.png')),
                                     ),
+
                                     SizedBox(
                                       width: 10,
                                     ),
@@ -318,11 +322,12 @@ class _ChannelOnlinePaymentViewState extends State<ChannelOnlinePaymentView> {
                                     SizedBox(
                                       width: 20,
                                     ),
-                                    Icon(
-                                      Icons.credit_card,
-                                      color: Color(0xff188FC5),
-                                      size: 40,
+
+                                    Padding(
+                                      padding: const EdgeInsets.all(6.0),
+                                      child: Image(image: AssetImage('assets/images/banking.png')),
                                     ),
+
                                     SizedBox(
                                       width: 10,
                                     ),
@@ -386,10 +391,13 @@ class _ChannelOnlinePaymentViewState extends State<ChannelOnlinePaymentView> {
                           if(isChooseCard){
                             AppUtils.showSuccessSnackBar('Success', 'Go to 2c2p Page');
                           }
-                          else{
+                          else if(isChooseCounter || isChooseBanking || isChooseWallet){
                             setState(() {
                               changePageIndex = 1;
                             });
+                          }
+                          else{
+
                           }
 
                         },

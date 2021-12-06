@@ -365,7 +365,65 @@ class _MakeOnlinePaymentViewState extends State<MakeOnlinePaymentView> {
               height:40,
             ),
 
-            Image(image: AssetImage('assets/images/banking_icon.png')),
+            Container(
+              margin: EdgeInsets.only(left: 20),
+              child: Row(children: [
+
+                Image(image: AssetImage('assets/images/vertical_banking_icon.png')),
+
+                SizedBox(
+                  width:40,
+                ),
+
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+
+                  Text(
+                    'Account Number',
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 20,
+                        color: Color(0xffe9e9e9)),
+                  ),
+                  Text(
+                    'XXXXXXXXXXXXXXXXXX',
+                    style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 18,
+                        color: Color(0xffe9e9e9)),
+                  ),
+
+                  SizedBox(
+                    height:60,
+                  ),
+
+
+                  Text(
+                    'Account Number',
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 20,
+                        color: Color(0xffe9e9e9)),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 5),
+                    child: Text(
+                      'XXXXXXXXXXXXXXXXXX',
+                      style: TextStyle(
+                          fontWeight: FontWeight.normal,
+                          fontSize: 18,
+                          color: Color(0xffe9e9e9)),
+                    ),
+                  ),
+
+
+                ],)
+
+              ],),
+            ),
 
 
             SizedBox(
