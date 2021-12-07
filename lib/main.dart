@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:MJN/LocalString/LocalString.dart';
 import 'package:MJN/NewViews/LoginView1.dart';
 import 'package:MJN/models/notificationModelVO.dart';
+import 'package:MJN/presistence/dao/NotificationDao.dart';
+import 'package:MJN/presistence/database/MyAppDatabase.dart';
 import 'package:MJN/presistence/database/MyDB.dart';
 import 'package:MJN/presistence/db/database_util.dart';
 import 'package:MJN/utils/app_constants.dart';
@@ -32,15 +34,14 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   NotificationModelVO notiModel = NotificationModelVO.fromJson(message.data);
 
   NotificationModelVO notificationModelVO = NotificationModelVO.fromJson(message.data);
-  final database = await $FloorMyDatabase.databaseBuilder('app_database.db').build();
-  final notificationDao = database.notiDao;
+  MyDatabase? database = await MyAppDatabase.instance.database;
+  final notificationDao = database!.notiDao;
 
   if (notiModel != null) {
-    // DatabaseUtil().InitDatabase().then((value) {
-    //   DatabaseUtil().insertNotification(notificationModelVO);
-    // });
+
     EventBusUtils.getInstance().fire(notiModel);
     print(message.data);
+
     notificationDao.insertNotification(notificationModelVO).then((value) => print('Success'));
   }
 }
@@ -67,13 +68,12 @@ void onReceivedFirebaseMsg(RemoteMessage message) async{
   }
 
   NotificationModelVO notiModel = NotificationModelVO.fromJson(message.data);
-  final database = await $FloorMyDatabase.databaseBuilder('app_database.db').build();
-  final notificationDao = database.notiDao;
+  MyDatabase? database = await MyAppDatabase.instance.database;
+  final notificationDao = database!.notiDao;
 
   if (notiModel != null) {
     print(message.data);
     EventBusUtils.getInstance().fire(notiModel);
-    //DatabaseUtil().insertNotification(notiModel);
     notificationDao.insertNotification(notiModel).then((value) => print('Success'));
   }
 }
@@ -84,6 +84,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
   await Firebase.initializeApp();
+
 
   //DatabaseUtil().InitDatabase();
 
@@ -109,6 +110,7 @@ class _MyAppState extends State<MyApp> {
   final dataStorage = GetStorage();
   @override
   void initState() {
+    MyAppDatabase.builder().then((value) => MyAppDatabase.notificationDao = value);
     FirebaseMessaging.instance.subscribeToTopic('mjn');
 
     getFirebaseToken();

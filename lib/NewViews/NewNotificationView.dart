@@ -4,30 +4,36 @@ import 'package:MJN/Widgets/new_notification_items.dart';
 import 'package:MJN/Widgets/notification_items.dart';
 import 'package:MJN/models/notificationModelVO.dart';
 import 'package:MJN/presistence/dao/NotificationDao.dart';
+import 'package:MJN/presistence/database/MyAppDatabase.dart';
 import 'package:MJN/presistence/database/MyDB.dart';
 import 'package:MJN/presistence/db/database_util.dart';
 import 'package:MJN/utils/app_utils.dart';
 import 'package:MJN/utils/eventbus_util.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 class NewNotificationView extends StatefulWidget {
   static const routeName = '/notification_screen';
-
+  late final NotificationDao notificationDao;
+  NewNotificationView(this.notificationDao);
+  
   @override
   _NewNotificationViewState createState() => _NewNotificationViewState();
 }
 
 class _NewNotificationViewState extends State<NewNotificationView> {
-  late MyDatabase database;
-  late NotificationDao notificationDao;
+  late MyDatabase? database;
+  //late widget.notificationDao widget.notificationDao;
 
   late StreamSubscription notiSub;
+
+  late StreamSubscription notiUpdate;
 
   List<NotificationModelVO> notificationLists = <NotificationModelVO>[];
   bool bDataRetrievedLately = false;
   String _value = "";
-  int notiCount = 0;
+  var notiCount = 0.obs;
 
   final List<String> notilists = <String>[
     'Aby',
@@ -36,12 +42,11 @@ class _NewNotificationViewState extends State<NewNotificationView> {
     'Aish',
   ];
 
-  builder() async {
-    database =
-        await $FloorMyDatabase.databaseBuilder('app_database.db').build();
-    setState(() {
-      notificationDao = database.notiDao;
-    });
+ Future<NotificationDao> builder() async {
+    database = await MyAppDatabase.instance.database;
+
+      widget.notificationDao = database!.notiDao;
+    return widget.notificationDao;
   }
 
   bool isExpanded = false;
@@ -49,53 +54,63 @@ class _NewNotificationViewState extends State<NewNotificationView> {
   String text =
       "Flutter has its own UI components, along with an engine to render them on both the Android and iOS platforms. Most of those UI components, right out of the box, conform to the guidelines of Material Design.";
 
-  void retrieveNotiFromDatabase() {
-    Future<List<NotificationModelVO>?> notimodels =
-        DatabaseUtil().getAllNotiModels();
-    notimodels.then((value) {
-      notificationLists = value!;
-      setState(() {
-        bDataRetrievedLately = true;
-      });
-      print(notificationLists.length);
-    });
-  }
-
   Future<List<NotificationModelVO>> retrieveUsers() async {
-    final database =
-        await $FloorMyDatabase.databaseBuilder('app_database.db').build();
-    final notificationDao = database.notiDao;
-
-    return await notificationDao.fetchAllNotifications();
+    return await widget.notificationDao.fetchAllNotifications();
   }
+
+  Future<List<NotificationModelVO>> retrieveAllUnreadNotifications() async {
+    return await widget.notificationDao.fetchUnreadNotifications();
+  }
+
+
 
   @override
   void initState() {
-    super.initState();
+    /*builder().then((value) {
 
-    builder();
+    });*/
+    retrieveUsers()
+        .then((value) {
+          notificationLists = value;
+          setState(() {
 
-    notiSub =
-        EventBusUtils.getInstance().on<NotificationModelVO>().listen((event) {
-      print("NOTI EVENT " + event.title);
-      notificationLists.add(event);
-      notiCount = notificationLists.length;
-      setState(() {
-        bDataRetrievedLately = true;
-      });
+          });
+        });
+
+    notiUpdate = EventBusUtils.getInstance().on().listen((event) {
+      if(event.toString() == 'success'){
+        retrieveAllUnreadNotifications().then((value) => {
+          notiCount.value = value.length
+        });
+      }
     });
 
-    retrieveUsers()
-        .then((value) => {notiCount = value.length, notificationLists = value});
+    notiSub = EventBusUtils.getInstance().on<NotificationModelVO>().listen((event) {
+          print("NOTI EVENT " + event.title);
+          notificationLists.add(event);
+
+          retrieveAllUnreadNotifications().then((value) => {
+            notiCount.value = value.length
+          });
+
+          setState(() {
+            bDataRetrievedLately = true;
+          });
+        });
+
+    retrieveAllUnreadNotifications().then((value) => {
+      notiCount.value = value.length
+    });
+
+    //notificationLists =  notificationLists.where((element) => element.title.contains("abc")).toList();
+
+    super.initState();
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      //retrieveNotiFromDatabase();
-      retrieveUsers().then(
-          (value) => {notiCount = value.length, notificationLists = value});
-    }
+    retrieveUsers().then(
+            (value) => {notificationLists = value});
   }
 
   @override
@@ -111,10 +126,12 @@ class _NewNotificationViewState extends State<NewNotificationView> {
             margin: EdgeInsets.all(20),
             child: Column(
               children: [
-                Text(
-                  '$notiCount ' + 'Unread Messages',
+              Obx(() {
+               return Text(
+                  "${notiCount.value} Unread Messages",
                   style: TextStyle(color: Colors.white),
-                ),
+                );
+              }) ,
                 Container(
                   width: 60,
                   height: 30,
@@ -189,17 +206,25 @@ class _NewNotificationViewState extends State<NewNotificationView> {
                             _value = value.toString();
                           });
                           if (_value == 'one') {
-                            AppUtils.showErrorSnackBar(
-                                'Success', 'Mark all as read');
+
+                            widget.notificationDao.markAllNotifications();
+                            widget.notificationDao.fetchUnreadNotifications().then((value) =>
+                            {
+                              notiCount.value = value.length
+                            });
+
                           } else if (_value == 'two') {
-                            notificationDao
+                            widget.notificationDao
                                 .deleteAllNotifications()
                                 .then((value) => {
                                       setState(() {
                                         retrieveUsers().then((value) => {
                                               notificationLists = value,
-                                              notiCount = value.length
                                             });
+
+                                        retrieveAllUnreadNotifications().then(
+                                            (value) =>
+                                                {notiCount.value = value.length});
                                       })
                                     });
                           }
@@ -220,7 +245,7 @@ class _NewNotificationViewState extends State<NewNotificationView> {
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (ctx, index) {
-                    return NewNotificationItems(text);
+                    return NewNotificationItems(text,notificationLists[index],widget.notificationDao);
                   },
                   itemCount: notificationLists.length,
                 ),

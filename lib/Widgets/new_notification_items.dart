@@ -1,8 +1,14 @@
+import 'package:MJN/models/notificationModelVO.dart';
+import 'package:MJN/presistence/dao/NotificationDao.dart';
+import 'package:MJN/utils/eventbus_util.dart';
 import 'package:flutter/material.dart';
 
 class NewNotificationItems extends StatefulWidget {
   String text;
-  NewNotificationItems(this.text);
+  NotificationModelVO notificationList;
+  NotificationDao notificationDao;
+
+  NewNotificationItems(this.text, this.notificationList, this.notificationDao);
   @override
   _NewNotificationItemsState createState() => _NewNotificationItemsState();
 }
@@ -36,6 +42,16 @@ class _NewNotificationItemsState extends State<NewNotificationItems> {
                   setState(() {
                     isReadMore = true;
                   });
+                  NotificationModelVO notification = new NotificationModelVO(widget.notificationList.id,
+                      widget.notificationList.title,
+                      widget.notificationList.body,
+                      widget.notificationList.message,
+                      widget.notificationList.type_name, widget.notificationList.action_url, widget.notificationList.created,read: 1);
+
+
+                  widget.notificationDao.updateNotification(notification).then((value) => {
+                    EventBusUtils.getInstance().fire('success')
+                  });
                 },
                 child: Text('Outage on 20 Oct 2021...',
                   style: TextStyle(fontSize: 14, color: Colors.black),)),
@@ -45,8 +61,8 @@ class _NewNotificationItemsState extends State<NewNotificationItems> {
 
       isReadMore ? Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Text(widget.text,
-          style: TextStyle(fontSize: 14, color: Colors.black),),
+        child:  Text(widget.text,
+            style: TextStyle(fontSize: 14, color: Colors.black),),
       )
           : Container(),
 

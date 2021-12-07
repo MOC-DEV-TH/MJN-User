@@ -8,11 +8,13 @@ import 'package:MJN/NewViews/NewProductAndServiceView.dart';
 import 'package:MJN/NewViews/NewServiceComplainView.dart';
 import 'package:MJN/NewViews/NewTermAndConditionView.dart';
 import 'package:MJN/NewViews/OnlinePaymentView.dart';
+import 'package:MJN/presistence/database/MyAppDatabase.dart';
 import 'package:MJN/utils/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
+import '../main.dart';
 import 'AccountDetailView.dart';
 
 class TabScreens extends StatefulWidget {
@@ -291,7 +293,9 @@ class _TabScreensState extends State<TabScreens> {
         : _selectedPageIndex;
     switch (pageIndex) {
       case 0:
-        return NewNotificationView();
+        {
+            return NewNotificationView(MyAppDatabase.notificationDao!);
+        }
       case 1:
         return OnlinePaymentView();
       case 2:

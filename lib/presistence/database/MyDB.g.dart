@@ -82,7 +82,7 @@ class _$MyDatabase extends MyDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `notification` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `body` TEXT NOT NULL, `message` TEXT NOT NULL, `type_name` TEXT NOT NULL, `action_url` TEXT NOT NULL, `created` TEXT NOT NULL)');
+            'CREATE TABLE IF NOT EXISTS `notification` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `read` INTEGER, `body` TEXT NOT NULL, `message` TEXT NOT NULL, `type_name` TEXT NOT NULL, `action_url` TEXT NOT NULL, `created` TEXT NOT NULL)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -105,6 +105,7 @@ class _$NotificationDao extends NotificationDao {
             (NotificationModelVO item) => <String, Object?>{
                   'id': item.id,
                   'title': item.title,
+                  'read': item.read,
                   'body': item.body,
                   'message': item.message,
                   'type_name': item.type_name,
@@ -118,6 +119,7 @@ class _$NotificationDao extends NotificationDao {
             (NotificationModelVO item) => <String, Object?>{
                   'id': item.id,
                   'title': item.title,
+                  'read': item.read,
                   'body': item.body,
                   'message': item.message,
                   'type_name': item.type_name,
@@ -151,7 +153,27 @@ class _$NotificationDao extends NotificationDao {
             row['message'] as String,
             row['type_name'] as String,
             row['action_url'] as String,
-            row['created'] as String));
+            row['created'] as String,
+            read: row['read'] as int?));
+  }
+
+  @override
+  Future<List<NotificationModelVO>> fetchUnreadNotifications() async {
+    return _queryAdapter.queryList('SELECT * FROM notification WHERE read = 0',
+        mapper: (Map<String, Object?> row) => NotificationModelVO(
+            row['id'] as int,
+            row['title'] as String,
+            row['body'] as String,
+            row['message'] as String,
+            row['type_name'] as String,
+            row['action_url'] as String,
+            row['created'] as String,
+            read: row['read'] as int?));
+  }
+
+  @override
+  Future<void> markAllNotifications() async {
+    await _queryAdapter.queryNoReturn('UPDATE notification SET read = 1');
   }
 
   @override
@@ -161,8 +183,8 @@ class _$NotificationDao extends NotificationDao {
   }
 
   @override
-  Future<int> updateNotification(NotificationModelVO notification) {
-    return _notificationModelVOUpdateAdapter.updateAndReturnChangedRows(
+  Future<void> updateNotification(NotificationModelVO notification) async {
+    await _notificationModelVOUpdateAdapter.update(
         notification, OnConflictStrategy.abort);
   }
 }

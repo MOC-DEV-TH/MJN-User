@@ -13,6 +13,12 @@ abstract class NotificationDao {
   @Query('SELECT * FROM notification')
   Future<List<NotificationModelVO>> fetchAllNotifications();
 
+  @Query('SELECT * FROM notification WHERE read = 0 ')
+  Future<List<NotificationModelVO>> fetchUnreadNotifications();
+
   @update
-  Future<int> updateNotification(NotificationModelVO notification);
+  Future<void> updateNotification(NotificationModelVO notification);
+
+  @Query('UPDATE notification SET read = 1')
+  Future<void> markAllNotifications();
 }
