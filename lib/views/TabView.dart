@@ -1,4 +1,5 @@
 import 'package:MJN/CustomDialog/CustomDialogUI.dart';
+import 'package:MJN/NewViews/MyAccountView.dart';
 import 'package:MJN/NewViews/NewAboutUsView.dart';
 import 'package:MJN/NewViews/NewContactUsView.dart';
 import 'package:MJN/NewViews/NewHomeView.dart';
@@ -313,7 +314,7 @@ class _TabScreensState extends State<TabScreens> {
       case 8:
         return NewContactUsView();
       case 9:
-        return AccountView();
+        return MyAccountView();
       case 10:
         return NewHomeView();
     }

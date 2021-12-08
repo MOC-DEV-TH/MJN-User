@@ -1,7 +1,12 @@
 import 'package:MJN/NewViews/PaymentInvoiceView.dart';
+import 'package:MJN/controllers/invoiceListController.dart';
 import 'package:MJN/controllers/transactionListController.dart';
+import 'package:MJN/models/accountInfoVO.dart';
+import 'package:MJN/models/invoiceListVO.dart';
+import 'package:MJN/utils/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class NewPaymentView extends StatefulWidget {
   @override
@@ -9,20 +14,29 @@ class NewPaymentView extends StatefulWidget {
 }
 
 class _NewPaymentViewState extends State<NewPaymentView> {
-  final TransactionListController transactionListController =
-      Get.put(TransactionListController());
+
+
+  final InvoiceListController invoiceListController =
+  Get.put(InvoiceListController());
+
+
 
   int changePageIndex = 0;
   int paymentStatusIndex = 0;
+  final loginDataStorage = GetStorage();
 
   @override
   void initState() {
     changePageIndex = 0;
     super.initState();
+
+    invoiceListController.fetchPaymentInvoiceList(loginDataStorage.read(TOKEN),
+        loginDataStorage.read(UID), loginDataStorage.read(DATA_TENANT_ID));
   }
 
   @override
   Widget build(BuildContext context) {
+
     String paymentStatus = paymentStatusIndex == 1 ? 'Unpaid' : paymentStatusIndex == 2 ? 'Paid' : '';
     return changePageIndex == 1 ? PaymentInvoiceView(paymentStatus) :Scaffold(
       backgroundColor: Color(0xff188FC5),
@@ -30,38 +44,53 @@ class _NewPaymentViewState extends State<NewPaymentView> {
         child: Container(
           padding: EdgeInsets.only(bottom: 25),
           alignment: Alignment.center,
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: Text(
-                  'Unpaid',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                      color: Color(0xffe9e9e9)),
-                ),
-              ),
-              _buildPaymentStatusUnpaidTitle(),
-              Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: Text(
-                  'Paid',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                      color: Color(0xffe9e9e9)),
-                ),
-              ),
-              _buildPaymentStatusPaidTitle()
-            ],
-          ),
+          child:
+              Obx((){
+                if(invoiceListController.isLoading.value){
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                else {
+                  return
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20),
+                        child: Text(
+                          'Unpaid',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                              color: Color(0xffe9e9e9)),
+                        ),
+                      ),
+                      _buildPaymentStatusUnpaidTitle(),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20),
+                        child: Text(
+                          'Paid',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                              color: Color(0xffe9e9e9)),
+                        ),
+                      ),
+                      _buildPaymentStatusPaidTitle()
+                    ],
+                  );
+                }
+              })
+
         ),
       ),
     );
   }
 
   Widget _buildPaymentStatusUnpaidTitle() {
+
+
+
     return Padding(
         padding: const EdgeInsets.all(12.0),
         child: Column(
@@ -108,6 +137,14 @@ class _NewPaymentViewState extends State<NewPaymentView> {
               physics: new NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemBuilder: (ctx, index) {
+
+                List<Detail> unPaidInvoiceLists = invoiceListController.invoiceListVo.details.where(
+                        (element) =>
+                    element.paymentStatus == 'Unpaid'
+                ).toList();
+
+
+
                 return Column(
                   children: [
                     Container(
@@ -132,10 +169,10 @@ class _NewPaymentViewState extends State<NewPaymentView> {
                                   });
                                 },
                                 child: Text(
-                                  '12-3456778656',
+                                  unPaidInvoiceLists[index].invoiceId,
                                   style: TextStyle(
                                       color: Colors.red,
-                                      fontSize: 10,
+                                      fontSize: 9,
                                       decoration: TextDecoration.underline),
                                   textAlign: TextAlign.center,
                                 ),
@@ -144,7 +181,7 @@ class _NewPaymentViewState extends State<NewPaymentView> {
                             Container(
                               width: 63,
                               child: Text(
-                                '2021-12-3',
+                                unPaidInvoiceLists[index].startDate,
                                 style: TextStyle(
                                   color: Colors.red,
                                   fontSize: 10,
@@ -155,7 +192,7 @@ class _NewPaymentViewState extends State<NewPaymentView> {
                             Container(
                               width: 60,
                               child: Text(
-                                '2021-1-1',
+                                unPaidInvoiceLists[index].endDate,
                                 style:
                                     TextStyle(color: Colors.red, fontSize: 10),
                                 textAlign: TextAlign.center,
@@ -164,7 +201,7 @@ class _NewPaymentViewState extends State<NewPaymentView> {
                             Container(
                               width: 56,
                               child: Text(
-                                '52000',
+                                unPaidInvoiceLists[index].paymentTotal,
                                 style:
                                     TextStyle(color: Colors.red, fontSize: 10),
                                 textAlign: TextAlign.center,
@@ -177,8 +214,10 @@ class _NewPaymentViewState extends State<NewPaymentView> {
                   ],
                 );
               },
-              itemCount: 4,
+              itemCount: invoiceListController.invoiceListVo.details.where((element) =>
+              element.paymentStatus == 'Unpaid').toList().length,
             ),
+
 
 
             Container(
@@ -203,7 +242,7 @@ class _NewPaymentViewState extends State<NewPaymentView> {
                 Padding(
                   padding: const EdgeInsets.only(right: 35),
                   child: Text(
-                    '100000',
+                    '10000',
                     style: TextStyle(color: Colors.black, fontSize: 10),
                   ),
                 ),
@@ -216,124 +255,143 @@ class _NewPaymentViewState extends State<NewPaymentView> {
   }
 
   Widget _buildPaymentStatusPaidTitle() {
-    return Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
-          children: [
-            Container(
-              height: 1,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.grey,
-              ),
-            ),
-            Container(
-              height: 45,
-              decoration: BoxDecoration(
-                color: Color(0xffffcc35),
-                border: Border.all(
-                  color: Colors.grey,
-                ),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    return
+    Obx((){
+      if(invoiceListController.isLoading.value){
+        return Center(child: CircularProgressIndicator(),);
+      }
+      else {
+        return
+          Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
                 children: [
-                  Text(
-                    'Invoice_id',
-                    style: TextStyle(color: Colors.black, fontSize: 10,fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
+                  Container(
+                    height: 1,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.grey,
+                    ),
                   ),
-                  Text(
-                    'Start date',
-                    style: TextStyle(color: Colors.black, fontSize: 10,fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    'End date',
-                    style: TextStyle(color: Colors.black, fontSize: 10,fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    'Amount',
-                    style: TextStyle(color: Colors.black, fontSize: 10,fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            ),
-            ListView.builder(
-              physics: new NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemBuilder: (ctx, index) {
-                return Column(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(
-                          color: Colors.grey,
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                              width: 73,
-                              child: InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    paymentStatusIndex = 2;
-                                    changePageIndex = 1;
-                                  });
-                                },
-                                child: Text(
-                                  '12-3456778656',
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 10,
-                                      decoration: TextDecoration.underline),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              width: 63,
-                              child: Text(
-                                '2021-12-3',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 10,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                            Container(
-                              width: 60,
-                              child: Text(
-                                '2021-1-1',
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 10),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                            Container(
-                              width: 56,
-                              child: Text(
-                                '52000',
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 10),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ],
-                        ),
+                  Container(
+                    height: 45,
+                    decoration: BoxDecoration(
+                      color: Color(0xffffcc35),
+                      border: Border.all(
+                        color: Colors.grey,
                       ),
                     ),
-                  ],
-                );
-              },
-              itemCount: 12,
-            )
-          ],
-        ));
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          'Invoice_id',
+                          style: TextStyle(color: Colors.black, fontSize: 10,fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
+                        ),
+                        Text(
+                          'Start date',
+                          style: TextStyle(color: Colors.black, fontSize: 10,fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          'End date',
+                          style: TextStyle(color: Colors.black, fontSize: 10,fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          'Amount',
+                          style: TextStyle(color: Colors.black, fontSize: 10,fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  ),
+                  ListView.builder(
+                    physics: new NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemBuilder: (ctx, index) {
+
+                      List<Detail> paidInvoiceLists = invoiceListController.invoiceListVo.details.where(
+                              (element) =>
+                                  element.paymentStatus == 'Paid'
+                      ).toList();
+
+
+
+                      return Column(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(
+                                color: Colors.grey,
+                              ),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Container(
+                                    width: 73,
+                                    child: InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          paymentStatusIndex = 2;
+                                          changePageIndex = 1;
+                                        });
+                                      },
+                                      child: Text(
+                                        paidInvoiceLists[index].invoiceId,
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 9,
+                                            decoration: TextDecoration.underline),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 63,
+                                    child: Text(
+                                      paidInvoiceLists[index].startDate,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 10,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 60,
+                                    child: Text(
+                                      paidInvoiceLists[index].endDate,
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 10),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 56,
+                                    child: Text(
+                                      paidInvoiceLists[index].paymentTotal,
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 10),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                    itemCount: invoiceListController.invoiceListVo.details.where((element) =>
+                    element.paymentStatus == 'Paid').toList().length,
+                  )
+                ],
+              ));
+      }
+    });
+
   }
 }

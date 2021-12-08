@@ -41,4 +41,5 @@ const GET_TICKET_URL = API_URL+"get_ticket?";
 const GET_INVOICE_URL = API_URL+"get_invoice?";
 const GET_TRANSACTION_URL = API_URL+"get_transaction?";
 const GET_LAST_TRANSACTION_URL = API_URL+"get_last_transaction?";
+const GET_SERVICE_REQUEST_TYPE_URL = API_URL+"get_service_req_type";
 

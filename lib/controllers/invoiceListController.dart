@@ -1,10 +1,12 @@
 import 'package:MJN/Network/MjnAPI.dart';
 import 'package:MJN/models/invoiceListVO.dart';
+import 'package:MJN/models/transactionVO.dart';
 import 'package:get/state_manager.dart';
 
 
 class InvoiceListController extends GetxController{
  late InvoiceListVo invoiceListVo;
+
   var isLoading = true.obs;
 
   void fetchPaymentInvoiceList(String token,String uid,String tenantID) async {
@@ -21,6 +23,7 @@ class InvoiceListController extends GetxController{
         invoiceListVo = res;
         print(invoiceListVo.status);
       }
+
     } finally {
       isLoading(false);
     }

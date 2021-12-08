@@ -25,11 +25,11 @@ class LoginController extends GetxController {
           //loginDataStorage.write(USER_NAME, loginVo.userName);
           loginDataStorage.write(PHONE_NO, loginVo.phone);
           loginDataStorage.write(UID, loginVo.uid);
-          //loginDataStorage.write(BUILDING, loginVo.details[0].building);
-          //loginDataStorage.write(UNIT, loginVo.details[0].unit);
+          loginDataStorage.write(BUILDING, loginVo..building);
+          loginDataStorage.write(UNIT, loginVo.unit);
           //loginDataStorage.write(DATA_TENANT_ID, loginVo.details[0].tenantId);
           loginDataStorage.write(TOKEN, loginVo.token);
-          loginDataStorage.write(DATA_TENANT_ID, loginVo.token);
+          loginDataStorage.write(DATA_TENANT_ID, loginVo.tenantId);
 
           Navigator.of(context).pushReplacementNamed(TabScreens.routeName);
         }

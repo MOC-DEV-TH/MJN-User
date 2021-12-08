@@ -10,7 +10,7 @@ import 'package:get/state_manager.dart';
 class CreateTicketController extends GetxController{
   late NetworkResult networkResult;
   var isLoading = false.obs;
-  void createTicket(RequestCreateTicket requestCreateTicket,String token,BuildContext context) async {
+  Future<void> createTicket(RequestCreateTicket requestCreateTicket,String token,BuildContext context) async {
     try {
       isLoading(true);
       print(requestCreateTicket.name);
@@ -21,13 +21,13 @@ class CreateTicketController extends GetxController{
 
       if (res != null) {
         networkResult = res;
-        if(networkResult.status == 'Success'){
-          AppUtils.showSuccessSnackBar('Success!!', 'Success create ticket!!');
-          Future.delayed(const Duration(milliseconds: 700), () {
-            Navigator.of(context).pushReplacementNamed(TabScreens.routeName);
-          });
-
-        }
+        // if(networkResult.status == 'Success'){
+        //   AppUtils.showSuccessSnackBar('Success!!', 'Success create ticket!!');
+        //   Future.delayed(const Duration(milliseconds: 700), () {
+        //     Navigator.of(context).pushReplacementNamed(TabScreens.routeName);
+        //   });
+        //
+        // }
         print(networkResult.status);
         print(networkResult.description);
       }

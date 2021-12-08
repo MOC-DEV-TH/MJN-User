@@ -7,6 +7,7 @@ import 'package:MJN/models/accountInfoVO.dart';
 import 'package:MJN/models/invoiceListVO.dart';
 import 'package:MJN/models/invoiceVO.dart';
 import 'package:MJN/models/loginVO.dart';
+import 'package:MJN/models/serviceRequestTypeVO.dart';
 import 'package:MJN/models/ticketListVO.dart';
 import 'package:MJN/models/ticketVO.dart';
 import 'package:MJN/models/transactionListVO.dart';
@@ -315,6 +316,26 @@ class MjnAPI {
     if (response.statusCode == 200) {
       var json = response.body;
       var result = transactionVoFromJson(json);
+      return result;
+    } else {
+      return null;
+    }
+  }
+
+  static Future fetchServiceRequestType(
+      ) async {
+
+    var response = await client.get(
+
+      Uri.parse( GET_SERVICE_REQUEST_TYPE_URL
+          ),
+      headers: {
+        'content-type': 'application/json',
+      },
+    );
+    if (response.statusCode == 200) {
+      var json = response.body;
+      var result = serviceRequestTypeVoFromJson(json);
       return result;
     } else {
       return null;

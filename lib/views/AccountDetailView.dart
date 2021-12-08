@@ -29,6 +29,10 @@ class _AccountViewState extends State<AccountView> {
 
   @override
   void initState() {
+
+    final AccountDetailController accountDetailController =
+    Get.put(AccountDetailController());
+
     changePageIndex = 0;
     accountDetailController.fetchAccountInfoData(loginDataStorage.read(TOKEN),
         loginDataStorage.read(UID), loginDataStorage.read(DATA_TENANT_ID));
@@ -54,6 +58,10 @@ class _AccountViewState extends State<AccountView> {
 
   @override
   Widget build(BuildContext context) {
+
+    final AccountDetailController accountDetailController =
+    Get.put(AccountDetailController());
+
     return changePageIndex == 1
         ? HomeView()
         : RefreshIndicator(
@@ -206,10 +214,11 @@ class _AccountViewState extends State<AccountView> {
                                                         margin: EdgeInsets.only(
                                                             left: 38),
                                                         child: Text(
-                                                          lastTransactionController
-                                                                  .transactionVo
-                                                                  .details
-                                                                  .transactionId
+                                                          // lastTransactionController
+                                                          //         .transactionVo
+                                                          //         .details
+                                                          //         .transactionId
+                                          ''
                                                              ,
                                                           style: TextStyle(
                                                               color: Colors
@@ -237,10 +246,11 @@ class _AccountViewState extends State<AccountView> {
                                                         margin: EdgeInsets.only(
                                                             left: 24),
                                                         child: Text(
-                                                          lastTransactionController
-                                                                  .transactionVo
-                                                                  .details
-                                                                  .startDate
+                                                          // lastTransactionController
+                                                          //         .transactionVo
+                                                          //         .details
+                                                          //         .startDate
+                                                          ''
                                                               ,
                                                           style: TextStyle(
                                                               color: Colors
@@ -295,17 +305,19 @@ class _AccountViewState extends State<AccountView> {
                                                         margin: EdgeInsets.only(
                                                             left: 95),
                                                         child: Text(
-                                                          (lastTransactionController
-                                                                      .transactionVo
-                                                                      .details
-                                                                      .paymentTotal
-                                                                  ) +
-                                                              ' ' +
-                                                              (lastTransactionController
-                                                                      .transactionVo
-                                                                      .details
-                                                                      .currencyType
-                                                                  ),
+                                                          // (lastTransactionController
+                                                          //             .transactionVo
+                                                          //             .details
+                                                          //             .paymentTotal
+                                                          //         ) +
+                                                          //     ' ' +
+                                                          //     (lastTransactionController
+                                                          //             .transactionVo
+                                                          //             .details
+                                                          //             .currencyType
+                                                          //         )
+                                          ''
+                                                                  ,
                                                           style: TextStyle(
                                                               color: Colors
                                                                   .black54),
@@ -332,17 +344,19 @@ class _AccountViewState extends State<AccountView> {
                                                         margin: EdgeInsets.only(
                                                             left: 73),
                                                         child: Text(
-                                                          (lastTransactionController
-                                                                      .transactionVo
-                                                                      .details
-                                                                      .paymentTotal
-                                                                  ) +
-                                                              ' ' +
-                                                              (lastTransactionController
-                                                                      .transactionVo
-                                                                      .details
-                                                                      .currencyType
-                                                                  ),
+                                                          // (lastTransactionController
+                                                          //             .transactionVo
+                                                          //             .details
+                                                          //             .paymentTotal
+                                                          //         ) +
+                                                          //     ' ' +
+                                                          //     (lastTransactionController
+                                                          //             .transactionVo
+                                                          //             .details
+                                                          //             .currencyType
+                                                          //         )
+                                                          ''
+                                                          ,
                                                           style: TextStyle(
                                                               color: Colors
                                                                   .black54),
@@ -369,10 +383,11 @@ class _AccountViewState extends State<AccountView> {
                                                         margin: EdgeInsets.only(
                                                             left: 70),
                                                         child: Text(
-                                                          lastTransactionController
-                                                                  .transactionVo
-                                                                  .details
-                                                                  .paidDate
+                                                          // lastTransactionController
+                                                          //         .transactionVo
+                                                          //         .details
+                                                          //         .paidDate
+                                          ''
                                                               ,
                                                           style: TextStyle(
                                                               color: Colors
@@ -401,10 +416,11 @@ class _AccountViewState extends State<AccountView> {
                                                         margin: EdgeInsets.only(
                                                             left: 40),
                                                         child: Text(
-                                                          accountDetailController
-                                                                  .accountInfoVo
-                                                                  .details
-                                                                  .firstname
+                                                          // accountDetailController
+                                                          //         .accountInfoVo
+                                                          //         .details
+                                                          //         .firstname
+                                          ''
                                                               ,
                                                           style: TextStyle(
                                                               color: Colors
@@ -491,10 +507,12 @@ class _AccountViewState extends State<AccountView> {
                                                 margin:
                                                     EdgeInsets.only(left: 60),
                                                 child: Text(
-                                                  accountDetailController
-                                                      .accountInfoVo
-                                                      .details
-                                                      .firstname,
+                                                  // accountDetailController
+                                                  //     .accountInfoVo
+                                                  //     !.details
+                                                  //     .firstname
+                      ''
+                                                  ,
                                                   style: TextStyle(
                                                       color: Colors.black54),
                                                 )),
@@ -519,10 +537,12 @@ class _AccountViewState extends State<AccountView> {
                                                 margin:
                                                     EdgeInsets.only(left: 60),
                                                 child: Text(
-                                                  accountDetailController
-                                                      .accountInfoVo
-                                                      .details
-                                                      .lastname,
+                                                  // accountDetailController
+                                                  //     .accountInfoVo
+                                                  //     !.details
+                                                  //     .lastname
+                                                ''
+                                                  ,
                                                   style: TextStyle(
                                                       color: Colors.black54),
                                                 )),
@@ -547,10 +567,12 @@ class _AccountViewState extends State<AccountView> {
                                                 margin:
                                                     EdgeInsets.only(left: 60),
                                                 child: Text(
-                                                  accountDetailController
-                                                      .accountInfoVo
-                                                      .details
-                                                      .name,
+                                                  // accountDetailController
+                                                  //     .accountInfoVo
+                                                  //     !.details
+                                                  //     .name
+                      ''
+                                                  ,
                                                   style: TextStyle(
                                                       color: Colors.black54),
                                                 )),
@@ -598,10 +620,13 @@ class _AccountViewState extends State<AccountView> {
                                                 margin:
                                                     EdgeInsets.only(left: 90),
                                                 child: Text(
-                                                  accountDetailController
-                                                      .accountInfoVo
-                                                      .details
-                                                      .mail,
+
+                                                  // accountDetailController
+                                                  //     .accountInfoVo
+                                                  //     .details
+                                                  //     .mail
+                      ''
+                                                  ,
                                                   style: TextStyle(
                                                       color: Colors.black54),
                                                 )),

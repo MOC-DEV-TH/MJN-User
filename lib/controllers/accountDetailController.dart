@@ -4,10 +4,10 @@ import 'package:get/state_manager.dart';
 
 class AccountDetailController extends GetxController{
 
-  late AccountInfoVo accountInfoVo;
+   late AccountInfoVo accountInfoVo ;
   var isLoading = true.obs;
 
-  void fetchAccountInfoData(String token,String uid,String tenantID) async {
+  Future<void> fetchAccountInfoData(String token,String uid,String tenantID) async {
     try {
       isLoading(true);
       print(token);
@@ -15,7 +15,6 @@ class AccountDetailController extends GetxController{
       print(tenantID);
 
       var res = await MjnAPI.fetchAccountInfoData(token,uid,tenantID);
-
 
       if (res != null) {
         accountInfoVo = res;
