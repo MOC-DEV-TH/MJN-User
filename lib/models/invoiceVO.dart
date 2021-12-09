@@ -1,3 +1,7 @@
+// To parse this JSON data, do
+//
+//     final invoiceVo = invoiceVoFromJson(jsonString);
+
 import 'dart:convert';
 
 InvoiceVo invoiceVoFromJson(String str) => InvoiceVo.fromJson(json.decode(str));
@@ -6,8 +10,8 @@ String invoiceVoToJson(InvoiceVo data) => json.encode(data.toJson());
 
 class InvoiceVo {
   InvoiceVo({
-    required this.status,
-    required  this.responseCode,
+    required  this.status,
+    required this.responseCode,
     required this.description,
     required this.isRequieredUpdate,
     required this.isforceUpdate,
@@ -42,40 +46,84 @@ class InvoiceVo {
 
 class Details {
   Details({
-    required   this.invoiceId,
-    required  this.paymentTotal,
-    required this.currencyType,
-    required  this.startDate,
+   required this.name,
+    required this.firstname,
+    required this.lastname,
+    required this.building,
+    required this.unit,
+    required this.startDate,
     required this.endDate,
-    required  this.creationDate,
-    required  this.modifiedDate,
+    required this.invoiceId,
+    required this.creationDate,
+    required this.tax,
+    required this.equipmentTotal,
+    required this.otherTotal,
+    required this.activationFee,
+    required this.reactivationFee,
+    required this.amount,
+    required this.totalDue,
+    required this.transactionDate,
+    required this.taxAmount,
   });
 
-  String invoiceId;
-  String paymentTotal;
-  String currencyType;
+  String name;
+  String firstname;
+  String lastname;
+  String building;
+  String unit;
   String startDate;
   String endDate;
+  String invoiceId;
   String creationDate;
-  String modifiedDate;
+  String tax;
+  String equipmentTotal;
+  String otherTotal;
+  String activationFee;
+  String reactivationFee;
+  String amount;
+  String totalDue;
+  String transactionDate;
+  String taxAmount;
 
   factory Details.fromJson(Map<String, dynamic> json) => Details(
-    invoiceId: json["invoice_id"],
-    paymentTotal: json["payment_total"],
-    currencyType: json["currency_type"],
+    name: json["name"],
+    firstname: json["firstname"],
+    lastname: json["lastname"],
+    building: json["building"],
+    unit: json["unit"],
     startDate: json["start_date"],
     endDate: json["end_date"],
+    invoiceId: json["invoice_id"],
     creationDate: json["creation_date"],
-    modifiedDate: json["modified_date"],
+    tax: json["tax"],
+    equipmentTotal: json["equipment_total"],
+    otherTotal: json["other_total"],
+    activationFee: json["activation_fee"],
+    reactivationFee: json["reactivation_fee"],
+    amount: json["amount"],
+    totalDue: json["total_due"],
+    transactionDate: json["transaction_date"],
+    taxAmount: json["tax_amount"],
   );
 
   Map<String, dynamic> toJson() => {
-    "invoice_id": invoiceId,
-    "payment_total": paymentTotal,
-    "currency_type": currencyType,
+    "name": name,
+    "firstname": firstname,
+    "lastname": lastname,
+    "building": building,
+    "unit": unit,
     "start_date": startDate,
     "end_date": endDate,
+    "invoice_id": invoiceId,
     "creation_date": creationDate,
-    "modified_date": modifiedDate,
+    "tax": tax,
+    "equipment_total": equipmentTotal,
+    "other_total": otherTotal,
+    "activation_fee": activationFee,
+    "reactivation_fee": reactivationFee,
+    "amount": amount,
+    "total_due": totalDue,
+    "transaction_date": transactionDate,
+    "tax_amount": taxAmount,
   };
 }

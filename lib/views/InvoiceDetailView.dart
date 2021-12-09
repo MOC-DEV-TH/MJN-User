@@ -26,7 +26,7 @@ class _InvoiceDetailViewState extends State<InvoiceDetailView> {
   void initState() {
     changePageIndex = 0;
     invoiceController.fetchInvoiceDataByID(
-        langStorage.read(TOKEN), langStorage.read(UID), widget.invoiceID);
+        langStorage.read(TOKEN), langStorage.read(UID), widget.invoiceID,'');
     super.initState();
   }
 
@@ -144,12 +144,7 @@ class _InvoiceDetailViewState extends State<InvoiceDetailView> {
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.only(right: 25),
-                                        child: Text(':' +
-                                            invoiceController
-                                                .invoiceVo.details.paymentTotal +
-                                            ' ' +
-                                            invoiceController
-                                                .invoiceVo.details.currencyType),
+                                        child: Text('')
                                       ),
                                     ],
                                   ),

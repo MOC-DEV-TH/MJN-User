@@ -20,10 +20,10 @@ class _NewPaymentViewState extends State<NewPaymentView> {
   Get.put(InvoiceListController());
 
 
-
   int changePageIndex = 0;
   int paymentStatusIndex = 0;
   final loginDataStorage = GetStorage();
+  late String currentInvoiceIndex ;
 
   @override
   void initState() {
@@ -38,7 +38,7 @@ class _NewPaymentViewState extends State<NewPaymentView> {
   Widget build(BuildContext context) {
 
     String paymentStatus = paymentStatusIndex == 1 ? 'Unpaid' : paymentStatusIndex == 2 ? 'Paid' : '';
-    return changePageIndex == 1 ? PaymentInvoiceView(paymentStatus) :Scaffold(
+    return changePageIndex == 1 ? PaymentInvoiceView(paymentStatus,currentInvoiceIndex) :Scaffold(
       backgroundColor: Color(0xff188FC5),
       body: SingleChildScrollView(
         child: Container(
@@ -88,8 +88,6 @@ class _NewPaymentViewState extends State<NewPaymentView> {
   }
 
   Widget _buildPaymentStatusUnpaidTitle() {
-
-
 
     return Padding(
         padding: const EdgeInsets.all(12.0),
@@ -143,8 +141,6 @@ class _NewPaymentViewState extends State<NewPaymentView> {
                     element.paymentStatus == 'Unpaid'
                 ).toList();
 
-
-
                 return Column(
                   children: [
                     Container(
@@ -164,6 +160,7 @@ class _NewPaymentViewState extends State<NewPaymentView> {
                               child: InkWell(
                                 onTap: () {
                                   setState(() {
+                                    currentInvoiceIndex = unPaidInvoiceLists[index].invoiceId;
                                     paymentStatusIndex = 1;
                                     changePageIndex = 1;
                                   });
@@ -315,7 +312,6 @@ class _NewPaymentViewState extends State<NewPaymentView> {
                       ).toList();
 
 
-
                       return Column(
                         children: [
                           Container(
@@ -335,6 +331,9 @@ class _NewPaymentViewState extends State<NewPaymentView> {
                                     child: InkWell(
                                       onTap: () {
                                         setState(() {
+
+                                          currentInvoiceIndex = paidInvoiceLists[index].invoiceId;
+
                                           paymentStatusIndex = 2;
                                           changePageIndex = 1;
                                         });

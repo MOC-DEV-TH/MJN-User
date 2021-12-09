@@ -4,10 +4,11 @@ import 'package:MJN/utils/app_utils.dart';
 import 'package:MJN/views/TabView.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:get/get.dart';
 
 class DialogUI extends StatefulWidget {
-  const DialogUI({required Key key}) : super(key: key);
-
+   BuildContext _context;
+  DialogUI(this._context);
   @override
   _DialogUIState createState() => _DialogUIState();
 }
@@ -43,6 +44,8 @@ class _DialogUIState extends State<DialogUI> {
 
                 GestureDetector(
                     onTap: () {
+
+
                       Navigator.pop(context);
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => TabScreens(1)));
@@ -61,6 +64,8 @@ class _DialogUIState extends State<DialogUI> {
 
                 GestureDetector(
                   onTap: () {
+
+
                     Navigator.pop(context);
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) => TabScreens(2)));
@@ -78,10 +83,11 @@ class _DialogUIState extends State<DialogUI> {
 
                 GestureDetector(
                   onTap: () {
+
+
                     Navigator.pop(context);
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) => TabScreens(3)));
-
 
                   },
                   child: Text('Terms & Conditions',
@@ -97,6 +103,8 @@ class _DialogUIState extends State<DialogUI> {
                 GestureDetector(
 
                     onTap: () {
+
+
                       Navigator.pop(context);
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => TabScreens(4)));
@@ -114,6 +122,9 @@ class _DialogUIState extends State<DialogUI> {
 
                 GestureDetector(
                     onTap: () {
+
+
+
                       Navigator.pop(context);
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => TabScreens(5)));
@@ -203,12 +214,15 @@ class _DialogUIState extends State<DialogUI> {
 
                 GestureDetector(
                   onTap: () {
+
+                    Navigator.pop(context);
+
                     langStorage.read(TOKEN) != null
                         ? AppUtils.showLogoutDialog(
                             'Logout',
                             'Are you sure you want to exit\nthis application?',
                             context)
-                        : Navigator.of(context)
+                        : Navigator.of(widget._context)
                             .pushReplacementNamed(LoginView1.routeName);
 
 

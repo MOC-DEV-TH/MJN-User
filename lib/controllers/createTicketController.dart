@@ -14,6 +14,7 @@ class CreateTicketController extends GetxController{
     try {
       isLoading(true);
       print(requestCreateTicket.name);
+      print(requestCreateTicket.tenant_id);
       print(token);
 
 

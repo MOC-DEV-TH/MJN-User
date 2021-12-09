@@ -361,7 +361,7 @@ class _NewCreateServiceTicketViewState
                                                       Color(0xff188FC5),
                                                   onChanged: (value) {
                                                     selectServiceRequestIndex =
-                                                        value!.id;
+                                                        value!.name;
                                                   },
                                                   items:
                                                       serviceRequestTypeController

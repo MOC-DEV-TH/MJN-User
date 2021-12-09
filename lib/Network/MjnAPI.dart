@@ -251,14 +251,15 @@ class MjnAPI {
   }
 
 
-  static Future fetchInvoiceData(
-      String token, String uid, String invoiceID) async {
+  static Future fetchInvoiceDetailByID(
+      String token, String uid, String invoiceID,String tenantID) async {
 
     var response = await client.get(
       Uri.parse(GET_INVOICE_URL +
           UID + uid +
           APP_VERSION + app_version +
-          INVOICE_ID + invoiceID)
+          INVOICE_ID + invoiceID +
+          TENANT_ID + tenantID)
       ,
 
       headers: {

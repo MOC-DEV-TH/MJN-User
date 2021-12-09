@@ -1,10 +1,14 @@
 import 'package:MJN/NewViews/ChannelOnlinePaymentView.dart';
+import 'package:MJN/controllers/invoiceController.dart';
+import 'package:MJN/utils/app_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class PaymentInvoiceView extends StatefulWidget {
   String paymentStatus;
-
-  PaymentInvoiceView(this.paymentStatus);
+  String invoiceID;
+  PaymentInvoiceView(this.paymentStatus,this.invoiceID);
 
   @override
   _PaymentInvoiceViewState createState() => _PaymentInvoiceViewState();
@@ -13,10 +17,16 @@ class PaymentInvoiceView extends StatefulWidget {
 class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
   int changePageIndex = 0;
 
+  final InvoiceController invoiceController = Get.put(InvoiceController());
+  final langStorage = GetStorage();
+
   @override
   void initState() {
     changePageIndex = 0;
     super.initState();
+
+    invoiceController.fetchInvoiceDataByID(
+        langStorage.read(TOKEN), langStorage.read(UID), widget.invoiceID,langStorage.read(DATA_TENANT_ID));
   }
 
   @override
@@ -35,383 +45,451 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
   }
 
   Widget _buildWidget() {
-    return Column(
-      children: [
-        Text(
-          'Invoice',
-          style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 14,
-              color: Color(0xffe9e9e9)),
-        ),
-        SizedBox(
-          height: 30,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 10, right: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Account',
-                style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
-              ),
-              Text(
-                '.............................',
-                style: TextStyle(color: Color(0xffe9e9e9)),
-              ),
-              Text(
-                'xxxxxx',
-                style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 10, right: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'First Name',
-                style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 17),
-                child: Text(
-                  '.............................',
-                  style: TextStyle(color: Color(0xffe9e9e9)),
+    return Obx((){
+      if(invoiceController.isLoading.value) {
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      }
+        else{
+          return
+            Column(
+              children: [
+                Text(
+                  'Invoice',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                      color: Color(0xffe9e9e9)),
                 ),
-              ),
-              Text(
-                'xxxxxx',
-                style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 10, right: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Last Name',
-                style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 18),
-                child: Text(
-                  '.............................',
-                  style: TextStyle(color: Color(0xffe9e9e9)),
+                SizedBox(
+                  height: 30,
                 ),
-              ),
-              Text(
-                'xxxxxx',
-                style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 10, right: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Building',
-                style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
-              ),
-              Text(
-                '.............................',
-                style: TextStyle(color: Color(0xffe9e9e9)),
-              ),
-              Text(
-                'xxxxxx',
-                style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 10, right: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Unit',
-                style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 26),
-                child: Text(
-                  '.............................',
-                  style: TextStyle(color: Color(0xffe9e9e9)),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Account',
+                        style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 70),
+                        child: Text(
+                          '.......................',
+                          style: TextStyle(color: Color(0xffe9e9e9)),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Text(
+                          invoiceController.invoiceVo.details.name,
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              fontSize: 14, color: Color(0xffe9e9e9)),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              Text(
-                'xxxxxx',
-                style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 10, right: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Start date',
-                style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 10),
-                child: Text(
-                  '.............................',
-                  style: TextStyle(color: Color(0xffe9e9e9)),
+                SizedBox(
+                  height: 15,
                 ),
-              ),
-              Text(
-                'xxxxxx',
-                style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 10, right: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'End date',
-                style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 3),
-                child: Text(
-                  '.............................',
-                  style: TextStyle(color: Color(0xffe9e9e9)),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'First Name',
+                        style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
+                      ),
+                       Padding(
+                         padding: const EdgeInsets.only(left:54),
+                         child: Text(
+                            '.......................',
+                            style: TextStyle(color: Color(0xffe9e9e9)),
+                          ),
+                       ),
+
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Text(
+                          invoiceController.invoiceVo.details.firstname,
+                          style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              Text(
-                'xxxxxx',
-                style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 10, right: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Transaction date',
-                style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 52),
-                child: Text(
-                  '.............................',
-                  style: TextStyle(color: Color(0xffe9e9e9)),
+                SizedBox(
+                  height: 15,
                 ),
-              ),
-              Text(
-                'xxxxxx',
-                style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 10, right: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Invoice ID',
-                style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 6),
-                child: Text(
-                  '.............................',
-                  style: TextStyle(color: Color(0xffe9e9e9)),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Last Name',
+                        style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
+                      ),
+                       Padding(
+                         padding: const EdgeInsets.only(left: 55),
+                         child: Text(
+                            '.......................',
+                            style: TextStyle(color: Color(0xffe9e9e9)),
+                      ),
+                       ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Text(
+                          invoiceController.invoiceVo.details.lastname,
+                          style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              Text(
-                'xxxxxx',
-                style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 10, right: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Invoice date',
-                style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 20),
-                child: Text(
-                  '.............................',
-                  style: TextStyle(color: Color(0xffe9e9e9)),
+                SizedBox(
+                  height: 15,
                 ),
-              ),
-              Text(
-                'xxxxxx',
-                style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 10, right: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Amount',
-                style: TextStyle(fontSize: 14, color: Colors.black),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 6),
-                child: Text(
-                  '.............................',
-                  style: TextStyle(color: Colors.black),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Building',
+                        style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 70),
+                        child: Text(
+                          '.......................',
+                          style: TextStyle(color: Color(0xffe9e9e9)),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Text(
+                          invoiceController.invoiceVo.details.building,
+                          style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              Text(
-                'xxxxxx',
-                style: TextStyle(fontSize: 14, color: Colors.black),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 10, right: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Tax',
-                style: TextStyle(fontSize: 14, color: Colors.black),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 35),
-                child: Text(
-                  '.............................',
-                  style: TextStyle(color: Colors.black),
+                SizedBox(
+                  height: 15,
                 ),
-              ),
-              Text(
-                'xxxxxx',
-                style: TextStyle(fontSize: 14, color: Colors.black),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Container(
-          height: 1,
-          width: MediaQuery.of(context).size.width,
-          color: Colors.grey,
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 10, right: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Total Due',
-                style: TextStyle(fontSize: 14, color: Colors.black),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 0),
-                child: Text(
-                  '.............................',
-                  style: TextStyle(color: Colors.black),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Unit',
+                        style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
+                      ),
+                       Padding(
+                         padding: const EdgeInsets.only(left: 95),
+                         child: Text(
+                            '.......................',
+                            style: TextStyle(color: Color(0xffe9e9e9)),
+                          ),
+                       ),
+
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Text(
+                          invoiceController.invoiceVo.details.unit,
+                          style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              Text(
-                'xxxxxx',
-                style: TextStyle(fontSize: 14, color: Colors.black),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: 35,
-        ),
-        Container(
-          width: 110,
-          child: RaisedButton(
-            onPressed: () {
-              if (widget.paymentStatus == 'Unpaid') {
-                setState(() {
-                  changePageIndex = 1;
-                });
-              }
-            },
-            child: Text((widget.paymentStatus == 'Unpaid') ? 'Unpaid' : 'Paid'),
-            textColor: Color(0xffe9e9e9),
-            color: Color(0xffff5f1f),
-          ),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Text(
-          'Statement',
-          style: TextStyle(
-              color: Colors.black, decoration: TextDecoration.underline),
-          textAlign: TextAlign.center,
-        ),
-      ],
-    );
+                SizedBox(
+                  height: 15,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Start date',
+                        style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
+                      ),
+                       Padding(
+                         padding: const EdgeInsets.only(left: 60),
+                         child: Text(
+                            '.......................',
+                            style: TextStyle(color: Color(0xffe9e9e9)),
+                          ),
+                       ),
+
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Text(
+                          invoiceController.invoiceVo.details.startDate,
+                          style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'End date',
+                        style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
+                      ),
+                       Padding(
+                         padding: const EdgeInsets.only(left: 65),
+                         child: Text(
+                            '.......................',
+                            style: TextStyle(color: Color(0xffe9e9e9)),
+
+                      ),
+                       ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Text(
+                          invoiceController.invoiceVo.details.endDate,
+                          style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Transaction date',
+                        style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 14),
+                        child: Text(
+                          '.......................',
+                          style: TextStyle(color: Color(0xffe9e9e9)),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Text(
+                          invoiceController.invoiceVo.details.transactionDate,
+                          style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Invoice ID',
+                        style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 58),
+                        child: Text(
+                            '.......................',
+                            style: TextStyle(color: Color(0xffe9e9e9)),
+
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Text(
+                          invoiceController.invoiceVo.details.invoiceId,
+                          style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Invoice date',
+                        style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
+                      ),
+                       Padding(
+                         padding: const EdgeInsets.only(left: 43),
+                         child: Text(
+                            '.......................',
+                            style: TextStyle(color: Color(0xffe9e9e9)),
+                          ),
+                       ),
+
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Text(
+                          invoiceController.invoiceVo.details.creationDate,
+                          style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Amount',
+                        style: TextStyle(fontSize: 14, color: Colors.black),
+                      ),
+                       Padding(
+                         padding: const EdgeInsets.only(left: 70),
+                         child: Text(
+                            '.......................',
+                            style: TextStyle(color: Colors.black),
+
+                      ),
+                       ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Text(
+                          invoiceController.invoiceVo.details.amount,
+                          style: TextStyle(fontSize: 14, color: Colors.black),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Tax',
+                        style: TextStyle(fontSize: 14, color: Colors.black),
+                      ),
+                       Padding(
+                         padding: const EdgeInsets.only(left: 97),
+                         child: Text(
+                            '.......................',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                       ),
+
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Text(
+                          invoiceController.invoiceVo.details.tax,
+                          style: TextStyle(fontSize: 14, color: Colors.black),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Container(
+                  height: 1,
+                  width: MediaQuery.of(context).size.width,
+                  color: Colors.grey,
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Total Due',
+                        style: TextStyle(fontSize: 14, color: Colors.black),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 60),
+                        child: Text(
+                            '.......................',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                      ),
+
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Text(
+                          invoiceController.invoiceVo.details.totalDue,
+                          style: TextStyle(fontSize: 14, color: Colors.black),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 35,
+                ),
+                Container(
+                  width: 110,
+                  child: RaisedButton(
+                    onPressed: () {
+                      if (widget.paymentStatus == 'Unpaid') {
+                        setState(() {
+                          changePageIndex = 1;
+                        });
+                      }
+                    },
+                    child: Text((widget.paymentStatus == 'Unpaid') ? 'Unpaid' : 'Paid'),
+                    textColor: Color(0xffe9e9e9),
+                    color: Color(0xffff5f1f),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  'Statement',
+                  style: TextStyle(
+                      color: Colors.black, decoration: TextDecoration.underline),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            );
+      }
+
+    });
+
   }
 }

@@ -100,9 +100,8 @@ class AppUtils {
                                   ),
                                   onPressed: () {
                                     AppUtils.removeDataFromGetStorage();
-                                    Navigator.of(context).pop();
-                                     Navigator.of(context).pushReplacementNamed(
-                                         Splash2.routeName);
+                                    Get.offNamed(Splash2.routeName);
+                                     //Navigator.of(context).pushReplacementNamed(Splash2.routeName);
                                   }),
                             ),
                           ),
@@ -124,7 +123,7 @@ class AppUtils {
                                         fontSize: 16),
                                   ),
                                   onPressed: () {
-                                    Navigator.of(context).pop();
+                                    Get.back();
                                   }),
                             ),
                           ),

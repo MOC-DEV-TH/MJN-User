@@ -375,7 +375,7 @@ class _TabScreensState extends State<TabScreens> {
             Animation secondaryAnimation) {
           return SafeArea(
             child:
-                Container(margin: EdgeInsets.only(top: 56), child: DialogUI(key: _scaffoldKey,)),
+                Container(margin: EdgeInsets.only(top: 56), child: DialogUI(context)),
           );
         });
   }
@@ -547,7 +547,7 @@ class _TabScreensState extends State<TabScreens> {
   //   );
   // }
 
-  Widget logoAndNavTitleAppBar(int navSelectPage) {
+  Widget logoAndNavTitleAppBar(int navSelectPage,BuildContext context) {
     return AppBar(
       automaticallyImplyLeading: false,
       toolbarHeight: 90,
@@ -664,7 +664,7 @@ class _TabScreensState extends State<TabScreens> {
     );
   }
 
-  Widget titleAppBar(int pageIndex) {
+  Widget titleAppBar(int pageIndex,BuildContext context) {
     return AppBar(
       automaticallyImplyLeading: false,
       toolbarHeight: 90,
@@ -797,8 +797,8 @@ class _TabScreensState extends State<TabScreens> {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(100),
         child :navSelectedIndex
-            ? logoAndNavTitleAppBar(_selectedPageIndex)
-            : titleAppBar(changePageIndex),
+            ? logoAndNavTitleAppBar(_selectedPageIndex,context)
+            : titleAppBar(changePageIndex,context),
       ),
       body: getSelectedPage(),
       bottomNavigationBar: BottomNavigationBar(
