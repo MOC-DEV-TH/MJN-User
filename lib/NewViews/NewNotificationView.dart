@@ -16,19 +16,25 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 class NewNotificationView extends StatefulWidget {
   static const routeName = '/notification_screen';
   late final NotificationDao notificationDao;
+
   NewNotificationView(this.notificationDao);
-  
+
   @override
   _NewNotificationViewState createState() => _NewNotificationViewState();
 }
 
 class _NewNotificationViewState extends State<NewNotificationView> {
   late MyDatabase? database;
+
   //late widget.notificationDao widget.notificationDao;
 
   late StreamSubscription notiSub;
 
   late StreamSubscription notiUpdate;
+
+  bool isReadMore = false;
+
+  var searchTextController = TextEditingController();
 
   List<NotificationModelVO> notificationLists = <NotificationModelVO>[];
   bool bDataRetrievedLately = false;
@@ -42,10 +48,10 @@ class _NewNotificationViewState extends State<NewNotificationView> {
     'Aish',
   ];
 
- Future<NotificationDao> builder() async {
+  Future<NotificationDao> builder() async {
     database = await MyAppDatabase.instance.database;
 
-      widget.notificationDao = database!.notiDao;
+    widget.notificationDao = database!.notiDao;
     return widget.notificationDao;
   }
 
@@ -62,55 +68,48 @@ class _NewNotificationViewState extends State<NewNotificationView> {
     return await widget.notificationDao.fetchUnreadNotifications();
   }
 
-
-
   @override
   void initState() {
-    /*builder().then((value) {
-
-    });*/
-    retrieveUsers()
-        .then((value) {
-          notificationLists = value;
-          setState(() {
-
-          });
-        });
-
-    notiUpdate = EventBusUtils.getInstance().on().listen((event) {
-      if(event.toString() == 'success'){
-        retrieveAllUnreadNotifications().then((value) => {
-          notiCount.value = value.length
-        });
-      }
+    retrieveUsers().then((value) {
+      notificationLists = value;
+      setState(() {});
     });
 
-    notiSub = EventBusUtils.getInstance().on<NotificationModelVO>().listen((event) {
-          print("NOTI EVENT " + event.title);
-          notificationLists.add(event);
+    notiSub =
+        EventBusUtils.getInstance().on<NotificationModelVO>().listen((event) {
+      print("NOTI EVENT " + event.title);
+      notificationLists.add(event);
 
-          retrieveAllUnreadNotifications().then((value) => {
-            notiCount.value = value.length
-          });
+      retrieveAllUnreadNotifications()
+          .then((value) => {notiCount.value = value.length});
 
-          setState(() {
-            bDataRetrievedLately = true;
-          });
-        });
+      setState(() {
 
-    retrieveAllUnreadNotifications().then((value) => {
-      notiCount.value = value.length
+      });
+
     });
 
-    //notificationLists =  notificationLists.where((element) => element.title.contains("abc")).toList();
+    retrieveAllUnreadNotifications()
+        .then((value) => {notiCount.value = value.length});
 
     super.initState();
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    retrieveUsers().then(
-            (value) => {notificationLists = value});
+    notiSub =
+        EventBusUtils.getInstance().on<NotificationModelVO>().listen((event) {
+          print("NOTI EVENT " + event.title);
+          notificationLists.add(event);
+
+          retrieveAllUnreadNotifications()
+              .then((value) => {notiCount.value = value.length});
+
+          setState(() {
+
+          });
+
+        });
   }
 
   @override
@@ -126,12 +125,12 @@ class _NewNotificationViewState extends State<NewNotificationView> {
             margin: EdgeInsets.all(20),
             child: Column(
               children: [
-              Obx(() {
-               return Text(
-                  "${notiCount.value} Unread Messages",
-                  style: TextStyle(color: Colors.white),
-                );
-              }) ,
+                Obx(() {
+                  return Text(
+                    "${notiCount.value} Unread Messages",
+                    style: TextStyle(color: Colors.white),
+                  );
+                }),
                 Container(
                   width: 60,
                   height: 30,
@@ -172,7 +171,16 @@ class _NewNotificationViewState extends State<NewNotificationView> {
                         height: 40,
                         padding: EdgeInsets.only(bottom: 6),
                         child: TextField(
+                          controller: searchTextController,
                           textAlign: TextAlign.center,
+                          onChanged: (String value) {
+                            if (value.length <= 0) {
+                              retrieveUsers().then((value) {
+                                notificationLists = value;
+                                setState(() {});
+                              });
+                            }
+                          },
                           decoration: InputDecoration(
                             border: InputBorder.none,
                           ),
@@ -182,10 +190,22 @@ class _NewNotificationViewState extends State<NewNotificationView> {
                     SizedBox(
                       width: 20,
                     ),
-                    Icon(
-                      Icons.search,
-                      color: Colors.white,
-                      size: 35,
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          if (searchTextController.value.text != '') {
+                            notificationLists = notificationLists
+                                .where((element) => element.title
+                                    .contains(searchTextController.value.text))
+                                .toList();
+                          }
+                        });
+                      },
+                      child: Icon(
+                        Icons.search,
+                        color: Colors.white,
+                        size: 35,
+                      ),
                     ),
                     SizedBox(
                       width: 10,
@@ -207,26 +227,34 @@ class _NewNotificationViewState extends State<NewNotificationView> {
                           });
                           if (_value == 'one') {
 
-                            widget.notificationDao.markAllNotifications();
-                            widget.notificationDao.fetchUnreadNotifications().then((value) =>
-                            {
-                              notiCount.value = value.length
-                            });
+                            widget.notificationDao
+                                .markAllNotifications()
+                                .then((value) => {
+                                      EventBusUtils.getInstance()
+                                          .fire('MarkAll'),
+                                    });
+                            widget.notificationDao
+                                .fetchUnreadNotifications()
+                                .then((value) =>
+                                    {notiCount.value = value.length});
+
 
                           } else if (_value == 'two') {
                             widget.notificationDao
                                 .deleteAllNotifications()
                                 .then((value) => {
-                                      setState(() {
-                                        retrieveUsers().then((value) => {
-                                              notificationLists = value,
-                                            });
+                                  setState(() {
+                                    notificationLists.clear();
 
-                                        retrieveAllUnreadNotifications().then(
-                                            (value) =>
-                                                {notiCount.value = value.length});
-                                      })
-                                    });
+
+                                EventBusUtils.getInstance().fire('DeleteAll');
+                                        retrieveAllUnreadNotifications()
+                                            .then((value) => {
+                                                  notiCount.value =
+                                                      value.length,
+                                                });
+                                    })
+                            });
                           }
                         },
                         itemBuilder: (context) => [
@@ -245,7 +273,8 @@ class _NewNotificationViewState extends State<NewNotificationView> {
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (ctx, index) {
-                    return NewNotificationItems(text,notificationLists[index],widget.notificationDao);
+                    return NewNotificationItems(
+                        text, notificationLists[index], widget.notificationDao);
                   },
                   itemCount: notificationLists.length,
                 ),
@@ -255,135 +284,5 @@ class _NewNotificationViewState extends State<NewNotificationView> {
         ),
       ),
     );
-
-    //retrieveNotiFromDatabase();
-
-//     if(bDataRetrievedLately && notificationLists != null) {
-//
-//       bDataRetrievedLately = false;
-//
-//       return Scaffold(
-//         backgroundColor: Color(0xff188FC5),
-//         body:
-//         GestureDetector(
-//           onTap: (){
-//             FocusManager.instance.primaryFocus?.unfocus();
-//           },
-//           child: SingleChildScrollView(
-//             child: Container(
-//               margin: EdgeInsets.all(20),
-//               child: Column(
-//                 children: [
-//                   Text('Unread Messages',style: TextStyle(color: Colors.white),),
-//
-//                   Container(
-//                     width: 60,
-//                     height: 30,
-//                     alignment: Alignment.centerLeft,
-//                     margin: EdgeInsets.only(top: 10,),
-//                     child: NeumorphicButton(
-//                       onPressed: () {},
-//                       child: Text(
-//                         "View",
-//                         style: TextStyle(
-//                             fontWeight: FontWeight.bold,
-//                             fontSize: 10,
-//                             color: Color(0xff188FC5)),
-//                       ),
-//                       style: NeumorphicStyle(
-//                         shape: NeumorphicShape.flat,
-//                         boxShape: NeumorphicBoxShape.roundRect(
-//                             BorderRadius.circular(8)),
-//                         color: Colors.white,
-//                         depth: -8,
-// //                lightSource: LightSource.topLeft,
-//                       ),
-//                     ),
-//                   ),
-//
-//                   SizedBox(
-//                     height: 10,
-//                   ),
-//
-//                   Row(
-//                     children: [
-//
-//                     Expanded(
-//                       child: Container(
-//                         decoration: BoxDecoration(
-//                           color: Colors.white,
-//                           borderRadius: BorderRadius.all(Radius.circular(5.0)),
-//                         ),
-//                         height: 40,
-//                         padding: EdgeInsets.only(bottom: 6),
-//                         child: TextField(
-//                           textAlign: TextAlign.center,
-//                           decoration: InputDecoration(
-//                             border: InputBorder.none,
-//                           ),
-//                         ),
-//                       ),
-//                     ),
-//
-//                     SizedBox(width: 20,),
-//
-//
-//                    Icon(Icons.search,color: Colors.white,size: 35,),
-//
-//                       SizedBox(width: 10,),
-//
-//                       PopupMenuButton(
-//                           icon: Padding(
-//                             padding: const EdgeInsets.only(left: 5),
-//                             child: Icon(Icons.more_vert,color: Colors.white,size: 25,),
-//                           ),
-//                           elevation: 20,
-//                           enabled: true,
-//                           onSelected: (value) {
-//                             setState(() {
-//                               _value = value.toString();
-//                             });
-//                             if(_value == 'one'){
-//                               AppUtils.showErrorSnackBar('Success', 'Mark all as read');
-//                             }
-//                             else if(_value == 'two'){
-//                               AppUtils.showErrorSnackBar('Success', 'Delete all');
-//                             }
-//                           },
-//                           itemBuilder:(context) => [
-//                             PopupMenuItem(
-//                               child: Text("Mark all as read"),
-//                               value: "one",
-//                             ),
-//                             PopupMenuItem(
-//                               child: Text("Delete all"),
-//                               value: "two",
-//                             ),
-//                           ]
-//                       )
-//
-//                   ],),
-//
-//
-//                   ListView.builder(
-//                     shrinkWrap: true,
-//                     physics: NeverScrollableScrollPhysics(),
-//                     itemBuilder: (ctx, index) {
-//
-//                       return NewNotificationItems(text);
-//                     },
-//                     itemCount: notilists.length,
-//                   ),
-//
-//                 ],
-//               ),
-//             ),
-//           ),
-//         ),
-//       );
-//     }
-//     else {
-//       return Container();
-//     }
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:MJN/CustomDialog/CustomDialogUI.dart';
 import 'package:MJN/NewViews/MyAccountView.dart';
 import 'package:MJN/NewViews/NewAboutUsView.dart';
@@ -9,8 +11,10 @@ import 'package:MJN/NewViews/NewProductAndServiceView.dart';
 import 'package:MJN/NewViews/NewServiceComplainView.dart';
 import 'package:MJN/NewViews/NewTermAndConditionView.dart';
 import 'package:MJN/NewViews/OnlinePaymentView.dart';
+import 'package:MJN/models/notificationModelVO.dart';
 import 'package:MJN/presistence/database/MyAppDatabase.dart';
 import 'package:MJN/utils/app_constants.dart';
+import 'package:MJN/utils/eventbus_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get_storage/get_storage.dart';
@@ -33,7 +37,7 @@ class _TabScreensState extends State<TabScreens> {
   var _scaffoldKey = GlobalKey<ScaffoldState>();
 
   bool isOpened = false;
-
+   var notiCount = 0.obs ;
   bool visible = false;
   bool pageSelectedIndex = false;
   bool navSelectedIndex = true;
@@ -60,12 +64,58 @@ class _TabScreensState extends State<TabScreens> {
     'Pineapple'
   ];
 
+  late StreamSubscription notiSub;
+
+
   @override
   void initState() {
     changePageIndex = 0;
     visible = false;
     isSelected = [true, false];
     super.initState();
+
+    notiSub = EventBusUtils.getInstance().on<NotificationModelVO>().listen((event) {
+          print("NOTI EVENT " + event.title);
+
+            MyAppDatabase.notificationDao!.fetchUnreadNotifications().then((value) => {
+              notiCount.value = value.length
+            });
+
+        });
+
+    notiSub = EventBusUtils.getInstance().on().listen((event) {
+      if(event.toString() == 'DeleteAll')
+
+      MyAppDatabase.notificationDao!.fetchUnreadNotifications().then((value) => {
+        notiCount.value = value.length
+      });
+
+    });
+
+    notiSub = EventBusUtils.getInstance().on().listen((event) {
+      if(event.toString() == 'MarkAll')
+
+        MyAppDatabase.notificationDao!.fetchUnreadNotifications().then((value) => {
+          notiCount.value = value.length
+        });
+
+    });
+
+    notiSub = EventBusUtils.getInstance().on().listen((event) {
+      if(event.toString() == 'Update')
+
+        MyAppDatabase.notificationDao!.fetchUnreadNotifications().then((value) => {
+          notiCount.value = value.length
+        });
+
+    });
+
+
+
+    MyAppDatabase.notificationDao!.fetchUnreadNotifications().then((value) => {
+      notiCount.value = value.length
+    });
+
 
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       menuPageIndex = widget.pageIndex;
@@ -335,34 +385,7 @@ class _TabScreensState extends State<TabScreens> {
   }
 
   void showMenuDialog(BuildContext context) {
-    // showGeneralDialog(
-    //   barrierDismissible: true,
-    //   barrierLabel: '',
-    //   barrierColor: Colors.black.withOpacity(0.5),
-    //   transitionDuration: Duration(milliseconds: 700),
-    //   context: context,
-    //   pageBuilder: (context, anim1, anim2) {
-    //     return Align(
-    //       alignment:  Alignment.topLeft,
-    //       child: Container(
-    //         height: 300,
-    //         width: 200,
-    //         child: _buildMenuItems(context),
-    //         margin: EdgeInsets.only(top: 120, left: 1,),
-    //         decoration: BoxDecoration(
-    //           color: Colors.white,
-    //           borderRadius: BorderRadius.circular(40),
-    //         ),
-    //       ),
-    //     );
-    //   },
-    //   transitionBuilder: (context, anim1, anim2, child) {
-    //     return SlideTransition(
-    //       position: Tween(begin: Offset(0, _fromTop ? -1 : 1), end: Offset(0, 0)).animate(anim1),
-    //       child: child,
-    //     );
-    //   },
-    // );
+
 
     showGeneralDialog(
         context: context,
@@ -804,7 +827,7 @@ class _TabScreensState extends State<TabScreens> {
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,
         backgroundColor: Color(0xff242527),
-        unselectedItemColor: Colors.grey,
+        unselectedItemColor: Colors.white,
         selectedItemColor: Theme.of(context).primaryColor,
         currentIndex: _selectedPageIndex,
         type: BottomNavigationBarType.fixed,
@@ -812,12 +835,45 @@ class _TabScreensState extends State<TabScreens> {
         unselectedFontSize: (selectedLang == "ENG") ? 12 : 10,
         items: [
           BottomNavigationBarItem(
-              backgroundColor: Colors.white,
-              icon: Icon(Icons.notifications),
-              title: Text(
-                'Notification',
-                style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold),
-              )),
+            icon: new Stack(
+              children: <Widget>[
+                new Icon(Icons.notifications,),
+                new Positioned(
+                  right: 0,
+                  child:
+                  Obx(() {
+                    if(notiCount.value == 0){
+                      return Container();
+                    }
+                    else {
+                     return Container(
+                        padding: EdgeInsets.all(1),
+                        decoration: new BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        constraints: BoxConstraints(
+                          minWidth: 12,
+                          minHeight: 12,
+                        ),
+                        child:  Text(
+                          notiCount.value.toString() ,
+                          style: new TextStyle(
+                            color: Colors.white,
+                            fontSize: 8,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+
+                      );
+                    }
+                  })
+                )
+              ],
+            ),
+            title: Text('Notifications',style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold),),
+          ),
+
           BottomNavigationBarItem(
               backgroundColor: Colors.white,
               icon: Icon(Icons.payment),
@@ -840,7 +896,6 @@ class _TabScreensState extends State<TabScreens> {
               backgroundColor: Colors.white,
               icon: Icon(Icons.pending_actions_rounded),
               title: Container(
-                padding: EdgeInsets.all(8),
                 child: Text(
                   'Service Complain',
                   style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold),

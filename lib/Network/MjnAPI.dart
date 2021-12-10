@@ -7,6 +7,7 @@ import 'package:MJN/models/accountInfoVO.dart';
 import 'package:MJN/models/invoiceListVO.dart';
 import 'package:MJN/models/invoiceVO.dart';
 import 'package:MJN/models/loginVO.dart';
+import 'package:MJN/models/promotionAndofferVO.dart';
 import 'package:MJN/models/serviceRequestTypeVO.dart';
 import 'package:MJN/models/ticketListVO.dart';
 import 'package:MJN/models/ticketVO.dart';
@@ -337,6 +338,28 @@ class MjnAPI {
     if (response.statusCode == 200) {
       var json = response.body;
       var result = serviceRequestTypeVoFromJson(json);
+      return result;
+    } else {
+      return null;
+    }
+  }
+
+  static Future fetchPromotionAndOfferData(String tenantID,String token
+      ) async {
+
+    var response = await client.get(
+
+      Uri.parse( GET_SLIDE_URL +
+          TENANT_ID + tenantID +
+          APP_VERSION + app_version ),
+      headers: {
+        'content-type': 'application/json',
+        'token': token
+      },
+    );
+    if (response.statusCode == 200) {
+      var json = response.body;
+      var result = promotionAndOfferVoFromJson(json);
       return result;
     } else {
       return null;

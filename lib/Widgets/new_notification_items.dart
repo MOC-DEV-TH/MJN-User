@@ -49,14 +49,15 @@ class _NewNotificationItemsState extends State<NewNotificationItems> {
                       widget.notificationList.type_name, widget.notificationList.action_url, widget.notificationList.created,read: 1);
 
 
-                  widget.notificationDao.updateNotification(notification).then((value) => {
-                    EventBusUtils.getInstance().fire('success')
-                  });
+                  widget.notificationDao.updateNotification(notification);
+
                 },
                 child: Text('Outage on 20 Oct 2021...',
                   style: TextStyle(fontSize: 14, color: Colors.black),)),
 
-          ],)
+          ],),
+
+       // widget.notificationList.read == 1 ? Container() :  Icon(Icons.circle,color: Color(0xff659EC7),size: 5,)
         ],),
 
       isReadMore ? Padding(

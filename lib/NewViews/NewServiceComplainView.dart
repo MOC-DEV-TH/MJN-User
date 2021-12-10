@@ -13,22 +13,6 @@ class NewServiceComplainView extends StatefulWidget {
 }
 
 class _NewServiceComplainViewState extends State<NewServiceComplainView> {
-  final List<String> promotionNews = <String>[
-    'Aby',
-    'Aish',
-    'Aby',
-    'Aish',
-    'Aish',
-    'Aby',
-    'Aish',
-    'Aish',
-    'Aby',
-    'Aish',
-    'Aby',
-    'Aish'
-        'Aby',
-    'Aish',
-  ];
 
   final TicketListController ticketListController =
       Get.put(TicketListController());

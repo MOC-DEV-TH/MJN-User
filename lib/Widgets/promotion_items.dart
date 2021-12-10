@@ -1,10 +1,11 @@
+import 'package:MJN/models/promotionAndofferVO.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 
 class PromotionItems extends StatelessWidget {
-  List<String> images;
+  List<Offer> promotionImages;
 
-  PromotionItems(this.images);
+  PromotionItems(this.promotionImages);
   @override
   Widget build(BuildContext context) {
     return Center(child: SizedBox(
@@ -23,8 +24,10 @@ class PromotionItems extends StatelessWidget {
         dotVerticalPadding: 10.0,
         showIndicator: true,
         indicatorBgPadding: 7.0,
-        images: images.map((imgData) =>
-            AssetImage('assets/images/promo_item.png'),).toList(),
+        images: promotionImages.map((imgData) =>
+            NetworkImage(
+                imgData.link + imgData.imageMm
+            )).toList(),
       ),
     ),);
   }

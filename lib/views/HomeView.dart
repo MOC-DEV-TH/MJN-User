@@ -75,7 +75,7 @@ class _HomeViewState extends State<HomeView> {
                           width: double.infinity,
                           alignment: Alignment.center,
                           height: 150,
-                          child: PromotionItems(promotionNews)),
+                          child:Center()),
                       NeumorphicButton(
                         margin: EdgeInsets.only(top: 10, left: 10),
                         onPressed: () {

@@ -1,9 +1,8 @@
-import 'package:MJN/Widgets/current_subscription_items.dart';
-import 'package:MJN/Widgets/package_and_service_items.dart';
 import 'package:MJN/Widgets/promotion_items.dart';
+import 'package:MJN/controllers/homeController.dart';
+import 'package:MJN/models/promotionAndofferVO.dart';
 import 'package:MJN/utils/app_constants.dart';
-import 'package:MJN/views/AccountDetailView.dart';
-import 'package:MJN/views/PackagePlanDetailView.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
@@ -18,17 +17,11 @@ class NewHomeView extends StatefulWidget {
 }
 
 class _NewHomeViewState extends State<NewHomeView> {
+
+  final HomeController homeController = Get.put(HomeController());
   int changePageIndex = 0;
 
-  final List<String> imgList = <String>[
-    'assets/images/package_one.png',
-    'assets/images/package_one.png',
-    'assets/images/package_two.png',
-    'assets/images/package_three.png',
-    'assets/images/package_four.png',
-    'assets/images/package_one.png',
-    'assets/images/package_two.png'
-  ];
+
   final List<String> promotionNews = <String>[
     'Aby',
     'Aish',
@@ -43,6 +36,9 @@ class _NewHomeViewState extends State<NewHomeView> {
   void initState() {
     changePageIndex = 0;
     super.initState();
+
+    homeController.fetchPromotionAndOfferData(
+        loginDataStorage.read(DATA_TENANT_ID),loginDataStorage.read(TOKEN),);
   }
 
   @override
@@ -55,62 +51,68 @@ class _NewHomeViewState extends State<NewHomeView> {
 
     return Scaffold(
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-                color: Colors.blueAccent,
-                width: double.infinity,
-                alignment: Alignment.center,
-                height: 200,
-                child: PromotionItems(promotionNews)),
-            Container(
-              color: Color(0xff188FC5),
-              child: Column(
+        child: Obx((){
+          if(homeController.isLoading.value){
+            return Center(child: CircularProgressIndicator(),);
+          }
+          else {
+            return
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    "Offers",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  GridView(
-                      shrinkWrap: true,
-                      physics: new NeverScrollableScrollPhysics(),
-                      primary: false,
-                      padding: const EdgeInsets.all(10),
+                  Container(
+                      color: Colors.blueAccent,
+                      width: double.infinity,
+                      alignment: Alignment.center,
+                      height: 200,
+                      child: PromotionItems(homeController.promotionAndOfferVo.details.promotion)),
+                  Container(
+                    color: Color(0xff188FC5),
+                    child: Column(
                       children: [
-                        Image(image: AssetImage('assets/images/package_one.png')),
-                        Image(image: AssetImage('assets/images/package_two.png')),
-                        Image(image: AssetImage( 'assets/images/package_three.png')),
-                        Image(image: AssetImage('assets/images/package_four.png')),
-                        Image(image: AssetImage( 'assets/images/package_one.png')),
-                        Image(image: AssetImage('assets/images/package_two.png')),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          "Offers",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        GridView(
+                            shrinkWrap: true,
+                            physics: new NeverScrollableScrollPhysics(),
+                            primary: false,
+                            padding: const EdgeInsets.all(10),
+                            children: homeController.promotionAndOfferVo.details.offer
+                                .map((imgData) =>
+                                PackageAndServiceItems(
+                                    imgData))
+                                .toList(),
+                            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                              maxCrossAxisExtent: 200,
+                              mainAxisSpacing: 20,
+                              crossAxisSpacing: 20,
+                              childAspectRatio: (1 / .8),
+                            )),
                       ],
-                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: 200,
-                        mainAxisSpacing: 20,
-                        crossAxisSpacing: 20,
-                        childAspectRatio: (1 / .8),
-                      )),
+                    ),
+                  )
                 ],
-              ),
-            )
-          ],
-        ),
+              );
+          }
+
+        })
       ),
     );
   }
 
-  Widget PackageAndServiceItems(String imageData) {
+  Widget PackageAndServiceItems(Offer offer) {
     return InkWell(
       onTap: () {
         setState(() {});
@@ -122,7 +124,12 @@ class _NewHomeViewState extends State<NewHomeView> {
               Radius.circular(24.0) //                 <--- border radius here
               ),
         ),
-        child: Container(child: Image(image: AssetImage(imageData.toString()))),
+        child: Container(child: Image.network(
+         offer.link + offer.imageMm,
+          height: 60,
+          width: double.infinity,
+          fit: BoxFit.fitHeight,
+        ),),
       ),
     );
   }
