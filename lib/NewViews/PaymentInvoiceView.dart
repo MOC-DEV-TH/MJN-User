@@ -462,7 +462,7 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
                   height: 35,
                 ),
                 Container(
-                  width: 110,
+                  width: 130,
                   child: RaisedButton(
                     onPressed: () {
                       if (widget.paymentStatus == 'Unpaid') {
@@ -471,7 +471,7 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
                         });
                       }
                     },
-                    child: Text((widget.paymentStatus == 'Unpaid') ? 'Unpaid' : 'Paid'),
+                    child: Text((widget.paymentStatus == 'Unpaid') ? 'Make Payment' : 'Paid'),
                     textColor: Color(0xffe9e9e9),
                     color: Color(0xffff5f1f),
                   ),

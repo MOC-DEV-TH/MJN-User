@@ -1,5 +1,10 @@
+import 'package:MJN/controllers/homeController.dart';
+import 'package:MJN/models/promotionAndofferVO.dart';
+import 'package:MJN/utils/app_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:get/get.dart';
 
 class NewContactUsView extends StatefulWidget {
   @override
@@ -7,6 +12,17 @@ class NewContactUsView extends StatefulWidget {
 }
 
 class _NewContactUsViewState extends State<NewContactUsView> {
+
+  final HomeController homeController = Get.put(HomeController());
+  final loginDataStorage = GetStorage();
+
+  @override
+  void initState() {
+    super.initState();
+    homeController.fetchPromotionAndOfferData(
+      loginDataStorage.read(DATA_TENANT_ID),loginDataStorage.read(TOKEN),);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -116,26 +132,31 @@ class _NewContactUsViewState extends State<NewContactUsView> {
                       SizedBox(
                         height: 10,
                       ),
-                      GridView(
-                          shrinkWrap: true,
-                          physics: ScrollPhysics(),
-                          primary: false,
-                          padding: const EdgeInsets.all(10),
-                          scrollDirection: Axis.vertical,
-                          children: [
-                            Image(image: AssetImage('assets/images/package_one.png')),
-                            Image(image: AssetImage('assets/images/package_two.png')),
-                            Image(image: AssetImage( 'assets/images/package_three.png')),
-                            Image(image: AssetImage('assets/images/package_four.png')),
-                            Image(image: AssetImage( 'assets/images/package_one.png')),
-                            Image(image: AssetImage('assets/images/package_two.png')),
-                          ],
-                          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: 200,
-                            mainAxisSpacing: 20,
-                            crossAxisSpacing: 20,
-                            childAspectRatio: (1 / .8),
-                          )),
+                    Obx((){
+                      if(homeController.isLoading.value){
+                        return Center(child: CircularProgressIndicator(),);
+                      }
+                      else {
+                        return
+                          GridView(
+                              shrinkWrap: true,
+                              physics: ScrollPhysics(),
+                              primary: false,
+                              padding: const EdgeInsets.all(10),
+                              scrollDirection: Axis.vertical,
+                              children:  homeController.promotionAndOfferVo.details.offer
+                                  .map((imgData) =>
+                                  PackageAndServiceItems(
+                                      imgData))
+                                  .toList(),
+                              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                                maxCrossAxisExtent: 200,
+                                mainAxisSpacing: 20,
+                                crossAxisSpacing: 20,
+                                childAspectRatio: (1 / .8),
+                              ));
+                      }
+                    })
                     ],
                   ),
                 )
@@ -145,6 +166,28 @@ class _NewContactUsViewState extends State<NewContactUsView> {
 
           ],
         ),
+      ),
+    );
+  }
+
+  Widget PackageAndServiceItems(Offer offer) {
+    return InkWell(
+      onTap: () {
+        setState(() {});
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Color(0xffBC8F8F)),
+          borderRadius: BorderRadius.all(
+              Radius.circular(24.0) //                 <--- border radius here
+          ),
+        ),
+        child: Container(child: Image.network(
+          offer.link + offer.imageMm,
+          height: 60,
+          width: double.infinity,
+          fit: BoxFit.fitHeight,
+        ),),
       ),
     );
   }

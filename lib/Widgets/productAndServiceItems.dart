@@ -1,7 +1,9 @@
+import 'package:MJN/models/promotionAndofferVO.dart';
 import 'package:flutter/material.dart';
 
 class ProductAndServiceItems extends StatelessWidget {
-
+  Offer offerImages;
+  ProductAndServiceItems(this.offerImages);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -16,10 +18,12 @@ class ProductAndServiceItems extends StatelessWidget {
               ),
               child: Container(
                 margin: EdgeInsets.only(left: 34),
-                child: Image(
-                  height: 300,
-                    fit: BoxFit.fill,
-                    image: AssetImage('assets/images/package_three.png')),
+                child: Image.network(
+                  offerImages.link + offerImages.imageMm,
+                  height: 60,
+                  width: double.infinity,
+                  fit: BoxFit.fitHeight,
+                ),
               )
             ),
 

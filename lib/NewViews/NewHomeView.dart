@@ -22,12 +22,6 @@ class _NewHomeViewState extends State<NewHomeView> {
   int changePageIndex = 0;
 
 
-  final List<String> promotionNews = <String>[
-    'Aby',
-    'Aish',
-    'Aby',
-    'Aish',
-  ];
   final loginDataStorage = GetStorage();
   double itemHeight = 0;
   double itemWidth = 0;
@@ -36,13 +30,17 @@ class _NewHomeViewState extends State<NewHomeView> {
   void initState() {
     changePageIndex = 0;
     super.initState();
-
     homeController.fetchPromotionAndOfferData(
-        loginDataStorage.read(DATA_TENANT_ID),loginDataStorage.read(TOKEN),);
+      loginDataStorage.read(DATA_TENANT_ID),loginDataStorage.read(TOKEN),);
+
   }
 
   @override
   Widget build(BuildContext context) {
+
+    homeController.fetchPromotionAndOfferData(
+      loginDataStorage.read(DATA_TENANT_ID),loginDataStorage.read(TOKEN),);
+
     var size = MediaQuery.of(context).size;
 
     /*24 is for notification bar on Android*/

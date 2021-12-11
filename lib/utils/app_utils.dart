@@ -84,29 +84,6 @@ class AppUtils {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Container(
-                              width: 100,
-                              height: 40,
-                              child: RaisedButton(
-                                  color: Theme.of(context).primaryColorDark,
-                                  child: Text(
-                                    'OK',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16),
-                                  ),
-                                  onPressed: () {
-                                    AppUtils.removeDataFromGetStorage();
-                                    Get.offNamed(Splash2.routeName);
-                                     //Navigator.of(context).pushReplacementNamed(Splash2.routeName);
-                                  }),
-                            ),
-                          ),
-
-                          SizedBox(width: 40,),
 
                           ClipRRect(
                             borderRadius: BorderRadius.circular(8),
@@ -127,6 +104,34 @@ class AppUtils {
                                   }),
                             ),
                           ),
+
+
+
+                          SizedBox(width: 40,),
+
+
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Container(
+                              width: 100,
+                              height: 40,
+                              child: RaisedButton(
+                                  color: Theme.of(context).primaryColorDark,
+                                  child: Text(
+                                    'OK',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16),
+                                  ),
+                                  onPressed: () {
+                                    AppUtils.removeDataFromGetStorage();
+                                    Get.offNamed(Splash2.routeName);
+                                    //Navigator.of(context).pushReplacementNamed(Splash2.routeName);
+                                  }),
+                            ),
+                          ),
+
 
                         ],)
 
