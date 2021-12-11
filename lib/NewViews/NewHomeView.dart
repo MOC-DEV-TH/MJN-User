@@ -30,10 +30,12 @@ class _NewHomeViewState extends State<NewHomeView> {
   void initState() {
     changePageIndex = 0;
     super.initState();
+
     homeController.fetchPromotionAndOfferData(
       loginDataStorage.read(DATA_TENANT_ID),loginDataStorage.read(TOKEN),);
 
   }
+
 
   @override
   Widget build(BuildContext context) {

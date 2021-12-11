@@ -1,3 +1,4 @@
+import 'package:MJN/NewViews/LoginView1.dart';
 import 'package:MJN/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -29,14 +30,14 @@ class AppUtils {
     );
   }
 
-  static void removeDataFromGetStorage() {
+  static Future<void> removeDataFromGetStorage() async {
     final box = GetStorage();
-    box.remove(USER_NAME);
     box.remove(TOKEN);
+    box.remove(PHONE_NO);
+    box.remove(UID);
     box.remove(UNIT);
     box.remove(BUILDING);
     box.remove(DATA_TENANT_ID);
-    box.remove(DATA_INVOICE_ID);
   }
 
   static void showLogoutDialog(
@@ -63,7 +64,7 @@ class AppUtils {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Icon(
-                        Icons.login_outlined,
+                        Icons.logout,
                         size: 60,
                       ),
                       Center(
@@ -125,8 +126,10 @@ class AppUtils {
                                         fontSize: 16),
                                   ),
                                   onPressed: () {
-                                    AppUtils.removeDataFromGetStorage();
-                                    Get.offNamed(Splash2.routeName);
+                                    AppUtils.removeDataFromGetStorage().then((value) => {
+                                    Get.offNamed(Splash2.routeName)
+                                    });
+
                                     //Navigator.of(context).pushReplacementNamed(Splash2.routeName);
                                   }),
                             ),
@@ -139,6 +142,109 @@ class AppUtils {
                   ),
                 ),
               ));
+    });
+  }
+
+  static void showLoginDialog(
+      String title, String message, BuildContext context) {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      showDialog(
+          context: context,
+          builder: (_) => Center(
+            child: Container(
+              height: 270,
+              width: double.infinity,
+              margin: EdgeInsets.all(10),
+              //child: Material(
+              //child: Container(
+              padding: EdgeInsets.all(4),
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/dialog_card_bg.png"),
+                  fit: BoxFit.fill,
+                ),
+              ),
+              //color: Colors.white,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Icon(
+                    Icons.login_outlined,
+                    size: 60,
+                  ),
+                  Center(
+                    child: Text(
+                      title,
+
+                      style: TextStyle(
+                          decoration: TextDecoration.none,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold, fontSize: 20.0),
+                    ),
+                  ),
+                  Center(
+                    child: Text(message,textAlign: TextAlign.center,style: TextStyle(
+                        decoration: TextDecoration.none,
+                        fontSize: 14,color: Colors.black),),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Container(
+                          width: 100,
+                          height: 40,
+                          child: RaisedButton(
+                              color: Theme.of(context).primaryColorDark,
+                              child: Text(
+                                'Cancel',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16),
+                              ),
+                              onPressed: () {
+                                Get.back();
+                              }),
+                        ),
+                      ),
+
+
+
+                      SizedBox(width: 40,),
+
+
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Container(
+                          width: 100,
+                          height: 40,
+                          child: RaisedButton(
+                              color: Theme.of(context).primaryColorDark,
+                              child: Text(
+                                'OK',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                Get.offNamed(LoginView1.routeName);
+
+                              }),
+                        ),
+                      ),
+
+
+                    ],)
+
+                ],
+              ),
+            ),
+          ));
     });
   }
 

@@ -23,8 +23,12 @@ class _NewServiceComplainViewState extends State<NewServiceComplainView> {
   @override
   void initState() {
     super.initState();
+
+
     ticketListController.fetchTicketList(loginDataStorage.read(TOKEN),
         loginDataStorage.read(UID), loginDataStorage.read(DATA_TENANT_ID));
+
+    print(loginDataStorage.read(TOKEN));
   }
 
   @override

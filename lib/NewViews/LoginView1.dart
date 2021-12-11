@@ -1,11 +1,7 @@
 import 'package:MJN/CustomDialog/CustomDialogUI.dart';
-import 'package:MJN/Widgets/login_main_drawer.dart';
 import 'package:MJN/controllers/loginController.dart';
 import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/utils/app_utils.dart';
-import 'package:MJN/views/SecondLoginView.dart';
-import 'package:MJN/views/SignUpView.dart';
-import 'package:MJN/views/TabView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
@@ -251,7 +247,10 @@ class _LoginView1State extends State<LoginView1> {
                     child: GestureDetector(
                         onTap: () {
                           showMenuDialog(context);
-                        }, child: Icon((Icons.dehaze_rounded)))),
+                        }, child: Padding(
+                          padding: const EdgeInsets.only(top: 10),
+                          child: Image(image: AssetImage('assets/images/menu_icon.png'),height: 24,width: 23,),
+                        ),)),
                 Container(
                     margin: EdgeInsets.only(left: 65),
                     width: 100,

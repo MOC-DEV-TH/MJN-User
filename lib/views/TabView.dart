@@ -6,7 +6,6 @@ import 'package:MJN/NewViews/NewAboutUsView.dart';
 import 'package:MJN/NewViews/NewContactUsView.dart';
 import 'package:MJN/NewViews/NewHomeView.dart';
 import 'package:MJN/NewViews/NewNotificationView.dart';
-import 'package:MJN/NewViews/NewPaymentView.dart';
 import 'package:MJN/NewViews/NewProductAndServiceView.dart';
 import 'package:MJN/NewViews/NewServiceComplainView.dart';
 import 'package:MJN/NewViews/NewTermAndConditionView.dart';
@@ -14,13 +13,13 @@ import 'package:MJN/NewViews/OnlinePaymentView.dart';
 import 'package:MJN/models/notificationModelVO.dart';
 import 'package:MJN/presistence/database/MyAppDatabase.dart';
 import 'package:MJN/utils/app_constants.dart';
+import 'package:MJN/utils/app_utils.dart';
 import 'package:MJN/utils/eventbus_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
-import '../main.dart';
-import 'AccountDetailView.dart';
+
 
 class TabScreens extends StatefulWidget {
   static const routeName = '/tab_screen';
@@ -166,170 +165,19 @@ class _TabScreensState extends State<TabScreens> {
   int changePageIndex = 0;
 
   void _selectPage(int index) {
-    setState(() {
-      changePageIndex = 0;
-      _selectedPageIndex = index;
-      navSelectedIndex = true;
-    });
+    if(langStorage.read(TOKEN) != null){
+      setState(() {
+        changePageIndex = 0;
+        _selectedPageIndex = index;
+        navSelectedIndex = true;
+      });
+    }
+    else {
+      AppUtils.showLoginDialog('Login', 'Please sign in to unlock all\naccount features', context);
+    }
+
   }
 
-  // _showPopupMenu() {
-  //   showMenu<String>(
-  //     color: Color(0xff242527),
-  //     context: context,
-  //     position: RelativeRect.fromLTRB(0.0, 100.0, 0.0, 0.0),
-  //     //position where you want to show the menu on screen
-  //     items: [
-  //       PopupMenuItem<String>(
-  //           child:
-  //           const Text('About Us', style: TextStyle(color: Colors.white)),
-  //           value: '1'),
-  //       PopupMenuItem<String>(
-  //           child: const Text(
-  //             'Product and Services',
-  //             style: TextStyle(color: Colors.white),
-  //           ),
-  //           value: '2'),
-  //       PopupMenuItem<String>(
-  //           child: const Text('Terms & Conditions',
-  //               style: TextStyle(color: Colors.white)),
-  //           value: '3'),
-  //       PopupMenuItem<String>(
-  //           child:
-  //           const Text('Contact Us', style: TextStyle(color: Colors.white)),
-  //           value: '4'),
-  //       PopupMenuItem<String>(
-  //           child:
-  //           const Text('My Account', style: TextStyle(color: Colors.white)),
-  //           value: '5'),
-  //       PopupMenuItem<String>(
-  //           child: visible
-  //               ? Container(
-  //             alignment: Alignment.topLeft,
-  //             child: Column(
-  //               crossAxisAlignment: CrossAxisAlignment.start,
-  //               children: [
-  //                 InkWell(
-  //                   onTap: () {
-  //                     setState(() {
-  //                       visible = false;
-  //                       Navigator.pop(context);
-  //                       _showPopupMenu();
-  //                     });
-  //                   },
-  //                   child: const Text('User Manual',
-  //                       style: TextStyle(color: Colors.white)),
-  //                 ),
-  //                 SizedBox(
-  //                   height: 15,
-  //                 ),
-  //                 Padding(
-  //                   padding: const EdgeInsets.only(left: 6),
-  //                   child: InkWell(
-  //                     onTap: () {
-  //                       print('Login Manual');
-  //                     },
-  //                     child: const Text('Login Manual',
-  //                         textAlign: TextAlign.left,
-  //                         style: TextStyle(
-  //                           fontSize: 13,
-  //                           color: Colors.grey,
-  //                         )),
-  //                   ),
-  //                 ),
-  //                 SizedBox(
-  //                   height: 10,
-  //                 ),
-  //                 Padding(
-  //                   padding: const EdgeInsets.only(left: 6),
-  //                   child: InkWell(
-  //                     onTap: () {
-  //                       print('Service Ticket Manual');
-  //                     },
-  //                     child: const Text('Service Ticket Manual',
-  //                         textAlign: TextAlign.left,
-  //                         style: TextStyle(
-  //                           fontSize: 13,
-  //                           color: Colors.grey,
-  //                         )),
-  //                   ),
-  //                 ),
-  //                 SizedBox(
-  //                   height: 10,
-  //                 ),
-  //                 Padding(
-  //                   padding: const EdgeInsets.only(left: 6),
-  //                   child: InkWell(
-  //                     onTap: () {
-  //                       print('Online Payment Manual');
-  //                     },
-  //                     child: const Text('Online Payment Manual',
-  //                         textAlign: TextAlign.left,
-  //                         style: TextStyle(
-  //                           fontSize: 13,
-  //                           color: Colors.grey,
-  //                         )),
-  //                   ),
-  //                 ),
-  //               ],
-  //             ),
-  //           )
-  //               : Text('User Manual', style: TextStyle(color: Colors.white)),
-  //           value: '6'),
-  //       PopupMenuItem<String>(
-  //           child: visible
-  //               ? Column(
-  //             children: [
-  //               Text(langStorage.read(TOKEN) != null ? 'Logout' : 'Login',
-  //                   style: TextStyle(color: Colors.white)),
-  //             ],
-  //           )
-  //               : Text(langStorage.read(TOKEN) != null ? 'Logout' : 'Login',
-  //               style: TextStyle(color: Colors.white)),
-  //           value: '7'),
-  //     ],
-  //     elevation: 8.0,
-  //   ).then<void>((String itemSelected) {
-  //     if (itemSelected == null) return;
-  //
-  //     if (itemSelected == "1") {
-  //       setState(() {
-  //         changePageIndex = 5;
-  //         navSelectedIndex = false;
-  //       });
-  //     } else if (itemSelected == "2") {
-  //       setState(() {
-  //         changePageIndex = 6;
-  //         navSelectedIndex = false;
-  //       });
-  //     } else if (itemSelected == "3") {
-  //       setState(() {
-  //         changePageIndex = 7;
-  //         navSelectedIndex = false;
-  //       });
-  //     } else if (itemSelected == "4") {
-  //       setState(() {
-  //         changePageIndex = 8;
-  //         navSelectedIndex = false;
-  //       });
-  //     } else if (itemSelected == "5") {
-  //       setState(() {
-  //         changePageIndex = 9;
-  //         navSelectedIndex = false;
-  //       });
-  //     } else if (itemSelected == "6") {
-  //       setState(() {
-  //         visible = true;
-  //         _showPopupMenu();
-  //       });
-  //     } else if (itemSelected == '7') {
-  //       langStorage.read(TOKEN) != null
-  //           ? AppUtils.showLogoutDialog('Logout',
-  //           'Are you sure you want to exit\nthis application?', context)
-  //           : Navigator.of(context).pushReplacementNamed(LoginView1.routeName);
-  //     }
-  //   });
-  // }
 
   Widget getSelectedPage() {
     int pageIndex = 0;
@@ -403,172 +251,6 @@ class _TabScreensState extends State<TabScreens> {
         });
   }
 
-  // Widget _buildMenuItems(BuildContext context) {
-  //   return Scaffold(
-  //     body: Container(
-  //       padding: EdgeInsets.only(top: 20, bottom: 20),
-  //       alignment: Alignment.center,
-  //       color: Color(0xff242527),
-  //       child: Column(
-  //         crossAxisAlignment: CrossAxisAlignment.start,
-  //         children: [
-  //           Expanded(
-  //               child: InkWell(
-  //                   onTap: () {
-  //                     Navigator.of(context).pop();
-  //
-  //                     setState(() {
-  //                       changePageIndex = 5;
-  //                       navSelectedIndex = false;
-  //                     });
-  //                   },
-  //                   child: Text('About Us',
-  //                       style: TextStyle(
-  //                           color: Colors.white,
-  //                           fontSize: 14,
-  //                           decoration: TextDecoration.none)))),
-  //           Expanded(
-  //               child: InkWell(
-  //                 onTap: () {
-  //                   Navigator.of(context).pop();
-  //                   setState(() {
-  //                     changePageIndex = 6;
-  //                     navSelectedIndex = false;
-  //                   });
-  //                 },
-  //                 child: Text('Product and Services',
-  //                     style: TextStyle(
-  //                         color: Colors.white,
-  //                         fontSize: 14,
-  //                         decoration: TextDecoration.none)),
-  //               )),
-  //           Expanded(
-  //               child: InkWell(
-  //                 onTap: () {
-  //                   Navigator.of(context).pop();
-  //                   setState(() {
-  //                     changePageIndex = 7;
-  //                     navSelectedIndex = false;
-  //                   });
-  //                 },
-  //                 child: Text('Terms & Conditions',
-  //                     style: TextStyle(
-  //                         color: Colors.white,
-  //                         fontSize: 14,
-  //                         decoration: TextDecoration.none)),
-  //               )),
-  //           Expanded(
-  //               child: InkWell(
-  //                   onTap: () {
-  //                     Navigator.of(context).pop();
-  //                     setState(() {
-  //                       changePageIndex = 8;
-  //                       navSelectedIndex = false;
-  //                     });
-  //                   },
-  //                   child: Text('Contact Us',
-  //                       style: TextStyle(
-  //                           color: Colors.white,
-  //                           fontSize: 14,
-  //                           decoration: TextDecoration.none)))),
-  //           Expanded(
-  //               child: InkWell(
-  //                   onTap: () {
-  //                     Navigator.of(context).pop();
-  //                     setState(() {
-  //                       changePageIndex = 9;
-  //                       navSelectedIndex = false;
-  //                     });
-  //                   },
-  //                   child: Text('My Account',
-  //                       style: TextStyle(
-  //                           color: Colors.white,
-  //                           fontSize: 14,
-  //                           decoration: TextDecoration.none)))),
-  //           Expanded(
-  //               child: InkWell(
-  //                   onTap: () {
-  //                     setState(() {
-  //                       manualOne = 'Login Manual';
-  //                       manualTwo = 'Service Ticket Manual';
-  //                       manualThree = 'Online Payment Manual';
-  //                     });
-  //                   },
-  //                   child: Text('User Manual',
-  //                       style: TextStyle(
-  //                           color: Colors.white,
-  //                           decoration: TextDecoration.none,
-  //                           fontSize: 14)))),
-  //
-  //           Expanded(
-  //               child: InkWell(
-  //                   onTap: () {
-  //                     Navigator.of(context).pop();
-  //                     setState(() {});
-  //                   },
-  //                   child: Padding(
-  //                     padding: const EdgeInsets.only(left: 10),
-  //                     child: Text(manualOne,
-  //                         style: TextStyle(
-  //                             color: Colors.white,
-  //                             fontSize: 12,
-  //                             decoration: TextDecoration.none)),
-  //                   ))),
-  //
-  //
-  //           Expanded(
-  //               child: InkWell(
-  //                   onTap: () {
-  //                     Navigator.of(context).pop();
-  //                     setState(() {});
-  //                   },
-  //                   child: Padding(
-  //                     padding: const EdgeInsets.only(left: 10),
-  //                     child: Text(manualTwo,
-  //                         style: TextStyle(
-  //                             color: Colors.white,
-  //                             fontSize: 12,
-  //                             decoration: TextDecoration.none)),
-  //                   ))),
-  //
-  //
-  //           Expanded(
-  //               child: InkWell(
-  //                   onTap: () {
-  //                     Navigator.of(context).pop();
-  //                     setState(() {});
-  //                   },
-  //                   child: Padding(
-  //                     padding: const EdgeInsets.only(left: 10),
-  //                     child: Text(manualThree,
-  //                         style: TextStyle(
-  //                             color: Colors.white,
-  //                             fontSize: 12,
-  //                             decoration: TextDecoration.none)),
-  //                   ))),
-  //
-  //
-  //           InkWell(
-  //             onTap: () {
-  //               langStorage.read(TOKEN) != null
-  //                   ? AppUtils.showLogoutDialog(
-  //                   'Logout',
-  //                   'Are you sure you want to exit\nthis application?',
-  //                   context)
-  //                   : Navigator.of(context)
-  //                   .pushReplacementNamed(LoginView1.routeName);
-  //             },
-  //             child: Text(langStorage.read(TOKEN) != null ? 'Logout' : 'Login',
-  //                 style: TextStyle(
-  //                     color: Colors.white,
-  //                     fontSize: 14,
-  //                     decoration: TextDecoration.none)),
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
 
   Widget logoAndNavTitleAppBar(int navSelectPage,BuildContext context) {
     return AppBar(
@@ -589,10 +271,13 @@ class _TabScreensState extends State<TabScreens> {
 
                         showMenuDialog(context);
                     },
-                    child: Icon((Icons.dehaze_rounded)))),
+                    child:  Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Image(image: AssetImage('assets/images/menu_icon.png'),height: 24,width: 23,),
+                    ),)),
             navSelectPage == 0
                 ? Container(
-                    padding: EdgeInsets.only(right: 80),
+                    padding: EdgeInsets.only(right: 80,top: 5),
                     child: Text(
                       'Notification',
                       style: TextStyle(fontSize: 14),
@@ -600,7 +285,7 @@ class _TabScreensState extends State<TabScreens> {
                   )
                 : navSelectPage == 1
                     ? Container(
-                        padding: EdgeInsets.only(right: 80),
+                        padding: EdgeInsets.only(right: 80,top: 5),
                         child: Text(
                           'Payment',
                           style: TextStyle(fontSize: 14),
@@ -608,7 +293,7 @@ class _TabScreensState extends State<TabScreens> {
                       )
                     : navSelectPage == 3
                         ? Container(
-                            padding: EdgeInsets.only(right: 60),
+                            padding: EdgeInsets.only(right: 60,top: 5),
                             child: Text(
                               'Service Complain',
                               style: TextStyle(fontSize: 14),
@@ -616,7 +301,7 @@ class _TabScreensState extends State<TabScreens> {
                           )
                         : navSelectPage == 4
                             ? Container(
-                                padding: EdgeInsets.only(right: 80),
+                                padding: EdgeInsets.only(right: 80,top: 5),
                                 child: Text(
                                   'Contact Us',
                                   style: TextStyle(fontSize: 14),
@@ -706,10 +391,13 @@ class _TabScreensState extends State<TabScreens> {
 
                         showMenuDialog(context);
                     },
-                    child: Icon((Icons.dehaze_rounded)))),
+                    child:
+                       Image(image: AssetImage('assets/images/menu_icon.png'),height: 24,width: 23,),
+                       ),
+                    ),
             pageIndex == 5
                 ? Container(
-                    padding: EdgeInsets.only(right: 80),
+                    padding: EdgeInsets.only(right: 80,top: 5),
                     child: Text(
                       'About Us',
                       style: TextStyle(fontSize: 14),
@@ -717,7 +405,7 @@ class _TabScreensState extends State<TabScreens> {
                   )
                 : pageIndex == 6
                     ? Container(
-                        padding: EdgeInsets.only(right: 40),
+                        padding: EdgeInsets.only(right: 40,top: 5),
                         child: Text(
                           'Product And Services',
                           style: TextStyle(fontSize: 14),
@@ -725,7 +413,7 @@ class _TabScreensState extends State<TabScreens> {
                       )
                     : pageIndex == 7
                         ? Container(
-                            padding: EdgeInsets.only(right: 40),
+                            padding: EdgeInsets.only(right: 40,top: 5),
                             child: Text(
                               'Terms & Conditions',
                               style: TextStyle(fontSize: 14),
@@ -733,7 +421,7 @@ class _TabScreensState extends State<TabScreens> {
                           )
                         : pageIndex == 8
                             ? Container(
-                                padding: EdgeInsets.only(right: 80),
+                                padding: EdgeInsets.only(right: 80,top: 5),
                                 child: Text(
                                   'Contact Us',
                                   style: TextStyle(fontSize: 14),
@@ -741,7 +429,7 @@ class _TabScreensState extends State<TabScreens> {
                               )
                             : pageIndex == 9
                                 ? Container(
-                                    padding: EdgeInsets.only(right: 80),
+                                    padding: EdgeInsets.only(right: 80,top: 5),
                                     child: Text(
                                       'My Account',
                                       style: TextStyle(fontSize: 14),
@@ -926,6 +614,7 @@ class _TabScreensState extends State<TabScreens> {
               setState(() {
                 changePageIndex = 10;
                 _selectedPageIndex = 2;
+                navSelectedIndex = true;
                 getSelectedPage();
               });
             },

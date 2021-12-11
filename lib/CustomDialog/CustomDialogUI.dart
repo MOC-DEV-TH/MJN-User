@@ -222,8 +222,7 @@ class _DialogUIState extends State<DialogUI> {
                             'Logout',
                             'Are you sure you want to exit\nthis application?',
                             context)
-                        : Navigator.of(widget._context)
-                            .pushReplacementNamed(LoginView1.routeName);
+                        : Get.offNamed(LoginView1.routeName);
 
 
                   },

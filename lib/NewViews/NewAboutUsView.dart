@@ -149,7 +149,7 @@ class _NewAboutUsViewState extends State<NewAboutUsView> {
           ),
 
           Text(
-            'If you are unhappy for whatever reason for the first 20 days,we offer a 100% full money back guarantee.',
+            'If you are unhappy for whatever reason for the first 30 days,we offer a 100% full money back guarantee.',
             textAlign: TextAlign.left,
             style: TextStyle(),
           ),
@@ -161,7 +161,7 @@ class _NewAboutUsViewState extends State<NewAboutUsView> {
           ),
 
           Text(
-            'Come in to our SHOWROOM to LEARN MORE and CREATE YOUR ACCOUNT today.',
+            'Come in to our SHOWROOM to LEARN MORE and CREATE YOUR ACCOUNT Today.',
             textAlign: TextAlign.left,
             style: TextStyle(),
           ),

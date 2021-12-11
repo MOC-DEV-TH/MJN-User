@@ -111,6 +111,11 @@ flutter:
     - assets/images/wallet.png
     - assets/images/counter.png
     - assets/images/cards.png
+    - assets/images/contact_us_icon.png
+    - assets/images/payment_icon.png
+    - assets/images/service_complain_icon.png
+    - assets/images/menu_icon.png
+
 
 
         # An image asset can refer to one or more resolution-specific "variants", see

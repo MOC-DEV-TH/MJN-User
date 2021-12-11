@@ -22,12 +22,10 @@ class LoginController extends GetxController {
         loginVo = res;
 
         if (loginVo.status == 'Success') {
-          //loginDataStorage.write(USER_NAME, loginVo.userName);
           loginDataStorage.write(PHONE_NO, loginVo.phone);
           loginDataStorage.write(UID, loginVo.uid);
           loginDataStorage.write(BUILDING, loginVo..building);
           loginDataStorage.write(UNIT, loginVo.unit);
-          //loginDataStorage.write(DATA_TENANT_ID, loginVo.details[0].tenantId);
           loginDataStorage.write(TOKEN, loginVo.token);
           loginDataStorage.write(DATA_TENANT_ID, loginVo.tenantId);
 

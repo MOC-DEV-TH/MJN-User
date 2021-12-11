@@ -92,11 +92,15 @@ class _MyAccountViewState extends State<MyAccountView> {
                     ),
 
 
-                    Text(
-                      ': ${accountDetailController.accountInfoVo.details.firstname}'
-                      ,
-                      style: TextStyle(
-                          fontSize: 14, color: Color(0xffe9e9e9)),
+
+                    Container(
+                      width: 125,
+                      child: Text(
+                        ': ${accountDetailController.accountInfoVo.details.firstname}'
+                        ,
+                        style: TextStyle(
+                            fontSize: 14, color: Color(0xffe9e9e9)),
+                      ),
                     ),
                   ],),
 
@@ -130,11 +134,14 @@ class _MyAccountViewState extends State<MyAccountView> {
                           fontSize: 14, color: Color(0xffe9e9e9)),
                     ),
 
-                    Text(
-                      ': ${accountDetailController.accountInfoVo.details.name}'
-                      ,
-                      style: TextStyle(
-                          fontSize: 14, color: Color(0xffe9e9e9)),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 50),
+                      child: Text(
+                        ': ${accountDetailController.accountInfoVo.details.name}'
+                        ,
+                        style: TextStyle(
+                            fontSize: 14, color: Color(0xffe9e9e9)),
+                      ),
                     ),
                   ],),
 
@@ -162,10 +169,13 @@ class _MyAccountViewState extends State<MyAccountView> {
                           fontSize: 14, color: Color(0xffe9e9e9)),
                     ),
 
-                    Text(
-                     ':  ${accountDetailController.accountInfoVo.details.creationDate}',
-                      style: TextStyle(
-                          fontSize: 14, color: Color(0xffe9e9e9)),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 25),
+                      child: Text(
+                       ':  ${accountDetailController.accountInfoVo.details.creationDate}',
+                        style: TextStyle(
+                            fontSize: 14, color: Color(0xffe9e9e9)),
+                      ),
                     ),
                   ],),
 
@@ -180,10 +190,13 @@ class _MyAccountViewState extends State<MyAccountView> {
                           fontSize: 14, color: Color(0xffe9e9e9)),
                     ),
 
-                    Text(
-                      ':  ${accountDetailController.accountInfoVo.details.modifiedDate}',
-                      style: TextStyle(
-                          fontSize: 14, color: Color(0xffe9e9e9)),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 25),
+                      child: Text(
+                        ':  ${accountDetailController.accountInfoVo.details.modifiedDate}',
+                        style: TextStyle(
+                            fontSize: 14, color: Color(0xffe9e9e9)),
+                      ),
                     ),
                   ],),
 
@@ -256,10 +269,13 @@ class _MyAccountViewState extends State<MyAccountView> {
                             fontSize: 14, color: Color(0xffe9e9e9)),
                       ),
 
-                      Text(
-                        ':  ${lastTransactionController.transactionVo.details.creationDate}',
-                        style: TextStyle(
-                            fontSize: 14, color: Color(0xffe9e9e9)),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 22),
+                        child: Text(
+                          ':  ${lastTransactionController.transactionVo.details.creationDate}',
+                          style: TextStyle(
+                              fontSize: 14, color: Color(0xffe9e9e9)),
+                        ),
                       ),
                     ],),
 
@@ -274,10 +290,13 @@ class _MyAccountViewState extends State<MyAccountView> {
                             fontSize: 14, color: Color(0xffe9e9e9)),
                       ),
 
-                      Text(
-                        ': 20Mbps',
-                        style: TextStyle(
-                            fontSize: 14, color: Color(0xffe9e9e9)),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 54),
+                        child: Text(
+                          ':  20Mbps',
+                          style: TextStyle(
+                              fontSize: 14, color: Color(0xffe9e9e9)),
+                        ),
                       ),
                     ],),
 
@@ -292,20 +311,23 @@ class _MyAccountViewState extends State<MyAccountView> {
                             fontSize: 14, color: Color(0xffe9e9e9)),
                       ),
 
-                      Text(
-                        ': ${(lastTransactionController
-                            .transactionVo
-                            .details
-                            .paymentTotal
-                        ) +
-                            ' ' +
-                            (lastTransactionController
-                                .transactionVo
-                                .details
-                                .currencyType
-                            )}',
-                        style: TextStyle(
-                            fontSize: 14, color: Color(0xffe9e9e9)),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 32),
+                        child: Text(
+                          ': ${(lastTransactionController
+                              .transactionVo
+                              .details
+                              .paymentTotal
+                          ) +
+                              ' ' +
+                              (lastTransactionController
+                                  .transactionVo
+                                  .details
+                                  .currencyType
+                              )}',
+                          style: TextStyle(
+                              fontSize: 14, color: Color(0xffe9e9e9)),
+                        ),
                       ),
                     ],),
                   SizedBox(height: 15,),
@@ -320,20 +342,23 @@ class _MyAccountViewState extends State<MyAccountView> {
                             fontSize: 14, color: Color(0xffe9e9e9)),
                       ),
 
-                      Text(
-                        ': ${(lastTransactionController
-                            .transactionVo
-                            .details
-                            .paymentTotal
-                        ) +
-                            ' ' +
-                            (lastTransactionController
-                                .transactionVo
-                                .details
-                                .currencyType
-                            )}',
-                        style: TextStyle(
-                            fontSize: 14, color: Color(0xffe9e9e9)),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 32),
+                        child: Text(
+                          ': ${(lastTransactionController
+                              .transactionVo
+                              .details
+                              .paymentTotal
+                          ) +
+                              ' ' +
+                              (lastTransactionController
+                                  .transactionVo
+                                  .details
+                                  .currencyType
+                              )}',
+                          style: TextStyle(
+                              fontSize: 14, color: Color(0xffe9e9e9)),
+                        ),
                       ),
                     ],),
 
@@ -349,10 +374,13 @@ class _MyAccountViewState extends State<MyAccountView> {
                             fontSize: 14, color: Color(0xffe9e9e9)),
                       ),
 
-                      Text(
-                        ':  ${lastTransactionController.transactionVo.details.creationDate}',
-                        style: TextStyle(
-                            fontSize: 14, color: Color(0xffe9e9e9)),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 19),
+                        child: Text(
+                          ':  ${lastTransactionController.transactionVo.details.creationDate}',
+                          style: TextStyle(
+                              fontSize: 14, color: Color(0xffe9e9e9)),
+                        ),
                       ),
                     ],),
 
@@ -369,10 +397,13 @@ class _MyAccountViewState extends State<MyAccountView> {
                       ),
 
 
-                      Text(
-                        ': Win Htut Oo',
-                        style: TextStyle(
-                            fontSize: 14, color: Color(0xffe9e9e9)),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 32),
+                        child: Text(
+                          ': Win Htut Oo',
+                          style: TextStyle(
+                              fontSize: 14, color: Color(0xffe9e9e9)),
+                        ),
                       ),
                     ],),
 
