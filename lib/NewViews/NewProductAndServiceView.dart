@@ -37,6 +37,9 @@ class _NewProductAndServiceViewState extends State<NewProductAndServiceView> {
             if(homeController.isLoading.value){
               return Center(child: CircularProgressIndicator(),);
             }
+            else if (homeController.promotionAndOfferVo == null){
+              return Center(child: Text("No Data"),);
+            }
             else return
               Container(
                 child: Column(
@@ -49,7 +52,7 @@ class _NewProductAndServiceViewState extends State<NewProductAndServiceView> {
                           primary: false,
                           padding: const EdgeInsets.all(10),
                           scrollDirection: Axis.vertical,
-                          children: homeController.promotionAndOfferVo.details.offer
+                          children: homeController.promotionAndOfferVo!.details.offer
                               .map((imgData) => ProductAndServiceItems(imgData))
                               .toList(),
                           gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(

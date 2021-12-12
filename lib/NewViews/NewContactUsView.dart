@@ -144,7 +144,7 @@ class _NewContactUsViewState extends State<NewContactUsView> {
                               primary: false,
                               padding: const EdgeInsets.all(10),
                               scrollDirection: Axis.vertical,
-                              children:  homeController.promotionAndOfferVo.details.offer
+                              children:  homeController.promotionAndOfferVo!.details.offer
                                   .map((imgData) =>
                                   PackageAndServiceItems(
                                       imgData))

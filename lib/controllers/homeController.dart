@@ -5,21 +5,32 @@ import 'package:get/state_manager.dart';
 
 class HomeController extends GetxController{
 
-  late PromotionAndOfferVo promotionAndOfferVo;
+  PromotionAndOfferVo? promotionAndOfferVo;
   var isLoading = true.obs;
 
   void fetchPromotionAndOfferData(String tenantID,String token) async {
     try {
       isLoading(true);
 
-      var res = await MjnAPI.fetchPromotionAndOfferData(tenantID,token);
+      if((tenantID !=null && token !=null) && (tenantID.isNotEmpty && token.isNotEmpty))
+      {
+        var res = await MjnAPI.fetchPromotionAndOfferData(tenantID,token);
 
-      if (res != null) {
-        promotionAndOfferVo = res;
-        print(promotionAndOfferVo.status);
+        if (res != null) {
+          promotionAndOfferVo = res;
+          print(promotionAndOfferVo!.status);
+          isLoading(false);
+        }
+        else{
+          isLoading(false);
+        }
+      }
+      else{
+        isLoading(false);
+        promotionAndOfferVo = null;
       }
     } finally {
-      isLoading(false);
+      //isLoading(false);
     }
   }
 

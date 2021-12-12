@@ -1,5 +1,6 @@
 import 'package:MJN/NewViews/LoginView1.dart';
 import 'package:MJN/main.dart';
+import 'package:MJN/views/TabView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
@@ -107,7 +108,6 @@ class AppUtils {
                           ),
 
 
-
                           SizedBox(width: 40,),
 
 
@@ -127,7 +127,7 @@ class AppUtils {
                                   ),
                                   onPressed: () {
                                     AppUtils.removeDataFromGetStorage().then((value) => {
-                                    Get.offNamed(Splash2.routeName)
+                                    Get.offAllNamed(Splash2.routeName)
                                     });
 
                                     //Navigator.of(context).pushReplacementNamed(Splash2.routeName);

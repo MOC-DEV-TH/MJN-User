@@ -32,17 +32,13 @@ class _NewHomeViewState extends State<NewHomeView> {
     super.initState();
 
     homeController.fetchPromotionAndOfferData(
-      loginDataStorage.read(DATA_TENANT_ID),loginDataStorage.read(TOKEN),);
+      loginDataStorage.read(DATA_TENANT_ID)??"",loginDataStorage.read(TOKEN)??"",);
 
   }
 
 
   @override
   Widget build(BuildContext context) {
-
-    homeController.fetchPromotionAndOfferData(
-      loginDataStorage.read(DATA_TENANT_ID),loginDataStorage.read(TOKEN),);
-
     var size = MediaQuery.of(context).size;
 
     /*24 is for notification bar on Android*/
@@ -50,14 +46,17 @@ class _NewHomeViewState extends State<NewHomeView> {
     itemWidth = size.width / 2;
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Obx((){
-          if(homeController.isLoading.value){
-            return Center(child: CircularProgressIndicator(),);
-          }
-          else {
-            return
-              Column(
+      body: Obx((){
+        if(homeController.isLoading.value){
+          return Center(child: CircularProgressIndicator(),);
+        }
+        else if (homeController.promotionAndOfferVo == null){
+          return Center(child: Text("No Data",style: TextStyle(color: Colors.red,fontSize: 24,fontWeight: FontWeight.w900),),);
+        }
+        else {
+          return
+            SingleChildScrollView(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
@@ -65,7 +64,7 @@ class _NewHomeViewState extends State<NewHomeView> {
                       width: double.infinity,
                       alignment: Alignment.center,
                       height: 200,
-                      child: PromotionItems(homeController.promotionAndOfferVo.details.promotion)),
+                      child: PromotionItems(homeController.promotionAndOfferVo!.details.promotion)),
                   Container(
                     color: Color(0xff188FC5),
                     child: Column(
@@ -89,7 +88,7 @@ class _NewHomeViewState extends State<NewHomeView> {
                             physics: new NeverScrollableScrollPhysics(),
                             primary: false,
                             padding: const EdgeInsets.all(10),
-                            children: homeController.promotionAndOfferVo.details.offer
+                            children: homeController.promotionAndOfferVo!.details.offer
                                 .map((imgData) =>
                                 PackageAndServiceItems(
                                     imgData))
@@ -104,11 +103,11 @@ class _NewHomeViewState extends State<NewHomeView> {
                     ),
                   )
                 ],
-              );
-          }
+              ),
+            );
+        }
 
-        })
-      ),
+      }),
     );
   }
 
