@@ -61,7 +61,7 @@ class MyServiceTicketItem extends StatelessWidget {
           Container(
             width: 30,
             child: Text(
-              ticketDetailVO.serviceRequestOther,
+              'ticketDetailVO.serviceRequestOther',
               style: TextStyle(color: Colors.black, fontSize: 8),
               textAlign: TextAlign.center,
             ),

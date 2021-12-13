@@ -49,7 +49,7 @@ class _PaymentViewState extends State<PaymentView> {
   @override
   Widget build(BuildContext context) {
     invoiceListController.fetchPaymentInvoiceList(loginDataStorage.read(TOKEN),
-        loginDataStorage.read(UID), loginDataStorage.read(DATA_TENANT_ID));
+        loginDataStorage.read(UID), loginDataStorage.read(DATA_TENANT_ID),context);
 
     transactionListController.fetchTransactionList(loginDataStorage.read(TOKEN),
         loginDataStorage.read(UID), loginDataStorage.read(DATA_TENANT_ID));
@@ -437,14 +437,14 @@ class _PaymentViewState extends State<PaymentView> {
 
                                                     if(invoiceListController
                                                         .invoiceListVo
-                                                        .details[index]
+                                                        .details![index]
                                                         .paymentStatus ==
                                                         'Unpaid'){
 
                                                       currentInvoiceIndex =
                                                           invoiceListController
                                                               .invoiceListVo
-                                                              .details[index]
+                                                              .details![index]
                                                               .invoiceId
                                                               .toString();
 
@@ -458,12 +458,12 @@ class _PaymentViewState extends State<PaymentView> {
                                                 },
                                                 child: Text(
                                                   invoiceListController.invoiceListVo
-                                                      .details[index].invoiceId ??
+                                                      .details![index].invoiceId ??
                                                       'null',
                                                   style: TextStyle(
                                                       color: invoiceListController
                                                           .invoiceListVo
-                                                          .details[index]
+                                                          .details![index]
                                                           .paymentStatus ==
                                                           'Unpaid'
                                                           ? Color(0xffff0000)
@@ -484,12 +484,12 @@ class _PaymentViewState extends State<PaymentView> {
                                               width: 66,
                                               child: Text(
                                                 invoiceListController.invoiceListVo
-                                                    .details[index].startDate ??
+                                                    .details![index].startDate ??
                                                     'null',
                                                 style: TextStyle(
                                                   color: invoiceListController
                                                       .invoiceListVo
-                                                      .details[index]
+                                                      .details![index]
                                                       .paymentStatus ==
                                                       'Unpaid'
                                                       ? Color(0xffff0000)
@@ -508,12 +508,12 @@ class _PaymentViewState extends State<PaymentView> {
                                               width: 68,
                                               child: Text(
                                                 invoiceListController.invoiceListVo
-                                                    .details[index].endDate ??
+                                                    .details![index].endDate ??
                                                     'null',
                                                 style: TextStyle(
                                                     color: invoiceListController
                                                         .invoiceListVo
-                                                        .details[index]
+                                                        .details![index]
                                                         .paymentStatus ==
                                                         'Unpaid'
                                                         ? Color(0xffff0000)
@@ -531,12 +531,12 @@ class _PaymentViewState extends State<PaymentView> {
                                               width: 57,
                                               child: Text(
                                                 invoiceListController.invoiceListVo
-                                                    .details[index].creditAmount ??
+                                                    .details![index].creditAmount ??
                                                     'null',
                                                 style: TextStyle(
                                                     color: invoiceListController
                                                         .invoiceListVo
-                                                        .details[index]
+                                                        .details![index]
                                                         .paymentStatus ==
                                                         'Unpaid'
                                                         ? Color(0xffff0000)
@@ -554,12 +554,12 @@ class _PaymentViewState extends State<PaymentView> {
                                               width: 52,
                                               child: Text(
                                                 invoiceListController.invoiceListVo
-                                                    .details[index].paymentStatus ??
+                                                    .details![index].paymentStatus ??
                                                     'null',
                                                 style: TextStyle(
                                                     color: invoiceListController
                                                         .invoiceListVo
-                                                        .details[index]
+                                                        .details![index]
                                                         .paymentStatus ==
                                                         'Unpaid'
                                                         ? Color(0xffff0000)
@@ -575,7 +575,7 @@ class _PaymentViewState extends State<PaymentView> {
                                   );
                                 },
                                 itemCount:
-                                invoiceListController.invoiceListVo.details.length,
+                                invoiceListController.invoiceListVo.details!.length,
                               )
                             ],
                           );

@@ -201,7 +201,7 @@ class _Splash2State extends State<Splash2> {
   Widget build(BuildContext context) {
     return SplashScreen(
       backgroundColor: Color(0xff242527),
-      seconds: 6,
+      seconds: 5,
       navigateAfterSeconds: new TabScreens(0),
       image: Image(
           image: AssetImage('assets/images/splash_screen_logo.png')),

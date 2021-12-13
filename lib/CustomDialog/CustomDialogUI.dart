@@ -7,12 +7,13 @@ import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
 
 class DialogUI extends StatefulWidget {
-   BuildContext _context;
+  BuildContext _context;
+
   DialogUI(this._context);
+
   @override
   _DialogUIState createState() => _DialogUIState();
 }
-
 
 class _DialogUIState extends State<DialogUI> {
   String manualOne = 'Login Manual';
@@ -41,35 +42,28 @@ class _DialogUIState extends State<DialogUI> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
-                GestureDetector(
-                    onTap: () {
-
-
-                      Navigator.pop(context);
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => TabScreens(1)));
-
-                    },
-
-                      child: Text('About Us',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.normal,
-                              decoration: TextDecoration.none)),
-                    ),
-
-                SizedBox(height: 20,),
-
                 GestureDetector(
                   onTap: () {
-
+                    Navigator.pop(context);
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => TabScreens(1)));
+                  },
+                  child: Text('About Us',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.normal,
+                          decoration: TextDecoration.none)),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                GestureDetector(
+                  onTap: () {
 
                     Navigator.pop(context);
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) => TabScreens(2)));
-
                   },
                   child: Text('Product and Services',
                       style: TextStyle(
@@ -78,17 +72,14 @@ class _DialogUIState extends State<DialogUI> {
                           fontWeight: FontWeight.normal,
                           decoration: TextDecoration.none)),
                 ),
-
-                SizedBox(height: 20,),
-
+                SizedBox(
+                  height: 20,
+                ),
                 GestureDetector(
                   onTap: () {
-
-
                     Navigator.pop(context);
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) => TabScreens(3)));
-
                   },
                   child: Text('Terms & Conditions',
                       style: TextStyle(
@@ -97,18 +88,22 @@ class _DialogUIState extends State<DialogUI> {
                           fontWeight: FontWeight.normal,
                           decoration: TextDecoration.none)),
                 ),
-
-                SizedBox(height: 20,),
-
+                SizedBox(
+                  height: 20,
+                ),
                 GestureDetector(
-
                     onTap: () {
 
-
-                      Navigator.pop(context);
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => TabScreens(4)));
-
+                      if (langStorage.read(TOKEN) == null) {
+                        Navigator.pop(context);
+                        AppUtils.showLoginDialog('Login',
+                            'Please sign in to unlock all\naccount features', context);
+                      }
+                      else{
+                        Navigator.pop(context);
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => TabScreens(4)));
+                      }
 
                     },
                     child: Text('Contact Us',
@@ -117,18 +112,22 @@ class _DialogUIState extends State<DialogUI> {
                             fontSize: 14,
                             fontWeight: FontWeight.normal,
                             decoration: TextDecoration.none))),
-
-                SizedBox(height: 20,),
-
+                SizedBox(
+                  height: 20,
+                ),
                 GestureDetector(
                     onTap: () {
 
-
-
-                      Navigator.pop(context);
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => TabScreens(5)));
-
+                      if (langStorage.read(TOKEN) == null) {
+                        Navigator.pop(context);
+                        AppUtils.showLoginDialog('Login',
+                            'Please sign in to unlock all\naccount features', context);
+                      } else
+                      {
+                        Navigator.pop(context);
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => TabScreens(5)));
+                      }
 
                     },
                     child: Text('My Account',
@@ -137,9 +136,9 @@ class _DialogUIState extends State<DialogUI> {
                             fontSize: 14,
                             fontWeight: FontWeight.normal,
                             decoration: TextDecoration.none))),
-
-                SizedBox(height: 20,),
-
+                SizedBox(
+                  height: 20,
+                ),
                 GestureDetector(
                     onTap: () {
                       setState(() {
@@ -152,9 +151,11 @@ class _DialogUIState extends State<DialogUI> {
                             fontWeight: FontWeight.normal,
                             decoration: TextDecoration.none,
                             fontSize: 14))),
-
-              isVisible ?  SizedBox(height: 10,) : Container(),
-
+                isVisible
+                    ? SizedBox(
+                        height: 10,
+                      )
+                    : Container(),
                 isVisible
                     ? GestureDetector(
                         onTap: () {
@@ -171,9 +172,11 @@ class _DialogUIState extends State<DialogUI> {
                                   decoration: TextDecoration.none)),
                         ))
                     : Container(),
-
-                isVisible ?  SizedBox(height: 10,) : Container(),
-
+                isVisible
+                    ? SizedBox(
+                        height: 10,
+                      )
+                    : Container(),
                 isVisible
                     ? GestureDetector(
                         onTap: () {
@@ -190,9 +193,11 @@ class _DialogUIState extends State<DialogUI> {
                                   decoration: TextDecoration.none)),
                         ))
                     : Container(),
-
-              isVisible ?  SizedBox(height: 10,) : Container(),
-
+                isVisible
+                    ? SizedBox(
+                        height: 10,
+                      )
+                    : Container(),
                 isVisible
                     ? GestureDetector(
                         onTap: () {
@@ -209,12 +214,15 @@ class _DialogUIState extends State<DialogUI> {
                                   decoration: TextDecoration.none)),
                         ))
                     : Container(),
-
-                !isVisible ?  SizedBox(height: 20,) : SizedBox(height: 10,),
-
+                !isVisible
+                    ? SizedBox(
+                        height: 20,
+                      )
+                    : SizedBox(
+                        height: 10,
+                      ),
                 GestureDetector(
                   onTap: () {
-
                     Navigator.pop(context);
 
                     langStorage.read(TOKEN) != null
@@ -223,8 +231,6 @@ class _DialogUIState extends State<DialogUI> {
                             'Are you sure you want to exit\nthis application?',
                             context)
                         : Get.offNamed(LoginView1.routeName);
-
-
                   },
                   child: Text(
                       langStorage.read(TOKEN) != null ? 'Logout' : 'Login',

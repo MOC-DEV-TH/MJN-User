@@ -1,5 +1,10 @@
 import 'package:MJN/NewViews/NewPaymentView.dart';
+import 'package:MJN/controllers/billingResponseController.dart';
+import 'package:MJN/utils/app_constants.dart';
+import 'package:MJN/utils/app_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class OnlinePaymentView extends StatefulWidget {
   @override
@@ -12,6 +17,10 @@ class _OnlinePaymentViewState extends State<OnlinePaymentView> {
   var contactNumberController = TextEditingController();
 
   int changePageIndex = 0;
+
+  final BillingResponseController billingResponseController =
+  Get.put(BillingResponseController());
+  final loginDataStorage = GetStorage();
 
   @override
   void initState() {
@@ -35,7 +44,8 @@ class _OnlinePaymentViewState extends State<OnlinePaymentView> {
                 Padding(
                   padding: const EdgeInsets.only(top: 20),
                   child: Image(
-                      image: AssetImage('assets/images/online_payment_icon.png')),
+                      image: AssetImage(
+                          'assets/images/online_payment_icon.png')),
                 ),
                 SizedBox(
                   height: 100,
@@ -59,12 +69,12 @@ class _OnlinePaymentViewState extends State<OnlinePaymentView> {
                                   style: TextStyle(color: Colors.grey)),
                               Expanded(
                                 child: TextField(
-                                    controller: buildTextController,
-                                    decoration: InputDecoration(
+                                  controller: buildTextController,
+                                  decoration: InputDecoration(
                                       border: InputBorder.none,
                                       hintText: "xxx",
-                                        hintStyle: TextStyle(color: Colors.grey)
-                                    ),
+                                      hintStyle: TextStyle(color: Colors.grey)
+                                  ),
                                   style: TextStyle(color: Colors.grey),
                                 ),
                               ),
@@ -138,18 +148,49 @@ class _OnlinePaymentViewState extends State<OnlinePaymentView> {
 
                 SizedBox(height: 60,),
 
-                Container(
-                  width: 110,
-                  child: RaisedButton(onPressed: (){
-                    setState(() {
-                         changePageIndex = 1;
-                    });
-                  },
-                    child: Text('Next'),
-                    textColor: Color(0xffe9e9e9),
-                    color: Color(0xffff5f1f),
-                  ),
-                )
+                Obx(() {
+                  if (billingResponseController.isLoading.value) {
+                    return Center(child: CircularProgressIndicator(),);
+                  }
+                  else {
+                    return Container(
+                      width: 110,
+                      child: RaisedButton(onPressed: () {
+
+                        billingResponseController.fetchBillingResponseNumber(
+                            loginDataStorage.read(TOKEN),
+                            loginDataStorage.read(DATA_TENANT_ID));
+
+                        if (billingResponseController.billingResponseNumberVo!
+                            .status == 'Success') {
+                          if (billingResponseController.billingResponseNumberVo!
+                              .billingResponsiveNo.toString() == contactNumberController.value.text)
+                            {
+                              Future.delayed(
+                                  const Duration(milliseconds: 700), () {
+                                setState(() {
+                                  changePageIndex = 1;
+                                });
+                              });
+                            }
+                          else {
+                            AppUtils.showSuccessSnackBar('Fail', 'Invalid Phone Number!!');
+                          }
+
+                        }
+                        else if(billingResponseController.billingResponseNumberVo!.status == 'Fail'){
+                          if(billingResponseController.billingResponseNumberVo!.responseCode == '005'){
+                            AppUtils.showSessionExpireDialog('Session is expired', 'Please login again',context);
+                          }
+                        }
+                      },
+                        child: Text('Next'),
+                        textColor: Color(0xffe9e9e9),
+                        color: Color(0xffff5f1f),
+                      ),
+                    );
+                  }
+                })
 
               ],
             ),

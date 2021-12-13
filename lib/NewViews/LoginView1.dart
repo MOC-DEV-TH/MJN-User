@@ -162,7 +162,7 @@ class _LoginView1State extends State<LoginView1> {
             height: 35,
           ),
           Padding(
-              padding: EdgeInsets.only(left: 130, right: 130),
+              padding: EdgeInsets.only(left: 90, right: 90),
               child: Obx(() {
                 if (loginController.isLoading.value) {
                   return Center(child: CircularProgressIndicator());
@@ -246,7 +246,7 @@ class _LoginView1State extends State<LoginView1> {
                     margin: EdgeInsets.only(right: 40),
                     child: GestureDetector(
                         onTap: () {
-                          showMenuDialog(context);
+                          //showMenuDialog(context);
                         }, child: Padding(
                           padding: const EdgeInsets.only(top: 10),
                           child: Image(image: AssetImage('assets/images/menu_icon.png'),height: 24,width: 23,),

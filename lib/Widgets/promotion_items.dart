@@ -1,4 +1,5 @@
 import 'package:MJN/models/promotionAndofferVO.dart';
+import 'package:MJN/utils/app_constants.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 
@@ -26,7 +27,7 @@ class PromotionItems extends StatelessWidget {
         indicatorBgPadding: 7.0,
         images: promotionImages.map((imgData) =>
             NetworkImage(
-                imgData.link + imgData.imageMm
+                BASE_URL + imgData.imageMm
             )).toList(),
       ),
     ),);

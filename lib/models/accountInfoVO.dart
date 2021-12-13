@@ -19,7 +19,7 @@ class AccountInfoVo {
   String description;
   bool isRequieredUpdate;
   bool isforceUpdate;
-  Details details;
+  Details? details;
 
   factory AccountInfoVo.fromJson(Map<String, dynamic> json) => AccountInfoVo(
     status: json["status"],
@@ -27,7 +27,7 @@ class AccountInfoVo {
     description: json["description"],
     isRequieredUpdate: json["is_requiered_update"],
     isforceUpdate: json["isforce_update"],
-    details: Details.fromJson(json["details"]),
+    details:json['details']!=null ? Details?.fromJson(json["details"]) : null,
   );
 
   Map<String, dynamic> toJson() => {
@@ -36,47 +36,47 @@ class AccountInfoVo {
     "description": description,
     "is_requiered_update": isRequieredUpdate,
     "isforce_update": isforceUpdate,
-    "details": details.toJson(),
+    "details": details!.toJson(),
   };
 }
 
 class Details {
   Details({
-    required  this.tenantId,
-    required this.name,
-    required this.status,
-    required  this.mail,
-    required this.uid,
-    required this.profileId,
-    required this.firstname,
-    required this.lastname,
-    required this.phone1,
-    required this.phone2,
-    required this.phone3,
-    required this.creationDate,
-    required this.modifiedDate,
-    required this.building,
-    required this.unit,
+      this.tenantId,
+     this.name,
+     this.status,
+      this.mail,
+     this.uid,
+     this.profileId,
+     this.firstname,
+     this.lastname,
+     this.phone1,
+     this.phone2,
+     this.phone3,
+     this.creationDate,
+     this.modifiedDate,
+     this.building,
+     this.unit,
   });
 
-  String tenantId;
-  String name;
-  String status;
-  String mail;
-  String uid;
-  String profileId;
-  String firstname;
-  String lastname;
-  String phone1;
-  String phone2;
-  String phone3;
-  String creationDate;
-  String modifiedDate;
-  String building;
-  String unit;
+  String? tenantId;
+  String? name;
+  String? status;
+  String? mail;
+  String? uid;
+  String? profileId;
+  String? firstname;
+  String? lastname;
+  String? phone1;
+  String? phone2;
+  String? phone3;
+  String? creationDate;
+  String? modifiedDate;
+  String? building;
+  String? unit;
 
   factory Details.fromJson(Map<String, dynamic> json) => Details(
-    tenantId: json["tenant_id"],
+    tenantId: json["tenant_id"] ?? json[''],
     name: json["name"],
     status: json["status"],
     mail: json["mail"],

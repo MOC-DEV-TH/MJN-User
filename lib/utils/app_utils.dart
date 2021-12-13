@@ -231,8 +231,8 @@ class AppUtils {
                                     fontSize: 16),
                               ),
                               onPressed: () {
-                                Navigator.of(context).pop();
                                 Get.offNamed(LoginView1.routeName);
+                                //Navigator.of(context,rootNavigator: true).pop();
 
                               }),
                         ),
@@ -302,10 +302,10 @@ class AppUtils {
                                     fontSize: 16),
                               ),
                               onPressed: () {
-                                AppUtils.removeDataFromGetStorage();
-                                Navigator.of(context).pop();
-                                // Navigator.of(context).pushReplacementNamed(
-                                //     SplashScreen.routeName);
+                                Get.back();
+                                AppUtils.removeDataFromGetStorage().then((value) => {
+                                  Get.offAllNamed(LoginView1.routeName)
+                                });
                               }),
                         ),
                       ),

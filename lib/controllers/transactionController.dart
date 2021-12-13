@@ -15,7 +15,7 @@ class TransactionController extends GetxController{
 
       if (res != null) {
         transactionVo = res;
-        print(transactionVo.details.paymentTotal);
+        print(transactionVo.details!.paymentTotal);
       }
     } finally {
       isLoading(false);

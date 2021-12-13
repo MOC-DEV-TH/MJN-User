@@ -19,7 +19,7 @@ class TransactionVo {
   String description;
   bool isRequieredUpdate;
   bool isforceUpdate;
-  Details details;
+  Details? details;
 
   factory TransactionVo.fromJson(Map<String, dynamic> json) => TransactionVo(
     status: json["status"],
@@ -27,7 +27,7 @@ class TransactionVo {
     description: json["description"],
     isRequieredUpdate: json["is_requiered_update"],
     isforceUpdate: json["isforce_update"],
-    details: Details.fromJson(json["details"]),
+    details:json['details'] !=null  ? Details.fromJson(json["details"]) : null,
   );
 
   Map<String, dynamic> toJson() => {
@@ -36,7 +36,7 @@ class TransactionVo {
     "description": description,
     "is_requiered_update": isRequieredUpdate,
     "isforce_update": isforceUpdate,
-    "details": details.toJson(),
+    "details": details!.toJson(),
   };
 }
 

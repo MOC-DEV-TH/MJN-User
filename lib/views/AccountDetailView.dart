@@ -35,7 +35,7 @@ class _AccountViewState extends State<AccountView> {
 
     changePageIndex = 0;
     accountDetailController.fetchAccountInfoData(loginDataStorage.read(TOKEN),
-        loginDataStorage.read(UID), loginDataStorage.read(DATA_TENANT_ID));
+        loginDataStorage.read(UID), loginDataStorage.read(DATA_TENANT_ID),context);
 
     lastTransactionController.fetchLastTransactionData(
         loginDataStorage.read(TOKEN),
@@ -53,7 +53,7 @@ class _AccountViewState extends State<AccountView> {
 
   Future refreshData() async {
     accountDetailController.fetchAccountInfoData(loginDataStorage.read(TOKEN),
-        loginDataStorage.read(UID), loginDataStorage.read(DATA_TENANT_ID));
+        loginDataStorage.read(UID), loginDataStorage.read(DATA_TENANT_ID),context);
   }
 
   @override

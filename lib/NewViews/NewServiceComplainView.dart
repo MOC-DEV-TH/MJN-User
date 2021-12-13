@@ -26,7 +26,7 @@ class _NewServiceComplainViewState extends State<NewServiceComplainView> {
 
 
     ticketListController.fetchTicketList(loginDataStorage.read(TOKEN),
-        loginDataStorage.read(UID), loginDataStorage.read(DATA_TENANT_ID));
+        loginDataStorage.read(UID), loginDataStorage.read(DATA_TENANT_ID),context);
 
     print(loginDataStorage.read(TOKEN));
   }
@@ -141,9 +141,9 @@ class _NewServiceComplainViewState extends State<NewServiceComplainView> {
                 shrinkWrap: true,
                 itemBuilder: (ctx, index) {
                   return MyServiceTicketItems(
-                      ticketListController.ticketListVo.details[index]);
+                      ticketListController.ticketListVo!.details![index]);
                 },
-                itemCount: ticketListController.ticketListVo.details.length,
+                itemCount: ticketListController.ticketListVo!.details!.length,
               )
             ],
           ),

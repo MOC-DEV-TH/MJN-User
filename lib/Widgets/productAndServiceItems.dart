@@ -1,4 +1,5 @@
 import 'package:MJN/models/promotionAndofferVO.dart';
+import 'package:MJN/utils/app_constants.dart';
 import 'package:flutter/material.dart';
 
 class ProductAndServiceItems extends StatelessWidget {
@@ -18,13 +19,16 @@ class ProductAndServiceItems extends StatelessWidget {
               ),
               child: Container(
                 margin: EdgeInsets.only(left: 34),
-                child: Image.network(
-                  offerImages.link + offerImages.imageMm,
-                  height: 60,
-                  width: double.infinity,
-                  fit: BoxFit.fitHeight,
+                decoration: BoxDecoration(
+                  image: DecorationImage(image:NetworkImage(
+                    BASE_URL + offerImages.imageMm,
+                  ) ,fit: BoxFit.fill),
+                  border: Border.all(color: Color(0xffBC8F8F)),
+                  borderRadius: BorderRadius.all(
+                      Radius.circular(24.0) //                 <--- border radius here
+                  ),
                 ),
-              )
+              ),
             ),
 
             Positioned(

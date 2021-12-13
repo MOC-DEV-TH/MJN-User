@@ -24,7 +24,7 @@ class _NewProductAndServiceViewState extends State<NewProductAndServiceView> {
     super.initState();
 
     homeController.fetchPromotionAndOfferData(
-      loginDataStorage.read(DATA_TENANT_ID),loginDataStorage.read(TOKEN),);
+      context);
   }
 
   @override
@@ -37,9 +37,7 @@ class _NewProductAndServiceViewState extends State<NewProductAndServiceView> {
             if(homeController.isLoading.value){
               return Center(child: CircularProgressIndicator(),);
             }
-            else if (homeController.promotionAndOfferVo == null){
-              return Center(child: Text("No Data"),);
-            }
+
             else return
               Container(
                 child: Column(

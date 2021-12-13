@@ -4,6 +4,7 @@ import 'package:MJN/Network/Request/RequestCreateTicket.dart';
 import 'package:MJN/models/NetworkResultVO.dart';
 import 'package:MJN/models/NewLoginVO.dart';
 import 'package:MJN/models/accountInfoVO.dart';
+import 'package:MJN/models/billingResponseNumberVO.dart';
 import 'package:MJN/models/invoiceListVO.dart';
 import 'package:MJN/models/invoiceVO.dart';
 import 'package:MJN/models/loginVO.dart';
@@ -163,8 +164,11 @@ class MjnAPI {
     );
     if (response.statusCode == 200) {
       var json = response.body;
-      var ticket = ticketVoFromJson(json);
-      return ticket;
+      if(json.isNotEmpty){
+        var ticket = ticketVoFromJson(json);
+        return ticket;
+      }
+
     } else {
       return null;
     }
@@ -344,14 +348,35 @@ class MjnAPI {
     }
   }
 
-  static Future fetchPromotionAndOfferData(String tenantID,String token
+  static Future fetchPromotionAndOfferData(
       ) async {
 
     var response = await client.get(
 
       Uri.parse( GET_SLIDE_URL +
-          TENANT_ID + tenantID +
           APP_VERSION + app_version ),
+      headers: {
+        'content-type': 'application/json',
+      },
+    );
+    if (response.statusCode == 200) {
+      var json = response.body;
+
+      var result = promotionAndOfferVoFromJson(json);
+      return result;
+    } else {
+      return null;
+    }
+  }
+
+
+  static Future fetchBillingResponseNumber(
+      String token, String tenantID) async {
+
+    var response = await client.get(
+
+      Uri.parse( GET_BILLING_RESPONSE_URL +
+          TENANT_ID + tenantID + APP_VERSION + app_version),
       headers: {
         'content-type': 'application/json',
         'token': token
@@ -359,7 +384,7 @@ class MjnAPI {
     );
     if (response.statusCode == 200) {
       var json = response.body;
-      var result = promotionAndOfferVoFromJson(json);
+      var result = billingResponseNumberVoFromJson(json);
       return result;
     } else {
       return null;

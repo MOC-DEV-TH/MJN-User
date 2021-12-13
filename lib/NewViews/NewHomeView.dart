@@ -29,10 +29,15 @@ class _NewHomeViewState extends State<NewHomeView> {
   @override
   void initState() {
     changePageIndex = 0;
+
+    Future.delayed(
+        Duration.zero,
+            () =>  homeController.fetchPromotionAndOfferData(
+            context)
+    );
+
     super.initState();
 
-    homeController.fetchPromotionAndOfferData(
-      loginDataStorage.read(DATA_TENANT_ID)??"",loginDataStorage.read(TOKEN)??"",);
 
   }
 
@@ -50,9 +55,7 @@ class _NewHomeViewState extends State<NewHomeView> {
         if(homeController.isLoading.value){
           return Center(child: CircularProgressIndicator(),);
         }
-        else if (homeController.promotionAndOfferVo == null){
-          return Center(child: Text("No Data",style: TextStyle(color: Colors.red,fontSize: 24,fontWeight: FontWeight.w900),),);
-        }
+
         else {
           return
             SingleChildScrollView(
@@ -118,17 +121,14 @@ class _NewHomeViewState extends State<NewHomeView> {
       },
       child: Container(
         decoration: BoxDecoration(
+          image: DecorationImage(image:NetworkImage(
+            BASE_URL + offer.imageMm,
+          ) ,fit: BoxFit.fill),
           border: Border.all(color: Color(0xffBC8F8F)),
           borderRadius: BorderRadius.all(
               Radius.circular(24.0) //                 <--- border radius here
               ),
         ),
-        child: Container(child: Image.network(
-         offer.link + offer.imageMm,
-          height: 60,
-          width: double.infinity,
-          fit: BoxFit.fitHeight,
-        ),),
       ),
     );
   }

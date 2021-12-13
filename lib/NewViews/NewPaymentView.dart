@@ -31,7 +31,7 @@ class _NewPaymentViewState extends State<NewPaymentView> {
     super.initState();
 
     invoiceListController.fetchPaymentInvoiceList(loginDataStorage.read(TOKEN),
-        loginDataStorage.read(UID), loginDataStorage.read(DATA_TENANT_ID));
+        loginDataStorage.read(UID), loginDataStorage.read(DATA_TENANT_ID),context);
   }
 
   @override
@@ -136,7 +136,7 @@ class _NewPaymentViewState extends State<NewPaymentView> {
               shrinkWrap: true,
               itemBuilder: (ctx, index) {
 
-                List<Detail> unPaidInvoiceLists = invoiceListController.invoiceListVo.details.where(
+                List<Detail> unPaidInvoiceLists = invoiceListController.invoiceListVo.details!.where(
                         (element) =>
                     element.paymentStatus == 'Unpaid'
                 ).toList();
@@ -211,7 +211,7 @@ class _NewPaymentViewState extends State<NewPaymentView> {
                   ],
                 );
               },
-              itemCount: invoiceListController.invoiceListVo.details.where((element) =>
+              itemCount: invoiceListController.invoiceListVo.details!.where((element) =>
               element.paymentStatus == 'Unpaid').toList().length,
             ),
 
@@ -306,7 +306,7 @@ class _NewPaymentViewState extends State<NewPaymentView> {
                     shrinkWrap: true,
                     itemBuilder: (ctx, index) {
 
-                      List<Detail> paidInvoiceLists = invoiceListController.invoiceListVo.details.where(
+                      List<Detail> paidInvoiceLists = invoiceListController.invoiceListVo.details!.where(
                               (element) =>
                                   element.paymentStatus == 'Paid'
                       ).toList();
@@ -384,7 +384,7 @@ class _NewPaymentViewState extends State<NewPaymentView> {
                         ],
                       );
                     },
-                    itemCount: invoiceListController.invoiceListVo.details.where((element) =>
+                    itemCount: invoiceListController.invoiceListVo.details!.where((element) =>
                     element.paymentStatus == 'Paid').toList().length,
                   )
                 ],

@@ -102,27 +102,27 @@ class _TransactionDetailViewState extends State<TransactionDetailView> {
                                                 transactionController
                                                     .transactionVo
                                                     .details
-                                                    .transactionId ??
+                                                    !.transactionId ??
                                             'null'),
                                         Text(': 10 Mbps'),
                                         Text(':' +
                                                 transactionController
                                                     .transactionVo
                                                     .details
-                                                    .startDate ??
+                                                    !.startDate ??
                                             'null'),
                                         Text(':'),
                                         Text(':' +
                                                 transactionController
                                                     .transactionVo
                                                     .details
-                                                    .endDate ??
+                                                    !.endDate ??
                                             'null'),
                                         Text(':' +
                                                 transactionController
                                                     .transactionVo
                                                     .details
-                                                    .paidDate ??
+                                                    !.paidDate ??
                                             'null'),
                                         Text(': 2500 MMK'),
                                       ],
@@ -153,10 +153,10 @@ class _TransactionDetailViewState extends State<TransactionDetailView> {
                                     padding: const EdgeInsets.only(right: 30),
                                     child: Text(':' +
                                         transactionController
-                                            .transactionVo.details.paymentTotal +
+                                            .transactionVo.details!.paymentTotal +
                                         ' ' +
                                         transactionController
-                                            .transactionVo.details.currencyType),
+                                            .transactionVo.details!.currencyType),
                                   ),
                                 ],
                               ),

@@ -19,7 +19,7 @@ class InvoiceListVo {
   String description;
   bool isRequieredUpdate;
   bool isforceUpdate;
-  List<Detail> details;
+  List<Detail>? details;
 
   factory InvoiceListVo.fromJson(Map<String, dynamic> json) => InvoiceListVo(
     status: json["status"],
@@ -27,7 +27,7 @@ class InvoiceListVo {
     description: json["description"],
     isRequieredUpdate: json["is_requiered_update"],
     isforceUpdate: json["isforce_update"],
-    details: List<Detail>.from(json["details"].map((x) => Detail.fromJson(x))),
+    details: List<Detail>.from(json["details"]?.map((x) => Detail.fromJson(x)) ?? []),
   );
 
   Map<String, dynamic> toJson() => {
@@ -36,7 +36,7 @@ class InvoiceListVo {
     "description": description,
     "is_requiered_update": isRequieredUpdate,
     "isforce_update": isforceUpdate,
-    "details": List<dynamic>.from(details.map((x) => x.toJson())),
+    "details": List<dynamic>.from(details!.map((x) => x.toJson())),
   };
 }
 

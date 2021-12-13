@@ -31,7 +31,7 @@ class _MyServiceTicketViewState extends State<MyServiceTicketView> {
   @override
   Widget build(BuildContext context) {
     ticketListController.fetchTicketList(loginDataStorage.read(TOKEN),
-        loginDataStorage.read(UID), loginDataStorage.read(DATA_TENANT_ID));
+        loginDataStorage.read(UID), loginDataStorage.read(DATA_TENANT_ID),context);
 
     return changePageIndex == 1
         ? ServiceComplainView()
@@ -176,10 +176,10 @@ class _MyServiceTicketViewState extends State<MyServiceTicketView> {
                               shrinkWrap: true,
                               itemBuilder: (ctx, index) {
                                 return MyServiceTicketItems(ticketListController
-                                    .ticketListVo.details[index]);
+                                    .ticketListVo!.details![index]);
                               },
                               itemCount: ticketListController
-                                  .ticketListVo.details.length,
+                                  .ticketListVo!.details!.length,
                             )
                           ],
                         ),
@@ -255,7 +255,7 @@ class _MyServiceTicketViewState extends State<MyServiceTicketView> {
           Container(
             width: 30,
             child: Text(
-              ticketDetailVO.serviceRequestOther,
+              'ticketDetailVO.serviceRequestOther',
               style: TextStyle(color: Colors.black, fontSize: 8),
               textAlign: TextAlign.center,
             ),

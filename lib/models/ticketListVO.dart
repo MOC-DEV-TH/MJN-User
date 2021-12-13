@@ -19,15 +19,16 @@ class TicketListVo {
   String description;
   bool isRequieredUpdate;
   bool isforceUpdate;
-  List<TicketDetail> details;
+  List<TicketDetail>? details;
 
-  factory TicketListVo.fromJson(Map<String, dynamic> json) => TicketListVo(
+  factory TicketListVo.fromJson(Map<String, dynamic> json) =>
+      TicketListVo(
     status: json["status"],
     responseCode: json["response_code"],
     description: json["description"],
     isRequieredUpdate: json["is_requiered_update"],
     isforceUpdate: json["isforce_update"],
-    details: List<TicketDetail>.from(json["details"].map((x) => TicketDetail.fromJson(x))),
+    details: List<TicketDetail>.from(json["details"]?.map((x) => TicketDetail.fromJson(x)) ?? []) ,
   );
 
   Map<String, dynamic> toJson() => {
@@ -36,7 +37,8 @@ class TicketListVo {
     "description": description,
     "is_requiered_update": isRequieredUpdate,
     "isforce_update": isforceUpdate,
-    "details": List<dynamic>.from(details.map((x) => x.toJson())),
+
+    "details": List<dynamic>.from(details!.map((x) => x.toJson())),
   };
 }
 

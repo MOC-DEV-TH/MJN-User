@@ -20,7 +20,6 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
 
-
 class TabScreens extends StatefulWidget {
   static const routeName = '/tab_screen';
 
@@ -36,7 +35,8 @@ class _TabScreensState extends State<TabScreens> {
   var _scaffoldKey = GlobalKey<ScaffoldState>();
 
   bool isOpened = false;
-   var notiCount = 0.obs ;
+  var notiCount = 0.obs;
+
   bool visible = false;
   bool pageSelectedIndex = false;
   bool navSelectedIndex = true;
@@ -65,7 +65,6 @@ class _TabScreensState extends State<TabScreens> {
 
   late StreamSubscription notiSub;
 
-
   @override
   void initState() {
     changePageIndex = 0;
@@ -73,48 +72,39 @@ class _TabScreensState extends State<TabScreens> {
     isSelected = [true, false];
     super.initState();
 
-    notiSub = EventBusUtils.getInstance().on<NotificationModelVO>().listen((event) {
-          print("NOTI EVENT " + event.title);
+    notiSub =
+        EventBusUtils.getInstance().on<NotificationModelVO>().listen((event) {
+      print("NOTI EVENT " + event.title);
 
-            MyAppDatabase.notificationDao!.fetchUnreadNotifications().then((value) => {
-              notiCount.value = value.length
-            });
-
-        });
-
-    notiSub = EventBusUtils.getInstance().on().listen((event) {
-      if(event.toString() == 'DeleteAll')
-
-      MyAppDatabase.notificationDao!.fetchUnreadNotifications().then((value) => {
-        notiCount.value = value.length
-      });
-
+      MyAppDatabase.notificationDao!
+          .fetchUnreadNotifications()
+          .then((value) => {notiCount.value = value.length});
     });
 
     notiSub = EventBusUtils.getInstance().on().listen((event) {
-      if(event.toString() == 'MarkAll')
-
-        MyAppDatabase.notificationDao!.fetchUnreadNotifications().then((value) => {
-          notiCount.value = value.length
-        });
-
+      if (event.toString() == 'DeleteAll')
+        MyAppDatabase.notificationDao!
+            .fetchUnreadNotifications()
+            .then((value) => {notiCount.value = value.length});
     });
 
     notiSub = EventBusUtils.getInstance().on().listen((event) {
-      if(event.toString() == 'Update')
-
-        MyAppDatabase.notificationDao!.fetchUnreadNotifications().then((value) => {
-          notiCount.value = value.length
-        });
-
+      if (event.toString() == 'MarkAll')
+        MyAppDatabase.notificationDao!
+            .fetchUnreadNotifications()
+            .then((value) => {notiCount.value = value.length});
     });
 
-
-
-    MyAppDatabase.notificationDao!.fetchUnreadNotifications().then((value) => {
-      notiCount.value = value.length
+    notiSub = EventBusUtils.getInstance().on().listen((event) {
+      if (event.toString() == 'Update')
+        MyAppDatabase.notificationDao!
+            .fetchUnreadNotifications()
+            .then((value) => {notiCount.value = value.length});
     });
 
+    MyAppDatabase.notificationDao!
+        .fetchUnreadNotifications()
+        .then((value) => {notiCount.value = value.length});
 
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       menuPageIndex = widget.pageIndex;
@@ -165,19 +155,17 @@ class _TabScreensState extends State<TabScreens> {
   int changePageIndex = 0;
 
   void _selectPage(int index) {
-    if(langStorage.read(TOKEN) != null){
+    if (langStorage.read(TOKEN) != null) {
       setState(() {
         changePageIndex = 0;
         _selectedPageIndex = index;
         navSelectedIndex = true;
       });
+    } else {
+      AppUtils.showLoginDialog(
+          'Login', 'Please sign in to unlock all\naccount features', context);
     }
-    else {
-      AppUtils.showLoginDialog('Login', 'Please sign in to unlock all\naccount features', context);
-    }
-
   }
-
 
   Widget getSelectedPage() {
     int pageIndex = 0;
@@ -193,7 +181,7 @@ class _TabScreensState extends State<TabScreens> {
     switch (pageIndex) {
       case 0:
         {
-            return NewNotificationView(MyAppDatabase.notificationDao!);
+          return NewNotificationView(MyAppDatabase.notificationDao!);
         }
       case 1:
         return OnlinePaymentView();
@@ -210,9 +198,18 @@ class _TabScreensState extends State<TabScreens> {
       case 7:
         return NewTermAndConditionView();
       case 8:
-        return NewContactUsView();
+        {
+          if (langStorage.read(TOKEN) == null) {
+            AppUtils.showLoginDialog('Login',
+                'Please sign in to unlock all\naccount features', context);
+
+            break;
+          } else
+            return NewContactUsView();
+        }
+
       case 9:
-        return MyAccountView();
+          return MyAccountView();
       case 10:
         return NewHomeView();
     }
@@ -233,8 +230,6 @@ class _TabScreensState extends State<TabScreens> {
   }
 
   void showMenuDialog(BuildContext context) {
-
-
     showGeneralDialog(
         context: context,
         barrierDismissible: true,
@@ -245,14 +240,13 @@ class _TabScreensState extends State<TabScreens> {
         pageBuilder: (BuildContext buildContext, Animation animation,
             Animation secondaryAnimation) {
           return SafeArea(
-            child:
-                Container(margin: EdgeInsets.only(top: 56), child: DialogUI(context)),
+            child: Container(
+                margin: EdgeInsets.only(top: 56), child: DialogUI(context)),
           );
         });
   }
 
-
-  Widget logoAndNavTitleAppBar(int navSelectPage,BuildContext context) {
+  Widget logoAndNavTitleAppBar(int navSelectPage, BuildContext context) {
     return AppBar(
       automaticallyImplyLeading: false,
       toolbarHeight: 90,
@@ -267,17 +261,21 @@ class _TabScreensState extends State<TabScreens> {
             Container(
                 margin: EdgeInsets.only(right: 40),
                 child: GestureDetector(
-                    onTap: () {
-
-                        showMenuDialog(context);
-                    },
-                    child:  Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: Image(image: AssetImage('assets/images/menu_icon.png'),height: 24,width: 23,),
-                    ),)),
+                  onTap: () {
+                    showMenuDialog(context);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Image(
+                      image: AssetImage('assets/images/menu_icon.png'),
+                      height: 24,
+                      width: 23,
+                    ),
+                  ),
+                )),
             navSelectPage == 0
                 ? Container(
-                    padding: EdgeInsets.only(right: 80,top: 5),
+                    padding: EdgeInsets.only(right: 80, top: 5),
                     child: Text(
                       'Notification',
                       style: TextStyle(fontSize: 14),
@@ -285,7 +283,7 @@ class _TabScreensState extends State<TabScreens> {
                   )
                 : navSelectPage == 1
                     ? Container(
-                        padding: EdgeInsets.only(right: 80,top: 5),
+                        padding: EdgeInsets.only(right: 80, top: 5),
                         child: Text(
                           'Payment',
                           style: TextStyle(fontSize: 14),
@@ -293,7 +291,7 @@ class _TabScreensState extends State<TabScreens> {
                       )
                     : navSelectPage == 3
                         ? Container(
-                            padding: EdgeInsets.only(right: 60,top: 5),
+                            padding: EdgeInsets.only(right: 60, top: 5),
                             child: Text(
                               'Service Complain',
                               style: TextStyle(fontSize: 14),
@@ -301,7 +299,7 @@ class _TabScreensState extends State<TabScreens> {
                           )
                         : navSelectPage == 4
                             ? Container(
-                                padding: EdgeInsets.only(right: 80,top: 5),
+                                padding: EdgeInsets.only(right: 80, top: 5),
                                 child: Text(
                                   'Contact Us',
                                   style: TextStyle(fontSize: 14),
@@ -372,7 +370,7 @@ class _TabScreensState extends State<TabScreens> {
     );
   }
 
-  Widget titleAppBar(int pageIndex,BuildContext context) {
+  Widget titleAppBar(int pageIndex, BuildContext context) {
     return AppBar(
       automaticallyImplyLeading: false,
       toolbarHeight: 90,
@@ -386,18 +384,20 @@ class _TabScreensState extends State<TabScreens> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-                child: GestureDetector(
-                    onTap: () {
-
-                        showMenuDialog(context);
-                    },
-                    child:
-                       Image(image: AssetImage('assets/images/menu_icon.png'),height: 24,width: 23,),
-                       ),
-                    ),
+              child: GestureDetector(
+                onTap: () {
+                  showMenuDialog(context);
+                },
+                child: Image(
+                  image: AssetImage('assets/images/menu_icon.png'),
+                  height: 24,
+                  width: 23,
+                ),
+              ),
+            ),
             pageIndex == 5
                 ? Container(
-                    padding: EdgeInsets.only(right: 80,top: 5),
+                    padding: EdgeInsets.only(right: 80, top: 5),
                     child: Text(
                       'About Us',
                       style: TextStyle(fontSize: 14),
@@ -405,7 +405,7 @@ class _TabScreensState extends State<TabScreens> {
                   )
                 : pageIndex == 6
                     ? Container(
-                        padding: EdgeInsets.only(right: 40,top: 5),
+                        padding: EdgeInsets.only(right: 40, top: 5),
                         child: Text(
                           'Product And Services',
                           style: TextStyle(fontSize: 14),
@@ -413,7 +413,7 @@ class _TabScreensState extends State<TabScreens> {
                       )
                     : pageIndex == 7
                         ? Container(
-                            padding: EdgeInsets.only(right: 40,top: 5),
+                            padding: EdgeInsets.only(right: 40, top: 5),
                             child: Text(
                               'Terms & Conditions',
                               style: TextStyle(fontSize: 14),
@@ -421,7 +421,7 @@ class _TabScreensState extends State<TabScreens> {
                           )
                         : pageIndex == 8
                             ? Container(
-                                padding: EdgeInsets.only(right: 80,top: 5),
+                                padding: EdgeInsets.only(right: 80, top: 5),
                                 child: Text(
                                   'Contact Us',
                                   style: TextStyle(fontSize: 14),
@@ -429,7 +429,7 @@ class _TabScreensState extends State<TabScreens> {
                               )
                             : pageIndex == 9
                                 ? Container(
-                                    padding: EdgeInsets.only(right: 80,top: 5),
+                                    padding: EdgeInsets.only(right: 80, top: 5),
                                     child: Text(
                                       'My Account',
                                       style: TextStyle(fontSize: 14),
@@ -507,9 +507,9 @@ class _TabScreensState extends State<TabScreens> {
       key: _scaffoldKey,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(100),
-        child :navSelectedIndex
-            ? logoAndNavTitleAppBar(_selectedPageIndex,context)
-            : titleAppBar(changePageIndex,context),
+        child: navSelectedIndex
+            ? logoAndNavTitleAppBar(_selectedPageIndex, context)
+            : titleAppBar(changePageIndex, context),
       ),
       body: getSelectedPage(),
       bottomNavigationBar: BottomNavigationBar(
@@ -525,49 +525,56 @@ class _TabScreensState extends State<TabScreens> {
           BottomNavigationBarItem(
             icon: new Stack(
               children: <Widget>[
-                new Icon(Icons.notifications,),
+                new Icon(
+                  Icons.notifications,
+                ),
                 new Positioned(
-                  right: 0,
-                  child:
-                  Obx(() {
-                    if(notiCount.value == 0){
-                      return Container();
-                    }
-                    else {
-                     return Container(
-                        padding: EdgeInsets.all(1),
-                        decoration: new BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        constraints: BoxConstraints(
-                          minWidth: 12,
-                          minHeight: 12,
-                        ),
-                        child:  Text(
-                          notiCount.value.toString() ,
-                          style: new TextStyle(
-                            color: Colors.white,
-                            fontSize: 8,
+                    right: 0,
+                    child: Obx(() {
+                      if (notiCount.value == 0) {
+                        return Container();
+                      } else {
+                        return Container(
+                          padding: EdgeInsets.all(1),
+                          decoration: new BoxDecoration(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(6),
                           ),
-                          textAlign: TextAlign.center,
-                        ),
-
-                      );
-                    }
-                  })
-                )
+                          constraints: BoxConstraints(
+                            minWidth: 12,
+                            minHeight: 12,
+                          ),
+                          child: Text(
+                            notiCount.value.toString(),
+                            style: new TextStyle(
+                              color: Colors.white,
+                              fontSize: 8,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        );
+                      }
+                    }))
               ],
             ),
-            title: Text('Notifications',style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold),),
+            title: Text(
+              'Notifications',
+              style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold),
+            ),
           ),
-
           BottomNavigationBarItem(
               backgroundColor: Colors.white,
-              icon: Icon(Icons.payment),
-              title: Text(
-                'Payment',
-                style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold),
+              icon: Image.asset(
+                'assets/images/payment_icon.png',
+                width: 20,
+                height: 20,
+              ),
+              title: Padding(
+                padding: const EdgeInsets.only(top: 2),
+                child: Text(
+                  'Payment',
+                  style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold),
+                ),
               )),
           BottomNavigationBarItem(
               backgroundColor: Colors.white,
@@ -582,19 +589,33 @@ class _TabScreensState extends State<TabScreens> {
               )),
           BottomNavigationBarItem(
               backgroundColor: Colors.white,
-              icon: Icon(Icons.pending_actions_rounded),
+              icon: Image.asset(
+                'assets/images/service_complain_icon.png',
+                width: 20,
+                height: 20,
+              ),
               title: Container(
-                child: Text(
-                  'Service Complain',
-                  style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold),
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 2),
+                  child: Text(
+                    'Service Complain',
+                    style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold),
+                  ),
                 ),
               )),
           BottomNavigationBarItem(
               backgroundColor: Colors.white,
-              icon: Icon(Icons.phone),
-              title: Text(
-                'Contact Us',
-                style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold),
+              icon: Image.asset(
+                'assets/images/contact_us_icon.png',
+                width: 20,
+                height: 20,
+              ),
+              title: Padding(
+                padding: const EdgeInsets.only(top: 2),
+                child: Text(
+                  'Contact Us',
+                  style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold),
+                ),
               )),
         ],
       ),

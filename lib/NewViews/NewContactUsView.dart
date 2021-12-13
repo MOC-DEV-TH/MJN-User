@@ -20,7 +20,7 @@ class _NewContactUsViewState extends State<NewContactUsView> {
   void initState() {
     super.initState();
     homeController.fetchPromotionAndOfferData(
-      loginDataStorage.read(DATA_TENANT_ID),loginDataStorage.read(TOKEN),);
+      context);
   }
 
   @override
@@ -177,17 +177,14 @@ class _NewContactUsViewState extends State<NewContactUsView> {
       },
       child: Container(
         decoration: BoxDecoration(
+          image: DecorationImage(image:NetworkImage(
+            BASE_URL + offer.imageMm,
+          ) ,fit: BoxFit.fill),
           border: Border.all(color: Color(0xffBC8F8F)),
           borderRadius: BorderRadius.all(
               Radius.circular(24.0) //                 <--- border radius here
           ),
         ),
-        child: Container(child: Image.network(
-          offer.link + offer.imageMm,
-          height: 60,
-          width: double.infinity,
-          fit: BoxFit.fitHeight,
-        ),),
       ),
     );
   }
