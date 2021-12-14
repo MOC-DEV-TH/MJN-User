@@ -16,6 +16,9 @@ class PromotionAndOfferVo {
     required this.isRequieredUpdate,
     required this.isforceUpdate,
     required this.details,
+   required this.loginManual,
+   required this.serviceTicketManual,
+   required this.onlinePaymentManual,
   });
 
   String status;
@@ -23,6 +26,9 @@ class PromotionAndOfferVo {
   String description;
   bool isRequieredUpdate;
   bool isforceUpdate;
+  String loginManual;
+  String serviceTicketManual;
+  String onlinePaymentManual;
   Details details;
 
   factory PromotionAndOfferVo.fromJson(Map<String, dynamic> json) => PromotionAndOfferVo(
@@ -32,6 +38,9 @@ class PromotionAndOfferVo {
     isRequieredUpdate: json["is_requiered_update"],
     isforceUpdate: json["isforce_update"],
     details: Details.fromJson(json["details"]),
+    loginManual: json["login_manual"],
+    serviceTicketManual: json["service_ticket_manual"],
+    onlinePaymentManual: json["online_payment_manual"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -41,6 +50,9 @@ class PromotionAndOfferVo {
     "is_requiered_update": isRequieredUpdate,
     "isforce_update": isforceUpdate,
     "details": details.toJson(),
+    "login_manual": loginManual,
+    "service_ticket_manual": serviceTicketManual,
+    "online_payment_manual": onlinePaymentManual,
   };
 }
 

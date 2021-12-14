@@ -23,6 +23,9 @@ const BUILDING = 'building';
 const DATA_INVOICE_ID = 'invoiceID';
 const LANGUAGE = 'language';
 const PHONE_NO = 'phone_no';
+const LOGIN_MANUAL = 'login_manual';
+const SERVICE_TICKET_MANUAL = 'service_ticket_manual';
+const ONLINE_PAYMENT_MANUAL = 'online_payment_manual';
 
 
 const API_URL = BASE_URL+'api/';
@@ -43,4 +46,6 @@ const GET_TRANSACTION_URL = API_URL+"get_transaction?";
 const GET_LAST_TRANSACTION_URL = API_URL+"get_last_transaction?";
 const GET_BILLING_RESPONSE_URL = API_URL+"get_billing_responsive_number?";
 const GET_SERVICE_REQUEST_TYPE_URL = API_URL+"get_service_req_type";
+const GET_PAYMENT_METHOD_URL = API_URL+"get_payment_methods?";
+
 

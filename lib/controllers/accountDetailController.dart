@@ -28,7 +28,7 @@ class AccountDetailController extends GetxController{
         }
       }
     } finally {
-      isLoading(false);
+      //isLoading(false);
     }
   }
 

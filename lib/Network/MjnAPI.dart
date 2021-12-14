@@ -5,6 +5,7 @@ import 'package:MJN/models/NetworkResultVO.dart';
 import 'package:MJN/models/NewLoginVO.dart';
 import 'package:MJN/models/accountInfoVO.dart';
 import 'package:MJN/models/billingResponseNumberVO.dart';
+import 'package:MJN/models/getPaymentMethodsVO.dart';
 import 'package:MJN/models/invoiceListVO.dart';
 import 'package:MJN/models/invoiceVO.dart';
 import 'package:MJN/models/loginVO.dart';
@@ -390,5 +391,29 @@ class MjnAPI {
       return null;
     }
   }
+
+  static Future fetchPaymentMethods(
+      String token, String tenantID,String invoiceID) async {
+
+    var response = await client.get(
+
+      Uri.parse( GET_PAYMENT_METHOD_URL +
+          TENANT_ID + tenantID + APP_VERSION + app_version
+          + INVOICE_ID + invoiceID
+      ),
+      headers: {
+        'content-type': 'application/json',
+        'token': token
+      },
+    );
+    if (response.statusCode == 200) {
+      var json = response.body;
+      var result = getPaymentMethodsVoFromJson(json);
+      return result;
+    } else {
+      return null;
+    }
+  }
+
 
 }

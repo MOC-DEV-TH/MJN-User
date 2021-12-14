@@ -5,6 +5,7 @@ import 'package:MJN/views/TabView.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DialogUI extends StatefulWidget {
   BuildContext _context;
@@ -153,14 +154,14 @@ class _DialogUIState extends State<DialogUI> {
                             fontSize: 14))),
                 isVisible
                     ? SizedBox(
-                        height: 10,
+                        height: 15,
                       )
                     : Container(),
                 isVisible
                     ? GestureDetector(
                         onTap: () {
                           Navigator.of(context).pop();
-                          setState(() {});
+                          onPressManual(BASE_URL+langStorage.read(LOGIN_MANUAL));
                         },
                         child: Padding(
                           padding: const EdgeInsets.only(left: 10),
@@ -174,14 +175,14 @@ class _DialogUIState extends State<DialogUI> {
                     : Container(),
                 isVisible
                     ? SizedBox(
-                        height: 10,
+                        height: 15,
                       )
                     : Container(),
                 isVisible
                     ? GestureDetector(
                         onTap: () {
                           Navigator.of(context).pop();
-                          setState(() {});
+                          onPressManual(BASE_URL+langStorage.read(SERVICE_TICKET_MANUAL));
                         },
                         child: Padding(
                           padding: const EdgeInsets.only(left: 10),
@@ -195,14 +196,14 @@ class _DialogUIState extends State<DialogUI> {
                     : Container(),
                 isVisible
                     ? SizedBox(
-                        height: 10,
+                        height: 15,
                       )
                     : Container(),
                 isVisible
                     ? GestureDetector(
                         onTap: () {
                           Navigator.of(context).pop();
-                          setState(() {});
+                          onPressManual(BASE_URL+langStorage.read(ONLINE_PAYMENT_MANUAL));
                         },
                         child: Padding(
                           padding: const EdgeInsets.only(left: 10),
@@ -219,7 +220,7 @@ class _DialogUIState extends State<DialogUI> {
                         height: 20,
                       )
                     : SizedBox(
-                        height: 10,
+                        height: 15,
                       ),
                 GestureDetector(
                   onTap: () {
@@ -246,5 +247,9 @@ class _DialogUIState extends State<DialogUI> {
         ],
       ),
     );
+  }
+
+  void onPressManual(String manualLink){
+    launch(manualLink);
   }
 }

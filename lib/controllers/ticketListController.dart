@@ -28,6 +28,9 @@ class TicketListController extends GetxController{
           AppUtils.showSessionExpireDialog('Session is expired', 'Please login again',context);
         }
       }
+      else {
+        isLoading(false);
+      }
 
     } finally {
       //isLoading(false);

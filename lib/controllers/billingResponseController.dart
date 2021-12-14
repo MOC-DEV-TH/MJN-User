@@ -8,7 +8,7 @@ class BillingResponseController extends GetxController{
    BillingResponseNumberVo? billingResponseNumberVo;
   var isLoading = false.obs;
 
-  void fetchBillingResponseNumber(String token,String tenantID) async {
+ Future<void>  fetchBillingResponseNumber(String token,String tenantID) async {
     try {
       isLoading(true);
       print(token);

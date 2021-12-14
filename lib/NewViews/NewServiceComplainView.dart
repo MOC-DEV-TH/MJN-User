@@ -23,16 +23,14 @@ class _NewServiceComplainViewState extends State<NewServiceComplainView> {
   @override
   void initState() {
     super.initState();
-
-
-    ticketListController.fetchTicketList(loginDataStorage.read(TOKEN),
-        loginDataStorage.read(UID), loginDataStorage.read(DATA_TENANT_ID),context);
-
-    print(loginDataStorage.read(TOKEN));
   }
 
   @override
   Widget build(BuildContext context) {
+
+    ticketListController.fetchTicketList(loginDataStorage.read(TOKEN),
+        loginDataStorage.read(UID), loginDataStorage.read(DATA_TENANT_ID),context);
+
     return changePageIndex == 1
         ? NewCreateServiceTicketView()
         : Scaffold(
@@ -62,6 +60,7 @@ class _NewServiceComplainViewState extends State<NewServiceComplainView> {
                   SizedBox(
                     height: 15,
                   ),
+
                   _buildServiceTicketTitle()
                 ],
               ),
@@ -70,7 +69,9 @@ class _NewServiceComplainViewState extends State<NewServiceComplainView> {
   }
 
   Widget _buildServiceTicketTitle() {
-    return Obx(() {
+    return
+
+      Obx(() {
       if (ticketListController.isLoading.value) {
         return Container(
           child: CircularProgressIndicator(),
