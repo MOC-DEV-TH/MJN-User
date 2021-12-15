@@ -32,10 +32,12 @@ class HomeController extends GetxController{
             isLoading(false);
         }
         else{
+
           isLoading(false);
+          promotionAndOfferVo = null;
         }
 
-    } finally {
+    } catch(e) {
       isLoading(false);
     }
   }

@@ -30,8 +30,10 @@ class _NewPaymentViewState extends State<NewPaymentView> {
     changePageIndex = 0;
     super.initState();
 
-    invoiceListController.fetchPaymentInvoiceList(loginDataStorage.read(TOKEN),
-        loginDataStorage.read(UID), loginDataStorage.read(DATA_TENANT_ID),context);
+    Future.delayed(Duration.zero,
+        () => invoiceListController.fetchPaymentInvoiceList(loginDataStorage.read(TOKEN),
+            loginDataStorage.read(UID), loginDataStorage.read(DATA_TENANT_ID),context));
+
   }
 
   @override

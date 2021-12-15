@@ -361,7 +361,7 @@ class _NewCreateServiceTicketViewState
                                                       Color(0xff188FC5),
                                                   onChanged: (value) {
                                                     selectServiceRequestIndex =
-                                                        value!.name;
+                                                        value!.id;
                                                   },
                                                   items:
                                                       serviceRequestTypeController
@@ -478,7 +478,7 @@ class _NewCreateServiceTicketViewState
                                             loginDataStorage.read(TOKEN),
                                             context).then((value) => {
 
-                                        if(createTicketController.networkResult.status == 'Success'){
+                                        if(createTicketController.networkResult!.status == 'Success'){
                                             Future.delayed(const Duration(milliseconds: 700), () {
                                       setState(() {
                                       changePageIndex = 1;

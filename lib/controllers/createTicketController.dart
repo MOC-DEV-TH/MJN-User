@@ -8,7 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/state_manager.dart';
 
 class CreateTicketController extends GetxController{
-  late NetworkResult networkResult;
+   NetworkResult? networkResult;
   var isLoading = false.obs;
   Future<void> createTicket(RequestCreateTicket requestCreateTicket,String token,BuildContext context) async {
     try {
@@ -22,15 +22,9 @@ class CreateTicketController extends GetxController{
 
       if (res != null) {
         networkResult = res;
-        // if(networkResult.status == 'Success'){
-        //   AppUtils.showSuccessSnackBar('Success!!', 'Success create ticket!!');
-        //   Future.delayed(const Duration(milliseconds: 700), () {
-        //     Navigator.of(context).pushReplacementNamed(TabScreens.routeName);
-        //   });
-        //
-        // }
-        print(networkResult.status);
-        print(networkResult.description);
+
+        print(networkResult!.status);
+        print(networkResult!.description);
       }
     } finally {
       isLoading(false);

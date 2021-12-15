@@ -2,6 +2,7 @@ import 'package:MJN/Network/MjnAPI.dart';
 import 'package:MJN/models/NewLoginVO.dart';
 import 'package:MJN/models/loginVO.dart';
 import 'package:MJN/utils/app_constants.dart';
+import 'package:MJN/utils/app_utils.dart';
 import 'package:MJN/views/TabView.dart';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
@@ -31,11 +32,17 @@ class LoginController extends GetxController {
 
           Navigator.of(context).pushReplacementNamed(TabScreens.routeName);
         }
+        else if(loginVo.status == 'Fail' && loginVo.responseCode == '003'){
+
+          AppUtils.showErrorSnackBar('Fail', 'Building or Unit is incorrect');
+
+        }
 
         print(loginVo.status);
         print(loginVo.description);
         print(loginVo.uid);
       }
+
     } finally {
       isLoading(false);
     }

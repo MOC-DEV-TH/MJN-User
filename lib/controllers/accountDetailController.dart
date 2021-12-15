@@ -6,7 +6,7 @@ import 'package:get/state_manager.dart';
 
 class AccountDetailController extends GetxController{
 
-   late AccountInfoVo accountInfoVo ;
+    AccountInfoVo? accountInfoVo ;
   var isLoading = true.obs;
 
   Future<void> fetchAccountInfoData(String token,String uid,String tenantID,BuildContext context) async {
@@ -20,15 +20,20 @@ class AccountDetailController extends GetxController{
 
       if (res != null) {
         accountInfoVo = res;
-        print(accountInfoVo.status);
+        print(accountInfoVo!.status);
         isLoading (false);
 
-        if(accountInfoVo.status == 'Fail'){
+        if(accountInfoVo!.status == 'Fail'){
           AppUtils.showSessionExpireDialog('Session is expired', 'Please login again',context);
         }
       }
-    } finally {
-      //isLoading(false);
+      else {
+        isLoading(false);
+        accountInfoVo = null;
+      }
+
+    } catch(e) {
+      isLoading(false);
     }
   }
 

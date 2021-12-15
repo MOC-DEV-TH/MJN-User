@@ -23,18 +23,22 @@ class _MyAccountViewState extends State<MyAccountView> {
   void initState() {
     super.initState();
 
-    accountDetailController
-        .fetchAccountInfoData(
+    Future.delayed(Duration.zero,
+        () => accountDetailController
+            .fetchAccountInfoData(
             loginDataStorage.read(TOKEN),
             loginDataStorage.read(UID),
             loginDataStorage.read(DATA_TENANT_ID),
             context)
-        .then((value) => {
-              lastTransactionController.fetchLastTransactionData(
-                  loginDataStorage.read(TOKEN),
-                  loginDataStorage.read(UID),
-                  loginDataStorage.read(DATA_TENANT_ID))
-            });
+            .then((value) => {
+          lastTransactionController.fetchLastTransactionData(
+              loginDataStorage.read(TOKEN),
+              loginDataStorage.read(UID),
+              loginDataStorage.read(DATA_TENANT_ID))
+        }) );
+
+
+
   }
 
   @override
@@ -61,7 +65,59 @@ class _MyAccountViewState extends State<MyAccountView> {
         return Center(
           child: CircularProgressIndicator(),
         );
-      } else {
+      }
+      else if(accountDetailController.accountInfoVo == null){
+        return Center(
+            child: Container(
+              margin: EdgeInsets.only(top: 100),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.wifi_off,
+                    size: 100,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    'Network Error!',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    'Connect to the internet and try again.',
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
+                  ),
+                  SizedBox(
+                    height: 50,
+                  ),
+                  RaisedButton(
+                      child: Text('Retry'),
+                      textColor: Colors.white,
+                      color: Colors.grey,
+                      onPressed: () {
+                        Future.delayed(Duration.zero,
+                                () => accountDetailController
+                                .fetchAccountInfoData(
+                                loginDataStorage.read(TOKEN),
+                                loginDataStorage.read(UID),
+                                loginDataStorage.read(DATA_TENANT_ID),
+                                context)
+                                .then((value) => {
+                              lastTransactionController.fetchLastTransactionData(
+                                  loginDataStorage.read(TOKEN),
+                                  loginDataStorage.read(UID),
+                                  loginDataStorage.read(DATA_TENANT_ID))
+                            }) );
+                      })
+                ],
+              ),
+            ));
+      }
+      else {
         return Container(
           child: Padding(
             padding:
@@ -113,7 +169,7 @@ class _MyAccountViewState extends State<MyAccountView> {
                       children: [
                         Container(
                           child: Text(
-                            ': ${accountDetailController.accountInfoVo.details!.firstname}',
+                            ': ${accountDetailController.accountInfoVo!.details!.firstname}',
                             style: TextStyle(
                                 fontSize: 14, color: Color(0xffe9e9e9)),
                           ),
@@ -123,7 +179,7 @@ class _MyAccountViewState extends State<MyAccountView> {
                         ),
                         Container(
                           child: Text(
-                            ': ${accountDetailController.accountInfoVo.details!.mail}',
+                            ': ${accountDetailController.accountInfoVo!.details!.mail}',
                             style: TextStyle(
                                 fontSize: 14, color: Color(0xffe9e9e9)),
                           ),
@@ -133,7 +189,7 @@ class _MyAccountViewState extends State<MyAccountView> {
                         ),
                         Container(
                           child: Text(
-                            ': ${accountDetailController.accountInfoVo.details!.name}',
+                            ': ${accountDetailController.accountInfoVo!.details!.name}',
                             style: TextStyle(
                                 fontSize: 14, color: Color(0xffe9e9e9)),
                           ),
@@ -191,7 +247,7 @@ class _MyAccountViewState extends State<MyAccountView> {
                         children: [
                           Container(
                             child: Text(
-                              ': ${accountDetailController.accountInfoVo.details!.creationDate}',
+                              ': ${accountDetailController.accountInfoVo!.details!.creationDate}',
                               style: TextStyle(
                                   fontSize: 14, color: Color(0xffe9e9e9)),
                             ),
@@ -201,7 +257,7 @@ class _MyAccountViewState extends State<MyAccountView> {
                           ),
                           Container(
                             child: Text(
-                              ': ${accountDetailController.accountInfoVo.details!.modifiedDate}',
+                              ': ${accountDetailController.accountInfoVo!.details!.modifiedDate}',
                               style: TextStyle(
                                   fontSize: 14, color: Color(0xffe9e9e9)),
                             ),

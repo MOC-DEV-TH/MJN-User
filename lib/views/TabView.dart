@@ -209,7 +209,7 @@ class _TabScreensState extends State<TabScreens> {
         }
 
       case 9:
-          return MyAccountView();
+        return MyAccountView();
       case 10:
         return NewHomeView();
     }
@@ -564,6 +564,11 @@ class _TabScreensState extends State<TabScreens> {
           ),
           BottomNavigationBarItem(
               backgroundColor: Colors.white,
+              activeIcon: Image.asset(
+                'assets/images/active_payment_icon.png',
+                width: 20,
+                height: 20,
+              ),
               icon: Image.asset(
                 'assets/images/payment_icon.png',
                 width: 20,
@@ -589,6 +594,11 @@ class _TabScreensState extends State<TabScreens> {
               )),
           BottomNavigationBarItem(
               backgroundColor: Colors.white,
+              activeIcon: Image.asset(
+                'assets/images/active_service_complain_icon.png',
+                width: 20,
+                height: 20,
+              ),
               icon: Image.asset(
                 'assets/images/service_complain_icon.png',
                 width: 20,
@@ -605,6 +615,11 @@ class _TabScreensState extends State<TabScreens> {
               )),
           BottomNavigationBarItem(
               backgroundColor: Colors.white,
+              activeIcon: Image.asset(
+                'assets/images/active_contact_us_icon.png',
+                width: 20,
+                height: 20,
+              ),
               icon: Image.asset(
                 'assets/images/contact_us_icon.png',
                 width: 20,

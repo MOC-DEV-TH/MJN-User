@@ -30,10 +30,11 @@ class TicketListController extends GetxController{
       }
       else {
         isLoading(false);
+        ticketListVo = null;
       }
 
-    } finally {
-      //isLoading(false);
+    } catch(e) {
+      isLoading(false);
     }
   }
 

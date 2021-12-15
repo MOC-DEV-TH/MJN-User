@@ -17,10 +17,8 @@ class NewHomeView extends StatefulWidget {
 }
 
 class _NewHomeViewState extends State<NewHomeView> {
-
   final HomeController homeController = Get.put(HomeController());
   int changePageIndex = 0;
-
 
   final loginDataStorage = GetStorage();
   double itemHeight = 0;
@@ -30,17 +28,11 @@ class _NewHomeViewState extends State<NewHomeView> {
   void initState() {
     changePageIndex = 0;
 
-    Future.delayed(
-        Duration.zero,
-            () =>  homeController.fetchPromotionAndOfferData(
-            context)
-    );
+    Future.delayed(Duration.zero,
+        () => homeController.fetchPromotionAndOfferData(context));
 
     super.initState();
-
-
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -51,65 +43,102 @@ class _NewHomeViewState extends State<NewHomeView> {
     itemWidth = size.width / 2;
 
     return Scaffold(
-      body: Obx((){
-        if(homeController.isLoading.value){
-          return Center(child: CircularProgressIndicator(),);
-        }
-
-        else {
-          return
-            SingleChildScrollView(
+      body: Obx(() {
+        if (homeController.isLoading.value) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (homeController.promotionAndOfferVo == null) {
+          return Center(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                      color: Colors.blueAccent,
-                      width: double.infinity,
-                      alignment: Alignment.center,
-                      height: 200,
-                      child: PromotionItems(homeController.promotionAndOfferVo!.details.promotion)),
-                  Container(
-                    color: Color(0xff188FC5),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          "Offers",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        GridView(
-                            shrinkWrap: true,
-                            physics: new NeverScrollableScrollPhysics(),
-                            primary: false,
-                            padding: const EdgeInsets.all(10),
-                            children: homeController.promotionAndOfferVo!.details.offer
-                                .map((imgData) =>
-                                PackageAndServiceItems(
-                                    imgData))
-                                .toList(),
-                            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                              maxCrossAxisExtent: 200,
-                              mainAxisSpacing: 20,
-                              crossAxisSpacing: 20,
-                              childAspectRatio: (1 / .8),
-                            )),
-                      ],
-                    ),
-                  )
-                ],
+                mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.wifi_off,
+                size: 100,
               ),
-            );
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                'Network Error!',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                'Connect to the internet and try again.',
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
+              ),
+              SizedBox(
+                height: 50,
+              ),
+              RaisedButton(
+                  child: Text('Retry'),
+                  textColor: Colors.white,
+                  color: Colors.grey,
+                  onPressed: () {
+                    Future.delayed(
+                        Duration.zero,
+                        () =>
+                            homeController.fetchPromotionAndOfferData(context));
+                  })
+            ],
+          ));
+        } else {
+          return SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                    color: Colors.blueAccent,
+                    width: double.infinity,
+                    alignment: Alignment.center,
+                    height: 200,
+                    child: PromotionItems(
+                        homeController.promotionAndOfferVo!.details.promotion)),
+                Container(
+                  color: Color(0xff188FC5),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Offers",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      GridView(
+                          shrinkWrap: true,
+                          physics: new NeverScrollableScrollPhysics(),
+                          primary: false,
+                          padding: const EdgeInsets.all(10),
+                          children: homeController
+                              .promotionAndOfferVo!.details.offer
+                              .map((imgData) => PackageAndServiceItems(imgData))
+                              .toList(),
+                          gridDelegate:
+                              SliverGridDelegateWithMaxCrossAxisExtent(
+                            maxCrossAxisExtent: 200,
+                            mainAxisSpacing: 20,
+                            crossAxisSpacing: 20,
+                            childAspectRatio: (1 / .8),
+                          )),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          );
         }
-
       }),
     );
   }
@@ -121,9 +150,11 @@ class _NewHomeViewState extends State<NewHomeView> {
       },
       child: Container(
         decoration: BoxDecoration(
-          image: DecorationImage(image:NetworkImage(
-            BASE_URL + offer.imageMm,
-          ) ,fit: BoxFit.fill),
+          image: DecorationImage(
+              image: NetworkImage(
+                BASE_URL + offer.imageMm,
+              ),
+              fit: BoxFit.fill),
           border: Border.all(color: Color(0xffBC8F8F)),
           borderRadius: BorderRadius.all(
               Radius.circular(24.0) //                 <--- border radius here

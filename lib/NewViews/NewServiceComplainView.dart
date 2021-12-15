@@ -15,7 +15,7 @@ class NewServiceComplainView extends StatefulWidget {
 class _NewServiceComplainViewState extends State<NewServiceComplainView> {
 
   final TicketListController ticketListController =
-      Get.put(TicketListController());
+  Get.put(TicketListController());
   final loginDataStorage = GetStorage();
 
   int changePageIndex = 0;
@@ -23,134 +23,185 @@ class _NewServiceComplainViewState extends State<NewServiceComplainView> {
   @override
   void initState() {
     super.initState();
+
+
+    Future.delayed(Duration.zero,
+            () =>
+            ticketListController.fetchTicketList(loginDataStorage.read(TOKEN),
+                loginDataStorage.read(UID),
+                loginDataStorage.read(DATA_TENANT_ID), context));
   }
 
   @override
   Widget build(BuildContext context) {
-
-    ticketListController.fetchTicketList(loginDataStorage.read(TOKEN),
-        loginDataStorage.read(UID), loginDataStorage.read(DATA_TENANT_ID),context);
-
     return changePageIndex == 1
         ? NewCreateServiceTicketView()
         : Scaffold(
-            backgroundColor: Color(0xff188FC5),
-            body: SingleChildScrollView(
-                child: Container(
-              margin: EdgeInsets.only(top: 40, bottom: 20),
-              alignment: Alignment.center,
-              child: Column(
-                children: [
-                  InkWell(
-                      onTap: () {
-                        setState(() {
-                          changePageIndex = 1;
-                        });
-                      },
-                      child: Image(
-                          image:
-                              AssetImage('assets/images/create_service.png'))),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Text(
-                    'Your Service Ticket',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-
-                  _buildServiceTicketTitle()
-                ],
-              ),
-            )),
+      backgroundColor: Color(0xff188FC5),
+      body: Obx((){
+        if (ticketListController.isLoading.value) {
+          return Center(
+            child: CircularProgressIndicator(),
           );
+        }
+        else if (ticketListController.ticketListVo == null) {
+          return Center(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.wifi_off,
+                      size: 100,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'Network Error!',
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'Connect to the internet and try again.',
+                      style: TextStyle(
+                          fontSize: 14, fontWeight: FontWeight.normal),
+                    ),
+                    SizedBox(
+                      height: 50,
+                    ),
+                    RaisedButton(
+                        child: Text('Retry'),
+                        textColor: Colors.white,
+                        color: Colors.grey,
+                        onPressed: () {
+
+                          Future.delayed(Duration.zero,
+                                  () =>
+                                  ticketListController.fetchTicketList(
+                                      loginDataStorage.read(TOKEN),
+                                      loginDataStorage.read(UID),
+                                      loginDataStorage.read(DATA_TENANT_ID),
+                                      context));
+                        })
+                  ],
+                ),
+              ));
+        }
+        else {
+          return SingleChildScrollView(
+              child: Container(
+                margin: EdgeInsets.only(top: 40, bottom: 20),
+                alignment: Alignment.center,
+                child: Column(
+                  children: [
+                    InkWell(
+                        onTap: () {
+                          setState(() {
+                            changePageIndex = 1;
+                          });
+                        },
+                        child: Image(
+                            image:
+                            AssetImage('assets/images/create_service.png'))),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Text(
+                      'Your Service Ticket',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+
+                    _buildServiceTicketTitle()
+                  ],
+                ),
+              ));
+        }
+      })
+    );
   }
 
   Widget _buildServiceTicketTitle() {
     return
-
-      Obx(() {
-      if (ticketListController.isLoading.value) {
-        return Container(
-          child: CircularProgressIndicator(),
-        );
-      } else {
-        return Container(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                height: 30,
-                color: Color(0xffffcc35),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 4, bottom: 4),
-                      child: Text(
-                        'Ticket ID',
-                        style: TextStyle(color: Colors.black, fontSize: 8),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(),
-                      child: Text(
-                        'Ticket\nCreated Date',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 8,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    Padding(
-                      padding:
-                          const EdgeInsets.only(top: 4, bottom: 4, right: 30),
-                      child: Container(
-                        child: Text(
-                          'Service\nRequest',
-                          style: TextStyle(color: Colors.black, fontSize: 8),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding:
-                          const EdgeInsets.only(top: 4, bottom: 4, right: 10),
-                      child: Text(
-                        'Issue',
-                        style: TextStyle(color: Colors.black, fontSize: 8),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: 4,
-                        bottom: 4,
-                      ),
-                      child: Text(
-                        'Status',
-                        style: TextStyle(color: Colors.black, fontSize: 8),
-                      ),
-                    ),
-                  ],
+      Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            height: 30,
+            color: Color(0xffffcc35),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 4, bottom: 4),
+                  child: Text(
+                    'Ticket ID',
+                    style: TextStyle(color: Colors.black, fontSize: 8),
+                  ),
                 ),
-              ),
-              ListView.builder(
-                physics: new NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemBuilder: (ctx, index) {
-                  return MyServiceTicketItems(
-                      ticketListController.ticketListVo!.details![index]);
-                },
-                itemCount: ticketListController.ticketListVo!.details!.length,
-              )
-            ],
+                Padding(
+                  padding: const EdgeInsets.only(),
+                  child: Text(
+                    'Ticket\nCreated Date',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 8,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                Padding(
+                  padding:
+                  const EdgeInsets.only(top: 4, bottom: 4, right: 30),
+                  child: Container(
+                    child: Text(
+                      'Service\nRequest',
+                      style: TextStyle(color: Colors.black, fontSize: 8),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding:
+                  const EdgeInsets.only(top: 4, bottom: 4, right: 10),
+                  child: Text(
+                    'Issue',
+                    style: TextStyle(color: Colors.black, fontSize: 8),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 4,
+                    bottom: 4,
+                  ),
+                  child: Text(
+                    'Status',
+                    style: TextStyle(color: Colors.black, fontSize: 8),
+                  ),
+                ),
+              ],
+            ),
           ),
-        );
-      }
-    });
+          ListView.builder(
+            physics: new NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemBuilder: (ctx, index) {
+              return MyServiceTicketItems(
+                  ticketListController.ticketListVo!.details![index]);
+            },
+            itemCount: ticketListController.ticketListVo!.details!.length,
+          )
+        ],
+      ),
+    );
+
   }
 
   Widget MyServiceTicketItems(TicketDetail ticketVo) {
@@ -161,9 +212,9 @@ class _NewServiceComplainViewState extends State<NewServiceComplainView> {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(left:10,top: 10, bottom: 10),
+            padding: const EdgeInsets.only(left: 10, top: 10, bottom: 10),
             child: Container(
-              margin: EdgeInsets.only(left: 30,right: 30),
+              margin: EdgeInsets.only(left: 30, right: 30),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -196,13 +247,13 @@ class _NewServiceComplainViewState extends State<NewServiceComplainView> {
                   Container(
                     width: 35,
 
-                        child: Text(
-                          ticketVo.serviceRequest.toString(),
-                          style: TextStyle(color: Colors.black, fontSize: 8),
-                          textAlign: TextAlign.center,
+                    child: Text(
+                      ticketVo.serviceRequest.toString(),
+                      style: TextStyle(color: Colors.black, fontSize: 8),
+                      textAlign: TextAlign.center,
 
 
-                      ),
+                    ),
                   ),
 
 
@@ -224,21 +275,21 @@ class _NewServiceComplainViewState extends State<NewServiceComplainView> {
                       color: ticketVo.status == 'Pending'
                           ? Colors.red
                           : ticketVo.status == 'Closed'
-                              ? Colors.deepOrangeAccent
-                              : Colors.green,
+                          ? Colors.deepOrangeAccent
+                          : Colors.green,
                       borderRadius: BorderRadius.all(Radius.circular(
-                              24.0) //                 <--- border radius here
-                          ),
+                          24.0) //                 <--- border radius here
+                      ),
                     ),
 
-                      child: Padding(
-                        padding: const EdgeInsets.all(3.0),
-                        child: Text(
-                          ticketVo.status,
-                          style: TextStyle(color: Colors.white, fontSize: 8),
-                          textAlign: TextAlign.center,
-                        ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(3.0),
+                      child: Text(
+                        ticketVo.status,
+                        style: TextStyle(color: Colors.white, fontSize: 8),
+                        textAlign: TextAlign.center,
                       ),
+                    ),
                   ),
                 ],
               ),

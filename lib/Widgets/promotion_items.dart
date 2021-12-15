@@ -31,5 +31,32 @@ class PromotionItems extends StatelessWidget {
             )).toList(),
       ),
     ),);
+
+    // return Container(
+    //   child: Padding(
+    //     padding: const EdgeInsets.all(8.0),
+    //     child: Carousel(
+    //         height: 200.0,
+    //         width: 500,
+    //         initialPage: 3,
+    //         allowWrap: false,
+    //         type: Types.slideSwiper,
+    //         onCarouselTap: (i) {
+    //           print("onTap $i");
+    //         },
+    //         indicatorType: IndicatorTypes.bar,
+    //         arrowColor: Colors.black,
+    //         axis: Axis.horizontal,
+    //         showArrow: true,
+    //         children:promotionImages.map((imgData) =>
+    //             Image.network(
+    //                 BASE_URL + imgData.imageMm,
+    //             )).toList()
+    //     ),
+    //   ),
+    // );
+
   }
+
+
 }

@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:MJN/Network/Request/RequestCreateTicket.dart';
 import 'package:MJN/models/NetworkResultVO.dart';
 import 'package:MJN/models/NewLoginVO.dart';
@@ -8,7 +7,6 @@ import 'package:MJN/models/billingResponseNumberVO.dart';
 import 'package:MJN/models/getPaymentMethodsVO.dart';
 import 'package:MJN/models/invoiceListVO.dart';
 import 'package:MJN/models/invoiceVO.dart';
-import 'package:MJN/models/loginVO.dart';
 import 'package:MJN/models/promotionAndofferVO.dart';
 import 'package:MJN/models/serviceRequestTypeVO.dart';
 import 'package:MJN/models/ticketListVO.dart';
@@ -359,13 +357,19 @@ class MjnAPI {
       headers: {
         'content-type': 'application/json',
       },
-    );
+    ).timeout(Duration(seconds: 10),onTimeout:(){
+      return http.Response('Connection Time Out',500);
+    });
     if (response.statusCode == 200) {
       var json = response.body;
 
       var result = promotionAndOfferVoFromJson(json);
       return result;
-    } else {
+    }
+    else if(response.statusCode == 500){
+      return null;
+    }
+    else {
       return null;
     }
   }

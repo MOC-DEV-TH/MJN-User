@@ -35,10 +35,10 @@ dependencies:
   readmore: ^2.1.0
   event_bus: ^2.0.0
   webview_flutter: ^3.0.0
+  flutter_multi_carousel: ^1.0.0
   flutter_neumorphic:
     git:
       url: "https://github.com/alionour/Flutter-Neumorphic"
-
 
 
   plugin_platform_interface: ^2.0.0
@@ -116,6 +116,9 @@ flutter:
     - assets/images/payment_icon.png
     - assets/images/service_complain_icon.png
     - assets/images/menu_icon.png
+    - assets/images/active_contact_us_icon.png
+    - assets/images/active_payment_icon.png
+    - assets/images/active_service_complain_icon.png
 
 
 

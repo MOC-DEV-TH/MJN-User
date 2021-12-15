@@ -45,9 +45,14 @@ class _DialogUIState extends State<DialogUI> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Navigator.pop(context);
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => TabScreens(1)));
+
+                    WidgetsBinding.instance!.addPostFrameCallback((_) {
+                      Navigator.pop(context);
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => TabScreens(1)));
+                    });
+
+
                   },
                   child: Text('About Us',
                       style: TextStyle(
@@ -62,9 +67,13 @@ class _DialogUIState extends State<DialogUI> {
                 GestureDetector(
                   onTap: () {
 
-                    Navigator.pop(context);
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => TabScreens(2)));
+                    WidgetsBinding.instance!.addPostFrameCallback((_) {
+                      Navigator.pop(context);
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => TabScreens(2)));
+                    });
+
+
                   },
                   child: Text('Product and Services',
                       style: TextStyle(
@@ -78,9 +87,14 @@ class _DialogUIState extends State<DialogUI> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.pop(context);
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => TabScreens(3)));
+
+                    WidgetsBinding.instance!.addPostFrameCallback((_) {
+                      Navigator.pop(context);
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => TabScreens(3)));
+                    });
+
+
                   },
                   child: Text('Terms & Conditions',
                       style: TextStyle(
