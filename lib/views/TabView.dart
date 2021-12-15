@@ -256,7 +256,7 @@ class _TabScreensState extends State<TabScreens> {
       title: Container(
         width: MediaQuery.of(context).size.width,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
                 margin: EdgeInsets.only(right: 40),
@@ -264,18 +264,15 @@ class _TabScreensState extends State<TabScreens> {
                   onTap: () {
                     showMenuDialog(context);
                   },
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: Image(
-                      image: AssetImage('assets/images/menu_icon.png'),
-                      height: 24,
-                      width: 23,
-                    ),
+                  child: Image(
+                    image: AssetImage('assets/images/menu_icon.png'),
+                    height: 24,
+                    width: 23,
                   ),
                 )),
             navSelectPage == 0
                 ? Container(
-                    padding: EdgeInsets.only(right: 80, top: 5),
+                    padding: EdgeInsets.only( top: 5,left: 40),
                     child: Text(
                       'Notification',
                       style: TextStyle(fontSize: 14),
@@ -283,7 +280,7 @@ class _TabScreensState extends State<TabScreens> {
                   )
                 : navSelectPage == 1
                     ? Container(
-                        padding: EdgeInsets.only(right: 80, top: 5),
+                        padding: EdgeInsets.only( top: 5,left: 60),
                         child: Text(
                           'Payment',
                           style: TextStyle(fontSize: 14),
@@ -291,7 +288,7 @@ class _TabScreensState extends State<TabScreens> {
                       )
                     : navSelectPage == 3
                         ? Container(
-                            padding: EdgeInsets.only(right: 60, top: 5),
+                            padding: EdgeInsets.only( top: 5,left: 40),
                             child: Text(
                               'Service Complain',
                               style: TextStyle(fontSize: 14),
@@ -299,15 +296,15 @@ class _TabScreensState extends State<TabScreens> {
                           )
                         : navSelectPage == 4
                             ? Container(
-                                padding: EdgeInsets.only(right: 80, top: 5),
+              padding: EdgeInsets.only( top: 5,left: 60),
                                 child: Text(
                                   'Contact Us',
                                   style: TextStyle(fontSize: 14),
                                 ),
                               )
                             : Container(
-                                margin: EdgeInsets.only(left: 65, right: 50),
                                 width: 100,
+                                margin: EdgeInsets.only(left: 40),
                                 child: Image(
                                     image: AssetImage(
                                         'assets/images/splash_screen_logo.png'))),
@@ -380,7 +377,7 @@ class _TabScreensState extends State<TabScreens> {
       title: Container(
         width: MediaQuery.of(context).size.width,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
@@ -397,7 +394,7 @@ class _TabScreensState extends State<TabScreens> {
             ),
             pageIndex == 5
                 ? Container(
-                    padding: EdgeInsets.only(right: 80, top: 5),
+                    padding: EdgeInsets.only( top: 5,left: 80),
                     child: Text(
                       'About Us',
                       style: TextStyle(fontSize: 14),
@@ -405,7 +402,7 @@ class _TabScreensState extends State<TabScreens> {
                   )
                 : pageIndex == 6
                     ? Container(
-                        padding: EdgeInsets.only(right: 40, top: 5),
+                        padding: EdgeInsets.only( top: 5,left: 60),
                         child: Text(
                           'Product And Services',
                           style: TextStyle(fontSize: 14),
@@ -413,7 +410,7 @@ class _TabScreensState extends State<TabScreens> {
                       )
                     : pageIndex == 7
                         ? Container(
-                            padding: EdgeInsets.only(right: 40, top: 5),
+                            padding: EdgeInsets.only( top: 5,left: 60),
                             child: Text(
                               'Terms & Conditions',
                               style: TextStyle(fontSize: 14),
@@ -421,7 +418,7 @@ class _TabScreensState extends State<TabScreens> {
                           )
                         : pageIndex == 8
                             ? Container(
-                                padding: EdgeInsets.only(right: 80, top: 5),
+                                padding: EdgeInsets.only( top: 5,left: 80),
                                 child: Text(
                                   'Contact Us',
                                   style: TextStyle(fontSize: 14),
@@ -429,7 +426,7 @@ class _TabScreensState extends State<TabScreens> {
                               )
                             : pageIndex == 9
                                 ? Container(
-                                    padding: EdgeInsets.only(right: 80, top: 5),
+                                    padding: EdgeInsets.only( top: 5,left: 80),
                                     child: Text(
                                       'My Account',
                                       style: TextStyle(fontSize: 14),

@@ -1,7 +1,8 @@
 import 'package:MJN/models/promotionAndofferVO.dart';
 import 'package:MJN/utils/app_constants.dart';
-import 'package:carousel_pro/carousel_pro.dart';
+
 import 'package:flutter/material.dart';
+import 'package:carousel_pro/carousel_pro.dart';
 
 class PromotionItems extends StatelessWidget {
   List<Offer> promotionImages;
@@ -32,25 +33,27 @@ class PromotionItems extends StatelessWidget {
       ),
     ),);
 
-    // return Container(
+    // return Center(
     //   child: Padding(
     //     padding: const EdgeInsets.all(8.0),
     //     child: Carousel(
     //         height: 200.0,
-    //         width: 500,
-    //         initialPage: 3,
+    //         width: double.infinity,
+    //         initialPage: 2,
     //         allowWrap: false,
     //         type: Types.slideSwiper,
     //         onCarouselTap: (i) {
     //           print("onTap $i");
     //         },
-    //         indicatorType: IndicatorTypes.bar,
+    //         indicatorType: IndicatorTypes.dot,
     //         arrowColor: Colors.black,
     //         axis: Axis.horizontal,
     //         showArrow: true,
     //         children:promotionImages.map((imgData) =>
     //             Image.network(
     //                 BASE_URL + imgData.imageMm,
+    //               fit: BoxFit.fill,
+    //               width: double.infinity,
     //             )).toList()
     //     ),
     //   ),

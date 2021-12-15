@@ -393,7 +393,7 @@ class _NewCreateServiceTicketViewState
                                                     child: Text(
                                                       '-Select Service Request-',
                                                       style: TextStyle(
-                                                          fontSize: 12,
+                                                          fontSize: 8,
                                                           color: Color(
                                                               0xffe9e9e9)),
                                                     ),

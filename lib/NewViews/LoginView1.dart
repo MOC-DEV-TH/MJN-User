@@ -69,11 +69,11 @@ class _LoginView1State extends State<LoginView1> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           SizedBox(
-            height: 40,
+            height: 10,
           ),
           Image(image: AssetImage('assets/images/login.png')),
           SizedBox(
-            height: 20,
+            height: 10,
           ),
           Row(
             children: [
@@ -240,7 +240,7 @@ class _LoginView1State extends State<LoginView1> {
           title: Container(
             width: MediaQuery.of(context).size.width,
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Container(
                     margin: EdgeInsets.only(right: 40),
@@ -252,7 +252,7 @@ class _LoginView1State extends State<LoginView1> {
                           child: Image(image: AssetImage('assets/images/menu_icon.png'),height: 24,width: 23,),
                         ),)),
                 Container(
-                    margin: EdgeInsets.only(left: 65),
+
                     width: 100,
                     child: Image(
                         image: AssetImage(

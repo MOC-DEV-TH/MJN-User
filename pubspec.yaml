@@ -36,6 +36,7 @@ dependencies:
   event_bus: ^2.0.0
   webview_flutter: ^3.0.0
   flutter_multi_carousel: ^1.0.0
+  full_screen_image: ^1.0.2
   flutter_neumorphic:
     git:
       url: "https://github.com/alionour/Flutter-Neumorphic"
