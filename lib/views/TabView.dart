@@ -241,7 +241,7 @@ class _TabScreensState extends State<TabScreens> {
             Animation secondaryAnimation) {
           return SafeArea(
             child: Container(
-                margin: EdgeInsets.only(top: 56), child: DialogUI(context)),
+                margin: EdgeInsets.only(top: 50), child: DialogUI(context)),
           );
         });
   }
@@ -313,7 +313,7 @@ class _TabScreensState extends State<TabScreens> {
       ),
       actions: [
         Container(
-          margin: EdgeInsets.only(right: 20, top: 30, bottom: 30),
+          margin: EdgeInsets.only(right: 20,top: 24,bottom: 24 ),
           padding: EdgeInsets.zero,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -394,7 +394,7 @@ class _TabScreensState extends State<TabScreens> {
             ),
             pageIndex == 5
                 ? Container(
-                    padding: EdgeInsets.only( top: 5,left: 80),
+                    padding: EdgeInsets.only( top: 5,left: 85),
                     child: Text(
                       'About Us',
                       style: TextStyle(fontSize: 14),
@@ -402,7 +402,7 @@ class _TabScreensState extends State<TabScreens> {
                   )
                 : pageIndex == 6
                     ? Container(
-                        padding: EdgeInsets.only( top: 5,left: 60),
+                        padding: EdgeInsets.only( top: 5,left: 65),
                         child: Text(
                           'Product And Services',
                           style: TextStyle(fontSize: 14),
@@ -410,7 +410,7 @@ class _TabScreensState extends State<TabScreens> {
                       )
                     : pageIndex == 7
                         ? Container(
-                            padding: EdgeInsets.only( top: 5,left: 60),
+                            padding: EdgeInsets.only( top: 5,left: 65),
                             child: Text(
                               'Terms & Conditions',
                               style: TextStyle(fontSize: 14),
@@ -418,7 +418,7 @@ class _TabScreensState extends State<TabScreens> {
                           )
                         : pageIndex == 8
                             ? Container(
-                                padding: EdgeInsets.only( top: 5,left: 80),
+                                padding: EdgeInsets.only( top: 5,left: 85),
                                 child: Text(
                                   'Contact Us',
                                   style: TextStyle(fontSize: 14),
@@ -426,7 +426,7 @@ class _TabScreensState extends State<TabScreens> {
                               )
                             : pageIndex == 9
                                 ? Container(
-                                    padding: EdgeInsets.only( top: 5,left: 80),
+                                    padding: EdgeInsets.only( top: 5,left: 85),
                                     child: Text(
                                       'My Account',
                                       style: TextStyle(fontSize: 14),
@@ -442,7 +442,7 @@ class _TabScreensState extends State<TabScreens> {
       ),
       actions: [
         Container(
-          margin: EdgeInsets.only(right: 20, top: 30, bottom: 30),
+          margin: EdgeInsets.only(right: 20,top: 24,bottom: 24 ),
           padding: EdgeInsets.zero,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -503,7 +503,7 @@ class _TabScreensState extends State<TabScreens> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(100),
+        preferredSize: const Size.fromHeight(80),
         child: navSelectedIndex
             ? logoAndNavTitleAppBar(_selectedPageIndex, context)
             : titleAppBar(changePageIndex, context),

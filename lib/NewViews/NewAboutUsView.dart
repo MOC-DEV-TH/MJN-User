@@ -9,40 +9,43 @@ class _NewAboutUsViewState extends State<NewAboutUsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:Color(0xff188FC5),
       body: Container(
-          child: Column(
-                children: [
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Stack(children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(15),
-                            topRight: Radius.circular(15),
-                          ),
-                          child: Container(
-                            margin: EdgeInsets.only(left: 20,right: 20,top: 55,bottom: 40),
-                            width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
-                              color: Color(0xffffffff).withOpacity(0.5),
-                              borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                            ),
-                            child: _buildAboutUsParagraph(),
-                          ),
-                        ),
-
-                        Positioned(child: Image(
-                            width: double.infinity,
-                            image: AssetImage('assets/images/about_us.png')))
-
-                      ],),
-                    ),
-                  )
-
-                ],
-              ),
+        decoration: BoxDecoration(
+          image: DecorationImage(image: AssetImage('assets/images/about_us_bg.png'), fit: BoxFit.cover),
         ),
+        child: Container(
+            child: Column(
+                  children: [
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Stack(children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(15),
+                            ),
+                            child: Container(
+                              margin: EdgeInsets.only(left: 20,right: 20,top: 55,bottom: 40),
+                              width: MediaQuery.of(context).size.width,
+                              decoration: BoxDecoration(
+                                color: Color(0xffffffff).withOpacity(0.7),
+                                borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                              ),
+                              child: _buildAboutUsParagraph(),
+                            ),
+                          ),
+
+                          Positioned(child: Image(
+                              width: double.infinity,
+                              image: AssetImage('assets/images/about_us.png')))
+
+                        ],),
+                      ),
+                    )
+
+                  ],
+                ),
+          ),
+      ),
     );
   }
 

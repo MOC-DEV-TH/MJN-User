@@ -18,6 +18,7 @@ class _OnlinePaymentViewState extends State<OnlinePaymentView> {
 
   int changePageIndex = 0;
 
+
   final BillingResponseController billingResponseController =
       Get.put(BillingResponseController());
   final loginDataStorage = GetStorage();
@@ -26,6 +27,8 @@ class _OnlinePaymentViewState extends State<OnlinePaymentView> {
   void initState() {
     changePageIndex = 0;
     super.initState();
+
+
   }
 
   @override
@@ -70,14 +73,17 @@ class _OnlinePaymentViewState extends State<OnlinePaymentView> {
                                     Text('Building : ',
                                         style: TextStyle(color: Colors.grey)),
                                     Expanded(
-                                      child: TextField(
-                                        controller: buildTextController,
-                                        decoration: InputDecoration(
-                                            border: InputBorder.none,
-                                            hintText: "xxx",
-                                            hintStyle:
-                                                TextStyle(color: Colors.grey)),
-                                        style: TextStyle(color: Colors.grey),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(bottom: 5),
+                                        child: TextFormField(
+                                          enabled: false,
+                                          initialValue: loginDataStorage.read(BUILDING).toString(),
+                                          decoration: InputDecoration(
+                                              border: InputBorder.none,
+                                              hintStyle:
+                                                  TextStyle(color: Colors.grey)),
+                                          style: TextStyle(color: Colors.grey),
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -99,14 +105,19 @@ class _OnlinePaymentViewState extends State<OnlinePaymentView> {
                                       style: TextStyle(color: Colors.grey),
                                     ),
                                     Expanded(
-                                      child: TextField(
-                                        controller: unitTextController,
-                                        decoration: InputDecoration(
-                                            border: InputBorder.none,
-                                            hintText: "xxx",
-                                            hintStyle:
-                                                TextStyle(color: Colors.grey)),
-                                        style: TextStyle(color: Colors.grey),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(bottom: 5),
+                                        child: TextFormField(
+                                          enabled: false,
+                                          initialValue: loginDataStorage.read(UNIT).toString(),
+                                          decoration: InputDecoration(
+                                              border: InputBorder.none,
+
+                                              hintStyle:
+                                                  TextStyle(color: Colors.grey)),
+                                          style: TextStyle(color: Colors.grey),
+                                        ),
+
                                       ),
                                     ),
                                   ],

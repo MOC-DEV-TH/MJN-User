@@ -2,12 +2,14 @@ import 'package:MJN/Widgets/promotion_items.dart';
 import 'package:MJN/controllers/homeController.dart';
 import 'package:MJN/models/promotionAndofferVO.dart';
 import 'package:MJN/utils/app_constants.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class NewHomeView extends StatefulWidget {
   static const routeName = '/home_screen';
@@ -18,11 +20,13 @@ class NewHomeView extends StatefulWidget {
 
 class _NewHomeViewState extends State<NewHomeView> {
   final HomeController homeController = Get.put(HomeController());
+  final controller = CarouselController();
   int changePageIndex = 0;
 
   final loginDataStorage = GetStorage();
   double itemHeight = 0;
   double itemWidth = 0;
+  int activeIndex = 0;
 
   @override
   void initState() {
@@ -51,7 +55,7 @@ class _NewHomeViewState extends State<NewHomeView> {
         } else if (homeController.promotionAndOfferVo == null) {
           return Center(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
                 Icons.wifi_off,
@@ -96,12 +100,15 @@ class _NewHomeViewState extends State<NewHomeView> {
                     width: double.infinity,
                     alignment: Alignment.center,
                     height: 200,
-                    child: PromotionItems(
-                        homeController.promotionAndOfferVo!.details.promotion)),
+                    child: _buildCustomCarousalSlider()),
                 Container(
                   color: Color(0xff188FC5),
                   child: Column(
                     children: [
+                      SizedBox(
+                        height: 10,
+                      ),
+                      buildIndicator(),
                       SizedBox(
                         height: 10,
                       ),
@@ -130,7 +137,7 @@ class _NewHomeViewState extends State<NewHomeView> {
                             maxCrossAxisExtent: 200,
                             mainAxisSpacing: 20,
                             crossAxisSpacing: 20,
-                            childAspectRatio: (1 / .8),
+                            childAspectRatio: (0.9 / .9),
                           )),
                     ],
                   ),
@@ -163,4 +170,69 @@ class _NewHomeViewState extends State<NewHomeView> {
       ),
     );
   }
+
+  Widget _buildCustomCarousalSlider() {
+    return Stack(
+      children: [
+        ClipRRect(
+          child: CarouselSlider.builder(
+              carouselController: controller,
+              options: CarouselOptions(
+                  initialPage: 0,
+                  height: 200,
+                  viewportFraction: 1,
+                  enableInfiniteScroll: true,
+                  onPageChanged: (index, reason) =>
+                      setState(() => activeIndex = index)),
+              itemCount:
+                  homeController.promotionAndOfferVo!.details.promotion.length,
+              itemBuilder: (context, index, realIndex) {
+                final urlImage = homeController
+                    .promotionAndOfferVo!.details.promotion[index].imageMm;
+                return _buildImage(urlImage, index);
+              }),
+        ),
+        Positioned(
+            child: Container(
+          alignment: Alignment.center,
+          padding: EdgeInsets.only(left: 15, right: 15),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Transform(
+                alignment: Alignment.center,
+                transform: Matrix4.rotationY(9.5),
+                child: InkWell(
+                  onTap: previous,
+                    child: Icon(Icons.play_circle_outline,color: Colors.white,)),
+              ),
+              InkWell(
+                onTap: next,
+                  child: Icon(Icons.play_circle_outline,color: Colors.white,)),
+            ],
+          ),
+        ))
+      ],
+    );
+  }
+
+  void next() => controller.nextPage();
+
+  void previous() => controller.previousPage();
+
+  Widget _buildImage(String imageUrl, int index) => Container(
+          child: Image.network(
+        BASE_URL + imageUrl,
+        fit: BoxFit.fill,
+      ));
+
+  Widget buildIndicator() => AnimatedSmoothIndicator(
+        activeIndex: activeIndex,
+        count: homeController.promotionAndOfferVo!.details.promotion.length,
+        effect: SlideEffect(
+            dotHeight: 10,
+            dotWidth: 10,
+            activeDotColor: Colors.white,
+            dotColor: Colors.grey.withOpacity(0.5)),
+      );
 }

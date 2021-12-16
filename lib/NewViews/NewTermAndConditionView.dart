@@ -31,7 +31,7 @@ class NewTermAndConditionView extends StatelessWidget {
           Text(
             'In other to user any of our services, Customer must :',
             textAlign: TextAlign.left,
-            style: TextStyle(color: Color(0xff188FC5), fontSize: 16),
+            style: TextStyle( fontSize: 16),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 15),
@@ -55,7 +55,7 @@ class NewTermAndConditionView extends StatelessWidget {
           Text(
             'Customers Responsibility : ',
             textAlign: TextAlign.left,
-            style: TextStyle(color: Color(0xff188FC5), fontSize: 16),
+            style: TextStyle(fontSize: 16),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 15),
@@ -89,7 +89,7 @@ class NewTermAndConditionView extends StatelessWidget {
           Text(
             'Our Service :',
             textAlign: TextAlign.left,
-            style: TextStyle(color: Color(0xff188FC5), fontSize: 16),
+            style: TextStyle(fontSize: 16),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 15),

@@ -110,14 +110,14 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
                         style: TextStyle(fontSize: 12, color: Colors.black),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 70),
+                        padding: const EdgeInsets.only(left: 80),
                         child: Text(
                           '.....................',
                           style: TextStyle(color: Colors.black),
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 30),
+                        padding: const EdgeInsets.only(left: 40),
                         child: Text(
                           invoiceController.invoiceVo.details.totalDue,
                           style: TextStyle(fontSize: 12, color: Colors.black),

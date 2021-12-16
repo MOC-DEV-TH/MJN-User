@@ -224,7 +224,7 @@ class _LoginView1State extends State<LoginView1> {
             Animation secondaryAnimation) {
           return SafeArea(
             child:
-            Container(margin: EdgeInsets.only(top: 56), child: DialogUI(context)),
+            Container(margin: EdgeInsets.only(top: 50), child: DialogUI(context)),
           );
         });
   }
@@ -234,7 +234,7 @@ class _LoginView1State extends State<LoginView1> {
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          toolbarHeight: 90,
+          toolbarHeight: 80,
           backgroundColor: Color(0xff242527),
           iconTheme: IconThemeData(color: Colors.grey),
           title: Container(
@@ -243,7 +243,7 @@ class _LoginView1State extends State<LoginView1> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Container(
-                    margin: EdgeInsets.only(right: 40),
+                    margin: EdgeInsets.only(right: 50),
                     child: GestureDetector(
                         onTap: () {
                           //showMenuDialog(context);
@@ -252,7 +252,7 @@ class _LoginView1State extends State<LoginView1> {
                           child: Image(image: AssetImage('assets/images/menu_icon.png'),height: 24,width: 23,),
                         ),)),
                 Container(
-
+                    margin: EdgeInsets.only(right: 40),
                     width: 100,
                     child: Image(
                         image: AssetImage(
@@ -262,7 +262,7 @@ class _LoginView1State extends State<LoginView1> {
           ),
           actions: [
             Container(
-              margin: EdgeInsets.only(right: 20, top: 30, bottom: 30),
+              margin: EdgeInsets.only(right: 20,top: 24,bottom: 24 ),
               padding: EdgeInsets.zero,
               decoration: BoxDecoration(
                 color: Colors.white,

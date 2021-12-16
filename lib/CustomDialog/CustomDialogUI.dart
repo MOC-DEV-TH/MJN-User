@@ -196,7 +196,7 @@ class _DialogUIState extends State<DialogUI> {
                     ? GestureDetector(
                         onTap: () {
                           Navigator.of(context).pop();
-                          onPressManual(BASE_URL+langStorage.read(SERVICE_TICKET_MANUAL));
+                          onPressManual(BASE_URL+langStorage.read(ONLINE_PAYMENT_MANUAL));
                         },
                         child: Padding(
                           padding: const EdgeInsets.only(left: 10),
@@ -217,7 +217,7 @@ class _DialogUIState extends State<DialogUI> {
                     ? GestureDetector(
                         onTap: () {
                           Navigator.of(context).pop();
-                          onPressManual(BASE_URL+langStorage.read(ONLINE_PAYMENT_MANUAL));
+                          onPressManual(BASE_URL+langStorage.read(SERVICE_TICKET_MANUAL));
                         },
                         child: Padding(
                           padding: const EdgeInsets.only(left: 10),

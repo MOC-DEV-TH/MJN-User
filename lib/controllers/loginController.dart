@@ -25,7 +25,7 @@ class LoginController extends GetxController {
         if (loginVo.status == 'Success') {
           loginDataStorage.write(PHONE_NO, loginVo.phone);
           loginDataStorage.write(UID, loginVo.uid);
-          loginDataStorage.write(BUILDING, loginVo..building);
+          loginDataStorage.write(BUILDING, loginVo.building);
           loginDataStorage.write(UNIT, loginVo.unit);
           loginDataStorage.write(TOKEN, loginVo.token);
           loginDataStorage.write(DATA_TENANT_ID, loginVo.tenantId);
@@ -41,6 +41,7 @@ class LoginController extends GetxController {
         print(loginVo.status);
         print(loginVo.description);
         print(loginVo.uid);
+        print(loginVo.building);
       }
 
     } finally {
