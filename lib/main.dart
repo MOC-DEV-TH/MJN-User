@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:MJN/LocalString/LocalString.dart';
 import 'package:MJN/NewViews/LoginView1.dart';
 import 'package:MJN/models/notificationModelVO.dart';

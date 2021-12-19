@@ -162,7 +162,7 @@ class _LoginView1State extends State<LoginView1> {
             height: 35,
           ),
           Padding(
-              padding: EdgeInsets.only(left: 90, right: 90),
+              padding: EdgeInsets.only(left: 130, right: 90),
               child: Obx(() {
                 if (loginController.isLoading.value) {
                   return Center(child: CircularProgressIndicator());

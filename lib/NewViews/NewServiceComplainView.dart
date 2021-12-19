@@ -1,8 +1,10 @@
 import 'package:MJN/NewViews/NewCreateServiceTicketView.dart';
+import 'package:MJN/controllers/checkCanCreateTicketController.dart';
 import 'package:MJN/controllers/ticketListController.dart';
 import 'package:MJN/models/ticketListVO.dart';
 import 'package:MJN/models/ticketVO.dart';
 import 'package:MJN/utils/app_constants.dart';
+import 'package:MJN/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -13,9 +15,12 @@ class NewServiceComplainView extends StatefulWidget {
 }
 
 class _NewServiceComplainViewState extends State<NewServiceComplainView> {
-
   final TicketListController ticketListController =
-  Get.put(TicketListController());
+      Get.put(TicketListController());
+
+  final CheckCreateTicketController checkCreateTicketController =
+      Get.put(CheckCreateTicketController());
+
   final loginDataStorage = GetStorage();
 
   int changePageIndex = 0;
@@ -24,12 +29,13 @@ class _NewServiceComplainViewState extends State<NewServiceComplainView> {
   void initState() {
     super.initState();
 
-
-    Future.delayed(Duration.zero,
-            () =>
-            ticketListController.fetchTicketList(loginDataStorage.read(TOKEN),
-                loginDataStorage.read(UID),
-                loginDataStorage.read(DATA_TENANT_ID), context));
+    Future.delayed(
+        Duration.zero,
+        () => ticketListController.fetchTicketList(
+            loginDataStorage.read(TOKEN),
+            loginDataStorage.read(UID),
+            loginDataStorage.read(DATA_TENANT_ID),
+            context));
   }
 
   @override
@@ -37,99 +43,117 @@ class _NewServiceComplainViewState extends State<NewServiceComplainView> {
     return changePageIndex == 1
         ? NewCreateServiceTicketView()
         : Scaffold(
-      backgroundColor: Color(0xff188FC5),
-      body: Obx((){
-        if (ticketListController.isLoading.value) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-        else if (ticketListController.ticketListVo == null) {
-          return Center(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.wifi_off,
-                      size: 100,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      'Network Error!',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      'Connect to the internet and try again.',
-                      style: TextStyle(
-                          fontSize: 14, fontWeight: FontWeight.normal),
-                    ),
-                    SizedBox(
-                      height: 50,
-                    ),
-                    RaisedButton(
-                        child: Text('Retry'),
-                        textColor: Colors.white,
-                        color: Colors.grey,
-                        onPressed: () {
-
-                          Future.delayed(Duration.zero,
-                                  () =>
-                                  ticketListController.fetchTicketList(
-                                      loginDataStorage.read(TOKEN),
-                                      loginDataStorage.read(UID),
-                                      loginDataStorage.read(DATA_TENANT_ID),
-                                      context));
-                        })
-                  ],
-                ),
-              ));
-        }
-        else {
-          return SingleChildScrollView(
-              child: Container(
-                margin: EdgeInsets.only(top: 40, bottom: 20),
-                alignment: Alignment.center,
-                child: Column(
-                  children: [
-                    InkWell(
-                        onTap: () {
-                          setState(() {
-                            changePageIndex = 1;
-                          });
-                        },
-                        child: Image(
-                            image:
-                            AssetImage('assets/images/create_service.png'))),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    Text(
-                      'Your Service Ticket',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-
-                    _buildServiceTicketTitle()
-                  ],
-                ),
-              ));
-        }
-      })
-    );
+            backgroundColor: Color(0xff188FC5),
+            body: Obx(() {
+              if (ticketListController.isLoading.value) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (ticketListController.ticketListVo == null) {
+                return Center(
+                    child: Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.wifi_off,
+                        size: 100,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        'Network Error!',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        'Connect to the internet and try again.',
+                        style: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.normal),
+                      ),
+                      SizedBox(
+                        height: 50,
+                      ),
+                      RaisedButton(
+                          child: Text('Retry'),
+                          textColor: Colors.white,
+                          color: Colors.grey,
+                          onPressed: () {
+                            Future.delayed(
+                                Duration.zero,
+                                () => ticketListController.fetchTicketList(
+                                    loginDataStorage.read(TOKEN),
+                                    loginDataStorage.read(UID),
+                                    loginDataStorage.read(DATA_TENANT_ID),
+                                    context));
+                          })
+                    ],
+                  ),
+                ));
+              } else {
+                return SingleChildScrollView(
+                    child: Container(
+                  margin: EdgeInsets.only(top: 40, bottom: 20),
+                  alignment: Alignment.center,
+                  child: Column(
+                    children: [
+                      Obx(() {
+                        if (checkCreateTicketController.isLoading.value) {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else {
+                          return InkWell(
+                              onTap: () {
+                                checkCreateTicketController
+                                    .checkCanCreateTicket(
+                                        loginDataStorage.read(TOKEN),
+                                        loginDataStorage.read(DATA_TENANT_ID))
+                                    .then((value) => {
+                                          if (checkCreateTicketController
+                                              .checkCanCreateTicketVo.canCreate)
+                                            {
+                                              setState(() {
+                                                changePageIndex = 1;
+                                              })
+                                            }
+                                          else
+                                            {
+                                              AppUtils.showErrorSnackBar('Fail',
+                                                  'Ticket can\'t be created as we are working\nfor your current ticket')
+                                            }
+                                        });
+                              },
+                              child: Image(
+                                  image: AssetImage(
+                                      'assets/images/create_service.png')));
+                        }
+                      }),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Text(
+                        'Your Service Ticket',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      _buildServiceTicketTitle()
+                    ],
+                  ),
+                ));
+              }
+            }));
   }
 
   Widget _buildServiceTicketTitle() {
-    return
-      Container(
+    return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -158,8 +182,7 @@ class _NewServiceComplainViewState extends State<NewServiceComplainView> {
                   ),
                 ),
                 Padding(
-                  padding:
-                  const EdgeInsets.only(top: 4, bottom: 4, right: 30),
+                  padding: const EdgeInsets.only(top: 4, bottom: 4, right: 30),
                   child: Container(
                     child: Text(
                       'Service\nRequest',
@@ -169,8 +192,7 @@ class _NewServiceComplainViewState extends State<NewServiceComplainView> {
                   ),
                 ),
                 Padding(
-                  padding:
-                  const EdgeInsets.only(top: 4, bottom: 4, right: 10),
+                  padding: const EdgeInsets.only(top: 4, bottom: 4, right: 10),
                   child: Text(
                     'Issue',
                     style: TextStyle(color: Colors.black, fontSize: 8),
@@ -201,7 +223,6 @@ class _NewServiceComplainViewState extends State<NewServiceComplainView> {
         ],
       ),
     );
-
   }
 
   Widget MyServiceTicketItems(TicketDetail ticketVo) {
@@ -246,21 +267,15 @@ class _NewServiceComplainViewState extends State<NewServiceComplainView> {
                   ),
                   Container(
                     width: 35,
-
                     child: Text(
                       ticketVo.serviceRequest.toString(),
                       style: TextStyle(color: Colors.black, fontSize: 8),
                       textAlign: TextAlign.center,
-
-
                     ),
                   ),
-
-
                   Container(
                     child: Padding(
-                      padding: const EdgeInsets.only(
-                          left: 10),
+                      padding: const EdgeInsets.only(left: 10),
                       child: Text(
                         'Slow Preformance',
                         style: TextStyle(color: Colors.black, fontSize: 8),
@@ -268,20 +283,17 @@ class _NewServiceComplainViewState extends State<NewServiceComplainView> {
                       ),
                     ),
                   ),
-
-
                   Container(
                     decoration: BoxDecoration(
                       color: ticketVo.status == 'Pending'
                           ? Colors.red
                           : ticketVo.status == 'Closed'
-                          ? Colors.deepOrangeAccent
-                          : Colors.green,
+                              ? Colors.deepOrangeAccent
+                              : Colors.green,
                       borderRadius: BorderRadius.all(Radius.circular(
-                          24.0) //                 <--- border radius here
-                      ),
+                              24.0) //                 <--- border radius here
+                          ),
                     ),
-
                     child: Padding(
                       padding: const EdgeInsets.all(3.0),
                       child: Text(

@@ -1,6 +1,5 @@
 import 'package:MJN/Network/MjnAPI.dart';
 import 'package:MJN/models/billingResponseNumberVO.dart';
-import 'package:MJN/models/ticketVO.dart';
 import 'package:get/state_manager.dart';
 
 class BillingResponseController extends GetxController{

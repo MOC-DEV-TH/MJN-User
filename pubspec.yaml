@@ -39,6 +39,7 @@ dependencies:
   full_screen_image: ^1.0.2
   carousel_slider: ^4.0.0
   smooth_page_indicator: ^1.0.0+2
+  flutter_inappwebview: ^5.3.2
   flutter_neumorphic:
     git:
       url: "https://github.com/alionour/Flutter-Neumorphic"
@@ -123,6 +124,8 @@ flutter:
     - assets/images/active_payment_icon.png
     - assets/images/active_service_complain_icon.png
     - assets/images/about_us_bg.png
+    - assets/images/left_arrow_icon.png
+    - assets/images/right_arrow_icon.png
 
 
 

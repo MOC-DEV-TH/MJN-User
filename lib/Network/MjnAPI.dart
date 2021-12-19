@@ -4,6 +4,7 @@ import 'package:MJN/models/NetworkResultVO.dart';
 import 'package:MJN/models/NewLoginVO.dart';
 import 'package:MJN/models/accountInfoVO.dart';
 import 'package:MJN/models/billingResponseNumberVO.dart';
+import 'package:MJN/models/checkCanCreateTicketVO.dart';
 import 'package:MJN/models/getPaymentMethodsVO.dart';
 import 'package:MJN/models/invoiceListVO.dart';
 import 'package:MJN/models/invoiceVO.dart';
@@ -413,6 +414,29 @@ class MjnAPI {
     if (response.statusCode == 200) {
       var json = response.body;
       var result = getPaymentMethodsVoFromJson(json);
+      return result;
+    } else {
+      return null;
+    }
+  }
+
+
+  static Future checkCanCreateTicket(
+      String token, String tenantID) async {
+
+    var response = await client.get(
+
+      Uri.parse( CHECK_CAN_CREATE_TICKET_URL +
+          TENANT_ID + tenantID
+      ),
+      headers: {
+        'content-type': 'application/json',
+        'token': token
+      },
+    );
+    if (response.statusCode == 200) {
+      var json = response.body;
+      var result = checkCanCreateTicketVoFromJson(json);
       return result;
     } else {
       return null;

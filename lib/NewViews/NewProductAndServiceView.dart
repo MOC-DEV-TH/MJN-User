@@ -1,6 +1,7 @@
 import 'package:MJN/Widgets/productAndServiceItems.dart';
 import 'package:MJN/controllers/homeController.dart';
 import 'package:MJN/utils/app_constants.dart';
+import 'package:MJN/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
@@ -77,7 +78,9 @@ class _NewProductAndServiceViewState extends State<NewProductAndServiceView> {
                             alignment: Alignment.centerLeft,
                             margin: EdgeInsets.only(top: 10, left: 27),
                             child: NeumorphicButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                AppUtils.showOnlineRegistrationDialog(context);
+                              },
                               child: Text(
                                 "Register Now",
                                 style: TextStyle(

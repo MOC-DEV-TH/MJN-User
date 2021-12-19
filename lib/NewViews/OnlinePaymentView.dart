@@ -2,11 +2,13 @@ import 'package:MJN/NewViews/NewPaymentView.dart';
 import 'package:MJN/controllers/billingResponseController.dart';
 import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/utils/app_utils.dart';
+import 'package:MJN/views/TabView.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 class OnlinePaymentView extends StatefulWidget {
+
   @override
   _OnlinePaymentViewState createState() => _OnlinePaymentViewState();
 }
@@ -33,6 +35,7 @@ class _OnlinePaymentViewState extends State<OnlinePaymentView> {
 
   @override
   Widget build(BuildContext context) {
+
     return changePageIndex == 1
         ? NewPaymentView()
         : Scaffold(

@@ -30,7 +30,7 @@ class _DialogUIState extends State<DialogUI> {
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
@@ -46,12 +46,12 @@ class _DialogUIState extends State<DialogUI> {
                 GestureDetector(
                   onTap: () {
 
-                    WidgetsBinding.instance!.addPostFrameCallback((_) {
-                      Navigator.pop(context);
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => TabScreens(1)));
-                    });
-
+                    Future.delayed(Duration.zero,
+                            () => {
+                            Navigator.pop(context),
+                            Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) => TabScreens(1)))
+                            });
 
                   },
                   child: Text('About Us',
@@ -67,12 +67,12 @@ class _DialogUIState extends State<DialogUI> {
                 GestureDetector(
                   onTap: () {
 
-                    WidgetsBinding.instance!.addPostFrameCallback((_) {
-                      Navigator.pop(context);
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => TabScreens(2)));
-                    });
-
+                    Future.delayed(Duration.zero,
+                            () => {
+                          Navigator.pop(context),
+                          Navigator.of(context).push(
+                              MaterialPageRoute(builder: (context) => TabScreens(2)))
+                        });
 
                   },
                   child: Text('Product and Services',
@@ -88,11 +88,12 @@ class _DialogUIState extends State<DialogUI> {
                 GestureDetector(
                   onTap: () {
 
-                    WidgetsBinding.instance!.addPostFrameCallback((_) {
-                      Navigator.pop(context);
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => TabScreens(3)));
-                    });
+                    Future.delayed(Duration.zero,
+                            () => {
+                          Navigator.pop(context),
+                          Navigator.of(context).push(
+                              MaterialPageRoute(builder: (context) => TabScreens(3)))
+                        });
 
 
                   },
@@ -139,9 +140,12 @@ class _DialogUIState extends State<DialogUI> {
                             'Please sign in to unlock all\naccount features', context);
                       } else
                       {
-                        Navigator.pop(context);
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => TabScreens(5)));
+                        Future.delayed(Duration.zero,
+                                () => {
+                              Navigator.pop(context),
+                              Navigator.of(context).push(
+                                  MaterialPageRoute(builder: (context) => TabScreens(5)))
+                            });
                       }
 
                     },

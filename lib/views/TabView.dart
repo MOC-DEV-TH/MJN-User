@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:MJN/CustomDialog/CustomDialogUI.dart';
 import 'package:MJN/NewViews/MyAccountView.dart';
 import 'package:MJN/NewViews/NewAboutUsView.dart';
@@ -25,6 +24,7 @@ class TabScreens extends StatefulWidget {
 
   int pageIndex;
 
+
   TabScreens(this.pageIndex);
 
   @override
@@ -36,6 +36,7 @@ class _TabScreensState extends State<TabScreens> {
 
   bool isOpened = false;
   var notiCount = 0.obs;
+  int currentPaymentIndex = 0;
 
   bool visible = false;
   bool pageSelectedIndex = false;
@@ -217,17 +218,6 @@ class _TabScreensState extends State<TabScreens> {
     return NewHomeView();
   }
 
-  double _buttonWidth(BuildContext context) {
-    final maxWidth = 20.0;
-    final buttonCount = 2;
-
-    final width = (MediaQuery.of(context).size.width - 200) / buttonCount;
-    if (width < maxWidth) {
-      return width;
-    } else {
-      return maxWidth;
-    }
-  }
 
   void showMenuDialog(BuildContext context) {
     showGeneralDialog(
@@ -256,23 +246,28 @@ class _TabScreensState extends State<TabScreens> {
       title: Container(
         width: MediaQuery.of(context).size.width,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-                margin: EdgeInsets.only(right: 40),
-                child: GestureDetector(
-                  onTap: () {
-                    showMenuDialog(context);
-                  },
-                  child: Image(
-                    image: AssetImage('assets/images/menu_icon.png'),
-                    height: 24,
-                    width: 23,
+            navSelectPage == 2
+                ? Container(
+                    child: GestureDetector(
+                        onTap: () {
+
+                        },
+                        child: Icon(Icons.account_circle)),
+                  )
+                : Container(
+                    child: GestureDetector(
+                        onTap: () {
+                             setState(() {
+                               _selectedPageIndex = 2;
+                             });
+                        },
+                        child: Icon(Icons.keyboard_backspace)),
                   ),
-                )),
             navSelectPage == 0
                 ? Container(
-                    padding: EdgeInsets.only( top: 5,left: 40),
+                    //padding: EdgeInsets.only( top: 5,left: 40),
                     child: Text(
                       'Notification',
                       style: TextStyle(fontSize: 14),
@@ -280,7 +275,7 @@ class _TabScreensState extends State<TabScreens> {
                   )
                 : navSelectPage == 1
                     ? Container(
-                        padding: EdgeInsets.only( top: 5,left: 60),
+                        //padding: EdgeInsets.only( top: 5,left: 60),
                         child: Text(
                           'Payment',
                           style: TextStyle(fontSize: 14),
@@ -288,7 +283,7 @@ class _TabScreensState extends State<TabScreens> {
                       )
                     : navSelectPage == 3
                         ? Container(
-                            padding: EdgeInsets.only( top: 5,left: 40),
+                            //padding: EdgeInsets.only( top: 5,left: 40),
                             child: Text(
                               'Service Complain',
                               style: TextStyle(fontSize: 14),
@@ -296,7 +291,6 @@ class _TabScreensState extends State<TabScreens> {
                           )
                         : navSelectPage == 4
                             ? Container(
-              padding: EdgeInsets.only( top: 5,left: 60),
                                 child: Text(
                                   'Contact Us',
                                   style: TextStyle(fontSize: 14),
@@ -304,65 +298,77 @@ class _TabScreensState extends State<TabScreens> {
                               )
                             : Container(
                                 width: 100,
-                                margin: EdgeInsets.only(left: 40),
+                                //margin: EdgeInsets.only(left: 40),
                                 child: Image(
                                     image: AssetImage(
                                         'assets/images/splash_screen_logo.png'))),
+            Container(
+                // margin: EdgeInsets.only(right: 40),
+                child: GestureDetector(
+              onTap: () {
+                showMenuDialog(context);
+              },
+              child: Image(
+                image: AssetImage('assets/images/menu_icon.png'),
+                height: 24,
+                width: 23,
+              ),
+            )),
           ],
         ),
       ),
       actions: [
-        Container(
-          margin: EdgeInsets.only(right: 20,top: 24,bottom: 24 ),
-          padding: EdgeInsets.zero,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(color: Colors.black, width: 1.0),
-            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-          ),
-          child: ToggleButtons(
-            constraints: BoxConstraints.tight(Size(35, 35)),
-            selectedColor: Colors.white,
-            borderRadius: BorderRadius.circular(5),
-            fillColor: Colors.blue,
-            children: [
-              Container(
-                alignment: Alignment.center,
-                width: _buttonWidth(context),
-                child: Text(
-                  'EN',
-                  style: TextStyle(fontSize: 10),
-                ),
-              ),
-              Container(
-                alignment: Alignment.center,
-                width: _buttonWidth(context),
-                child: Text(
-                  'MY',
-                  style: TextStyle(fontSize: 10),
-                ),
-              ),
-            ],
-            onPressed: (int index) {
-              setState(() {
-                for (int i = 0; i < isSelected.length; i++) {
-                  isSelected[i] = i == index;
-                }
-
-                if (index == 0) {
-                  langStorage.write(LANGUAGE, 'EN');
-                  var locale = Locale('en', 'US');
-                  Get.updateLocale(locale);
-                } else {
-                  langStorage.write(LANGUAGE, 'MY');
-                  var locale = Locale('my', 'MM');
-                  Get.updateLocale(locale);
-                }
-              });
-            },
-            isSelected: isSelected,
-          ),
-        ),
+        // Container(
+        //   margin: EdgeInsets.only(right: 20,top: 24,bottom: 24 ),
+        //   padding: EdgeInsets.zero,
+        //   decoration: BoxDecoration(
+        //     color: Colors.white,
+        //     border: Border.all(color: Colors.black, width: 1.0),
+        //     borderRadius: BorderRadius.all(Radius.circular(5.0)),
+        //   ),
+        //   child: ToggleButtons(
+        //     constraints: BoxConstraints.tight(Size(35, 35)),
+        //     selectedColor: Colors.white,
+        //     borderRadius: BorderRadius.circular(5),
+        //     fillColor: Colors.blue,
+        //     children: [
+        //       Container(
+        //         alignment: Alignment.center,
+        //         width: _buttonWidth(context),
+        //         child: Text(
+        //           'EN',
+        //           style: TextStyle(fontSize: 10),
+        //         ),
+        //       ),
+        //       Container(
+        //         alignment: Alignment.center,
+        //         width: _buttonWidth(context),
+        //         child: Text(
+        //           'MY',
+        //           style: TextStyle(fontSize: 10),
+        //         ),
+        //       ),
+        //     ],
+        //     onPressed: (int index) {
+        //       setState(() {
+        //         for (int i = 0; i < isSelected.length; i++) {
+        //           isSelected[i] = i == index;
+        //         }
+        //
+        //         if (index == 0) {
+        //           langStorage.write(LANGUAGE, 'EN');
+        //           var locale = Locale('en', 'US');
+        //           Get.updateLocale(locale);
+        //         } else {
+        //           langStorage.write(LANGUAGE, 'MY');
+        //           var locale = Locale('my', 'MM');
+        //           Get.updateLocale(locale);
+        //         }
+        //       });
+        //     },
+        //     isSelected: isSelected,
+        //   ),
+        // ),
       ],
     );
   }
@@ -377,9 +383,60 @@ class _TabScreensState extends State<TabScreens> {
       title: Container(
         width: MediaQuery.of(context).size.width,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            Container(
+              child: GestureDetector(
+                  onTap: () {
+                    Get.back();
+                  },
+                  child: Icon(Icons.keyboard_backspace)),
+            ),
+            pageIndex == 5
+                ? Container(
+                    //padding: EdgeInsets.only( top: 5,left: 85),
+                    child: Text(
+                      'About Us',
+                      style: TextStyle(fontSize: 14),
+                    ),
+                  )
+                : pageIndex == 6
+                    ? Container(
+                        //padding: EdgeInsets.only( top: 5,left: 65),
+                        child: Text(
+                          'Product And Services',
+                          style: TextStyle(fontSize: 14),
+                        ),
+                      )
+                    : pageIndex == 7
+                        ? Container(
+                            //padding: EdgeInsets.only( top: 5,left: 65),
+                            child: Text(
+                              'Terms & Conditions',
+                              style: TextStyle(fontSize: 14),
+                            ),
+                          )
+                        : pageIndex == 8
+                            ? Container(
+                                //padding: EdgeInsets.only( top: 5,left: 85),
+                                child: Text(
+                                  'Contact Us',
+                                  style: TextStyle(fontSize: 14),
+                                ),
+                              )
+                            : pageIndex == 9
+                                ? Container(
+                                    //padding: EdgeInsets.only( top: 5,left: 85),
+                                    child: Text(
+                                      'My Account',
+                                      style: TextStyle(fontSize: 14),
+                                    ),
+                                  )
+                                : Container(
+                                    margin:
+                                        EdgeInsets.only(left: 65, right: 50),
+                                    child: Text(''),
+                                  ),
             Container(
               child: GestureDetector(
                 onTap: () {
@@ -392,105 +449,60 @@ class _TabScreensState extends State<TabScreens> {
                 ),
               ),
             ),
-            pageIndex == 5
-                ? Container(
-                    padding: EdgeInsets.only( top: 5,left: 85),
-                    child: Text(
-                      'About Us',
-                      style: TextStyle(fontSize: 14),
-                    ),
-                  )
-                : pageIndex == 6
-                    ? Container(
-                        padding: EdgeInsets.only( top: 5,left: 65),
-                        child: Text(
-                          'Product And Services',
-                          style: TextStyle(fontSize: 14),
-                        ),
-                      )
-                    : pageIndex == 7
-                        ? Container(
-                            padding: EdgeInsets.only( top: 5,left: 65),
-                            child: Text(
-                              'Terms & Conditions',
-                              style: TextStyle(fontSize: 14),
-                            ),
-                          )
-                        : pageIndex == 8
-                            ? Container(
-                                padding: EdgeInsets.only( top: 5,left: 85),
-                                child: Text(
-                                  'Contact Us',
-                                  style: TextStyle(fontSize: 14),
-                                ),
-                              )
-                            : pageIndex == 9
-                                ? Container(
-                                    padding: EdgeInsets.only( top: 5,left: 85),
-                                    child: Text(
-                                      'My Account',
-                                      style: TextStyle(fontSize: 14),
-                                    ),
-                                  )
-                                : Container(
-                                    margin:
-                                        EdgeInsets.only(left: 65, right: 50),
-                                    child: Text(''),
-                                  ),
           ],
         ),
       ),
       actions: [
-        Container(
-          margin: EdgeInsets.only(right: 20,top: 24,bottom: 24 ),
-          padding: EdgeInsets.zero,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(color: Colors.black, width: 1.0),
-            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-          ),
-          child: ToggleButtons(
-            constraints: BoxConstraints.tight(Size(35, 35)),
-            selectedColor: Colors.white,
-            borderRadius: BorderRadius.circular(5),
-            fillColor: Colors.blue,
-            children: [
-              Container(
-                alignment: Alignment.center,
-                width: _buttonWidth(context),
-                child: Text(
-                  'EN',
-                  style: TextStyle(fontSize: 10),
-                ),
-              ),
-              Container(
-                alignment: Alignment.center,
-                width: _buttonWidth(context),
-                child: Text(
-                  'MY',
-                  style: TextStyle(fontSize: 10),
-                ),
-              ),
-            ],
-            onPressed: (int index) {
-              setState(() {
-                for (int i = 0; i < isSelected.length; i++) {
-                  isSelected[i] = i == index;
-                }
-                if (index == 0) {
-                  langStorage.write(LANGUAGE, 'EN');
-                  var locale = Locale('en', 'US');
-                  Get.updateLocale(locale);
-                } else {
-                  langStorage.write(LANGUAGE, 'MY');
-                  var locale = Locale('my', 'MM');
-                  Get.updateLocale(locale);
-                }
-              });
-            },
-            isSelected: isSelected,
-          ),
-        ),
+        // Container(
+        //   margin: EdgeInsets.only(right: 20,top: 24,bottom: 24 ),
+        //   padding: EdgeInsets.zero,
+        //   decoration: BoxDecoration(
+        //     color: Colors.white,
+        //     border: Border.all(color: Colors.black, width: 1.0),
+        //     borderRadius: BorderRadius.all(Radius.circular(5.0)),
+        //   ),
+        //   child: ToggleButtons(
+        //     constraints: BoxConstraints.tight(Size(35, 35)),
+        //     selectedColor: Colors.white,
+        //     borderRadius: BorderRadius.circular(5),
+        //     fillColor: Colors.blue,
+        //     children: [
+        //       Container(
+        //         alignment: Alignment.center,
+        //         width: _buttonWidth(context),
+        //         child: Text(
+        //           'EN',
+        //           style: TextStyle(fontSize: 10),
+        //         ),
+        //       ),
+        //       Container(
+        //         alignment: Alignment.center,
+        //         width: _buttonWidth(context),
+        //         child: Text(
+        //           'MY',
+        //           style: TextStyle(fontSize: 10),
+        //         ),
+        //       ),
+        //     ],
+        //     onPressed: (int index) {
+        //       setState(() {
+        //         for (int i = 0; i < isSelected.length; i++) {
+        //           isSelected[i] = i == index;
+        //         }
+        //         if (index == 0) {
+        //           langStorage.write(LANGUAGE, 'EN');
+        //           var locale = Locale('en', 'US');
+        //           Get.updateLocale(locale);
+        //         } else {
+        //           langStorage.write(LANGUAGE, 'MY');
+        //           var locale = Locale('my', 'MM');
+        //           Get.updateLocale(locale);
+        //         }
+        //       });
+        //     },
+        //     isSelected: isSelected,
+        //   ),
+        // ),
       ],
     );
   }

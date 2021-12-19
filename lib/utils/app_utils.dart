@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'app_constants.dart';
 
@@ -51,93 +52,102 @@ class AppUtils {
                   height: 270,
                   width: double.infinity,
                   margin: EdgeInsets.all(10),
-                  //child: Material(
-                  //child: Container(
                   padding: EdgeInsets.all(4),
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage("assets/images/dialog_card_bg.png"),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                  //color: Colors.white,
+                  // decoration: BoxDecoration(
+                  //   image: DecorationImage(
+                  //     image: AssetImage("assets/images/dialog_card_bg.png"),
+                  //     fit: BoxFit.fill,
+                  //   ),
+                  // ),
+                  color: Colors.white,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Icon(
                         Icons.logout,
-                        size: 60,
+                        color: Color(0xff188FC5),
+                        size: 50,
                       ),
                       Center(
-                        child: Text(
-                          title,
-
-                          style: TextStyle(
-                            decoration: TextDecoration.none,
-                            color: Colors.black,
-                              fontWeight: FontWeight.bold, fontSize: 20.0),
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 20),
+                          child: Text(
+                            title,
+                            style: TextStyle(
+                                decoration: TextDecoration.none,
+                                color: Color(0xff188FC5),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20.0),
+                          ),
                         ),
                       ),
                       Center(
-                        child: Text(message,textAlign: TextAlign.center,style: TextStyle(
-                            decoration: TextDecoration.none,
-                            fontSize: 14,color: Colors.black),),
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 40),
+                          child: Text(
+                            message,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                decoration: TextDecoration.none,
+                                fontSize: 14,
+                                color: Color(0xff188FC5)),
+                          ),
+                        ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Container(
-                              width: 100,
-                              height: 40,
-                              child: RaisedButton(
-                                  color: Theme.of(context).primaryColorDark,
-                                  child: Text(
-                                    'Cancel',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16),
-                                  ),
-                                  onPressed: () {
-                                    Get.back();
-                                  }),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Container(
+                                width: 100,
+                                height: 40,
+                                child: RaisedButton(
+                                    color: Color(0xff188FC5),
+                                    child: Text(
+                                      'Cancel',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16),
+                                    ),
+                                    onPressed: () {
+                                      Get.back();
+                                    }),
+                              ),
                             ),
-                          ),
-
-
-                          SizedBox(width: 40,),
-
-
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Container(
-                              width: 100,
-                              height: 40,
-                              child: RaisedButton(
-                                  color: Theme.of(context).primaryColorDark,
-                                  child: Text(
-                                    'OK',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16),
-                                  ),
-                                  onPressed: () {
-                                    AppUtils.removeDataFromGetStorage().then((value) => {
-                                    Get.offAllNamed(Splash2.routeName)
-                                    });
-
-                                    //Navigator.of(context).pushReplacementNamed(Splash2.routeName);
-                                  }),
+                            SizedBox(
+                              width: 40,
                             ),
-                          ),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Container(
+                                width: 100,
+                                height: 40,
+                                child: RaisedButton(
+                                    color: Color(0xff188FC5),
+                                    child: Text(
+                                      'OK',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16),
+                                    ),
+                                    onPressed: () {
+                                      AppUtils.removeDataFromGetStorage().then(
+                                          (value) => {
+                                                Get.offAllNamed(Splash2.routeName)
+                                              });
 
-
-                        ],)
-
+                                      //Navigator.of(context).pushReplacementNamed(Splash2.routeName);
+                                    }),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
                     ],
                   ),
                 ),
@@ -151,100 +161,101 @@ class AppUtils {
       showDialog(
           context: context,
           builder: (_) => Center(
-            child: Container(
-              height: 270,
-              width: double.infinity,
-              margin: EdgeInsets.all(10),
-              //child: Material(
-              //child: Container(
-              padding: EdgeInsets.all(4),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/images/dialog_card_bg.png"),
-                  fit: BoxFit.fill,
-                ),
-              ),
-              //color: Colors.white,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Icon(
-                    Icons.login_outlined,
-                    size: 60,
-                  ),
-                  Center(
-                    child: Text(
-                      title,
-
-                      style: TextStyle(
-                          decoration: TextDecoration.none,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold, fontSize: 20.0),
-                    ),
-                  ),
-                  Center(
-                    child: Text(message,textAlign: TextAlign.center,style: TextStyle(
-                        decoration: TextDecoration.none,
-                        fontSize: 14,color: Colors.black),),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                child: Container(
+                  height: 270,
+                  width: double.infinity,
+                  margin: EdgeInsets.all(10),
+                  padding: EdgeInsets.all(4),
+                  color: Colors.white,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: Container(
-                          width: 100,
-                          height: 40,
-                          child: RaisedButton(
-                              color: Theme.of(context).primaryColorDark,
-                              child: Text(
-                                'Cancel',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16),
-                              ),
-                              onPressed: () {
-                                Get.back();
-                              }),
+                      Icon(
+                        Icons.account_circle,
+                        color: Color(0xff188FC5),
+                        size: 60,
+                      ),
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 20),
+                          child: Text(
+                            title,
+                            style: TextStyle(
+                                decoration: TextDecoration.none,
+                                color: Color(0xff188FC5),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20.0),
+                          ),
                         ),
                       ),
-
-
-
-                      SizedBox(width: 40,),
-
-
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: Container(
-                          width: 100,
-                          height: 40,
-                          child: RaisedButton(
-                              color: Theme.of(context).primaryColorDark,
-                              child: Text(
-                                'OK',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16),
-                              ),
-                              onPressed: () {
-                                Get.offNamed(LoginView1.routeName);
-                                //Navigator.of(context,rootNavigator: true).pop();
-
-                              }),
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 50),
+                          child: Text(
+                            message,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              decoration: TextDecoration.none,
+                              fontSize: 14,
+                              color: Color(0xff188FC5),
+                            ),
+                          ),
                         ),
                       ),
-
-
-                    ],)
-
-                ],
-              ),
-            ),
-          ));
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Container(
+                                width: 100,
+                                height: 40,
+                                child: RaisedButton(
+                                    color: Color(0xff188FC5),
+                                    child: Text(
+                                      'Cancel',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16),
+                                    ),
+                                    onPressed: () {
+                                      Get.back();
+                                    }),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 40,
+                            ),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Container(
+                                width: 100,
+                                height: 40,
+                                child: RaisedButton(
+                                    color: Color(0xff188FC5),
+                                    child: Text(
+                                      'OK',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16),
+                                    ),
+                                    onPressed: () {
+                                      Get.offNamed(LoginView1.routeName);
+                                      //Navigator.of(context,rootNavigator: true).pop();
+                                    }),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ));
     });
   }
 
@@ -284,9 +295,11 @@ class AppUtils {
                         ),
                       ),
                       Center(
-                        child: Text(message,textAlign: TextAlign.center,),
+                        child: Text(
+                          message,
+                          textAlign: TextAlign.center,
+                        ),
                       ),
-
                       ClipRRect(
                         borderRadius: BorderRadius.circular(8),
                         child: Container(
@@ -303,13 +316,13 @@ class AppUtils {
                               ),
                               onPressed: () {
                                 Get.back();
-                                AppUtils.removeDataFromGetStorage().then((value) => {
-                                  Get.offAllNamed(LoginView1.routeName)
-                                });
+                                AppUtils.removeDataFromGetStorage().then(
+                                    (value) => {
+                                          Get.offAllNamed(LoginView1.routeName)
+                                        });
                               }),
                         ),
                       ),
-
                     ],
                   ),
                 ),
@@ -317,96 +330,153 @@ class AppUtils {
     });
   }
 
-
   static void showRequireUpdateDialog(
       String title, String message, BuildContext context) {
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       showDialog(
           context: context,
           builder: (_) => Center(
-            child: Container(
-              height: 270,
-              width: double.infinity,
-              margin: EdgeInsets.all(10),
-              //child: Material(
-              //child: Container(
-              padding: EdgeInsets.all(4),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/images/dialog_card_bg.png"),
-                  fit: BoxFit.fill,
-                ),
-              ),
-              //color: Colors.white,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Icon(
-                    Icons.update_outlined,
-                    size: 60,
-                  ),
-                  Center(
-                    child: Text(
-                      title,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 20.0),
+                child: Container(
+                  height: 270,
+                  width: double.infinity,
+                  margin: EdgeInsets.all(10),
+                  //child: Material(
+                  //child: Container(
+                  padding: EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("assets/images/dialog_card_bg.png"),
+                      fit: BoxFit.fill,
                     ),
                   ),
-                  Center(
-                    child: Text(message,textAlign: TextAlign.center,),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  //color: Colors.white,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: Container(
-                          width: 100,
-                          height: 40,
-                          child: RaisedButton(
-                              color: Theme.of(context).primaryColorDark,
-                              child: Text(
-                                'OK',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16),
-                              ),
-                              onPressed: () {
-
-                              }),
+                      Icon(
+                        Icons.update_outlined,
+                        size: 60,
+                      ),
+                      Center(
+                        child: Text(
+                          title,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20.0),
                         ),
                       ),
-
-                      SizedBox(width: 40,),
-
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: Container(
-                          width: 100,
-                          height: 40,
-                          child: RaisedButton(
-                              color: Theme.of(context).primaryColorDark,
-                              child: Text(
-                                'Cancel',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16),
-                              ),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              }),
+                      Center(
+                        child: Text(
+                          message,
+                          textAlign: TextAlign.center,
                         ),
                       ),
-
-                    ],)
-
-                ],
-              ),
-            ),
-          ));
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Container(
+                              width: 100,
+                              height: 40,
+                              child: RaisedButton(
+                                  color: Theme.of(context).primaryColorDark,
+                                  child: Text(
+                                    'OK',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16),
+                                  ),
+                                  onPressed: () {}),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 40,
+                          ),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Container(
+                              width: 100,
+                              height: 40,
+                              child: RaisedButton(
+                                  color: Theme.of(context).primaryColorDark,
+                                  child: Text(
+                                    'Cancel',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  }),
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ));
     });
   }
 
+  static void showOnlineRegistrationDialog(BuildContext context) {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      showDialog(
+          context: context,
+          builder: (_) => Center(
+                child: Container(
+                  height: 200,
+                  width: double.infinity,
+                  margin: EdgeInsets.all(50),
+                  padding: EdgeInsets.all(10),
+                  color: Colors.white,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Center(
+                        child: Text(
+                          'Choose your location',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18.0,
+                            color: Color(0xff188FC5),
+                          ),
+                        ),
+                      ),
+                      RaisedButton(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 40, right: 40),
+                          child: Text(
+                            'Star City',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        color: Color(0xff188FC5),
+                        onPressed: () {
+                          launch(
+                              'http://mojoenet.myanmaronlinecreations.com/webapp/online_registration/star_city');
+                        },
+                      ),
+                      RaisedButton(
+                        color: Color(0xff188FC5),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 40, right: 40),
+                          child: Text(
+                            'City Loft',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        onPressed: () {
+                          launch(
+                              'http://mojoenet.myanmaronlinecreations.com/webapp/online_registration/city_loft');
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ));
+    });
+  }
 }

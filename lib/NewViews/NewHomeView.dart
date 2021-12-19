@@ -199,16 +199,16 @@ class _NewHomeViewState extends State<NewHomeView> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Transform(
-                alignment: Alignment.center,
-                transform: Matrix4.rotationY(9.5),
-                child: InkWell(
-                  onTap: previous,
-                    child: Icon(Icons.play_circle_outline,color: Colors.white,)),
+              InkWell(
+                onTap: previous,
+                child: Image(
+                    image: AssetImage('assets/images/left_arrow_icon.png')),
               ),
               InkWell(
                 onTap: next,
-                  child: Icon(Icons.play_circle_outline,color: Colors.white,)),
+                child: Image(
+                    image: AssetImage('assets/images/right_arrow_icon.png')),
+              ),
             ],
           ),
         ))
