@@ -3,6 +3,7 @@ import 'package:MJN/NewViews/OnlinePaymentWebView.dart';
 import 'package:MJN/controllers/getPaymentMethodController.dart';
 import 'package:MJN/controllers/invoiceController.dart';
 import 'package:MJN/utils/app_constants.dart';
+import 'package:MJN/views/TabView.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -42,7 +43,7 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
 
   @override
   Widget build(BuildContext context) {
-    return changePageIndex == 1
+    return TabScreens.onlinePaymentIndex > 2
         ? OnlinePaymentWebView(paymentMethodLink)
         : Scaffold(
             backgroundColor: Color(0xff188FC5),
@@ -149,6 +150,7 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
                                           () {
                                         setState(() {
                                           changePageIndex = 1;
+                                          TabScreens.onlinePaymentIndex =3;
                                           paymentMethodLink =
                                               getPaymentMethodController
                                                   .getPaymentMethodsVo!

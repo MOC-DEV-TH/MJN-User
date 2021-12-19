@@ -1,9 +1,11 @@
+import 'package:MJN/NewViews/OnlinePaymentView.dart';
 import 'package:MJN/NewViews/PaymentInvoiceView.dart';
 import 'package:MJN/controllers/invoiceListController.dart';
 import 'package:MJN/controllers/transactionListController.dart';
 import 'package:MJN/models/accountInfoVO.dart';
 import 'package:MJN/models/invoiceListVO.dart';
 import 'package:MJN/utils/app_constants.dart';
+import 'package:MJN/views/TabView.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -40,7 +42,7 @@ class _NewPaymentViewState extends State<NewPaymentView> {
   Widget build(BuildContext context) {
 
     String paymentStatus = paymentStatusIndex == 1 ? 'Unpaid' : paymentStatusIndex == 2 ? 'Paid' : '';
-    return changePageIndex == 1 ? PaymentInvoiceView(paymentStatus,currentInvoiceIndex) :Scaffold(
+    return TabScreens.onlinePaymentIndex > 1 ? PaymentInvoiceView(paymentStatus,currentInvoiceIndex) :Scaffold(
       backgroundColor: Color(0xff188FC5),
       body: SingleChildScrollView(
         child: Container(
@@ -164,7 +166,8 @@ class _NewPaymentViewState extends State<NewPaymentView> {
                                   setState(() {
                                     currentInvoiceIndex = unPaidInvoiceLists[index].invoiceId;
                                     paymentStatusIndex = 1;
-                                    changePageIndex = 1;
+                                    TabScreens.onlinePaymentIndex = 2;
+                                    // changePageIndex = 1;
                                   });
                                 },
                                 child: Text(
@@ -333,11 +336,12 @@ class _NewPaymentViewState extends State<NewPaymentView> {
                                     child: InkWell(
                                       onTap: () {
                                         setState(() {
-
+                                          TabScreens.onlinePaymentIndex = 2;
+                                          print("Call page index${TabScreens.onlinePaymentIndex }");
                                           currentInvoiceIndex = paidInvoiceLists[index].invoiceId;
 
                                           paymentStatusIndex = 2;
-                                          changePageIndex = 1;
+                                         // changePageIndex = 1;
                                         });
                                       },
                                       child: Text(

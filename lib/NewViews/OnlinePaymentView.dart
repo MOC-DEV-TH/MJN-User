@@ -17,17 +17,12 @@ class _OnlinePaymentViewState extends State<OnlinePaymentView> {
   var buildTextController = TextEditingController();
   var unitTextController = TextEditingController();
   var contactNumberController = TextEditingController();
-
-  int changePageIndex = 0;
-
-
   final BillingResponseController billingResponseController =
       Get.put(BillingResponseController());
   final loginDataStorage = GetStorage();
 
   @override
   void initState() {
-    changePageIndex = 0;
     super.initState();
 
 
@@ -36,7 +31,7 @@ class _OnlinePaymentViewState extends State<OnlinePaymentView> {
   @override
   Widget build(BuildContext context) {
 
-    return changePageIndex == 1
+    return TabScreens.onlinePaymentIndex > 0
         ? NewPaymentView()
         : Scaffold(
             backgroundColor: Color(0xff188FC5),
@@ -203,7 +198,7 @@ class _OnlinePaymentViewState extends State<OnlinePaymentView> {
                                                             milliseconds: 700),
                                                         () {
                                                       setState(() {
-                                                        changePageIndex = 1;
+                                                        TabScreens.onlinePaymentIndex=1;
                                                       });
                                                     })
                                                   }

@@ -21,9 +21,8 @@ import 'package:get/get.dart';
 
 class TabScreens extends StatefulWidget {
   static const routeName = '/tab_screen';
-
+  static int onlinePaymentIndex = 0;
   int pageIndex;
-
 
   TabScreens(this.pageIndex);
 
@@ -33,7 +32,6 @@ class TabScreens extends StatefulWidget {
 
 class _TabScreensState extends State<TabScreens> {
   var _scaffoldKey = GlobalKey<ScaffoldState>();
-
   bool isOpened = false;
   var notiCount = 0.obs;
   int currentPaymentIndex = 0;
@@ -158,6 +156,7 @@ class _TabScreensState extends State<TabScreens> {
   void _selectPage(int index) {
     if (langStorage.read(TOKEN) != null) {
       setState(() {
+        TabScreens.onlinePaymentIndex=0;
         changePageIndex = 0;
         _selectedPageIndex = index;
         navSelectedIndex = true;
@@ -185,7 +184,9 @@ class _TabScreensState extends State<TabScreens> {
           return NewNotificationView(MyAppDatabase.notificationDao!);
         }
       case 1:
-        return OnlinePaymentView();
+        {
+          return OnlinePaymentView();
+        }
       case 2:
         return NewHomeView();
       case 3:
@@ -218,24 +219,6 @@ class _TabScreensState extends State<TabScreens> {
     return NewHomeView();
   }
 
-
-  void showMenuDialog(BuildContext context) {
-    showGeneralDialog(
-        context: context,
-        barrierDismissible: true,
-        barrierLabel:
-            MaterialLocalizations.of(context).modalBarrierDismissLabel,
-        barrierColor: Colors.black45,
-        transitionDuration: const Duration(milliseconds: 200),
-        pageBuilder: (BuildContext buildContext, Animation animation,
-            Animation secondaryAnimation) {
-          return SafeArea(
-            child: Container(
-                margin: EdgeInsets.only(top: 50), child: DialogUI(context)),
-          );
-        });
-  }
-
   Widget logoAndNavTitleAppBar(int navSelectPage, BuildContext context) {
     return AppBar(
       automaticallyImplyLeading: false,
@@ -252,16 +235,34 @@ class _TabScreensState extends State<TabScreens> {
                 ? Container(
                     child: GestureDetector(
                         onTap: () {
-
-                        },
-                        child: Icon(Icons.account_circle)),
+                        }, child: Icon(Icons.account_circle)),
                   )
                 : Container(
                     child: GestureDetector(
                         onTap: () {
+                         /* setState(() {
+                            _selectedPageIndex = 2;
+                          });*/
+                          if(_selectedPageIndex==1) {
+                            setState(() {
+                              int index = TabScreens.onlinePaymentIndex - 1;
+                              TabScreens.onlinePaymentIndex =
+                              index < 0 ? 0 : index;
+                              if(index > -1)
+                              _selectedPageIndex = 1;
+                              else
+                                _selectedPageIndex = 2;
+                            });
+                          }else if(_selectedPageIndex == 3)
+                            {
+                               setState(() {
+                            _selectedPageIndex = 3;
+                          });
+                            }else{
                              setState(() {
-                               _selectedPageIndex = 2;
-                             });
+                            _selectedPageIndex = 2;
+                          });
+                          }
                         },
                         child: Icon(Icons.keyboard_backspace)),
                   ),
@@ -355,140 +356,6 @@ class _TabScreensState extends State<TabScreens> {
         //           isSelected[i] = i == index;
         //         }
         //
-        //         if (index == 0) {
-        //           langStorage.write(LANGUAGE, 'EN');
-        //           var locale = Locale('en', 'US');
-        //           Get.updateLocale(locale);
-        //         } else {
-        //           langStorage.write(LANGUAGE, 'MY');
-        //           var locale = Locale('my', 'MM');
-        //           Get.updateLocale(locale);
-        //         }
-        //       });
-        //     },
-        //     isSelected: isSelected,
-        //   ),
-        // ),
-      ],
-    );
-  }
-
-  Widget titleAppBar(int pageIndex, BuildContext context) {
-    return AppBar(
-      automaticallyImplyLeading: false,
-      toolbarHeight: 90,
-      elevation: 2,
-      backgroundColor: Color(0xff242527),
-      iconTheme: IconThemeData(color: Colors.grey),
-      title: Container(
-        width: MediaQuery.of(context).size.width,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-              child: GestureDetector(
-                  onTap: () {
-                    Get.back();
-                  },
-                  child: Icon(Icons.keyboard_backspace)),
-            ),
-            pageIndex == 5
-                ? Container(
-                    //padding: EdgeInsets.only( top: 5,left: 85),
-                    child: Text(
-                      'About Us',
-                      style: TextStyle(fontSize: 14),
-                    ),
-                  )
-                : pageIndex == 6
-                    ? Container(
-                        //padding: EdgeInsets.only( top: 5,left: 65),
-                        child: Text(
-                          'Product And Services',
-                          style: TextStyle(fontSize: 14),
-                        ),
-                      )
-                    : pageIndex == 7
-                        ? Container(
-                            //padding: EdgeInsets.only( top: 5,left: 65),
-                            child: Text(
-                              'Terms & Conditions',
-                              style: TextStyle(fontSize: 14),
-                            ),
-                          )
-                        : pageIndex == 8
-                            ? Container(
-                                //padding: EdgeInsets.only( top: 5,left: 85),
-                                child: Text(
-                                  'Contact Us',
-                                  style: TextStyle(fontSize: 14),
-                                ),
-                              )
-                            : pageIndex == 9
-                                ? Container(
-                                    //padding: EdgeInsets.only( top: 5,left: 85),
-                                    child: Text(
-                                      'My Account',
-                                      style: TextStyle(fontSize: 14),
-                                    ),
-                                  )
-                                : Container(
-                                    margin:
-                                        EdgeInsets.only(left: 65, right: 50),
-                                    child: Text(''),
-                                  ),
-            Container(
-              child: GestureDetector(
-                onTap: () {
-                  showMenuDialog(context);
-                },
-                child: Image(
-                  image: AssetImage('assets/images/menu_icon.png'),
-                  height: 24,
-                  width: 23,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-      actions: [
-        // Container(
-        //   margin: EdgeInsets.only(right: 20,top: 24,bottom: 24 ),
-        //   padding: EdgeInsets.zero,
-        //   decoration: BoxDecoration(
-        //     color: Colors.white,
-        //     border: Border.all(color: Colors.black, width: 1.0),
-        //     borderRadius: BorderRadius.all(Radius.circular(5.0)),
-        //   ),
-        //   child: ToggleButtons(
-        //     constraints: BoxConstraints.tight(Size(35, 35)),
-        //     selectedColor: Colors.white,
-        //     borderRadius: BorderRadius.circular(5),
-        //     fillColor: Colors.blue,
-        //     children: [
-        //       Container(
-        //         alignment: Alignment.center,
-        //         width: _buttonWidth(context),
-        //         child: Text(
-        //           'EN',
-        //           style: TextStyle(fontSize: 10),
-        //         ),
-        //       ),
-        //       Container(
-        //         alignment: Alignment.center,
-        //         width: _buttonWidth(context),
-        //         child: Text(
-        //           'MY',
-        //           style: TextStyle(fontSize: 10),
-        //         ),
-        //       ),
-        //     ],
-        //     onPressed: (int index) {
-        //       setState(() {
-        //         for (int i = 0; i < isSelected.length; i++) {
-        //           isSelected[i] = i == index;
-        //         }
         //         if (index == 0) {
         //           langStorage.write(LANGUAGE, 'EN');
         //           var locale = Locale('en', 'US');
@@ -668,4 +535,153 @@ class _TabScreensState extends State<TabScreens> {
       ),
     );
   }
+}
+
+void showMenuDialog(BuildContext context) {
+  showGeneralDialog(
+      context: context,
+      barrierDismissible: true,
+      barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+      barrierColor: Colors.black45,
+      transitionDuration: const Duration(milliseconds: 200),
+      pageBuilder: (BuildContext buildContext, Animation animation,
+          Animation secondaryAnimation) {
+        return SafeArea(
+          child: Container(
+              margin: EdgeInsets.only(top: 50), child: DialogUI(context)),
+        );
+      });
+}
+
+Widget titleAppBar(int pageIndex, BuildContext context) {
+  return AppBar(
+    automaticallyImplyLeading: false,
+    toolbarHeight: 90,
+    elevation: 2,
+    backgroundColor: Color(0xff242527),
+    iconTheme: IconThemeData(color: Colors.grey),
+    title: Container(
+      width: MediaQuery.of(context).size.width,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            child: GestureDetector(
+                onTap: () {
+                  Get.back();
+                },
+                child: Icon(Icons.keyboard_backspace)),
+          ),
+          pageIndex == 5
+              ? Container(
+//padding: EdgeInsets.only( top: 5,left: 85),
+                  child: Text(
+                    'About Us',
+                    style: TextStyle(fontSize: 14),
+                  ),
+                )
+              : pageIndex == 6
+                  ? Container(
+//padding: EdgeInsets.only( top: 5,left: 65),
+                      child: Text(
+                        'Product And Services',
+                        style: TextStyle(fontSize: 14),
+                      ),
+                    )
+                  : pageIndex == 7
+                      ? Container(
+//padding: EdgeInsets.only( top: 5,left: 65),
+                          child: Text(
+                            'Terms & Conditions',
+                            style: TextStyle(fontSize: 14),
+                          ),
+                        )
+                      : pageIndex == 8
+                          ? Container(
+//padding: EdgeInsets.only( top: 5,left: 85),
+                              child: Text(
+                                'Contact Us',
+                                style: TextStyle(fontSize: 14),
+                              ),
+                            )
+                          : pageIndex == 9
+                              ? Container(
+//padding: EdgeInsets.only( top: 5,left: 85),
+                                  child: Text(
+                                    'My Account',
+                                    style: TextStyle(fontSize: 14),
+                                  ),
+                                )
+                              : Container(
+                                  margin: EdgeInsets.only(left: 65, right: 50),
+                                  child: Text(''),
+                                ),
+          Container(
+            child: GestureDetector(
+              onTap: () {
+                showMenuDialog(context);
+              },
+              child: Image(
+                image: AssetImage('assets/images/menu_icon.png'),
+                height: 24,
+                width: 23,
+              ),
+            ),
+          ),
+        ],
+      ),
+    ),
+    actions: [
+// Container(
+//   margin: EdgeInsets.only(right: 20,top: 24,bottom: 24 ),
+//   padding: EdgeInsets.zero,
+//   decoration: BoxDecoration(
+//     color: Colors.white,
+//     border: Border.all(color: Colors.black, width: 1.0),
+//     borderRadius: BorderRadius.all(Radius.circular(5.0)),
+//   ),
+//   child: ToggleButtons(
+//     constraints: BoxConstraints.tight(Size(35, 35)),
+//     selectedColor: Colors.white,
+//     borderRadius: BorderRadius.circular(5),
+//     fillColor: Colors.blue,
+//     children: [
+//       Container(
+//         alignment: Alignment.center,
+//         width: _buttonWidth(context),
+//         child: Text(
+//           'EN',
+//           style: TextStyle(fontSize: 10),
+//         ),
+//       ),
+//       Container(
+//         alignment: Alignment.center,
+//         width: _buttonWidth(context),
+//         child: Text(
+//           'MY',
+//           style: TextStyle(fontSize: 10),
+//         ),
+//       ),
+//     ],
+//     onPressed: (int index) {
+//       setState(() {
+//         for (int i = 0; i < isSelected.length; i++) {
+//           isSelected[i] = i == index;
+//         }
+//         if (index == 0) {
+//           langStorage.write(LANGUAGE, 'EN');
+//           var locale = Locale('en', 'US');
+//           Get.updateLocale(locale);
+//         } else {
+//           langStorage.write(LANGUAGE, 'MY');
+//           var locale = Locale('my', 'MM');
+//           Get.updateLocale(locale);
+//         }
+//       });
+//     },
+//     isSelected: isSelected,
+//   ),
+// ),
+    ],
+  );
 }
