@@ -6,6 +6,7 @@ import 'package:MJN/models/invoiceListVO.dart';
 import 'package:MJN/models/serviceRequestTypeVO.dart';
 import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/utils/app_utils.dart';
+import 'package:MJN/views/TabView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -50,7 +51,7 @@ class _NewCreateServiceTicketViewState
 
   @override
   Widget build(BuildContext context) {
-    return changePageIndex == 1
+    return TabScreens.serviceComplainIndex > 1
         ? SuccessCreateTicketView()
         : Scaffold(
             backgroundColor: Color(0xff188FC5),
@@ -180,39 +181,16 @@ class _NewCreateServiceTicketViewState
                                   Container(
                                     height: 30,
                                     decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color: Color(0xffe9e9e9)),
+                                      border:
+                                          Border.all(color: Color(0xffe9e9e9)),
                                     ),
                                     child: Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 3),
-                                      child: TextField(
-                                        textAlign: TextAlign.center,
-                                        controller: nameText,
-                                        style: TextStyle(
-                                            color: Color(0xffe9e9e9),
-                                            fontSize: 14),
-                                        decoration: InputDecoration(
-                                          border: InputBorder.none,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 30,
-                                  ),
-                                  Container(
-                                    height: 30,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color: Color(0xffe9e9e9)),
-                                    ),
-                                    child: Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 3),
+                                      padding: const EdgeInsets.only(bottom: 3),
                                       child: TextFormField(
-                                        initialValue: loginDataStorage.read(BUILDING).toString(),
                                         textAlign: TextAlign.center,
+                                        initialValue: loginDataStorage
+                                            .read(USER_NAME)
+                                            .toString(),
                                         style: TextStyle(
                                             color: Color(0xffe9e9e9),
                                             fontSize: 14),
@@ -228,14 +206,15 @@ class _NewCreateServiceTicketViewState
                                   Container(
                                     height: 30,
                                     decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color: Color(0xffe9e9e9)),
+                                      border:
+                                          Border.all(color: Color(0xffe9e9e9)),
                                     ),
                                     child: Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 3),
+                                      padding: const EdgeInsets.only(bottom: 3),
                                       child: TextFormField(
-                                        initialValue: loginDataStorage.read(UNIT).toString(),
+                                        initialValue: loginDataStorage
+                                            .read(BUILDING)
+                                            .toString(),
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                             color: Color(0xffe9e9e9),
@@ -252,38 +231,15 @@ class _NewCreateServiceTicketViewState
                                   Container(
                                     height: 30,
                                     decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color: Color(0xffe9e9e9)),
+                                      border:
+                                          Border.all(color: Color(0xffe9e9e9)),
                                     ),
                                     child: Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 3),
-                                      child: TextField(
-                                        textAlign: TextAlign.center,
-                                        controller: emailText,
-                                        style: TextStyle(
-                                            color: Color(0xffe9e9e9),
-                                            fontSize: 14),
-                                        decoration: InputDecoration(
-                                          border: InputBorder.none,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 30,
-                                  ),
-                                  Container(
-                                    height: 30,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color: Color(0xffe9e9e9)),
-                                    ),
-                                    child: Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 3),
+                                      padding: const EdgeInsets.only(bottom: 3),
                                       child: TextFormField(
-                                        initialValue: loginDataStorage.read(PHONE_NO).toString(),
+                                        initialValue: loginDataStorage
+                                            .read(UNIT)
+                                            .toString(),
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                             color: Color(0xffe9e9e9),
@@ -300,12 +256,61 @@ class _NewCreateServiceTicketViewState
                                   Container(
                                     height: 30,
                                     decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color: Color(0xffe9e9e9)),
+                                      border:
+                                          Border.all(color: Color(0xffe9e9e9)),
                                     ),
                                     child: Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 3),
+                                      padding: const EdgeInsets.only(bottom: 3),
+                                      child: TextFormField(
+                                        textAlign: TextAlign.center,
+                                        initialValue: loginDataStorage
+                                            .read(EMAIL)
+                                            .toString(),
+                                        style: TextStyle(
+                                            color: Color(0xffe9e9e9),
+                                            fontSize: 14),
+                                        decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 30,
+                                  ),
+                                  Container(
+                                    height: 30,
+                                    decoration: BoxDecoration(
+                                      border:
+                                          Border.all(color: Color(0xffe9e9e9)),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(bottom: 3),
+                                      child: TextFormField(
+                                        initialValue: loginDataStorage
+                                            .read(PHONE_NO)
+                                            .toString(),
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: Color(0xffe9e9e9),
+                                            fontSize: 14),
+                                        decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 30,
+                                  ),
+                                  Container(
+                                    height: 30,
+                                    decoration: BoxDecoration(
+                                      border:
+                                          Border.all(color: Color(0xffe9e9e9)),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(bottom: 3),
                                       child: TextField(
                                         textAlign: TextAlign.center,
                                         controller: wifiText,
@@ -344,13 +349,11 @@ class _NewCreateServiceTicketViewState
                                                 color: Color(0xffe9e9e9),
                                                 width: 0.8,
                                               ),
-                                              boxShape: NeumorphicBoxShape
-                                                  .roundRect(
-                                                      BorderRadius.circular(
-                                                          0)),
+                                              boxShape:
+                                                  NeumorphicBoxShape.roundRect(
+                                                      BorderRadius.circular(0)),
                                               depth: -4,
-                                              lightSource:
-                                                  LightSource.topLeft,
+                                              lightSource: LightSource.topLeft,
 //                    color: Colors.grey
                                             ),
                                             child: Padding(
@@ -370,20 +373,25 @@ class _NewCreateServiceTicketViewState
                                                         .details
                                                         .map((label) =>
                                                             DropdownMenuItem(
-                                                                child: Padding(
-                                                                  padding: const EdgeInsets.only(left: 15),
-                                                                  child: Text(
-                                                                    label.name
-                                                                        .toString(),
-                                                                    textAlign: TextAlign.end,
-                                                                    style: TextStyle(
-                                                                        color: Color(
-                                                                            0xffe9e9e9),
-                                                                        fontSize:
-                                                                            12),
-                                                                  ),
+                                                              child: Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .only(
+                                                                        left:
+                                                                            15),
+                                                                child: Text(
+                                                                  label.name
+                                                                      .toString(),
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .end,
+                                                                  style: TextStyle(
+                                                                      color: Color(
+                                                                          0xffe9e9e9),
+                                                                      fontSize:
+                                                                          12),
                                                                 ),
-
+                                                              ),
                                                               value: label,
                                                             ))
                                                         .toList(),
@@ -395,8 +403,8 @@ class _NewCreateServiceTicketViewState
                                                     '-Select Service Request-',
                                                     style: TextStyle(
                                                         fontSize: 8,
-                                                        color: Color(
-                                                            0xffe9e9e9)),
+                                                        color:
+                                                            Color(0xffe9e9e9)),
                                                   ),
                                                 ),
                                               ),
@@ -414,13 +422,13 @@ class _NewCreateServiceTicketViewState
                                     padding: EdgeInsets.only(
                                         left: 4, top: 4, right: 4),
                                     decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color: Color(0xffe9e9e9)),
+                                      border:
+                                          Border.all(color: Color(0xffe9e9e9)),
                                     ),
                                     child: TextField(
                                       controller: messageText,
-                                      style: TextStyle(color:  Color(
-                                          0xffe9e9e9)),
+                                      style:
+                                          TextStyle(color: Color(0xffe9e9e9)),
                                       decoration: InputDecoration(
                                         border: InputBorder.none,
                                       ),
@@ -445,11 +453,9 @@ class _NewCreateServiceTicketViewState
                               return Center(
                                 child: CircularProgressIndicator(),
                               );
-
                             } else {
                               return NeumorphicButton(
                                 onPressed: () {
-
                                   if (buildingText.text == '' ||
                                       unitText.text == '' ||
                                       emailText.text == '' ||
@@ -462,38 +468,46 @@ class _NewCreateServiceTicketViewState
                                   } else {
                                     RequestCreateTicket requestCreateTicket =
                                         new RequestCreateTicket(
-                                            nameText.value.text,
-                                            loginDataStorage.read(BUILDING).toString(),
+                                            loginDataStorage.read(USER_NAME),
+                                            loginDataStorage
+                                                .read(BUILDING)
+                                                .toString(),
                                             loginDataStorage.read(UNIT),
-                                            emailText.value.text,
+                                            loginDataStorage.read(EMAIL),
                                             loginDataStorage.read(PHONE_NO),
-                                            selectServiceRequestIndex.toString(),
+                                            selectServiceRequestIndex
+                                                .toString(),
                                             '99',
                                             "Topic Other",
                                             messageText.value.text,
-                                            loginDataStorage.read(DATA_TENANT_ID),
+                                            wifiText.value.text,
+                                            loginDataStorage
+                                                .read(DATA_TENANT_ID),
                                             loginDataStorage.read(UID),
                                             app_version);
 
-                                    createTicketController.createTicket(
-                                        requestCreateTicket,
-                                        loginDataStorage.read(TOKEN),
-                                        context).then((value) => {
-
-                                    if(createTicketController.networkResult!.status == 'Success'){
-                                        Future.delayed(const Duration(milliseconds: 700), () {
-                                  setState(() {
-                                  changePageIndex = 1;
-                                  });
-                                  })
-                                }
-
-                                    });
-
-
-
+                                    createTicketController
+                                        .createTicket(
+                                            requestCreateTicket,
+                                            loginDataStorage.read(TOKEN),
+                                            context)
+                                        .then((value) => {
+                                              if (createTicketController
+                                                      .networkResult!.status ==
+                                                  'Success')
+                                                {
+                                                  Future.delayed(
+                                                      const Duration(
+                                                          milliseconds: 700),
+                                                      () {
+                                                    setState(() {
+                                                      TabScreens
+                                                          .serviceComplainIndex = 2;
+                                                    });
+                                                  })
+                                                }
+                                            });
                                   }
-
                                 },
                                 child: Center(
                                   child: Text(

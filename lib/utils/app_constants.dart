@@ -16,6 +16,7 @@ const TRANSACTION_ID = '&trxn_id=';
 
 //get storage key
 const USER_NAME = 'user_name';
+const EMAIL = 'email';
 const TOKEN = 'token';
 const DATA_TENANT_ID = 'tenant_id';
 const UNIT = 'unit';

@@ -29,6 +29,8 @@ class LoginController extends GetxController {
           loginDataStorage.write(UNIT, loginVo.unit);
           loginDataStorage.write(TOKEN, loginVo.token);
           loginDataStorage.write(DATA_TENANT_ID, loginVo.tenantId);
+          loginDataStorage.write(USER_NAME, loginVo.userName);
+          loginDataStorage.write(EMAIL, loginVo.email);
 
           Navigator.of(context).pushReplacementNamed(TabScreens.routeName);
         }

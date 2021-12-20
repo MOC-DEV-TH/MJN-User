@@ -21,7 +21,7 @@ class ProductAndServiceItems extends StatelessWidget {
                 margin: EdgeInsets.only(left: 34),
                 decoration: BoxDecoration(
                   image: DecorationImage(image:NetworkImage(
-                    BASE_URL + offerImages.imageMm,
+                    BASE_URL + offerImages.image,
                   ) ,fit: BoxFit.fill),
                   border: Border.all(color: Color(0xffBC8F8F)),
                   borderRadius: BorderRadius.all(

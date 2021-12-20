@@ -41,6 +41,12 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
     print(message.data);
 
     notificationDao.insertNotification(notificationModelVO).then((value) => print('Success'));
+
+    Get.toNamed(
+      TabScreens.routeName,
+      arguments: "Notification",
+    );
+
   }
 }
 
@@ -73,7 +79,9 @@ void onReceivedFirebaseMsg(RemoteMessage message) async{
     print(message.data);
     EventBusUtils.getInstance().fire(notiModel);
     notificationDao.insertNotification(notiModel).then((value) => print('Success'));
+
   }
+
 }
 
 

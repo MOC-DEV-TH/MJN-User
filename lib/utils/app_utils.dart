@@ -15,7 +15,7 @@ class AppUtils {
       title,
       message,
       icon: Icon(Icons.error, color: Colors.black),
-      backgroundColor: Colors.green,
+      backgroundColor: Colors.red,
       snackPosition: SnackPosition.BOTTOM,
       duration: Duration(seconds: 2),
     );
@@ -63,11 +63,8 @@ class AppUtils {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Icon(
-                        Icons.logout,
-                        color: Color(0xff188FC5),
-                        size: 50,
-                      ),
+                      Image(
+                          image: AssetImage('assets/images/logout_icon.png')),
                       Center(
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 20),
@@ -170,11 +167,8 @@ class AppUtils {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Icon(
-                        Icons.account_circle,
-                        color: Color(0xff188FC5),
-                        size: 60,
-                      ),
+                      Image(
+                          image: AssetImage('assets/images/account_icon.png')),
                       Center(
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 20),

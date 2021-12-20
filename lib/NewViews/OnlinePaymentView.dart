@@ -204,7 +204,7 @@ class _OnlinePaymentViewState extends State<OnlinePaymentView> {
                                                   }
                                                 else
                                                   {
-                                                    AppUtils.showSuccessSnackBar(
+                                                    AppUtils.showErrorSnackBar(
                                                         'Fail',
                                                         'Invalid Phone Number!!')
                                                   }

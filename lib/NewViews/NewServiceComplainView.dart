@@ -5,6 +5,7 @@ import 'package:MJN/models/ticketListVO.dart';
 import 'package:MJN/models/ticketVO.dart';
 import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/utils/app_utils.dart';
+import 'package:MJN/views/TabView.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -40,7 +41,7 @@ class _NewServiceComplainViewState extends State<NewServiceComplainView> {
 
   @override
   Widget build(BuildContext context) {
-    return changePageIndex == 1
+    return TabScreens.serviceComplainIndex > 0
         ? NewCreateServiceTicketView()
         : Scaffold(
             backgroundColor: Color(0xff188FC5),
@@ -119,7 +120,7 @@ class _NewServiceComplainViewState extends State<NewServiceComplainView> {
                                               .checkCanCreateTicketVo.canCreate)
                                             {
                                               setState(() {
-                                                changePageIndex = 1;
+                                                TabScreens.serviceComplainIndex = 1;
                                               })
                                             }
                                           else
@@ -128,6 +129,8 @@ class _NewServiceComplainViewState extends State<NewServiceComplainView> {
                                                   'Ticket can\'t be created as we are working\nfor your current ticket')
                                             }
                                         });
+
+
                               },
                               child: Image(
                                   image: AssetImage(

@@ -47,6 +47,7 @@ class _NewHomeViewState extends State<NewHomeView> {
     itemWidth = size.width / 2;
 
     return Scaffold(
+      backgroundColor: Color(0xff188FC5),
       body: Obx(() {
         if (homeController.isLoading.value) {
           return Center(
@@ -102,7 +103,6 @@ class _NewHomeViewState extends State<NewHomeView> {
                     height: 200,
                     child: _buildCustomCarousalSlider()),
                 Container(
-                  color: Color(0xff188FC5),
                   child: Column(
                     children: [
                       SizedBox(
@@ -159,7 +159,7 @@ class _NewHomeViewState extends State<NewHomeView> {
         decoration: BoxDecoration(
           image: DecorationImage(
               image: NetworkImage(
-                BASE_URL + offer.imageMm,
+                BASE_URL + offer.image,
               ),
               fit: BoxFit.fill),
           border: Border.all(color: Color(0xffBC8F8F)),
@@ -188,7 +188,7 @@ class _NewHomeViewState extends State<NewHomeView> {
                   homeController.promotionAndOfferVo!.details.promotion.length,
               itemBuilder: (context, index, realIndex) {
                 final urlImage = homeController
-                    .promotionAndOfferVo!.details.promotion[index].imageMm;
+                    .promotionAndOfferVo!.details.promotion[index].image;
                 return _buildImage(urlImage, index);
               }),
         ),

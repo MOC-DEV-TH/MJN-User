@@ -8,6 +8,7 @@ class RequestCreateTicket {
   String topic;
   String topic_other;
   String message;
+  String ssid;
   String tenant_id;
   String uid;
   String app_version;
@@ -22,6 +23,7 @@ class RequestCreateTicket {
       this.topic,
       this.topic_other,
       this.message,
+      this.ssid,
       this.tenant_id,
       this.uid,
       this.app_version);
@@ -38,7 +40,8 @@ class RequestCreateTicket {
     data['service_request'] = this.service_request;
     data['topic'] = this.topic;
     data['topic_other'] = this.topic_other;
-    data['message'] = this.name;
+    data['message'] = this.message;
+    data['ssid'] = this.ssid;
     data['tenant_id'] = this.tenant_id;
     data['uid'] = this.uid;
     data['app_version'] = this.app_version;

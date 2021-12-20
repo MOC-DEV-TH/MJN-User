@@ -125,6 +125,8 @@ flutter:
     - assets/images/about_us_bg.png
     - assets/images/left_arrow_icon.png
     - assets/images/right_arrow_icon.png
+    - assets/images/account_icon.png
+    - assets/images/logout_icon.png
 
 
 

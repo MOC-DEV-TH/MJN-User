@@ -22,6 +22,8 @@ import 'package:get/get.dart';
 class TabScreens extends StatefulWidget {
   static const routeName = '/tab_screen';
   static int onlinePaymentIndex = 0;
+  static int serviceComplainIndex = 0;
+  static int notificationPageIndex = 0;
   int pageIndex;
 
   TabScreens(this.pageIndex);
@@ -35,6 +37,9 @@ class _TabScreensState extends State<TabScreens> {
   bool isOpened = false;
   var notiCount = 0.obs;
   int currentPaymentIndex = 0;
+
+
+  final notificationAlert = Get.arguments as String;
 
   bool visible = false;
   bool pageSelectedIndex = false;
@@ -63,9 +68,23 @@ class _TabScreensState extends State<TabScreens> {
   ];
 
   late StreamSubscription notiSub;
+  late int _selectedPageIndex;
 
   @override
   void initState() {
+
+    print(notificationAlert.toString());
+    if(notificationAlert != null){
+      setState(() {
+        _selectedPageIndex = 0;
+      });
+
+    }
+    else {
+      _selectedPageIndex = 2;
+    }
+
+
     changePageIndex = 0;
     visible = false;
     isSelected = [true, false];
@@ -150,13 +169,16 @@ class _TabScreensState extends State<TabScreens> {
     }
   }
 
-  int _selectedPageIndex = 2;
+
+
   int changePageIndex = 0;
 
   void _selectPage(int index) {
     if (langStorage.read(TOKEN) != null) {
       setState(() {
-        TabScreens.onlinePaymentIndex=0;
+        TabScreens.onlinePaymentIndex = 0;
+        TabScreens.serviceComplainIndex = 0;
+        TabScreens.notificationPageIndex = 0;
         changePageIndex = 0;
         _selectedPageIndex = index;
         navSelectedIndex = true;
@@ -233,35 +255,49 @@ class _TabScreensState extends State<TabScreens> {
           children: [
             navSelectPage == 2
                 ? Container(
-                    child: GestureDetector(
-                        onTap: () {
-                        }, child: Icon(Icons.account_circle)),
+
                   )
                 : Container(
                     child: GestureDetector(
                         onTap: () {
-                         /* setState(() {
+                          /* setState(() {
                             _selectedPageIndex = 2;
                           });*/
-                          if(_selectedPageIndex==1) {
+                          if (_selectedPageIndex == 1) {
                             setState(() {
                               int index = TabScreens.onlinePaymentIndex - 1;
                               TabScreens.onlinePaymentIndex =
-                              index < 0 ? 0 : index;
-                              if(index > -1)
-                              _selectedPageIndex = 1;
+                                  index < 0 ? 0 : index;
+                              if (index > -1)
+                                _selectedPageIndex = 1;
                               else
                                 _selectedPageIndex = 2;
                             });
-                          }else if(_selectedPageIndex == 3)
-                            {
-                               setState(() {
-                            _selectedPageIndex = 3;
-                          });
-                            }else{
-                             setState(() {
-                            _selectedPageIndex = 2;
-                          });
+                          } else if (_selectedPageIndex == 3) {
+                            setState(() {
+                              int scIndex = TabScreens.serviceComplainIndex - 1;
+                              TabScreens.serviceComplainIndex =
+                                  scIndex < 0 ? 0 : scIndex;
+                              if (scIndex > -1)
+                                _selectedPageIndex = 3;
+                              else
+                                _selectedPageIndex = 2;
+                            });
+                          } else if (_selectedPageIndex == 0) {
+                            setState(() {
+                              int notiIndex =
+                                  TabScreens.notificationPageIndex - 1;
+                              TabScreens.notificationPageIndex =
+                              notiIndex < 0 ? 0 : notiIndex;
+                              if (notiIndex > -1)
+                                _selectedPageIndex = 0;
+                              else
+                                _selectedPageIndex = 2;
+                            });
+                          } else {
+                            setState(() {
+                              _selectedPageIndex = 2;
+                            });
                           }
                         },
                         child: Icon(Icons.keyboard_backspace)),

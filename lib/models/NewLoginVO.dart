@@ -20,6 +20,10 @@ class NewLoginVo {
     required this.building,
     required this.unit,
     required this.phone,
+    required this.userName,
+    required this.email,
+    required this.firstName,
+    required this.lastName,
     required this.token,
   });
 
@@ -33,6 +37,10 @@ class NewLoginVo {
   String building;
   String unit;
   String phone;
+  String userName;
+  String email;
+  String firstName;
+  String lastName;
   String token;
 
   factory NewLoginVo.fromJson(Map<String, dynamic> json) => NewLoginVo(
@@ -46,6 +54,10 @@ class NewLoginVo {
     building: json["building"],
     unit: json["unit"],
     phone: json["phone"],
+    userName: json["username"],
+    email: json["email"],
+    firstName: json["firstname"],
+    lastName: json["lastname"],
     token: json["token"],
   );
 
@@ -60,6 +72,10 @@ class NewLoginVo {
     "building": building,
     "unit": unit,
     "phone": phone,
+    "username" : userName,
+    "email" : email,
+    "firstname" : firstName,
+    "lastname" : lastName,
     "token": token,
   };
 }

@@ -1,14 +1,15 @@
 import 'package:MJN/models/notificationModelVO.dart';
 import 'package:MJN/presistence/dao/NotificationDao.dart';
+import 'package:MJN/presistence/database/MyAppDatabase.dart';
 import 'package:MJN/utils/eventbus_util.dart';
 import 'package:flutter/material.dart';
 
 class NewNotificationItems extends StatefulWidget {
   String text;
   NotificationModelVO notificationList;
-  NotificationDao notificationDao;
 
-  NewNotificationItems(this.text, this.notificationList, this.notificationDao);
+
+  NewNotificationItems(this.text, this.notificationList);
   @override
   _NewNotificationItemsState createState() => _NewNotificationItemsState();
 }
@@ -49,7 +50,8 @@ class _NewNotificationItemsState extends State<NewNotificationItems> {
                       widget.notificationList.type_name, widget.notificationList.action_url, widget.notificationList.created,read: 1);
 
 
-                  widget.notificationDao.updateNotification(notification);
+                  //widget.notificationDao.updateNotification(notification);
+                  //MyAppDatabase.notificationDao!.updateNotification(notification);
 
                 },
                 child: Text('Outage on 20 Oct 2021...',

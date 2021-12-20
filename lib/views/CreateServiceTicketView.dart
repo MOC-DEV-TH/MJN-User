@@ -407,6 +407,7 @@ class _CreateServiceTicketViewState extends State<CreateServiceTicketView> {
                                                selectIssueIndex.toString(),
                                                "Topic Other",
                                                messageText.value.text,
+                                               messageText.value.text,
                                                loginDataStorage.read(DATA_TENANT_ID),
                                                loginDataStorage.read(UID),
                                                app_version);
