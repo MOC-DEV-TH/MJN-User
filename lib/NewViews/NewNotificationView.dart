@@ -8,12 +8,14 @@ import 'package:MJN/presistence/dao/NotificationDao.dart';
 import 'package:MJN/presistence/database/MyAppDatabase.dart';
 import 'package:MJN/presistence/database/MyDB.dart';
 import 'package:MJN/presistence/db/database_util.dart';
+import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/utils/app_utils.dart';
 import 'package:MJN/utils/eventbus_util.dart';
 import 'package:MJN/views/TabView.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:get_storage/get_storage.dart';
 
 class NewNotificationView extends StatefulWidget {
   static const routeName = '/notification_screen';
@@ -33,6 +35,8 @@ class _NewNotificationViewState extends State<NewNotificationView> {
   late StreamSubscription notiSub;
 
   late StreamSubscription notiUpdate;
+
+  final langStorage = GetStorage();
 
   bool isReadMore = false;
 
@@ -110,185 +114,186 @@ class _NewNotificationViewState extends State<NewNotificationView> {
 
   @override
   Widget build(BuildContext context) {
-    return TabScreens.notificationPageIndex > 0
-        ? UnreadNotificationView()
-        : Scaffold(
-            backgroundColor: Color(0xff188FC5),
-            body: GestureDetector(
-              onTap: () {
-                FocusManager.instance.primaryFocus?.unfocus();
-              },
-              child: SingleChildScrollView(
-                child: Container(
-                  margin: EdgeInsets.all(20),
-                  child: Column(
-                    children: [
-                      Obx(() {
-                        return Text(
-                          "${notiCount.value} Unread Messages",
-                          style: TextStyle(color: Colors.white),
-                        );
-                      }),
-                      Container(
-                        width: 60,
-                        height: 30,
-                        alignment: Alignment.centerLeft,
-                        margin: EdgeInsets.only(
-                          top: 10,
-                        ),
-                        child: NeumorphicButton(
-                          onPressed: () {
-                            retrieveAllUnreadNotifications().then((value) => {
-                                  if (value.length > 0)
-                                    {
-                                      setState(() {
-                                        TabScreens.notificationPageIndex = 1;
-                                      })
-                                    }
-                                });
-                          },
-                          child: Text(
-                            "View",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 10,
-                                color: Color(0xff188FC5)),
-                          ),
-                          style: NeumorphicStyle(
-                            shape: NeumorphicShape.flat,
-                            boxShape: NeumorphicBoxShape.roundRect(
-                                BorderRadius.circular(8)),
-                            color: Colors.white,
-                            depth: -8,
+      return TabScreens.notificationPageIndex > 0
+          ? UnreadNotificationView()
+          : Scaffold(
+        backgroundColor: Color(0xff188FC5),
+        body: GestureDetector(
+          onTap: () {
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
+          child: SingleChildScrollView(
+            child: Container(
+              margin: EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  Obx(() {
+                    return Text(
+                      "${notiCount.value} Unread Messages",
+                      style: TextStyle(color: Colors.white),
+                    );
+                  }),
+                  Container(
+                    width: 60,
+                    height: 30,
+                    alignment: Alignment.centerLeft,
+                    margin: EdgeInsets.only(
+                      top: 10,
+                    ),
+                    child: NeumorphicButton(
+                      onPressed: () {
+                        retrieveAllUnreadNotifications().then((value) => {
+                          if (value.length > 0)
+                            {
+                              setState(() {
+                                TabScreens.notificationPageIndex = 1;
+                              })
+                            }
+                        });
+                      },
+                      child: Text(
+                        "View",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 10,
+                            color: Color(0xff188FC5)),
+                      ),
+                      style: NeumorphicStyle(
+                        shape: NeumorphicShape.flat,
+                        boxShape: NeumorphicBoxShape.roundRect(
+                            BorderRadius.circular(8)),
+                        color: Colors.white,
+                        depth: -8,
 //                lightSource: LightSource.topLeft,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:
+                            BorderRadius.all(Radius.circular(5.0)),
+                          ),
+                          height: 40,
+                          padding: EdgeInsets.only(bottom: 6),
+                          child: TextField(
+                            controller: searchTextController,
+                            textAlign: TextAlign.center,
+                            onChanged: (String value) {
+                              if (value.length <= 0) {
+                                retrieveUsers().then((value) {
+                                  notificationLists = value;
+                                  setState(() {});
+                                });
+                              }
+                            },
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                            ),
                           ),
                         ),
                       ),
                       SizedBox(
-                        height: 10,
+                        width: 20,
                       ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(5.0)),
-                              ),
-                              height: 40,
-                              padding: EdgeInsets.only(bottom: 6),
-                              child: TextField(
-                                controller: searchTextController,
-                                textAlign: TextAlign.center,
-                                onChanged: (String value) {
-                                  if (value.length <= 0) {
-                                    retrieveUsers().then((value) {
-                                      notificationLists = value;
-                                      setState(() {});
-                                    });
-                                  }
-                                },
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          InkWell(
-                            onTap: () {
-                              setState(() {
-                                if (searchTextController.value.text != '') {
-                                  notificationLists = notificationLists
-                                      .where((element) => element.title
-                                          .contains(
-                                              searchTextController.value.text))
-                                      .toList();
-                                }
-                              });
-                            },
-                            child: Icon(
-                              Icons.search,
-                              color: Colors.white,
-                              size: 35,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          PopupMenuButton(
-                              icon: Padding(
-                                padding: const EdgeInsets.only(left: 5),
-                                child: Icon(
-                                  Icons.more_vert,
-                                  color: Colors.white,
-                                  size: 25,
-                                ),
-                              ),
-                              elevation: 20,
-                              enabled: true,
-                              onSelected: (value) {
-                                setState(() {
-                                  _value = value.toString();
-                                });
-                                if (_value == 'one') {
-                                  widget.notificationDao
-                                      .markAllNotifications()
-                                      .then((value) => {
-                                            EventBusUtils.getInstance()
-                                                .fire('MarkAll'),
-                                          });
-                                  widget.notificationDao
-                                      .fetchUnreadNotifications()
-                                      .then((value) =>
-                                          {notiCount.value = value.length});
-                                } else if (_value == 'two') {
-                                  widget.notificationDao
-                                      .deleteAllNotifications()
-                                      .then((value) => {
-                                            setState(() {
-                                              notificationLists.clear();
-
-                                              EventBusUtils.getInstance()
-                                                  .fire('DeleteAll');
-                                              retrieveAllUnreadNotifications()
-                                                  .then((value) => {
-                                                        notiCount.value =
-                                                            value.length,
-                                                      });
-                                            })
-                                          });
-                                }
-                              },
-                              itemBuilder: (context) => [
-                                    PopupMenuItem(
-                                      child: Text("Mark all as read"),
-                                      value: "one",
-                                    ),
-                                    PopupMenuItem(
-                                      child: Text("Delete all"),
-                                      value: "two",
-                                    ),
-                                  ])
-                        ],
-                      ),
-                      ListView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemBuilder: (ctx, index) {
-                          return NewNotificationItems(
-                              text, notificationLists[index]);
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            if (searchTextController.value.text != '') {
+                              notificationLists = notificationLists
+                                  .where((element) => element.title.toLowerCase()
+                                  .contains(
+                                  searchTextController.value.text))
+                                  .toList();
+                            }
+                          });
                         },
-                        itemCount: notificationLists.length,
+                        child: Icon(
+                          Icons.search,
+                          color: Colors.white,
+                          size: 35,
+                        ),
                       ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      PopupMenuButton(
+                          icon: Padding(
+                            padding: const EdgeInsets.only(left: 5),
+                            child: Icon(
+                              Icons.more_vert,
+                              color: Colors.white,
+                              size: 25,
+                            ),
+                          ),
+                          elevation: 20,
+                          enabled: true,
+                          onSelected: (value) {
+                            setState(() {
+                              _value = value.toString();
+                            });
+                            if (_value == 'one') {
+                              widget.notificationDao
+                                  .markAllNotifications()
+                                  .then((value) => {
+                                EventBusUtils.getInstance()
+                                    .fire('MarkAll'),
+                              });
+                              widget.notificationDao
+                                  .fetchUnreadNotifications()
+                                  .then((value) =>
+                              {notiCount.value = value.length});
+                            } else if (_value == 'two') {
+                              widget.notificationDao
+                                  .deleteAllNotifications()
+                                  .then((value) => {
+                                setState(() {
+                                  notificationLists.clear();
+
+                                  EventBusUtils.getInstance()
+                                      .fire('DeleteAll');
+                                  retrieveAllUnreadNotifications()
+                                      .then((value) => {
+                                    notiCount.value =
+                                        value.length,
+                                  });
+                                })
+                              });
+                            }
+                          },
+                          itemBuilder: (context) => [
+                            PopupMenuItem(
+                              child: Text("Mark all as read"),
+                              value: "one",
+                            ),
+                            PopupMenuItem(
+                              child: Text("Delete all"),
+                              value: "two",
+                            ),
+                          ])
                     ],
                   ),
-                ),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (ctx, index) {
+                      return NewNotificationItems(
+                          text, notificationLists[index]);
+                    },
+                    itemCount: notificationLists.length,
+                  ),
+                ],
               ),
             ),
-          );
+          ),
+        ),
+      );
+
   }
 }

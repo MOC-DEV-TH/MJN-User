@@ -33,9 +33,13 @@ class _OnlinePaymentWebViewState extends State<OnlinePaymentWebView> {
   Widget build(BuildContext context) {
     return WillPopScope(child:
       changePageIndex == 1 ? NewPaymentView() : Scaffold(
-          body: WebView(
-            initialUrl: BASE_URL+widget.paymentLink,
-            javascriptMode: JavascriptMode.unrestricted,
+          body: Container(
+            color: Color(0xff188FC5),
+            padding: EdgeInsets.all(12),
+            child: WebView(
+              initialUrl: BASE_URL+widget.paymentLink,
+              javascriptMode: JavascriptMode.unrestricted,
+            ),
           ),
         ), onWillPop:() async{
      /* setState(() {

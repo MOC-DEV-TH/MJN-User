@@ -240,19 +240,18 @@ class _LoginView1State extends State<LoginView1> {
           title: Container(
             width: MediaQuery.of(context).size.width,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                // Container(
+                //     margin: EdgeInsets.only(right: 50),
+                //     child: GestureDetector(
+                //         onTap: () {
+                //           //showMenuDialog(context);
+                //         }, child: Padding(
+                //           padding: const EdgeInsets.only(top: 10),
+                //           child: Image(image: AssetImage('assets/images/menu_icon.png'),height: 24,width: 23,),
+                //         ),)),
                 Container(
-                    margin: EdgeInsets.only(right: 50),
-                    child: GestureDetector(
-                        onTap: () {
-                          //showMenuDialog(context);
-                        }, child: Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: Image(image: AssetImage('assets/images/menu_icon.png'),height: 24,width: 23,),
-                        ),)),
-                Container(
-                    margin: EdgeInsets.only(right: 40),
                     width: 100,
                     child: Image(
                         image: AssetImage(
@@ -261,58 +260,58 @@ class _LoginView1State extends State<LoginView1> {
             ),
           ),
           actions: [
-            Container(
-              margin: EdgeInsets.only(right: 20,top: 24,bottom: 24 ),
-              padding: EdgeInsets.zero,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(color: Colors.black, width: 1.0),
-                borderRadius: BorderRadius.all(Radius.circular(5.0)),
-              ),
-              child: ToggleButtons(
-                constraints: BoxConstraints.tight(Size(35, 35)),
-                selectedColor: Colors.white,
-                borderRadius: BorderRadius.circular(5),
-                fillColor: Colors.blue,
-                children: [
-                  Container(
-                    alignment: Alignment.center,
-                    child: Text(
-                      'EN',
-                      style: TextStyle(fontSize: 10),
-                    ),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    child: Text(
-                      'MY',
-                      style: TextStyle(fontSize: 10),
-                    ),
-                  ),
-                ],
-
-                onPressed: (int index) {
-                  setState(() {
-                    for (int i = 0; i < isSelected.length; i++) {
-                      isSelected[i] = i == index;
-                    }
-
-                    if (index == 0) {
-                      langStorage.write(LANGUAGE, 'EN');
-                      var locale = Locale('en', 'US');
-                      Get.updateLocale(locale);
-                    } else {
-                      langStorage.write(LANGUAGE, 'MY');
-                      var locale = Locale('my', 'MM');
-                      Get.updateLocale(locale);
-                    }
-                  });
-                },
-                isSelected: isSelected,
-
-                //             var locale = Locale('my', 'MM');
-              ),
-            ),
+            // Container(
+            //   margin: EdgeInsets.only(right: 20,top: 24,bottom: 24 ),
+            //   padding: EdgeInsets.zero,
+            //   decoration: BoxDecoration(
+            //     color: Colors.white,
+            //     border: Border.all(color: Colors.black, width: 1.0),
+            //     borderRadius: BorderRadius.all(Radius.circular(5.0)),
+            //   ),
+            //   child: ToggleButtons(
+            //     constraints: BoxConstraints.tight(Size(35, 35)),
+            //     selectedColor: Colors.white,
+            //     borderRadius: BorderRadius.circular(5),
+            //     fillColor: Colors.blue,
+            //     children: [
+            //       Container(
+            //         alignment: Alignment.center,
+            //         child: Text(
+            //           'EN',
+            //           style: TextStyle(fontSize: 10),
+            //         ),
+            //       ),
+            //       Container(
+            //         alignment: Alignment.center,
+            //         child: Text(
+            //           'MY',
+            //           style: TextStyle(fontSize: 10),
+            //         ),
+            //       ),
+            //     ],
+            //
+            //     onPressed: (int index) {
+            //       setState(() {
+            //         for (int i = 0; i < isSelected.length; i++) {
+            //           isSelected[i] = i == index;
+            //         }
+            //
+            //         if (index == 0) {
+            //           langStorage.write(LANGUAGE, 'EN');
+            //           var locale = Locale('en', 'US');
+            //           Get.updateLocale(locale);
+            //         } else {
+            //           langStorage.write(LANGUAGE, 'MY');
+            //           var locale = Locale('my', 'MM');
+            //           Get.updateLocale(locale);
+            //         }
+            //       });
+            //     },
+            //     isSelected: isSelected,
+            //
+            //     //             var locale = Locale('my', 'MM');
+            //   ),
+            // ),
           ],
         ),
         key: _scaffoldKey,

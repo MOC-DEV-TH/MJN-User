@@ -2,15 +2,12 @@ import 'dart:convert';
 import 'package:MJN/LocalString/LocalString.dart';
 import 'package:MJN/NewViews/LoginView1.dart';
 import 'package:MJN/models/notificationModelVO.dart';
-import 'package:MJN/presistence/dao/NotificationDao.dart';
 import 'package:MJN/presistence/database/MyAppDatabase.dart';
 import 'package:MJN/presistence/database/MyDB.dart';
-import 'package:MJN/presistence/db/database_util.dart';
 import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/utils/eventbus_util.dart';
 import 'package:MJN/views/ChangePasswordView.dart';
 import 'package:MJN/views/CreateServiceTicketView.dart';
-import 'package:MJN/views/LoginView.dart';
 import 'package:MJN/views/NewLoginView.dart';
 import 'package:MJN/views/SecondLoginView.dart';
 import 'package:MJN/views/ServiceComplainView.dart';
@@ -31,22 +28,23 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
   NotificationModelVO notiModel = NotificationModelVO.fromJson(message.data);
 
-  NotificationModelVO notificationModelVO = NotificationModelVO.fromJson(message.data);
+  NotificationModelVO notificationModelVO =
+      NotificationModelVO.fromJson(message.data);
   MyDatabase? database = await MyAppDatabase.instance.database;
   final notificationDao = database!.notiDao;
 
   if (notiModel != null) {
-
     EventBusUtils.getInstance().fire(notiModel);
     print(message.data);
 
-    notificationDao.insertNotification(notificationModelVO).then((value) => print('Success'));
+    notificationDao
+        .insertNotification(notificationModelVO)
+        .then((value) => print('Success'));
 
     Get.toNamed(
       TabScreens.routeName,
       arguments: "Notification",
     );
-
   }
 }
 
@@ -60,11 +58,13 @@ const AndroidNotificationChannel channel = const AndroidNotificationChannel(
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
-
-void onReceivedFirebaseMsg(RemoteMessage message) async{
+void onReceivedFirebaseMsg(RemoteMessage message) async {
   if (message.notification != null) {
     print('Message also contained a notification: ${message.notification}');
-    print('notification.body' + message.notification!.body.toString() + ', notification.body' + message.notification!.title.toString());
+    print('notification.body' +
+        message.notification!.body.toString() +
+        ', notification.body' +
+        message.notification!.title.toString());
   }
 
   if (message.data != null) {
@@ -78,19 +78,16 @@ void onReceivedFirebaseMsg(RemoteMessage message) async{
   if (notiModel != null) {
     print(message.data);
     EventBusUtils.getInstance().fire(notiModel);
-    notificationDao.insertNotification(notiModel).then((value) => print('Success'));
-
+    notificationDao
+        .insertNotification(notiModel)
+        .then((value) => print('Success'));
   }
-
 }
 
-
 void main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
   await Firebase.initializeApp();
-
 
   //DatabaseUtil().InitDatabase();
 
@@ -110,13 +107,15 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
-
-  final SendFirebaseTokenController sendFirebaseTokenController = Get.put(SendFirebaseTokenController());
+  final SendFirebaseTokenController sendFirebaseTokenController =
+      Get.put(SendFirebaseTokenController());
   final dataStorage = GetStorage();
+
   @override
   void initState() {
-    MyAppDatabase.builder().then((value) => MyAppDatabase.notificationDao = value);
+
+    MyAppDatabase.builder()
+        .then((value) => MyAppDatabase.notificationDao = value);
     FirebaseMessaging.instance.subscribeToTopic('mjn');
 
     getFirebaseToken();
@@ -128,8 +127,9 @@ class _MyAppState extends State<MyApp> {
     super.initState();
   }
 
-  sendFirebaseTokenToServer(String token){
-    if(dataStorage.read(UID).toString() != null)  {
+
+  sendFirebaseTokenToServer(String token) {
+    if (dataStorage.read(UID).toString() != null) {
       Map<String, String> map = {
         'user_id': dataStorage.read(UID),
         'app_version': app_version,
@@ -137,53 +137,50 @@ class _MyAppState extends State<MyApp> {
       };
 
       sendFirebaseTokenController.sendFirebaseTokenToServer(map);
-
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      translations: LocalString(),
-      locale: Locale('en', 'US'),
-      theme: ThemeData(
-          primarySwatch: Colors.blue,
-          accentColor: Colors.amber,
-          textTheme: ThemeData.light().textTheme.copyWith(
-                button: TextStyle(color: Colors.white),
-              )),
-      debugShowCheckedModeBanner: false,
-      routes: {
-        TabScreens.routeName: (ctx) => TabScreens(0),
-        ChangePasswordView.routeName: (ctx) => ChangePasswordView(),
-        CreateServiceTicketView.routeName: (ctx) => CreateServiceTicketView(),
-        SecondLoginVIew.routeName: (ctx) => SecondLoginVIew(),
-        NewLoginView.routeName: (ctx) => NewLoginView(),
-        LoginView1.routeName: (ctx) => LoginView1(),
-        Splash2.routeName: (ctx) => Splash2(),
-        ServiceComplainView.routeName: (ctx) => ServiceComplainView(),
-      },
-      home: Splash2()
-    );
+        translations: LocalString(),
+        locale: Locale('en', 'US'),
+        theme: ThemeData(
+            primarySwatch: Colors.blue,
+            accentColor: Colors.amber,
+            textTheme: ThemeData.light().textTheme.copyWith(
+                  button: TextStyle(color: Colors.white),
+                )),
+        debugShowCheckedModeBanner: false,
+        routes: {
+          TabScreens.routeName: (ctx) => TabScreens(0),
+          ChangePasswordView.routeName: (ctx) => ChangePasswordView(),
+          CreateServiceTicketView.routeName: (ctx) => CreateServiceTicketView(),
+          SecondLoginVIew.routeName: (ctx) => SecondLoginVIew(),
+          NewLoginView.routeName: (ctx) => NewLoginView(),
+          LoginView1.routeName: (ctx) => LoginView1(),
+          Splash2.routeName: (ctx) => Splash2(),
+          ServiceComplainView.routeName: (ctx) => ServiceComplainView(),
+        },
+        home: Splash2());
   }
 }
 
-
 class Splash2 extends StatefulWidget {
   static const routeName = '/splash_screen';
+
   @override
   _Splash2State createState() => _Splash2State();
 }
 
 class _Splash2State extends State<Splash2> {
-
   @override
   void initState() {
-
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       onReceivedFirebaseMsg(message);
       NotificationModelVO notificationModelVO =
-      NotificationModelVO.fromJson(message.data);
+          NotificationModelVO.fromJson(message.data);
+
       if (notificationModelVO != null) {
         flutterLocalNotificationsPlugin.show(
             notificationModelVO.hashCode,
@@ -197,11 +194,15 @@ class _Splash2State extends State<Splash2> {
                 //      one that already exists in example app.
                 icon: 'launch_background',
               ),
+
             ));
+
       }
     });
 
+
     super.initState();
+
   }
 
   @override
@@ -210,17 +211,19 @@ class _Splash2State extends State<Splash2> {
       backgroundColor: Color(0xff242527),
       seconds: 5,
       navigateAfterSeconds: new TabScreens(0),
-      image: Image(
-          image: AssetImage('assets/images/splash_screen_logo.png')),
-      loadingText: Text("Loading....",
+      image: Image(image: AssetImage('assets/images/splash_screen_logo.png')),
+      loadingText: Text(
+        "Loading....",
         style: TextStyle(
-            color: Color(0xff659EC7), fontWeight: FontWeight.bold, fontSize: 18.0),),
+            color: Color(0xff659EC7),
+            fontWeight: FontWeight.bold,
+            fontSize: 18.0),
+      ),
       photoSize: 140.0,
       loaderColor: Color(0xff659EC7),
     );
   }
 }
-
 
 // class SplashScreen extends StatefulWidget {
 //   static const routeName = '/splash_screen';
@@ -290,10 +293,8 @@ class _Splash2State extends State<Splash2> {
 //     );
 //   }
 // }
- getFirebaseToken() async {
+getFirebaseToken() async {
   String? token = await FirebaseMessaging.instance.getToken();
+  print(token);
   return token;
-
 }
-
-

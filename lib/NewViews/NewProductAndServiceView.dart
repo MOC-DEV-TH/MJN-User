@@ -69,7 +69,7 @@ class _NewProductAndServiceViewState extends State<NewProductAndServiceView> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(top: 4),
-                            child: Text('Interest?',style: TextStyle(color: Colors.black,fontSize: 16),),
+                            child: Text('Interested?',style: TextStyle(color: Colors.black,fontSize: 16),),
                           ),
 
                           Container(

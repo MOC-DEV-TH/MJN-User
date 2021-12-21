@@ -1,4 +1,5 @@
 import 'package:MJN/NewViews/ChannelOnlinePaymentView.dart';
+import 'package:MJN/NewViews/NewPaymentView.dart';
 import 'package:MJN/NewViews/OnlinePaymentWebView.dart';
 import 'package:MJN/controllers/getPaymentMethodController.dart';
 import 'package:MJN/controllers/invoiceController.dart';
@@ -30,6 +31,11 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
   late String paymentMethodLink;
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   void initState() {
     changePageIndex = 0;
     super.initState();
@@ -45,6 +51,8 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
   Widget build(BuildContext context) {
     return TabScreens.onlinePaymentIndex > 2
         ? OnlinePaymentWebView(paymentMethodLink)
+        : TabScreens.onlinePaymentIndex == 1
+        ? NewPaymentView()
         : Scaffold(
             backgroundColor: Color(0xff188FC5),
             body: SingleChildScrollView(
@@ -148,15 +156,18 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
                                       Future.delayed(
                                           const Duration(milliseconds: 700),
                                           () {
-                                        setState(() {
-                                          changePageIndex = 1;
-                                          TabScreens.onlinePaymentIndex =3;
-                                          paymentMethodLink =
-                                              getPaymentMethodController
-                                                  .getPaymentMethodsVo!
-                                                  .details
-                                                  .paymentLink;
-                                        });
+
+                                              setState(() {
+                                                changePageIndex = 1;
+                                                TabScreens.onlinePaymentIndex =3;
+                                                paymentMethodLink =
+                                                    getPaymentMethodController
+                                                        .getPaymentMethodsVo!
+                                                        .details
+                                                        .paymentLink;
+                                              });
+
+
                                       })
                                     }
                                 });
@@ -175,12 +186,21 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
                 SizedBox(
                   height: 10,
                 ),
-                Text(
-                  'Statement',
-                  style: TextStyle(
-                      color: Colors.black,
-                      decoration: TextDecoration.underline),
-                  textAlign: TextAlign.center,
+                GestureDetector(
+                  onTap: (){
+
+                    setState(() {
+                      TabScreens.onlinePaymentIndex =1;
+                    });
+
+                  },
+                  child: Text(
+                    'Statement',
+                    style: TextStyle(
+                        color: Colors.black,
+                        decoration: TextDecoration.underline),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
 
               ],

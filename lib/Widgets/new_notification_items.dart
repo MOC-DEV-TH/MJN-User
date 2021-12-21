@@ -28,43 +28,47 @@ class _NewNotificationItemsState extends State<NewNotificationItems> {
         Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
+
           Image(image: AssetImage('assets/images/outage_icon.png')),
 
           Container(height: 40, width: 2, color: Colors.grey,),
 
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-            Text('13 Oct 2021',
-              style: TextStyle(fontSize: 8, color: Colors.grey,),textAlign: TextAlign.left,),
+          Container(
+            width: 180,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+              Text(widget.notificationList.created,
+                style: TextStyle(fontSize: 8, color: Colors.grey,),textAlign: TextAlign.left,),
 
-            InkWell(
-                onTap: () {
-                  setState(() {
-                    isReadMore = true;
-                  });
-                  NotificationModelVO notification = new NotificationModelVO(widget.notificationList.id,
-                      widget.notificationList.title,
-                      widget.notificationList.body,
-                      widget.notificationList.message,
-                      widget.notificationList.type_name, widget.notificationList.action_url, widget.notificationList.created,read: 1);
+              InkWell(
+                  onTap: () {
+                    setState(() {
+                      isReadMore = true;
+                    });
+                    NotificationModelVO notification = new NotificationModelVO(widget.notificationList.id,
+                        widget.notificationList.title,
+                        widget.notificationList.body,
+                        widget.notificationList.message,
+                        widget.notificationList.type_name, widget.notificationList.action_url, widget.notificationList.created,read: 1);
 
 
-                  //widget.notificationDao.updateNotification(notification);
-                  //MyAppDatabase.notificationDao!.updateNotification(notification);
+                    //widget.notificationDao.updateNotification(notification);
+                    //MyAppDatabase.notificationDao!.updateNotification(notification);
 
-                },
-                child: Text('Outage on 20 Oct 2021...',
-                  style: TextStyle(fontSize: 14, color: Colors.black),)),
+                  },
+                  child: Text(widget.notificationList.title,
+                    style: TextStyle(fontSize: 14, color: Colors.black),)),
 
-          ],),
+            ],),
+          ),
 
        // widget.notificationList.read == 1 ? Container() :  Icon(Icons.circle,color: Color(0xff659EC7),size: 5,)
         ],),
 
       isReadMore ? Padding(
         padding: const EdgeInsets.all(8.0),
-        child:  Text(widget.text,
+        child:  Text(widget.notificationList.message,
             style: TextStyle(fontSize: 14, color: Colors.black),),
       )
           : Container(),

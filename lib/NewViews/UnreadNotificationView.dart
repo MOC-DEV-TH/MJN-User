@@ -32,15 +32,17 @@ class _UnreadNotificationViewState extends State<UnreadNotificationView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xff188FC5),
-      body: Container(
-        margin: EdgeInsets.all(20),
-        child: ListView.builder(
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          itemBuilder: (ctx, index) {
-            return NewNotificationItems(text, notificationLists[index]);
-          },
-          itemCount: notificationLists.length,
+      body: SingleChildScrollView(
+        child: Container(
+          margin: EdgeInsets.all(20),
+          child: ListView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemBuilder: (ctx, index) {
+              return NewNotificationItems(text, notificationLists[index]);
+            },
+            itemCount: notificationLists.length,
+          ),
         ),
       ),
     );

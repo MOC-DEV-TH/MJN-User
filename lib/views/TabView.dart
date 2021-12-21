@@ -9,12 +9,15 @@ import 'package:MJN/NewViews/NewProductAndServiceView.dart';
 import 'package:MJN/NewViews/NewServiceComplainView.dart';
 import 'package:MJN/NewViews/NewTermAndConditionView.dart';
 import 'package:MJN/NewViews/OnlinePaymentView.dart';
+import 'package:MJN/main.dart';
 import 'package:MJN/models/notificationModelVO.dart';
 import 'package:MJN/presistence/database/MyAppDatabase.dart';
 import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/utils/app_utils.dart';
 import 'package:MJN/utils/eventbus_util.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
@@ -38,8 +41,6 @@ class _TabScreensState extends State<TabScreens> {
   var notiCount = 0.obs;
   int currentPaymentIndex = 0;
 
-
-  final notificationAlert = Get.arguments as String;
 
   bool visible = false;
   bool pageSelectedIndex = false;
@@ -68,27 +69,76 @@ class _TabScreensState extends State<TabScreens> {
   ];
 
   late StreamSubscription notiSub;
-  late int _selectedPageIndex;
+  late int _selectedPageIndex = 2;
+
+  Future<void> setUpInteractMessage() async {
+    FirebaseMessaging.onMessageOpenedApp.listen((event) {_handleMessage(event);});
+
+    RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
+    if (initialMessage != null && langStorage.read('nextInit') == null ) {
+      _handleMessage(initialMessage);
+    }
+    else {
+      langStorage.remove('nextInit');
+      if(initialMessage != null && langStorage.read(TOKEN) != null){
+        _handleMessage(initialMessage);
+      }
+    }
+  }
+
+  void _handleMessage(RemoteMessage message) {
+
+    if(message.messageId != null){
+      if(langStorage.read(TOKEN) == null){
+        AppUtils.showLoginDialog(
+            'Login', 'Please sign in to unlock all\naccount features', context);
+    }
+      else {
+        langStorage.write('nextInit', false);
+        _selectedPageIndex = 0;
+      }
+
+    }
+    else {
+
+      _selectedPageIndex =2;
+    }
+  }
+
+  Future onSelectNotification(String? payload) async {
+    if(payload != null){
+      debugPrint("openNotiMessage call");
+      if(langStorage.read(TOKEN) == null){
+        AppUtils.showLoginDialog(
+            'Login', 'Please sign in to unlock all\naccount features', context);
+      }
+      else {
+        setState(() {
+          _selectedPageIndex = 0;
+          changePageIndex = 0;
+        });
+      }
+
+
+    }
+  }
 
   @override
   void initState() {
 
-    print(notificationAlert.toString());
-    if(notificationAlert != null){
-      setState(() {
-        _selectedPageIndex = 0;
-      });
+    var initializeAndroid = new AndroidInitializationSettings('@mipmap/ic_launcher');
+    var initializeIOS = new IOSInitializationSettings();
+    var initializeSetting = new InitializationSettings(android: initializeAndroid,iOS: initializeIOS);
 
-    }
-    else {
-      _selectedPageIndex = 2;
-    }
-
+    flutterLocalNotificationsPlugin.initialize(initializeSetting,onSelectNotification: onSelectNotification);
 
     changePageIndex = 0;
     visible = false;
     isSelected = [true, false];
+
+    setUpInteractMessage();
     super.initState();
+
 
     notiSub =
         EventBusUtils.getInstance().on<NotificationModelVO>().listen((event) {
@@ -119,10 +169,13 @@ class _TabScreensState extends State<TabScreens> {
             .fetchUnreadNotifications()
             .then((value) => {notiCount.value = value.length});
     });
+    if(MyAppDatabase.notificationDao != null)
+      {
+        MyAppDatabase.notificationDao!
+            .fetchUnreadNotifications()
+            .then((value) => {notiCount.value = value.length});
+      }
 
-    MyAppDatabase.notificationDao!
-        .fetchUnreadNotifications()
-        .then((value) => {notiCount.value = value.length});
 
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       menuPageIndex = widget.pageIndex;
@@ -200,6 +253,7 @@ class _TabScreensState extends State<TabScreens> {
             changePageIndex == 10)
         ? changePageIndex
         : _selectedPageIndex;
+
     switch (pageIndex) {
       case 0:
         {
@@ -238,7 +292,7 @@ class _TabScreensState extends State<TabScreens> {
         return NewHomeView();
     }
 
-    return NewHomeView();
+    return NewNotificationView(MyAppDatabase.notificationDao!);
   }
 
   Widget logoAndNavTitleAppBar(int navSelectPage, BuildContext context) {
@@ -563,7 +617,7 @@ class _TabScreensState extends State<TabScreens> {
                 changePageIndex = 10;
                 _selectedPageIndex = 2;
                 navSelectedIndex = true;
-                getSelectedPage();
+                //getSelectedPage();
               });
             },
           ),

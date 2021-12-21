@@ -456,12 +456,9 @@ class _NewCreateServiceTicketViewState
                             } else {
                               return NeumorphicButton(
                                 onPressed: () {
-                                  if (buildingText.text == '' ||
-                                      unitText.text == '' ||
-                                      emailText.text == '' ||
-                                      phoneNoText.text == '' ||
-                                      nameText.text == '' ||
-                                      messageText.text == '' ||
+                                  if (
+                                      wifiText.value.text == '' ||
+                                      messageText.value.text == '' ||
                                       selectServiceRequestIndex == null) {
                                     AppUtils.showErrorSnackBar(
                                         'Error!!', 'Data must not empty!!');

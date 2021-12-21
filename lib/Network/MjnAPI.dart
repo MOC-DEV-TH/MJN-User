@@ -443,5 +443,24 @@ class MjnAPI {
     }
   }
 
+  static Future saveFirebaseToken(
+      Map<String, String> params,String token) async {
+    var response = await client.post(
+      Uri.parse(SAVE_FIREBASE_TOKEN_URL),
+      body: json.encode(params),
+      headers: {
+        'content-type': 'application/json',
+        'token': token
+      },
+    );
+    if (response.statusCode == 200) {
+      var json = response.body;
+      var resp = networkResultFromJson(json);
+      print('Save firebase token '+resp.status);
+    } else {
+      return null;
+    }
+  }
+
 
 }

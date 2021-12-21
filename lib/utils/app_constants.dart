@@ -49,5 +49,6 @@ const GET_BILLING_RESPONSE_URL = API_URL+"get_billing_responsive_number?";
 const GET_SERVICE_REQUEST_TYPE_URL = API_URL+"get_service_req_type";
 const GET_PAYMENT_METHOD_URL = API_URL+"get_payment_methods?";
 const CHECK_CAN_CREATE_TICKET_URL = API_URL+"check_can_create_ticket?";
+const SAVE_FIREBASE_TOKEN_URL = API_URL+"save_firebase_token?";
 
 
