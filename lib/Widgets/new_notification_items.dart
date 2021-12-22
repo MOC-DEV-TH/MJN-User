@@ -1,5 +1,6 @@
+import 'package:MJN/NewViews/NewNotificationView.dart';
+import 'package:MJN/models/notificationCountNotifier.dart';
 import 'package:MJN/models/notificationModelVO.dart';
-import 'package:MJN/presistence/dao/NotificationDao.dart';
 import 'package:MJN/presistence/database/MyAppDatabase.dart';
 import 'package:MJN/utils/eventbus_util.dart';
 import 'package:flutter/material.dart';
@@ -8,13 +9,14 @@ class NewNotificationItems extends StatefulWidget {
   String text;
   NotificationModelVO notificationList;
 
-
   NewNotificationItems(this.text, this.notificationList);
+
   @override
   _NewNotificationItemsState createState() => _NewNotificationItemsState();
 }
 
 class _NewNotificationItemsState extends State<NewNotificationItems> {
+  final updateNotify = NotificationCountNotifier();
   bool isReadMore = false;
 
   @override
@@ -25,70 +27,107 @@ class _NewNotificationItemsState extends State<NewNotificationItems> {
       color: Colors.white,
       child: Column(
         children: [
-        Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              //Image(image: AssetImage('assets/images/outage_icon.png')),
+              Image.network(
+                widget.notificationList.imageUrl,
+                height: 50,
+              ),
+              Container(
+                height: 40,
+                width: 2,
+                color: Colors.grey,
+              ),
 
-          Image(image: AssetImage('assets/images/outage_icon.png')),
+              Container(
+                width: 180,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.notificationList.created,
+                      style: TextStyle(
+                        fontSize: 8,
+                        color: Colors.grey,
+                      ),
+                      textAlign: TextAlign.left,
+                    ),
+                    InkWell(
+                        onTap: () {
 
-          Container(height: 40, width: 2, color: Colors.grey,),
+                          setState(() {
+                            isReadMore = true;
+                          });
+                          NotificationModelVO notification =
+                              new NotificationModelVO(
+                                  widget.notificationList.id,
+                                  widget.notificationList.title,
+                                  widget.notificationList.body,
+                                  widget.notificationList.message,
+                                  widget.notificationList.type_name,
+                                  widget.notificationList.action_url,
+                                  widget.notificationList.created,
+                                  widget.notificationList.imageUrl,
+                                  read: 1);
 
-          Container(
-            width: 180,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-              Text(widget.notificationList.created,
-                style: TextStyle(fontSize: 8, color: Colors.grey,),textAlign: TextAlign.left,),
+                          //widget.notificationDao.updateNotification(notification);
 
-              InkWell(
-                  onTap: () {
-                    setState(() {
-                      isReadMore = true;
-                    });
-                    NotificationModelVO notification = new NotificationModelVO(widget.notificationList.id,
-                        widget.notificationList.title,
-                        widget.notificationList.body,
-                        widget.notificationList.message,
-                        widget.notificationList.type_name, widget.notificationList.action_url, widget.notificationList.created,read: 1);
+                          MyAppDatabase.notificationDao!
+                              .updateNotification(notification)
+                              .then((value) => {
+                                    EventBusUtils.getInstance().fire('Update'),
+                                  });
 
-
-                    //widget.notificationDao.updateNotification(notification);
-                    //MyAppDatabase.notificationDao!.updateNotification(notification);
-
-                  },
-                  child: Text(widget.notificationList.title,
-                    style: TextStyle(fontSize: 14, color: Colors.black),)),
-
-            ],),
+                        },
+                        child: Text(
+                          widget.notificationList.title,
+                          style: TextStyle(fontSize: 14, color: Colors.black),
+                        )),
+                  ],
+                ),
+              ),
+              // widget.notificationList.read == 1
+              //     ? Container()
+              //     : Icon(
+              //         Icons.circle,
+              //         color: Colors.red,
+              //         size: 8,
+              //       )
+            ],
           ),
-
-       // widget.notificationList.read == 1 ? Container() :  Icon(Icons.circle,color: Color(0xff659EC7),size: 5,)
-        ],),
-
-      isReadMore ? Padding(
-        padding: const EdgeInsets.all(8.0),
-        child:  Text(widget.notificationList.message,
-            style: TextStyle(fontSize: 14, color: Colors.black),),
-      )
-          : Container(),
-
-
-        isReadMore ?  Container(
-            alignment: Alignment.centerRight,
-            child: InkWell(
-              onTap: (){
-                setState(() {
-                  isReadMore = !isReadMore;
-                });
-              },
-              child: Text('show less',
-                style: TextStyle(fontSize: 10, color: Color(0xff188FC5),),textAlign: TextAlign.end,),
-            ),
-          ) : Container(),
-
-      ],
-    ),);
-
+          isReadMore
+              ? Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    widget.notificationList.message,
+                    style: TextStyle(fontSize: 14, color: Colors.black),
+                  ),
+                )
+              : Container(),
+          isReadMore
+              ? Container(
+                  alignment: Alignment.centerRight,
+                  child: InkWell(
+                    onTap: () {
+                      setState(() {
+                        isReadMore = !isReadMore;
+                      });
+                    },
+                    child: Text(
+                      'show less',
+                      style: TextStyle(
+                        fontSize: 10,
+                        color: Color(0xff188FC5),
+                      ),
+                      textAlign: TextAlign.end,
+                    ),
+                  ),
+                )
+              : Container(),
+        ],
+      ),
+    );
   }
 }

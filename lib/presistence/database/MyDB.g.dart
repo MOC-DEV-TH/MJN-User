@@ -82,7 +82,7 @@ class _$MyDatabase extends MyDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `notification` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `read` INTEGER, `body` TEXT NOT NULL, `message` TEXT NOT NULL, `type_name` TEXT NOT NULL, `action_url` TEXT NOT NULL, `created` TEXT NOT NULL)');
+            'CREATE TABLE IF NOT EXISTS `notification` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `read` INTEGER, `body` TEXT NOT NULL, `message` TEXT NOT NULL, `type_name` TEXT NOT NULL, `action_url` TEXT NOT NULL, `created` TEXT NOT NULL, `imageUrl` TEXT NOT NULL)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -110,7 +110,8 @@ class _$NotificationDao extends NotificationDao {
                   'message': item.message,
                   'type_name': item.type_name,
                   'action_url': item.action_url,
-                  'created': item.created
+                  'created': item.created,
+                  'imageUrl': item.imageUrl
                 }),
         _notificationModelVOUpdateAdapter = UpdateAdapter(
             database,
@@ -124,7 +125,8 @@ class _$NotificationDao extends NotificationDao {
                   'message': item.message,
                   'type_name': item.type_name,
                   'action_url': item.action_url,
-                  'created': item.created
+                  'created': item.created,
+                  'imageUrl': item.imageUrl
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -154,6 +156,7 @@ class _$NotificationDao extends NotificationDao {
             row['type_name'] as String,
             row['action_url'] as String,
             row['created'] as String,
+            row['imageUrl'] as String,
             read: row['read'] as int?));
   }
 
@@ -168,6 +171,7 @@ class _$NotificationDao extends NotificationDao {
             row['type_name'] as String,
             row['action_url'] as String,
             row['created'] as String,
+            row['imageUrl'] as String,
             read: row['read'] as int?));
   }
 

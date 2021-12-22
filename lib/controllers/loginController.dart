@@ -19,16 +19,21 @@ class LoginController extends GetxController {
       isLoading(true);
 
       var res = await MjnAPI.fetchLoginData(map);
+
       if (res != null) {
         loginVo = res;
 
         if (loginVo.status == 'Success') {
 
-          print('FToken'+FirebaseMessaging.instance.getToken().toString());
+
+
+          String? fToken = await FirebaseMessaging.instance.getToken();
+
+          print('FToken :'+fToken.toString());
 
           Map<String, String> map = {
             'tenant_id': loginVo.tenantId,
-            'firebase_token': FirebaseMessaging.instance.getToken().toString(),
+            'firebase_token': fToken.toString(),
             'app_version': app_version,
           };
 

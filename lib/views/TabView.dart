@@ -41,7 +41,6 @@ class _TabScreensState extends State<TabScreens> {
   var notiCount = 0.obs;
   int currentPaymentIndex = 0;
 
-
   bool visible = false;
   bool pageSelectedIndex = false;
   bool navSelectedIndex = true;
@@ -72,65 +71,61 @@ class _TabScreensState extends State<TabScreens> {
   late int _selectedPageIndex = 2;
 
   Future<void> setUpInteractMessage() async {
-    FirebaseMessaging.onMessageOpenedApp.listen((event) {_handleMessage(event);});
+    FirebaseMessaging.onMessageOpenedApp.listen((event) {
+      _handleMessage(event);
+    });
 
-    RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
-    if (initialMessage != null && langStorage.read('nextInit') == null ) {
+    RemoteMessage? initialMessage =
+        await FirebaseMessaging.instance.getInitialMessage();
+    if (initialMessage != null && langStorage.read('nextInit') == null) {
       _handleMessage(initialMessage);
-    }
-    else {
+    } else {
       langStorage.remove('nextInit');
-      if(initialMessage != null && langStorage.read(TOKEN) != null){
+      if (initialMessage != null && langStorage.read(TOKEN) != null) {
         _handleMessage(initialMessage);
       }
     }
   }
 
   void _handleMessage(RemoteMessage message) {
-
-    if(message.messageId != null){
-      if(langStorage.read(TOKEN) == null){
+    if (message.messageId != null) {
+      if (langStorage.read(TOKEN) == null) {
         AppUtils.showLoginDialog(
             'Login', 'Please sign in to unlock all\naccount features', context);
-    }
-      else {
+      } else {
         langStorage.write('nextInit', false);
         _selectedPageIndex = 0;
       }
-
-    }
-    else {
-
-      _selectedPageIndex =2;
+    } else {
+      _selectedPageIndex = 2;
     }
   }
 
   Future onSelectNotification(String? payload) async {
-    if(payload != null){
+    if (payload != null) {
       debugPrint("openNotiMessage call");
-      if(langStorage.read(TOKEN) == null){
+      if (langStorage.read(TOKEN) == null) {
         AppUtils.showLoginDialog(
             'Login', 'Please sign in to unlock all\naccount features', context);
-      }
-      else {
+      } else {
         setState(() {
           _selectedPageIndex = 0;
           changePageIndex = 0;
         });
       }
-
-
     }
   }
 
   @override
   void initState() {
-
-    var initializeAndroid = new AndroidInitializationSettings('@mipmap/ic_launcher');
+    var initializeAndroid =
+        new AndroidInitializationSettings('@mipmap/ic_launcher');
     var initializeIOS = new IOSInitializationSettings();
-    var initializeSetting = new InitializationSettings(android: initializeAndroid,iOS: initializeIOS);
+    var initializeSetting = new InitializationSettings(
+        android: initializeAndroid, iOS: initializeIOS);
 
-    flutterLocalNotificationsPlugin.initialize(initializeSetting,onSelectNotification: onSelectNotification);
+    flutterLocalNotificationsPlugin.initialize(initializeSetting,
+        onSelectNotification: onSelectNotification);
 
     changePageIndex = 0;
     visible = false;
@@ -138,7 +133,6 @@ class _TabScreensState extends State<TabScreens> {
 
     setUpInteractMessage();
     super.initState();
-
 
     notiSub =
         EventBusUtils.getInstance().on<NotificationModelVO>().listen((event) {
@@ -169,13 +163,11 @@ class _TabScreensState extends State<TabScreens> {
             .fetchUnreadNotifications()
             .then((value) => {notiCount.value = value.length});
     });
-    if(MyAppDatabase.notificationDao != null)
-      {
-        MyAppDatabase.notificationDao!
-            .fetchUnreadNotifications()
-            .then((value) => {notiCount.value = value.length});
-      }
-
+    if (MyAppDatabase.notificationDao != null) {
+      MyAppDatabase.notificationDao!
+          .fetchUnreadNotifications()
+          .then((value) => {notiCount.value = value.length});
+    }
 
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       menuPageIndex = widget.pageIndex;
@@ -221,8 +213,6 @@ class _TabScreensState extends State<TabScreens> {
       });
     }
   }
-
-
 
   int changePageIndex = 0;
 
@@ -308,9 +298,7 @@ class _TabScreensState extends State<TabScreens> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             navSelectPage == 2
-                ? Container(
-
-                  )
+                ? Container()
                 : Container(
                     child: GestureDetector(
                         onTap: () {
@@ -342,7 +330,7 @@ class _TabScreensState extends State<TabScreens> {
                               int notiIndex =
                                   TabScreens.notificationPageIndex - 1;
                               TabScreens.notificationPageIndex =
-                              notiIndex < 0 ? 0 : notiIndex;
+                                  notiIndex < 0 ? 0 : notiIndex;
                               if (notiIndex > -1)
                                 _selectedPageIndex = 0;
                               else

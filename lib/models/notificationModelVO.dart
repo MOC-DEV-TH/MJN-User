@@ -11,8 +11,10 @@ class NotificationModelVO {
   final String type_name;
   final String action_url;
   final String created;
+  final String imageUrl;
 
-  NotificationModelVO(this.id, this.title,this.body, this.message, this.type_name, this.action_url, this.created,{this.read=0});
+
+  NotificationModelVO(this.id, this.title,this.body, this.message, this.type_name, this.action_url, this.created,this.imageUrl,{this.read=0});
 
   NotificationModelVO.fromJson(Map<String, dynamic> json)
       : id = json['id'],
@@ -22,6 +24,7 @@ class NotificationModelVO {
         type_name = json['type_name'],
         action_url = json['action_url'],
         created = json['created'],
+        imageUrl = json['image'],
         read = 0;
 
 
@@ -32,7 +35,8 @@ class NotificationModelVO {
     'message': message,
     'type_name': type_name,
     'action_url': action_url,
-    'created': created
+    'created': created,
+    'image' : imageUrl
   };
 
   @override

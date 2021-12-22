@@ -48,6 +48,13 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
   }
 
   @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return TabScreens.onlinePaymentIndex > 2
         ? OnlinePaymentWebView(paymentMethodLink)
@@ -188,7 +195,6 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
                 ),
                 GestureDetector(
                   onTap: (){
-
                     setState(() {
                       TabScreens.onlinePaymentIndex =1;
                     });

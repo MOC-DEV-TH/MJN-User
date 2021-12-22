@@ -12,7 +12,7 @@ class _UnreadNotificationViewState extends State<UnreadNotificationView> {
   List<NotificationModelVO> notificationLists = <NotificationModelVO>[];
 
   String text =
-      "Flutter has its own UI components, along with an engine to render them on both the Android and iOS platforms. Most of those UI components, right out of the box, conform to the guidelines of Material Design.";
+      "unread";
 
   @override
   void initState() {
@@ -28,6 +28,7 @@ class _UnreadNotificationViewState extends State<UnreadNotificationView> {
     super.initState();
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +40,8 @@ class _UnreadNotificationViewState extends State<UnreadNotificationView> {
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             itemBuilder: (ctx, index) {
-              return NewNotificationItems(text, notificationLists[index]);
+              return NewNotificationItems(
+                  text, notificationLists[index]);
             },
             itemCount: notificationLists.length,
           ),
