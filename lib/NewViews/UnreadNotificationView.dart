@@ -28,6 +28,8 @@ class _UnreadNotificationViewState extends State<UnreadNotificationView> {
     super.initState();
   }
 
+  void doNothing(){}
+
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +43,8 @@ class _UnreadNotificationViewState extends State<UnreadNotificationView> {
             physics: NeverScrollableScrollPhysics(),
             itemBuilder: (ctx, index) {
               return NewNotificationItems(
-                  text, notificationLists[index]);
+                  'typeUnread',text, notificationLists[index],(value){
+              });
             },
             itemCount: notificationLists.length,
           ),

@@ -30,6 +30,8 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
 
   late String paymentMethodLink;
 
+
+
   @override
   void dispose() {
     super.dispose();
@@ -40,11 +42,8 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
     changePageIndex = 0;
     super.initState();
 
-    invoiceController.fetchInvoiceDataByID(
-        langStorage.read(TOKEN),
-        langStorage.read(UID),
-        widget.invoiceID,
-        langStorage.read(DATA_TENANT_ID));
+    print(widget.paymentStatus);
+    print(widget.invoiceID);
   }
 
   @override
@@ -56,6 +55,13 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
 
   @override
   Widget build(BuildContext context) {
+
+    invoiceController.fetchInvoiceDataByID(
+        langStorage.read(TOKEN),
+        langStorage.read(UID),
+        widget.invoiceID,
+        langStorage.read(DATA_TENANT_ID));
+
     return TabScreens.onlinePaymentIndex > 2
         ? OnlinePaymentWebView(paymentMethodLink)
         : TabScreens.onlinePaymentIndex == 1
@@ -197,6 +203,8 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
                   onTap: (){
                     setState(() {
                       TabScreens.onlinePaymentIndex =1;
+                      //widget.invoiceID = '';
+                     // widget.paymentStatus = '';
                     });
 
                   },

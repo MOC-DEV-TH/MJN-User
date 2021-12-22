@@ -19,7 +19,6 @@ class NewNotificationView extends StatefulWidget {
 
   NewNotificationView(this.notificationDao);
 
-
   @override
   _NewNotificationViewState createState() => _NewNotificationViewState();
 }
@@ -80,10 +79,8 @@ class _NewNotificationViewState extends State<NewNotificationView> {
       setState(() {});
     });
 
-
     notiSub = EventBusUtils.getInstance().on().listen((event) {
       if (event.toString() == 'Update')
-
         WidgetsBinding.instance!.addPostFrameCallback((_) {
           setState(() {
             // retrieveUsers().then((value) {
@@ -92,21 +89,24 @@ class _NewNotificationViewState extends State<NewNotificationView> {
             retrieveAllUnreadNotifications()
                 .then((value) => {notiCount.value = value.length});
           });
-
         });
-
     });
-
 
     notiSub =
         EventBusUtils.getInstance().on<NotificationModelVO>().listen((event) {
-      print("NOTI EVENT " + event.title);
-      notificationLists.add(event);
+      print("NOTI EVENT INIT " + event.title);
+
+        //notificationLists.add(event);
+        retrieveUsers().then((value) {
+          notificationLists = value;
+          setState(() {
+          });
+        });
 
       retrieveAllUnreadNotifications()
           .then((value) => {notiCount.value = value.length});
 
-      setState(() {});
+     // setState(() {});
     });
 
     retrieveAllUnreadNotifications()
@@ -114,7 +114,6 @@ class _NewNotificationViewState extends State<NewNotificationView> {
 
     super.initState();
   }
-
 
   @override
   void setState(fn) {
@@ -127,20 +126,16 @@ class _NewNotificationViewState extends State<NewNotificationView> {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     notiSub =
         EventBusUtils.getInstance().on<NotificationModelVO>().listen((event) {
-      print("NOTI EVENT " + event.title);
+      print("NOTI EVENT LifeCycle" + event.title);
 
       notificationLists.add(event);
 
       retrieveAllUnreadNotifications()
           .then((value) => {notiCount.value = value.length});
-
     });
-
-
 
     notiSub = EventBusUtils.getInstance().on().listen((event) {
       if (event.toString() == 'Update')
-
         WidgetsBinding.instance!.addPostFrameCallback((_) {
           setState(() {
             // retrieveUsers().then((value) {
@@ -150,9 +145,24 @@ class _NewNotificationViewState extends State<NewNotificationView> {
             retrieveAllUnreadNotifications()
                 .then((value) => {notiCount.value = value.length});
           });
-
         });
+    });
+  }
 
+  void retrieveUpdateNotifications(int value) {
+    debugPrint("Click");
+   setState(() {
+      retrieveUsers().then((value) {
+        notificationLists = value;
+      });
+
+      retrieveAllUnreadNotifications()
+          .then((value)  {
+            debugPrint("Click ${value.length}");
+            Future.delayed(Duration(seconds: 1),(){
+              notiCount.value = value.length;
+            });
+          });
     });
   }
 
@@ -337,7 +347,12 @@ class _NewNotificationViewState extends State<NewNotificationView> {
                         physics: NeverScrollableScrollPhysics(),
                         itemBuilder: (ctx, index) {
                           return NewNotificationItems(
-                              text, notificationLists[index]);
+                              'typeAll',
+                              text,
+                              notificationLists[index],
+                              (value){
+                                retrieveUpdateNotifications(value);
+                              });
                         },
                         itemCount: notificationLists.length,
                       ),

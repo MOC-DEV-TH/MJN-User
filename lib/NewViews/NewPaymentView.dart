@@ -40,8 +40,9 @@ class _NewPaymentViewState extends State<NewPaymentView> {
 
   @override
   Widget build(BuildContext context) {
-
+    print("Payment Status"+paymentStatusIndex.toString());
     String paymentStatus = paymentStatusIndex == 1 ? 'Unpaid' : paymentStatusIndex == 2 ? 'Paid' : '';
+    paymentStatusIndex = 1;// set initial value
     return TabScreens.onlinePaymentIndex > 1 ? PaymentInvoiceView(paymentStatus,currentInvoiceIndex) :Scaffold(
       backgroundColor: Color(0xff188FC5),
       body: SingleChildScrollView(

@@ -1,15 +1,17 @@
-import 'package:MJN/NewViews/NewNotificationView.dart';
 import 'package:MJN/models/notificationCountNotifier.dart';
 import 'package:MJN/models/notificationModelVO.dart';
 import 'package:MJN/presistence/database/MyAppDatabase.dart';
 import 'package:MJN/utils/eventbus_util.dart';
 import 'package:flutter/material.dart';
-
+typedef NotiUpdate(int);
 class NewNotificationItems extends StatefulWidget {
+  String type;
   String text;
   NotificationModelVO notificationList;
+ // final Function notiupdate;
+  NotiUpdate? notiUpdate;
 
-  NewNotificationItems(this.text, this.notificationList);
+  NewNotificationItems(this.type,this.text, this.notificationList,this.notiUpdate);
 
   @override
   _NewNotificationItemsState createState() => _NewNotificationItemsState();
@@ -18,6 +20,7 @@ class NewNotificationItems extends StatefulWidget {
 class _NewNotificationItemsState extends State<NewNotificationItems> {
   final updateNotify = NotificationCountNotifier();
   bool isReadMore = false;
+  int readStatus = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -56,10 +59,7 @@ class _NewNotificationItemsState extends State<NewNotificationItems> {
                     ),
                     InkWell(
                         onTap: () {
-
-                          setState(() {
-                            isReadMore = true;
-                          });
+                          print("UPdate");
                           NotificationModelVO notification =
                               new NotificationModelVO(
                                   widget.notificationList.id,
@@ -78,7 +78,14 @@ class _NewNotificationItemsState extends State<NewNotificationItems> {
                               .updateNotification(notification)
                               .then((value) => {
                                     EventBusUtils.getInstance().fire('Update'),
+                                   print("UPdate1"),
+                                    widget.notiUpdate!(1)
                                   });
+
+                          setState(() {
+                            isReadMore = true;
+                            readStatus =1;
+                          });
 
                         },
                         child: Text(
@@ -88,13 +95,15 @@ class _NewNotificationItemsState extends State<NewNotificationItems> {
                   ],
                 ),
               ),
-              // widget.notificationList.read == 1
-              //     ? Container()
-              //     : Icon(
-              //         Icons.circle,
-              //         color: Colors.red,
-              //         size: 8,
-              //       )
+              widget.notificationList.read == 1
+                  ? Container()
+                  : (widget.type == 'typeUnread'  && readStatus == 1  )
+                  ? Container()
+                  : Icon(
+                      Icons.circle,
+                      color: Colors.red,
+                      size: 8,
+                    )
             ],
           ),
           isReadMore
@@ -112,8 +121,10 @@ class _NewNotificationItemsState extends State<NewNotificationItems> {
                   child: InkWell(
                     onTap: () {
                       setState(() {
+                        print("read Update");
                         isReadMore = !isReadMore;
                       });
+
                     },
                     child: Text(
                       'show less',
