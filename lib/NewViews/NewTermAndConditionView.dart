@@ -23,7 +23,7 @@ class NewTermAndConditionView extends StatelessWidget {
           Text(
             'These General Terms and Conditions shall apply to all Services provided by mojoenet.',
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 16),
+            style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),
           ),
           SizedBox(
             height: 20,

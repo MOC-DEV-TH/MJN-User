@@ -1,4 +1,3 @@
-import 'package:MJN/NewViews/ChannelOnlinePaymentView.dart';
 import 'package:MJN/NewViews/NewPaymentView.dart';
 import 'package:MJN/NewViews/OnlinePaymentWebView.dart';
 import 'package:MJN/controllers/getPaymentMethodController.dart';
@@ -8,7 +7,7 @@ import 'package:MJN/views/TabView.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:url_launcher/url_launcher.dart';
+
 
 class PaymentInvoiceView extends StatefulWidget {
   String paymentStatus;
@@ -29,8 +28,6 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
   final langStorage = GetStorage();
 
   late String paymentMethodLink;
-
-
 
   @override
   void dispose() {
@@ -55,7 +52,6 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
 
   @override
   Widget build(BuildContext context) {
-
     invoiceController.fetchInvoiceDataByID(
         langStorage.read(TOKEN),
         langStorage.read(UID),
@@ -65,16 +61,16 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
     return TabScreens.onlinePaymentIndex > 2
         ? OnlinePaymentWebView(paymentMethodLink)
         : TabScreens.onlinePaymentIndex == 1
-        ? NewPaymentView()
-        : Scaffold(
-            backgroundColor: Color(0xff188FC5),
-            body: SingleChildScrollView(
-              child: Container(
-                  alignment: Alignment.center,
-                  padding: EdgeInsets.all(20.0),
-                  child: _buildWidget()),
-            ),
-          );
+            ? NewPaymentView()
+            : Scaffold(
+                backgroundColor: Color(0xff188FC5),
+                body: SingleChildScrollView(
+                  child: Container(
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.all(20.0),
+                      child: _buildWidget()),
+                ),
+              );
   }
 
   Widget _buildWidget() {
@@ -104,11 +100,9 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-
                         _buildLabelText(),
                         _buildMiddleText(),
                         _buildNetworkDataText(),
-
                       ]),
                 ),
                 SizedBox(
@@ -117,39 +111,48 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
                 Container(
                   height: 1,
                   width: MediaQuery.of(context).size.width,
-                  color: Colors.grey,
+                  color: Colors.black54,
                 ),
                 SizedBox(
                   height: 15,
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  padding: const EdgeInsets.only(left: 8,right: 8),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         'Total Due',
                         style: TextStyle(fontSize: 12, color: Colors.black),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 80),
+
+                      Container(
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.only(left: 20),
                         child: Text(
                           '.....................',
-                          style: TextStyle(color: Colors.black),
+                          style: TextStyle(
+                            color: Color(0xffe9e9e9),
+                          ),
+                          textAlign: TextAlign.center,
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 40),
+
+                      Container(
+                        width: 100,
                         child: Text(
                           invoiceController.invoiceVo.details.totalDue,
-                          style: TextStyle(fontSize: 12, color: Colors.black),
+                          textAlign: TextAlign.left,
+                          style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
                         ),
                       ),
                     ],
                   ),
                 ),
+
                 SizedBox(
-                  height: 35,
+                  height: 20,
                 ),
                 Container(
                   child: RaisedButton(
@@ -169,18 +172,15 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
                                       Future.delayed(
                                           const Duration(milliseconds: 700),
                                           () {
-
-                                              setState(() {
-                                                changePageIndex = 1;
-                                                TabScreens.onlinePaymentIndex =3;
-                                                paymentMethodLink =
-                                                    getPaymentMethodController
-                                                        .getPaymentMethodsVo!
-                                                        .details
-                                                        .paymentLink;
-                                              });
-
-
+                                        setState(() {
+                                          changePageIndex = 1;
+                                          TabScreens.onlinePaymentIndex = 3;
+                                          paymentMethodLink =
+                                              getPaymentMethodController
+                                                  .getPaymentMethodsVo!
+                                                  .details
+                                                  .paymentLink;
+                                        });
                                       })
                                     }
                                 });
@@ -200,13 +200,12 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
                   height: 10,
                 ),
                 GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     setState(() {
-                      TabScreens.onlinePaymentIndex =1;
+                      TabScreens.onlinePaymentIndex = 1;
                       //widget.invoiceID = '';
-                     // widget.paymentStatus = '';
+                      // widget.paymentStatus = '';
                     });
-
                   },
                   child: Text(
                     'Statement',
@@ -216,344 +215,285 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
                     textAlign: TextAlign.center,
                   ),
                 ),
-
               ],
             ));
       }
     });
   }
 
-  Widget _buildMiddleText(){
-    return  Padding(
+  Widget _buildMiddleText() {
+    return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
-
-
           Text(
             '.....................',
-            style: TextStyle(color: Color(0xffe9e9e9),),
+            style: TextStyle(
+              color: Color(0xffe9e9e9),
+            ),
             textAlign: TextAlign.center,
           ),
-
           SizedBox(
             height: 15,
           ),
-
-
           Text(
             '.....................',
             style: TextStyle(color: Color(0xffe9e9e9)),
             textAlign: TextAlign.center,
           ),
-
           SizedBox(
             height: 10,
           ),
-
           Text(
             '.....................',
             style: TextStyle(color: Color(0xffe9e9e9)),
             textAlign: TextAlign.center,
           ),
-
           SizedBox(
             height: 10,
           ),
-
           Text(
             '.....................',
             style: TextStyle(color: Color(0xffe9e9e9)),
           ),
-
           SizedBox(
             height: 12,
           ),
-
           Text(
             '.....................',
             style: TextStyle(color: Color(0xffe9e9e9)),
           ),
-
           SizedBox(
             height: 9,
           ),
-
           Text(
             '.....................',
             style: TextStyle(color: Color(0xffe9e9e9)),
           ),
-
           SizedBox(
             height: 10,
           ),
-
           Text(
             '.....................',
             style: TextStyle(color: Color(0xffe9e9e9)),
           ),
-
           SizedBox(
             height: 15,
           ),
-
           Text(
             '.....................',
             style: TextStyle(color: Color(0xffe9e9e9)),
           ),
-
           SizedBox(
             height: 15,
           ),
-
           Text(
             '.....................',
             style: TextStyle(color: Color(0xffe9e9e9)),
           ),
-
           SizedBox(
             height: 15,
           ),
-
           Text(
             '.....................',
             style: TextStyle(color: Color(0xffe9e9e9)),
           ),
-
           SizedBox(
             height: 15,
           ),
-
           Text(
             '.....................',
             style: TextStyle(color: Color(0xffe9e9e9)),
           ),
-
           SizedBox(
             height: 10,
           ),
-
-
           Text(
             '.....................',
             style: TextStyle(color: Color(0xffe9e9e9)),
           ),
-
-
         ],
       ),
     );
   }
 
-
-
-  Widget _buildNetworkDataText(){
-    return
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            invoiceController.invoiceVo.details.name,
-            textAlign: TextAlign.left,
-            style: TextStyle(
-                fontSize: 12, color: Color(0xffe9e9e9)),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Text(
-            invoiceController.invoiceVo.details.firstname,
-            style: TextStyle(
-                fontSize: 12, color: Color(0xffe9e9e9)),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Text(
-            invoiceController.invoiceVo.details.lastname,
-            style: TextStyle(
-                fontSize: 12, color: Color(0xffe9e9e9)),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Text(
-            invoiceController.invoiceVo.details.building,
-            style: TextStyle(
-                fontSize: 12, color: Color(0xffe9e9e9)),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Text(
-            invoiceController.invoiceVo.details.unit,
-            style: TextStyle(
-                fontSize: 12, color: Color(0xffe9e9e9)),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Text(
-            invoiceController.invoiceVo.details.startDate,
-            style: TextStyle(
-                fontSize: 12, color: Color(0xffe9e9e9)),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Text(
-            invoiceController.invoiceVo.details.endDate,
-            style: TextStyle(
-                fontSize: 12, color: Color(0xffe9e9e9)),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Text(
-            invoiceController
-                .invoiceVo.details.transactionDate,
-            style: TextStyle(
-                fontSize: 12, color: Color(0xffe9e9e9)),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Text(
-            invoiceController.invoiceVo.details.invoiceId,
-            style: TextStyle(
-                fontSize: 12, color: Color(0xffe9e9e9)),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Text(
-            invoiceController.invoiceVo.details.creationDate,
-            style: TextStyle(
-                fontSize: 12, color: Color(0xffe9e9e9)),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Text(
-            invoiceController.invoiceVo.details.amount,
-            style: TextStyle(
-                fontSize: 12, color: Colors.black),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Text(
-            invoiceController.invoiceVo.details.tax,
-            style: TextStyle(
-                fontSize: 12, color: Colors.black),
-          ),
-        ],
-      );
-
+  Widget _buildNetworkDataText() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          invoiceController.invoiceVo.details.name,
+          textAlign: TextAlign.left,
+          style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
+        ),
+        SizedBox(
+          height: 15,
+        ),
+        Text(
+          invoiceController.invoiceVo.details.firstname,
+          style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
+        ),
+        SizedBox(
+          height: 15,
+        ),
+        Text(
+          invoiceController.invoiceVo.details.lastname,
+          style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
+        ),
+        SizedBox(
+          height: 15,
+        ),
+        Text(
+          invoiceController.invoiceVo.details.building,
+          style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
+        ),
+        SizedBox(
+          height: 15,
+        ),
+        Text(
+          invoiceController.invoiceVo.details.unit,
+          style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
+        ),
+        SizedBox(
+          height: 15,
+        ),
+        Text(
+          invoiceController.invoiceVo.details.startDate,
+          style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
+        ),
+        SizedBox(
+          height: 15,
+        ),
+        Text(
+          invoiceController.invoiceVo.details.endDate,
+          style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
+        ),
+        SizedBox(
+          height: 15,
+        ),
+        Text(
+          invoiceController.invoiceVo.details.transactionDate,
+          style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
+        ),
+        SizedBox(
+          height: 15,
+        ),
+        Text(
+          invoiceController.invoiceVo.details.invoiceId,
+          style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
+        ),
+        SizedBox(
+          height: 15,
+        ),
+        Text(
+          invoiceController.invoiceVo.details.creationDate,
+          style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
+        ),
+        SizedBox(
+          height: 15,
+        ),
+        Text(
+          invoiceController.invoiceVo.details.amount,
+          style: TextStyle(fontSize: 12, color: Colors.black),
+        ),
+        SizedBox(
+          height: 15,
+        ),
+        Text(
+          invoiceController.invoiceVo.details.tax,
+          style: TextStyle(fontSize: 12, color: Colors.black),
+        ),
+      ],
+    );
   }
 
-  Widget _buildLabelText(){
+  Widget _buildLabelText() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           'Account',
-          style: TextStyle(
-              fontSize: 12, color: Color(0xffe9e9e9)),
+          style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
         ),
         SizedBox(
           height: 15,
         ),
         Text(
           'First Name',
-          style: TextStyle(
-              fontSize: 12, color: Color(0xffe9e9e9)),
+          style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
         ),
         SizedBox(
           height: 15,
         ),
         Text(
           'Last Name',
-          style: TextStyle(
-              fontSize: 12, color: Color(0xffe9e9e9)),
+          style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
         ),
         SizedBox(
           height: 15,
         ),
         Text(
           'Building',
-          style: TextStyle(
-              fontSize: 12, color: Color(0xffe9e9e9)),
+          style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
         ),
         SizedBox(
           height: 15,
         ),
         Text(
           'Unit',
-          style: TextStyle(
-              fontSize: 12, color: Color(0xffe9e9e9)),
+          style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
         ),
         SizedBox(
           height: 15,
         ),
         Text(
           'Start date',
-          style: TextStyle(
-              fontSize: 12, color: Color(0xffe9e9e9)),
+          style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
         ),
         SizedBox(
           height: 15,
         ),
         Text(
           'End date',
-          style: TextStyle(
-              fontSize: 12, color: Color(0xffe9e9e9)),
+          style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
         ),
         SizedBox(
           height: 15,
         ),
         Text(
           'Transaction date',
-          style: TextStyle(
-              fontSize: 12, color: Color(0xffe9e9e9)),
+          style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
         ),
         SizedBox(
           height: 15,
         ),
         Text(
           'Invoice ID',
-          style: TextStyle(
-              fontSize: 12, color: Color(0xffe9e9e9)),
+          style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
         ),
         SizedBox(
           height: 15,
         ),
         Text(
           'Invoice date',
-          style: TextStyle(
-              fontSize: 12, color: Color(0xffe9e9e9)),
+          style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
         ),
         SizedBox(
           height: 20,
         ),
         Text(
           'Amount',
-          style:
-          TextStyle(fontSize: 12, color: Colors.black),
+          style: TextStyle(fontSize: 12, color: Colors.black),
         ),
         SizedBox(
           height: 15,
         ),
         Text(
           'Tax',
-          style:
-          TextStyle(fontSize: 12, color: Colors.black),
+          style: TextStyle(fontSize: 12, color: Colors.black),
         ),
       ],
     );
   }
-
-
 }

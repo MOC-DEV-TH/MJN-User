@@ -460,7 +460,7 @@ class _TabScreensState extends State<TabScreens> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(80),
+        preferredSize: const Size.fromHeight(60),
         child: navSelectedIndex
             ? logoAndNavTitleAppBar(_selectedPageIndex, context)
             : titleAppBar(changePageIndex, context),
@@ -626,7 +626,7 @@ void showMenuDialog(BuildContext context) {
           Animation secondaryAnimation) {
         return SafeArea(
           child: Container(
-              margin: EdgeInsets.only(top: 50), child: DialogUI(context)),
+              margin: EdgeInsets.only(top: 30), child: DialogUI(context)),
         );
       });
 }

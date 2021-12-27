@@ -1,10 +1,9 @@
 import 'package:MJN/NewViews/LoginView1.dart';
 import 'package:MJN/main.dart';
-import 'package:MJN/views/TabView.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:launch_review/launch_review.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'app_constants.dart';
@@ -375,13 +374,15 @@ class AppUtils {
                               child: RaisedButton(
                                   color: Theme.of(context).primaryColorDark,
                                   child: Text(
-                                    'OK',
+                                    'Update Now',
                                     style: TextStyle(
-                                        color: Colors.white,
+                                        color: Color(0xff188FC5),
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16),
                                   ),
-                                  onPressed: () {}),
+                                  onPressed: () {
+                                    LaunchReview.launch(androidAppId: 'com.hti.hiinternet',iOSAppId: '');
+                                  }),
                             ),
                           ),
                           SizedBox(
@@ -395,14 +396,14 @@ class AppUtils {
                               child: RaisedButton(
                                   color: Theme.of(context).primaryColorDark,
                                   child: Text(
-                                    'Cancel',
+                                    'Ignore',
                                     style: TextStyle(
-                                        color: Colors.white,
+                                        color: Color(0xff188FC5),
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16),
                                   ),
                                   onPressed: () {
-                                    Navigator.of(context).pop();
+                                    Get.back();
                                   }),
                             ),
                           ),

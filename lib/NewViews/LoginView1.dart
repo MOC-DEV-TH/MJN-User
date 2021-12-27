@@ -234,7 +234,7 @@ class _LoginView1State extends State<LoginView1> {
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          toolbarHeight: 80,
+          toolbarHeight: 60,
           backgroundColor: Color(0xff242527),
           iconTheme: IconThemeData(color: Colors.grey),
           title: Container(
