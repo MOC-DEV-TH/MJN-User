@@ -1,4 +1,4 @@
-const app_version = '1.0';
+const app_version = '2.0';
 
 // staging url
 const BASE_URL = 'http://mojoenet.myanmaronlinecreations.com/';
@@ -50,5 +50,6 @@ const GET_SERVICE_REQUEST_TYPE_URL = API_URL+"get_service_req_type";
 const GET_PAYMENT_METHOD_URL = API_URL+"get_payment_methods?";
 const CHECK_CAN_CREATE_TICKET_URL = API_URL+"check_can_create_ticket?";
 const SAVE_FIREBASE_TOKEN_URL = API_URL+"save_firebase_token?";
+const CHECK_REQUIRE_UPDATE_URL = API_URL+"is_required_update?";
 
 

@@ -6,8 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/state_manager.dart';
 import 'package:get_storage/get_storage.dart';
 
-class HomeController extends GetxController{
-
+class HomeController extends GetxController {
   PromotionAndOfferVo? promotionAndOfferVo;
   var isLoading = true.obs;
   final dataStorage = GetStorage();
@@ -16,36 +15,26 @@ class HomeController extends GetxController{
     try {
       isLoading(true);
 
-        var res = await MjnAPI.fetchPromotionAndOfferData();
+      var res = await MjnAPI.fetchPromotionAndOfferData();
 
-        if (res != null) {
-
-            promotionAndOfferVo = res;
-            print(promotionAndOfferVo!.status);
-            if(promotionAndOfferVo!.status == 'Success')
-              {
-                dataStorage.write(LOGIN_MANUAL, promotionAndOfferVo!.loginManual);
-                dataStorage.write(SERVICE_TICKET_MANUAL, promotionAndOfferVo!.serviceTicketManual);
-                dataStorage.write(ONLINE_PAYMENT_MANUAL, promotionAndOfferVo!.onlinePaymentManual);
-
-                if(promotionAndOfferVo!.isRequieredUpdate){
-                  AppUtils.showRequireUpdateDialog('Update Require', 'A new update is available', context);
-                }
-
-              }
-
-
-            isLoading(false);
-        }
-        else{
-
-          isLoading(false);
-          promotionAndOfferVo = null;
+      if (res != null) {
+        promotionAndOfferVo = res;
+        print(promotionAndOfferVo!.status);
+        if (promotionAndOfferVo!.status == 'Success') {
+          dataStorage.write(LOGIN_MANUAL, promotionAndOfferVo!.loginManual);
+          dataStorage.write(
+              SERVICE_TICKET_MANUAL, promotionAndOfferVo!.serviceTicketManual);
+          dataStorage.write(
+              ONLINE_PAYMENT_MANUAL, promotionAndOfferVo!.onlinePaymentManual);
         }
 
-    } catch(e) {
+        isLoading(false);
+      } else {
+        isLoading(false);
+        promotionAndOfferVo = null;
+      }
+    } catch (e) {
       isLoading(false);
     }
   }
-
 }

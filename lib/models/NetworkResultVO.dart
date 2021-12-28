@@ -16,7 +16,7 @@ class NetworkResult {
   String status;
   String responseCode;
   String description;
-  bool isRequieredUpdate;
+  bool? isRequieredUpdate;
   bool isforceUpdate;
 
   factory NetworkResult.fromJson(Map<String, dynamic> json) => NetworkResult(

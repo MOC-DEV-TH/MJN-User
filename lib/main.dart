@@ -1,10 +1,13 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:MJN/LocalString/LocalString.dart';
 import 'package:MJN/NewViews/LoginView1.dart';
+import 'package:MJN/controllers/checkRequireUpdateController.dart';
 import 'package:MJN/models/notificationModelVO.dart';
 import 'package:MJN/presistence/database/MyAppDatabase.dart';
 import 'package:MJN/presistence/database/MyDB.dart';
 import 'package:MJN/utils/app_constants.dart';
+import 'package:MJN/utils/app_utils.dart';
 import 'package:MJN/utils/eventbus_util.dart';
 import 'package:MJN/views/ChangePasswordView.dart';
 import 'package:MJN/views/CreateServiceTicketView.dart';
@@ -109,11 +112,11 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final SendFirebaseTokenController sendFirebaseTokenController =
       Get.put(SendFirebaseTokenController());
+
   final dataStorage = GetStorage();
 
   @override
   void initState() {
-
     MyAppDatabase.builder()
         .then((value) => MyAppDatabase.notificationDao = value);
     FirebaseMessaging.instance.subscribeToTopic('mjn');
@@ -126,7 +129,6 @@ class _MyAppState extends State<MyApp> {
 
     super.initState();
   }
-
 
   sendFirebaseTokenToServer(String token) {
     if (dataStorage.read(UID).toString() != null) {
@@ -174,8 +176,16 @@ class Splash2 extends StatefulWidget {
 }
 
 class _Splash2State extends State<Splash2> {
+  final CheckRequireUpdateController checkRequireUpdateController =
+      Get.put(CheckRequireUpdateController());
+
+  var isLoading = false.obs;
+
   @override
   void initState() {
+
+    checkRequireUpdateController.checkRequireUpdate(context);
+
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       onReceivedFirebaseMsg(message);
       NotificationModelVO notificationModelVO =
@@ -194,33 +204,78 @@ class _Splash2State extends State<Splash2> {
                 //      one that already exists in example app.
                 icon: 'launch_background',
               ),
-
             ));
-
       }
     });
 
+    Future.delayed(Duration(seconds: 5), () {
+      checkRequireUpdateController.checkRequireUpdate(context).then((value) {
+        if(checkRequireUpdateController.networkResult != null){
+          if(checkRequireUpdateController.networkResult!.isRequieredUpdate!){
+            setState(() {
+              isLoading.value = true;
+            });
 
+            AppUtils.showRequireUpdateDialog(
+                'Update Require', 'A new update is available', context);
+          }
+          else {
+            Get.off(TabScreens(0));
+          }
+        }
+
+      });
+    });
+
+
+    // AppUtils.showRequireUpdateDialog(
+    //     'Update Require', 'A new update is available', context)
     super.initState();
-
   }
 
   @override
   Widget build(BuildContext context) {
-    return SplashScreen(
-      backgroundColor: Color(0xff242527),
-      seconds: 5,
-      navigateAfterSeconds: new TabScreens(0),
-      image: Image(image: AssetImage('assets/images/splash_screen_logo.png')),
-      loadingText: Text(
-        "Loading....",
-        style: TextStyle(
-            color: Color(0xff659EC7),
-            fontWeight: FontWeight.bold,
-            fontSize: 18.0),
+
+
+
+    // return SplashScreen(
+    //   backgroundColor: Color(0xff242527),
+    //   image: Image(image: AssetImage('assets/images/splash_screen_logo.png')),
+    //   loadingText: Text(
+    //     "Loading....",
+    //     style: TextStyle(
+    //         color: Color(0xff659EC7),
+    //         fontWeight: FontWeight.bold,
+    //         fontSize: 18.0),
+    //   ),
+    //   photoSize: 140.0,
+    //   loaderColor: Color(0xff659EC7),
+    // );
+    return Container(
+      color: Color(0xff242527),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Image(image: AssetImage('assets/images/splash_screen_logo.png')),
+          Text(''),
+          Text(''),
+          Column(
+            children: [
+              Text(
+                'Loading....',
+                style: TextStyle(
+                    color:  Color(0xff188FC5),
+                    fontSize: 24,
+                    decoration: TextDecoration.none),
+              ),
+              SizedBox(height: 25,),
+              Visibility(
+                visible:isLoading.value ? false : true,
+                  child: CircularProgressIndicator(color:  Color(0xff188FC5),))
+            ],
+          )
+        ],
       ),
-      photoSize: 140.0,
-      loaderColor: Color(0xff659EC7),
     );
   }
 }
@@ -297,4 +352,11 @@ getFirebaseToken() async {
   String? token = await FirebaseMessaging.instance.getToken();
   print(token);
   return token;
+}
+
+class AfterSplash extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return new TabScreens(0);
+  }
 }

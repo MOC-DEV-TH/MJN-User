@@ -278,12 +278,18 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
             '.....................',
             style: TextStyle(color: Color(0xffe9e9e9)),
           ),
-          SizedBox(
-            height: 15,
+          Visibility(
+            visible: widget.paymentStatus == 'Paid' ? true : false,
+            child: SizedBox(
+              height: 15,
+            ),
           ),
-          Text(
-            '.....................',
-            style: TextStyle(color: Color(0xffe9e9e9)),
+          Visibility(
+            visible: widget.paymentStatus == 'Paid' ? true : false,
+            child: Text(
+              '.....................',
+              style: TextStyle(color: Color(0xffe9e9e9)),
+            ),
           ),
           SizedBox(
             height: 15,
@@ -369,12 +375,18 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
           invoiceController.invoiceVo.details.endDate,
           style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
         ),
-        SizedBox(
-          height: 15,
+        Visibility(
+          visible: widget.paymentStatus == 'Paid' ? true : false,
+          child: SizedBox(
+            height: 15,
+          ),
         ),
-        Text(
-          invoiceController.invoiceVo.details.transactionDate,
-          style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
+        Visibility(
+          visible: widget.paymentStatus == 'Paid' ? true : false,
+          child: Text(
+            invoiceController.invoiceVo.details.transactionDate,
+            style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
+          ),
         ),
         SizedBox(
           height: 15,
@@ -458,12 +470,18 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
           'End date',
           style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
         ),
-        SizedBox(
-          height: 15,
+        Visibility(
+          visible: widget.paymentStatus == 'Paid' ? true : false,
+          child: SizedBox(
+            height: 15,
+          ),
         ),
-        Text(
-          'Transaction date',
-          style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
+        Visibility(
+          visible: widget.paymentStatus == 'Paid' ? true : false,
+          child: Text(
+            'Transaction date',
+            style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
+          ),
         ),
         SizedBox(
           height: 15,

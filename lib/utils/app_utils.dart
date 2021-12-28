@@ -1,5 +1,6 @@
 import 'package:MJN/NewViews/LoginView1.dart';
 import 'package:MJN/main.dart';
+import 'package:MJN/views/TabView.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -266,24 +267,20 @@ class AppUtils {
                   //child: Material(
                   //child: Container(
                   padding: EdgeInsets.all(4),
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage("assets/images/dialog_card_bg.png"),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                  //color: Colors.white,
+                  color: Colors.white,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Icon(
                         Icons.error_outline,
                         size: 60,
+                        color: Color(0xff188FC5),
                       ),
                       Center(
                         child: Text(
                           title,
                           style: TextStyle(
+                              color: Color(0xff188FC5),
                               fontWeight: FontWeight.bold, fontSize: 20.0),
                         ),
                       ),
@@ -291,6 +288,7 @@ class AppUtils {
                         child: Text(
                           message,
                           textAlign: TextAlign.center,
+                          style: TextStyle(color: Color(0xff188FC5),),
                         ),
                       ),
                       ClipRRect(
@@ -299,7 +297,7 @@ class AppUtils {
                           width: MediaQuery.of(context).size.width * 0.5555,
                           height: MediaQuery.of(context).size.height * 0.0625,
                           child: RaisedButton(
-                              color: Theme.of(context).primaryColorDark,
+                              color: Color(0xff188FC5),
                               child: Text(
                                 'OK',
                                 style: TextStyle(
@@ -327,6 +325,7 @@ class AppUtils {
       String title, String message, BuildContext context) {
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       showDialog(
+          barrierDismissible: false,
           context: context,
           builder: (_) => Center(
                 child: Container(
@@ -336,24 +335,21 @@ class AppUtils {
                   //child: Material(
                   //child: Container(
                   padding: EdgeInsets.all(4),
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage("assets/images/dialog_card_bg.png"),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                  //color: Colors.white,
+                  color: Colors.white,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Icon(
-                        Icons.update_outlined,
+                        Icons.update,
                         size: 60,
+                        color: Color(0xff188FC5),
                       ),
                       Center(
                         child: Text(
                           title,
                           style: TextStyle(
+                              decoration: TextDecoration.none,
+                              color: Color(0xff188FC5),
                               fontWeight: FontWeight.bold, fontSize: 20.0),
                         ),
                       ),
@@ -361,6 +357,9 @@ class AppUtils {
                         child: Text(
                           message,
                           textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 14,
+                              color: Color(0xff188FC5),decoration: TextDecoration.none),
                         ),
                       ),
                       Row(
@@ -372,16 +371,16 @@ class AppUtils {
                               width: 100,
                               height: 40,
                               child: RaisedButton(
-                                  color: Theme.of(context).primaryColorDark,
+                                   color: Color(0xff188FC5),
                                   child: Text(
-                                    'Update Now',
+                                    'Ignore',
                                     style: TextStyle(
-                                        color: Color(0xff188FC5),
+                                        color: Colors.white,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16),
                                   ),
                                   onPressed: () {
-                                    LaunchReview.launch(androidAppId: 'com.hti.hiinternet',iOSAppId: '');
+                                    Get.offAll(TabScreens(0));
                                   }),
                             ),
                           ),
@@ -391,19 +390,18 @@ class AppUtils {
                           ClipRRect(
                             borderRadius: BorderRadius.circular(8),
                             child: Container(
-                              width: 100,
                               height: 40,
                               child: RaisedButton(
-                                  color: Theme.of(context).primaryColorDark,
+                                  color: Color(0xff188FC5),
                                   child: Text(
-                                    'Ignore',
+                                    'Update Now',
                                     style: TextStyle(
-                                        color: Color(0xff188FC5),
+                                      color: Colors.white,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16),
                                   ),
                                   onPressed: () {
-                                    Get.back();
+                                    LaunchReview.launch(androidAppId: 'com.moc.mjninternetapp',iOSAppId: '=com.hti.hiinternet');
                                   }),
                             ),
                           ),

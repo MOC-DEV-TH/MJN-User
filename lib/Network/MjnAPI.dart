@@ -462,5 +462,22 @@ class MjnAPI {
     }
   }
 
+  static Future checkRequireUpdate() async {
+
+    var response = await client.get(
+
+      Uri.parse( CHECK_REQUIRE_UPDATE_URL +
+           APP_VERSION + app_version
+      ),
+    );
+    if (response.statusCode == 200) {
+      var json = response.body;
+      var result = networkResultFromJson(json);
+      return result;
+    } else {
+      return null;
+    }
+  }
+
 
 }
