@@ -1,4 +1,4 @@
-const app_version = '2.0';
+const app_version = '1.0';
 
 // staging url
 const BASE_URL = 'http://mojoenet.myanmaronlinecreations.com/';

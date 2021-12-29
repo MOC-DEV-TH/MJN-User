@@ -401,7 +401,7 @@ class AppUtils {
                                         fontSize: 16),
                                   ),
                                   onPressed: () {
-                                    LaunchReview.launch(androidAppId: 'com.moc.mjninternetapp',iOSAppId: '=com.hti.hiinternet');
+                                    LaunchReview.launch(androidAppId: 'com.moc.mjninternetapp',iOSAppId: 'com.hti.hiinternet');
                                   }),
                             ),
                           ),
