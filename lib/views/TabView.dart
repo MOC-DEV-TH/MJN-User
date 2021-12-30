@@ -12,6 +12,7 @@ import 'package:MJN/NewViews/OnlinePaymentView.dart';
 import 'package:MJN/main.dart';
 import 'package:MJN/models/notificationModelVO.dart';
 import 'package:MJN/presistence/database/MyAppDatabase.dart';
+import 'package:MJN/presistence/database/MyDB.dart';
 import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/utils/app_utils.dart';
 import 'package:MJN/utils/eventbus_util.dart';
@@ -126,6 +127,7 @@ class _TabScreensState extends State<TabScreens> {
 
     flutterLocalNotificationsPlugin.initialize(initializeSetting,
         onSelectNotification: onSelectNotification);
+
 
     changePageIndex = 0;
     visible = false;

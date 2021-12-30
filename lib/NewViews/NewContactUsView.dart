@@ -193,24 +193,27 @@ class _NewContactUsViewState extends State<NewContactUsView> {
                             SizedBox(
                               height: 10,
                             ),
-                            GridView(
-                                shrinkWrap: true,
-                                physics: ScrollPhysics(),
-                                primary: false,
-                                padding: const EdgeInsets.all(10),
-                                scrollDirection: Axis.vertical,
-                                children: homeController
-                                    .promotionAndOfferVo!.details.offer
-                                    .map((imgData) =>
-                                        PackageAndServiceItems(imgData))
-                                    .toList(),
-                                gridDelegate:
-                                    SliverGridDelegateWithMaxCrossAxisExtent(
-                                  maxCrossAxisExtent: 200,
-                                  mainAxisSpacing: 20,
-                                  crossAxisSpacing: 20,
-                                  childAspectRatio: (1 / .8),
-                                ))
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 20),
+                              child: GridView(
+                                  shrinkWrap: true,
+                                  physics: ScrollPhysics(),
+                                  primary: false,
+                                  padding: const EdgeInsets.all(10),
+                                  scrollDirection: Axis.vertical,
+                                  children: homeController
+                                      .promotionAndOfferVo!.details.offer
+                                      .map((imgData) =>
+                                          PackageAndServiceItems(imgData))
+                                      .toList(),
+                                  gridDelegate:
+                                      SliverGridDelegateWithMaxCrossAxisExtent(
+                                    maxCrossAxisExtent: 200,
+                                    mainAxisSpacing: 20,
+                                    crossAxisSpacing: 20,
+                                    childAspectRatio: (1 / .8),
+                                  )),
+                            )
                           ],
                         ),
                       )

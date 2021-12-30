@@ -21,7 +21,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
-import 'package:splashscreen/splashscreen.dart';
+
 
 import 'controllers/sendFirebaseTokenController.dart';
 
@@ -56,6 +56,8 @@ const AndroidNotificationChannel channel = const AndroidNotificationChannel(
   'High Importance Notifications', // title
   'This channel is used for important notifications.', // description
   importance: Importance.high,
+
+
 );
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -96,6 +98,7 @@ void main() async {
 
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
+
   await flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin>()
@@ -117,6 +120,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
+
+
     MyAppDatabase.builder()
         .then((value) => MyAppDatabase.notificationDao = value);
     FirebaseMessaging.instance.subscribeToTopic('mjn');
@@ -185,28 +190,29 @@ class _Splash2State extends State<Splash2> {
   void initState() {
 
     checkRequireUpdateController.checkRequireUpdate(context);
-
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       onReceivedFirebaseMsg(message);
       NotificationModelVO notificationModelVO =
           NotificationModelVO.fromJson(message.data);
 
       if (notificationModelVO != null) {
-        flutterLocalNotificationsPlugin.show(
-            notificationModelVO.hashCode,
-            notificationModelVO.title,
-            notificationModelVO.body,
-            NotificationDetails(
-              android: AndroidNotificationDetails(
-                channel.id,
-                channel.name,
-                channel.description,
-                //      one that already exists in example app.
-                icon: 'launch_background',
-              ),
-            ));
+          flutterLocalNotificationsPlugin.show(
+              notificationModelVO.hashCode,
+              notificationModelVO.title,
+              notificationModelVO.body,
+              NotificationDetails(
+                android: AndroidNotificationDetails(
+                  channel.id,
+                  channel.name,
+                  channel.description,
+                  //      one that already exists in example app.
+                  icon: 'launch_background',
+                ),
+              ));
+
       }
     });
+
 
     Future.delayed(Duration(seconds: 5), () {
       checkRequireUpdateController.checkRequireUpdate(context).then((value) {

@@ -4,7 +4,7 @@ import 'package:MJN/views/TabView.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:launch_review/launch_review.dart';
+import 'package:store_redirect/store_redirect.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'app_constants.dart';
@@ -401,7 +401,7 @@ class AppUtils {
                                         fontSize: 16),
                                   ),
                                   onPressed: () {
-                                    LaunchReview.launch(androidAppId: 'com.moc.mjninternetapp',iOSAppId: 'com.hti.hiinternet');
+                                    StoreRedirect.redirect(androidAppId: 'com.moc.mjninternetapp',iOSAppId: '');
                                   }),
                             ),
                           ),
