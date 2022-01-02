@@ -94,10 +94,14 @@ void main() async {
   await GetStorage.init();
   await Firebase.initializeApp();
 
-  //DatabaseUtil().InitDatabase();
-
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
+  await FirebaseMessaging.instance
+      .setForegroundNotificationPresentationOptions(
+    alert: true,
+    badge: true,
+    sound: true,
+  );
 
   await flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<
@@ -190,6 +194,7 @@ class _Splash2State extends State<Splash2> {
   void initState() {
 
     checkRequireUpdateController.checkRequireUpdate(context);
+
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       onReceivedFirebaseMsg(message);
       NotificationModelVO notificationModelVO =
@@ -233,30 +238,11 @@ class _Splash2State extends State<Splash2> {
       });
     });
 
-
-    // AppUtils.showRequireUpdateDialog(
-    //     'Update Require', 'A new update is available', context)
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-
-
-
-    // return SplashScreen(
-    //   backgroundColor: Color(0xff242527),
-    //   image: Image(image: AssetImage('assets/images/splash_screen_logo.png')),
-    //   loadingText: Text(
-    //     "Loading....",
-    //     style: TextStyle(
-    //         color: Color(0xff659EC7),
-    //         fontWeight: FontWeight.bold,
-    //         fontSize: 18.0),
-    //   ),
-    //   photoSize: 140.0,
-    //   loaderColor: Color(0xff659EC7),
-    // );
     return Container(
       color: Color(0xff242527),
       child: Column(
@@ -286,74 +272,6 @@ class _Splash2State extends State<Splash2> {
   }
 }
 
-// class SplashScreen extends StatefulWidget {
-//   static const routeName = '/splash_screen';
-//   const SplashScreen({Key key}) : super(key: key);
-//
-//   @override
-//   _SplashScreenState createState() => _SplashScreenState();
-// }
-//
-// class _SplashScreenState extends State<SplashScreen>
-//     with TickerProviderStateMixin {
-//   AnimationController _controller;
-//   final loginDataStorage = GetStorage();
-//
-//   @override
-//   void initState() {
-//
-//     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-//       onReceivedFirebaseMsg(message);
-//       NotificationModelVO notificationModelVO =
-//       NotificationModelVO.fromJson(message.data);
-//       if (notificationModelVO != null) {
-//         flutterLocalNotificationsPlugin.show(
-//             notificationModelVO.hashCode,
-//             notificationModelVO.title,
-//             notificationModelVO.body,
-//             NotificationDetails(
-//               android: AndroidNotificationDetails(
-//                 channel.id,
-//                 channel.name,
-//                 channel.description,
-//                 //      one that already exists in example app.
-//                 icon: 'launch_background',
-//               ),
-//             ));
-//       }
-//     });
-//
-//
-//     super.initState();
-//     _controller = AnimationController(
-//       duration: Duration(seconds: (5)),
-//       vsync: this,
-//     );
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Lottie.asset(
-//         'assets/splash_lottie_network.json',
-//         controller: _controller,
-//         height: MediaQuery.of(context).size.height * 1,
-//         animate: true,
-//         onLoaded: (composition) {
-//           _controller
-//             ..duration = composition.duration
-//             ..forward().whenComplete(() => Navigator.pushReplacement(
-//                   context,
-//                   MaterialPageRoute(
-//                       builder: (context) => loginDataStorage.read(TOKEN) != null
-//                           ? TabScreens()
-//                           : LoginView()),
-//                 ));
-//         },
-//       ),
-//     );
-//   }
-// }
 getFirebaseToken() async {
   String? token = await FirebaseMessaging.instance.getToken();
   print(token);

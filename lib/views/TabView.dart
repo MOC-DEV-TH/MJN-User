@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:MJN/CustomDialog/CustomDialogUI.dart';
 import 'package:MJN/NewViews/MyAccountView.dart';
 import 'package:MJN/NewViews/NewAboutUsView.dart';
@@ -12,7 +13,6 @@ import 'package:MJN/NewViews/OnlinePaymentView.dart';
 import 'package:MJN/main.dart';
 import 'package:MJN/models/notificationModelVO.dart';
 import 'package:MJN/presistence/database/MyAppDatabase.dart';
-import 'package:MJN/presistence/database/MyDB.dart';
 import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/utils/app_utils.dart';
 import 'package:MJN/utils/eventbus_util.dart';
@@ -90,12 +90,19 @@ class _TabScreensState extends State<TabScreens> {
 
   void _handleMessage(RemoteMessage message) {
     if (message.messageId != null) {
+      MyAppDatabase.notificationDao!
+          .fetchUnreadNotifications()
+          .then((value) => {notiCount.value = value.length});
       if (langStorage.read(TOKEN) == null) {
         AppUtils.showLoginDialog(
             'Login', 'Please sign in to unlock all\naccount features', context);
       } else {
         langStorage.write('nextInit', false);
-        _selectedPageIndex = 0;
+        setState(() {
+          _selectedPageIndex = 0;
+          changePageIndex = 0;
+        });
+
       }
     } else {
       _selectedPageIndex = 2;
@@ -128,12 +135,42 @@ class _TabScreensState extends State<TabScreens> {
     flutterLocalNotificationsPlugin.initialize(initializeSetting,
         onSelectNotification: onSelectNotification);
 
+    // if(Platform.isIOS){
+    //
+    //   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async{
+    //     print('A new onMessageOpenedApp event was published!');
+    //
+    //     NotificationModelVO notiModel = NotificationModelVO.fromJson(message.data);
+    //     MyDatabase? database = await MyAppDatabase.instance.database;
+    //     final notificationDao = database!.notiDao;
+    //
+    //     if (notiModel != null) {
+    //       print(message.data);
+    //       EventBusUtils.getInstance().fire(notiModel);
+    //       notificationDao
+    //           .insertNotification(notiModel)
+    //           .then((value) {
+    //         print('Success ios notification insert');
+    //         setState(() {
+    //           _selectedPageIndex = 0;
+    //           changePageIndex = 0;
+    //         });
+    //       });
+    //     }
+    //
+    //   });
+    // }
+
+
 
     changePageIndex = 0;
     visible = false;
     isSelected = [true, false];
 
-    setUpInteractMessage();
+
+      setUpInteractMessage();
+
+
     super.initState();
 
     notiSub =
