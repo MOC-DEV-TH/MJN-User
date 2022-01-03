@@ -6,7 +6,6 @@ import 'package:MJN/controllers/checkRequireUpdateController.dart';
 import 'package:MJN/models/notificationModelVO.dart';
 import 'package:MJN/presistence/database/MyAppDatabase.dart';
 import 'package:MJN/presistence/database/MyDB.dart';
-import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/utils/app_utils.dart';
 import 'package:MJN/utils/eventbus_util.dart';
 import 'package:MJN/views/ChangePasswordView.dart';
@@ -22,9 +21,6 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
 
-
-import 'controllers/sendFirebaseTokenController.dart';
-
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
   print('Handling a background message ${message.messageId}');
@@ -37,17 +33,27 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   final notificationDao = database!.notiDao;
 
   if (notiModel != null) {
+    flutterLocalNotificationsPlugin.show(
+        notificationModelVO.hashCode,
+        notificationModelVO.title,
+        notificationModelVO.body,
+        NotificationDetails(
+            android: AndroidNotificationDetails(
+              channel.id,
+              channel.name,
+              channel.description,
+              //      one that already exists in example app.
+              icon: 'launch_background',
+            ),
+            iOS: IOSNotificationDetails(
+                presentAlert: true, presentSound: true, presentBadge: true)));
+
     EventBusUtils.getInstance().fire(notiModel);
     print(message.data);
 
     notificationDao
         .insertNotification(notificationModelVO)
         .then((value) => print('Success'));
-
-    Get.toNamed(
-      TabScreens.routeName,
-      arguments: "Notification",
-    );
   }
 }
 
@@ -56,16 +62,14 @@ const AndroidNotificationChannel channel = const AndroidNotificationChannel(
   'High Importance Notifications', // title
   'This channel is used for important notifications.', // description
   importance: Importance.high,
-
-
 );
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
 void onReceivedFirebaseMsg(RemoteMessage message) async {
-  if (message.notification != null) {
-    print('Message also contained a notification: ${message.notification}');
+  if (message.data != null) {
+    print('Message also contained a notification: ${message.data}');
     print('notification.body' +
         message.notification!.body.toString() +
         ', notification.body' +
@@ -93,15 +97,12 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
   await Firebase.initializeApp();
-
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-
-  await FirebaseMessaging.instance
-      .setForegroundNotificationPresentationOptions(
+  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
     alert: true,
     badge: true,
     sound: true,
   );
+  _requestPermissions();
 
   await flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<
@@ -111,44 +112,42 @@ void main() async {
   runApp(MyApp());
 }
 
+void _requestPermissions() {
+  flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<
+          IOSFlutterLocalNotificationsPlugin>()
+      ?.requestPermissions(
+        alert: true,
+        badge: true,
+        sound: true,
+      );
+  flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<
+          MacOSFlutterLocalNotificationsPlugin>()
+      ?.requestPermissions(
+        alert: true,
+        badge: true,
+        sound: true,
+      );
+}
+
 class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-  final SendFirebaseTokenController sendFirebaseTokenController =
-      Get.put(SendFirebaseTokenController());
-
   final dataStorage = GetStorage();
 
   @override
   void initState() {
-
-
     MyAppDatabase.builder()
         .then((value) => MyAppDatabase.notificationDao = value);
     FirebaseMessaging.instance.subscribeToTopic('mjn');
 
     getFirebaseToken();
 
-    FirebaseMessaging.instance.getToken().then((token) {
-      sendFirebaseTokenToServer(token!);
-    });
-
     super.initState();
-  }
-
-  sendFirebaseTokenToServer(String token) {
-    if (dataStorage.read(UID).toString() != null) {
-      Map<String, String> map = {
-        'user_id': dataStorage.read(UID),
-        'app_version': app_version,
-        'firebase_token': token
-      };
-
-      sendFirebaseTokenController.sendFirebaseTokenToServer(map);
-    }
   }
 
   @override
@@ -192,7 +191,6 @@ class _Splash2State extends State<Splash2> {
 
   @override
   void initState() {
-
     checkRequireUpdateController.checkRequireUpdate(context);
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
@@ -201,11 +199,11 @@ class _Splash2State extends State<Splash2> {
           NotificationModelVO.fromJson(message.data);
 
       if (notificationModelVO != null) {
-          flutterLocalNotificationsPlugin.show(
-              notificationModelVO.hashCode,
-              notificationModelVO.title,
-              notificationModelVO.body,
-              NotificationDetails(
+        flutterLocalNotificationsPlugin.show(
+            notificationModelVO.hashCode,
+            notificationModelVO.title,
+            notificationModelVO.body,
+            NotificationDetails(
                 android: AndroidNotificationDetails(
                   channel.id,
                   channel.name,
@@ -213,28 +211,29 @@ class _Splash2State extends State<Splash2> {
                   //      one that already exists in example app.
                   icon: 'launch_background',
                 ),
-              ));
-
+                iOS: IOSNotificationDetails(
+                    presentAlert: true,
+                    presentSound: true,
+                    presentBadge: true)));
       }
     });
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
 
     Future.delayed(Duration(seconds: 5), () {
       checkRequireUpdateController.checkRequireUpdate(context).then((value) {
-        if(checkRequireUpdateController.networkResult != null){
-          if(checkRequireUpdateController.networkResult!.isRequieredUpdate!){
+        if (checkRequireUpdateController.networkResult != null) {
+          if (checkRequireUpdateController.networkResult!.isRequieredUpdate!) {
             setState(() {
               isLoading.value = true;
             });
 
             AppUtils.showRequireUpdateDialog(
                 'Update Require', 'A new update is available', context);
-          }
-          else {
+          } else {
             Get.off(TabScreens(0));
           }
         }
-
       });
     });
 
@@ -256,14 +255,18 @@ class _Splash2State extends State<Splash2> {
               Text(
                 'Loading....',
                 style: TextStyle(
-                    color:  Color(0xff188FC5),
+                    color: Color(0xff188FC5),
                     fontSize: 24,
                     decoration: TextDecoration.none),
               ),
-              SizedBox(height: 25,),
+              SizedBox(
+                height: 25,
+              ),
               Visibility(
-                visible:isLoading.value ? false : true,
-                  child: CircularProgressIndicator(color:  Color(0xff188FC5),))
+                  visible: isLoading.value ? false : true,
+                  child: CircularProgressIndicator(
+                    color: Color(0xff188FC5),
+                  ))
             ],
           )
         ],

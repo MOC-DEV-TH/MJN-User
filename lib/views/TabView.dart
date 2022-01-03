@@ -135,33 +135,6 @@ class _TabScreensState extends State<TabScreens> {
     flutterLocalNotificationsPlugin.initialize(initializeSetting,
         onSelectNotification: onSelectNotification);
 
-    // if(Platform.isIOS){
-    //
-    //   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async{
-    //     print('A new onMessageOpenedApp event was published!');
-    //
-    //     NotificationModelVO notiModel = NotificationModelVO.fromJson(message.data);
-    //     MyDatabase? database = await MyAppDatabase.instance.database;
-    //     final notificationDao = database!.notiDao;
-    //
-    //     if (notiModel != null) {
-    //       print(message.data);
-    //       EventBusUtils.getInstance().fire(notiModel);
-    //       notificationDao
-    //           .insertNotification(notiModel)
-    //           .then((value) {
-    //         print('Success ios notification insert');
-    //         setState(() {
-    //           _selectedPageIndex = 0;
-    //           changePageIndex = 0;
-    //         });
-    //       });
-    //     }
-    //
-    //   });
-    // }
-
-
 
     changePageIndex = 0;
     visible = false;
