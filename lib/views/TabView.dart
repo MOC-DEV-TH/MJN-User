@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:MJN/CustomDialog/CustomDialogUI.dart';
 import 'package:MJN/NewViews/MyAccountView.dart';
 import 'package:MJN/NewViews/NewAboutUsView.dart';
@@ -36,7 +35,7 @@ class TabScreens extends StatefulWidget {
   _TabScreensState createState() => _TabScreensState();
 }
 
-class _TabScreensState extends State<TabScreens> {
+class _TabScreensState extends State<TabScreens>  with WidgetsBindingObserver {
   var _scaffoldKey = GlobalKey<ScaffoldState>();
   bool isOpened = false;
   var notiCount = 0.obs;
@@ -125,7 +124,28 @@ class _TabScreensState extends State<TabScreens> {
   }
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+
+    if(state == AppLifecycleState.resumed){
+      print('onResume');
+      MyAppDatabase.notificationDao!
+          .fetchUnreadNotifications()
+          .then((value) => {notiCount.value = value.length});
+    }
+
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance!.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
   void initState() {
+
+    WidgetsBinding.instance!.addObserver(this);
+
     var initializeAndroid =
         new AndroidInitializationSettings('@mipmap/ic_launcher');
     var initializeIOS = new IOSInitializationSettings();

@@ -62,7 +62,6 @@ class _NewNotificationItemsState extends State<NewNotificationItems> {
                           print("UPdate");
                           NotificationModelVO notification =
                               new NotificationModelVO(
-                                  widget.notificationList.id,
                                   widget.notificationList.title,
                                   widget.notificationList.body,
                                   widget.notificationList.message,

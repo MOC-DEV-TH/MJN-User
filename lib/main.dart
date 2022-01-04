@@ -31,12 +31,14 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
       NotificationModelVO.fromJson(message.data);
   MyDatabase? database = await MyAppDatabase.instance.database;
   final notificationDao = database!.notiDao;
+  RemoteNotification? notification = message.notification;
 
-  if (notiModel != null) {
+
+  if (notification != null) {
     flutterLocalNotificationsPlugin.show(
-        notificationModelVO.hashCode,
-        notificationModelVO.title,
-        notificationModelVO.body,
+        notification.hashCode,
+        notification.title,
+        notification.body,
         NotificationDetails(
             android: AndroidNotificationDetails(
               channel.id,
@@ -55,6 +57,9 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
         .insertNotification(notificationModelVO)
         .then((value) => print('Success'));
   }
+
+  flutterLocalNotificationsPlugin.cancel(message.notification.hashCode);
+
 }
 
 const AndroidNotificationChannel channel = const AndroidNotificationChannel(
@@ -197,12 +202,13 @@ class _Splash2State extends State<Splash2> {
       onReceivedFirebaseMsg(message);
       NotificationModelVO notificationModelVO =
           NotificationModelVO.fromJson(message.data);
-
-      if (notificationModelVO != null) {
+      RemoteNotification? notification = message.notification;
+     AndroidNotification? android = message.notification?.android;
+      if (notification != null ) {
         flutterLocalNotificationsPlugin.show(
-            notificationModelVO.hashCode,
-            notificationModelVO.title,
-            notificationModelVO.body,
+            notification.hashCode,
+            notification.title,
+            notification.body,
             NotificationDetails(
                 android: AndroidNotificationDetails(
                   channel.id,
@@ -216,6 +222,7 @@ class _Splash2State extends State<Splash2> {
                     presentSound: true,
                     presentBadge: true)));
       }
+
     });
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 

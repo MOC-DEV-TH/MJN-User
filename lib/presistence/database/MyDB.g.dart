@@ -82,7 +82,7 @@ class _$MyDatabase extends MyDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `notification` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `read` INTEGER, `body` TEXT NOT NULL, `message` TEXT NOT NULL, `type_name` TEXT NOT NULL, `action_url` TEXT NOT NULL, `created` TEXT NOT NULL, `imageUrl` TEXT NOT NULL)');
+            'CREATE TABLE IF NOT EXISTS `notification` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `title` TEXT NOT NULL, `read` INTEGER, `body` TEXT NOT NULL, `message` TEXT NOT NULL, `type_name` TEXT NOT NULL, `action_url` TEXT NOT NULL, `created` TEXT NOT NULL, `imageUrl` TEXT NOT NULL)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -149,7 +149,6 @@ class _$NotificationDao extends NotificationDao {
   Future<List<NotificationModelVO>> fetchAllNotifications() async {
     return _queryAdapter.queryList('SELECT * FROM notification',
         mapper: (Map<String, Object?> row) => NotificationModelVO(
-            row['id'] as int,
             row['title'] as String,
             row['body'] as String,
             row['message'] as String,
@@ -157,14 +156,14 @@ class _$NotificationDao extends NotificationDao {
             row['action_url'] as String,
             row['created'] as String,
             row['imageUrl'] as String,
-            read: row['read'] as int?));
+            read: row['read'] as int?,
+            id: row['id'] as int?));
   }
 
   @override
   Future<List<NotificationModelVO>> fetchUnreadNotifications() async {
     return _queryAdapter.queryList('SELECT * FROM notification WHERE read = 0',
         mapper: (Map<String, Object?> row) => NotificationModelVO(
-            row['id'] as int,
             row['title'] as String,
             row['body'] as String,
             row['message'] as String,
@@ -172,7 +171,8 @@ class _$NotificationDao extends NotificationDao {
             row['action_url'] as String,
             row['created'] as String,
             row['imageUrl'] as String,
-            read: row['read'] as int?));
+            read: row['read'] as int?,
+            id: row['id'] as int?));
   }
 
   @override
