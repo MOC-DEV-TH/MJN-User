@@ -3,7 +3,7 @@ import 'package:floor/floor.dart';
 @Entity(tableName: 'notification')
 class NotificationModelVO {
   @PrimaryKey(autoGenerate: true)
-   int? id ;
+   int? id = 0;
   final String title;
   int? read;
   final String body;
@@ -14,10 +14,11 @@ class NotificationModelVO {
   final String imageUrl;
 
 
-  NotificationModelVO(this.title,this.body, this.message, this.type_name, this.action_url, this.created,this.imageUrl,{this.read=0,this.id});
+  NotificationModelVO(this.id,this.title,this.body, this.message, this.type_name, this.action_url, this.created,this.imageUrl,{this.read=0});
 
   NotificationModelVO.fromJson(Map<String, dynamic> json)
       :
+        id = json['id'],
         title = json['title'],
         body = json['body'],
         message = json['message'],

@@ -17,10 +17,9 @@ class CheckRequireUpdateController extends GetxController{
       if (res != null) {
         networkResult = res;
         print('Require update'+networkResult!.isRequieredUpdate.toString());
-        // if(networkResult!.isRequieredUpdate){
-        //   AppUtils.showRequireUpdateDialog(
-        //       'Update Require', 'A new update is available', context);
-        // }
+      }
+      else {
+        networkResult = null;
       }
     } catch(e) {
 

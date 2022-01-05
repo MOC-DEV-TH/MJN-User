@@ -120,7 +120,8 @@ class _NewServiceComplainViewState extends State<NewServiceComplainView> {
                                               .checkCanCreateTicketVo.canCreate)
                                             {
                                               setState(() {
-                                                TabScreens.serviceComplainIndex = 1;
+                                                TabScreens
+                                                    .serviceComplainIndex = 1;
                                               })
                                             }
                                           else
@@ -129,8 +130,6 @@ class _NewServiceComplainViewState extends State<NewServiceComplainView> {
                                                   'Ticket can\'t be created as we are working\nfor your current ticket')
                                             }
                                         });
-
-
                               },
                               child: Image(
                                   image: AssetImage(
@@ -147,7 +146,20 @@ class _NewServiceComplainViewState extends State<NewServiceComplainView> {
                       SizedBox(
                         height: 15,
                       ),
-                      _buildServiceTicketTitle()
+                      _buildServiceTicketTitle(),
+                      ticketListController.ticketListVo!.details!.length == 0
+                          ? Center(
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 50),
+                                child: Text(
+                                  'There is no tickets...',
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.normal),
+                                ),
+                              ),
+                            )
+                          : Container()
                     ],
                   ),
                 ));
@@ -184,38 +196,24 @@ class _NewServiceComplainViewState extends State<NewServiceComplainView> {
                     textAlign: TextAlign.center,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 4, bottom: 4, right: 30),
-                  child: Container(
-                    child: Text(
-                      'Service\nRequest',
-                      style: TextStyle(color: Colors.black, fontSize: 8),
-                      textAlign: TextAlign.center,
-                    ),
+                Container(
+                  child: Text(
+                    'Service\nRequest',
+                    style: TextStyle(color: Colors.black, fontSize: 8),
+                    textAlign: TextAlign.center,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 4, bottom: 4, right: 10),
-                  child: Text(
-                    'Issue',
-                    style: TextStyle(color: Colors.black, fontSize: 8),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    top: 4,
-                    bottom: 4,
-                  ),
-                  child: Text(
-                    'Status',
-                    style: TextStyle(color: Colors.black, fontSize: 8),
-                  ),
+
+                Text(
+                  'Status',
+                  style: TextStyle(color: Colors.black, fontSize: 8),
                 ),
               ],
             ),
           ),
           ListView.builder(
             physics: new NeverScrollableScrollPhysics(),
+            reverse: true,
             shrinkWrap: true,
             itemBuilder: (ctx, index) {
               return MyServiceTicketItems(
@@ -234,13 +232,13 @@ class _NewServiceComplainViewState extends State<NewServiceComplainView> {
         color: Colors.white,
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
             padding: const EdgeInsets.only(left: 10, top: 10, bottom: 10),
             child: Container(
-              margin: EdgeInsets.only(left: 30, right: 30),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Container(
                     child: InkWell(
@@ -276,17 +274,9 @@ class _NewServiceComplainViewState extends State<NewServiceComplainView> {
                       textAlign: TextAlign.center,
                     ),
                   ),
+
                   Container(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 10),
-                      child: Text(
-                        'Slow Preformance',
-                        style: TextStyle(color: Colors.black, fontSize: 8),
-                        textAlign: TextAlign.right,
-                      ),
-                    ),
-                  ),
-                  Container(
+                    padding: ticketVo.status == 'Closed' ? EdgeInsets.only(right: 5,left: 3) : EdgeInsets.all(0) ,
                     decoration: BoxDecoration(
                       color: ticketVo.status == 'Pending'
                           ? Colors.red

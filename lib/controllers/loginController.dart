@@ -23,21 +23,20 @@ class LoginController extends GetxController {
       if (res != null) {
         loginVo = res;
 
+
         if (loginVo.status == 'Success') {
-
-
 
           String? fToken = await FirebaseMessaging.instance.getToken();
 
           print('FToken :'+fToken.toString());
 
           Map<String, String> map = {
-            'tenant_id': loginVo.tenantId,
+            'tenant_id': loginVo.tenantId.toString(),
             'firebase_token': fToken.toString(),
             'app_version': app_version,
           };
 
-          MjnAPI.saveFirebaseToken(map,loginVo.token);
+          MjnAPI.saveFirebaseToken(map,loginVo.token.toString());
 
           loginDataStorage.write(PHONE_NO, loginVo.phone);
           loginDataStorage.write(UID, loginVo.uid);
@@ -61,6 +60,7 @@ class LoginController extends GetxController {
         print(loginVo.uid);
         print(loginVo.building);
       }
+
 
     } finally {
       isLoading(false);

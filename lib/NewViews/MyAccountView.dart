@@ -31,11 +31,13 @@ class _MyAccountViewState extends State<MyAccountView> {
             loginDataStorage.read(DATA_TENANT_ID),
             context)
             .then((value) => {
+
           lastTransactionController.fetchLastTransactionData(
               loginDataStorage.read(TOKEN),
               loginDataStorage.read(UID),
               loginDataStorage.read(DATA_TENANT_ID))
         }) );
+
 
 
 
@@ -279,7 +281,8 @@ class _MyAccountViewState extends State<MyAccountView> {
     return Obx(() {
       if (lastTransactionController.isLoading.value) {
         return Container();
-      } else {
+      }
+      else if(lastTransactionController.transactionVo!.details != null){
         return Container(
           child: Padding(
             padding:
@@ -464,6 +467,9 @@ class _MyAccountViewState extends State<MyAccountView> {
             ),
           ),
         );
+      }
+      else{
+        return Container();
       }
     });
   }

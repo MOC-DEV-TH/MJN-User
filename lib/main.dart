@@ -33,7 +33,6 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   final notificationDao = database!.notiDao;
   RemoteNotification? notification = message.notification;
 
-
   if (notification != null) {
     flutterLocalNotificationsPlugin.show(
         notification.hashCode,
@@ -59,7 +58,6 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   }
 
   flutterLocalNotificationsPlugin.cancel(message.notification.hashCode);
-
 }
 
 const AndroidNotificationChannel channel = const AndroidNotificationChannel(
@@ -203,8 +201,8 @@ class _Splash2State extends State<Splash2> {
       NotificationModelVO notificationModelVO =
           NotificationModelVO.fromJson(message.data);
       RemoteNotification? notification = message.notification;
-     AndroidNotification? android = message.notification?.android;
-      if (notification != null ) {
+      AndroidNotification? android = message.notification?.android;
+      if (notification != null && android != null) {
         flutterLocalNotificationsPlugin.show(
             notification.hashCode,
             notification.title,
@@ -222,62 +220,116 @@ class _Splash2State extends State<Splash2> {
                     presentSound: true,
                     presentBadge: true)));
       }
-
     });
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-
-    Future.delayed(Duration(seconds: 5), () {
-      checkRequireUpdateController.checkRequireUpdate(context).then((value) {
-        if (checkRequireUpdateController.networkResult != null) {
-          if (checkRequireUpdateController.networkResult!.isRequieredUpdate!) {
-            setState(() {
-              isLoading.value = true;
-            });
-
-            AppUtils.showRequireUpdateDialog(
-                'Update Require', 'A new update is available', context);
-          } else {
-            Get.off(TabScreens(0));
-          }
-        }
-      });
+    Future.delayed(Duration(seconds: 7), () {
+      checkRequireUpdate();
     });
 
     super.initState();
+  }
+
+  void checkRequireUpdate() {
+    checkRequireUpdateController.checkRequireUpdate(context).then((value) {
+      if (checkRequireUpdateController.networkResult != null) {
+        if (checkRequireUpdateController.networkResult!.isRequieredUpdate!) {
+          setState(() {
+            isLoading.value = true;
+          });
+
+          AppUtils.showRequireUpdateDialog(
+              'Update Require', 'A new update is available', context);
+        } else {
+          Get.off(TabScreens(0));
+        }
+      } else {
+        setState(() {
+          isLoading.value = true;
+        });
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Color(0xff242527),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Image(image: AssetImage('assets/images/splash_screen_logo.png')),
-          Text(''),
-          Text(''),
-          Column(
-            children: [
-              Text(
-                'Loading....',
-                style: TextStyle(
-                    color: Color(0xff188FC5),
-                    fontSize: 24,
-                    decoration: TextDecoration.none),
-              ),
-              SizedBox(
-                height: 25,
-              ),
-              Visibility(
-                  visible: isLoading.value ? false : true,
-                  child: CircularProgressIndicator(
-                    color: Color(0xff188FC5),
-                  ))
-            ],
-          )
-        ],
-      ),
+      child: isLoading.value
+          ? Center(
+              child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.wifi_off,
+                  size: 100,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  'Network Error!',
+                  style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      decoration: TextDecoration.none),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  'Connect to the internet and try again.',
+                  style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 14,
+                      fontWeight: FontWeight.normal,
+                      decoration: TextDecoration.none),
+                ),
+                SizedBox(
+                  height: 50,
+                ),
+                RaisedButton(
+                    child: Text('Retry'),
+                    textColor: Colors.white,
+                    color: Colors.grey,
+                    onPressed: () {
+                      setState(() {
+                        isLoading.value = false;
+                        Future.delayed(
+                            Duration.zero, () => checkRequireUpdate());
+                      });
+                    })
+              ],
+            ))
+          : Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Image(
+                    image: AssetImage('assets/images/splash_screen_logo.png')),
+                Text(''),
+                Text(''),
+                Column(
+                  children: [
+                    Text(
+                      'Loading....',
+                      style: TextStyle(
+                          color: Color(0xff188FC5),
+                          fontSize: 24,
+                          decoration: TextDecoration.none),
+                    ),
+                    SizedBox(
+                      height: 25,
+                    ),
+                    Visibility(
+                        visible: isLoading.value ? false : true,
+                        child: CircularProgressIndicator(
+                          color: Color(0xff188FC5),
+                        ))
+                  ],
+                )
+              ],
+            ),
     );
   }
 }

@@ -23,10 +23,9 @@ class NewNotificationView extends StatefulWidget {
   _NewNotificationViewState createState() => _NewNotificationViewState();
 }
 
-class _NewNotificationViewState extends State<NewNotificationView> {
+class _NewNotificationViewState extends State<NewNotificationView> with WidgetsBindingObserver {
   late MyDatabase? database;
 
-  //late widget.notificationDao widget.notificationDao;
 
   late StreamSubscription notiSub;
 
@@ -73,7 +72,17 @@ class _NewNotificationViewState extends State<NewNotificationView> {
   }
 
   @override
+  void dispose() {
+    WidgetsBinding.instance!.removeObserver(this);
+    super.dispose();
+  }
+
+
+  @override
   void initState() {
+    WidgetsBinding.instance!.addObserver(this);
+    print('Noti init state');
+
     retrieveUsers().then((value) {
       notificationLists = value;
       setState(() {});
@@ -124,6 +133,9 @@ class _NewNotificationViewState extends State<NewNotificationView> {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+
+    print('LifeCycleState'+state.toString());
+
     notiSub =
         EventBusUtils.getInstance().on<NotificationModelVO>().listen((event) {
       print("NOTI EVENT LifeCycle" + event.title);
@@ -168,6 +180,9 @@ class _NewNotificationViewState extends State<NewNotificationView> {
 
   @override
   Widget build(BuildContext context) {
+    retrieveUsers().then((value) {
+      notificationLists = value;
+    });
     return TabScreens.notificationPageIndex > 0
         ? UnreadNotificationView()
         : Scaffold(

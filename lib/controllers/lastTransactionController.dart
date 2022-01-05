@@ -18,8 +18,11 @@ class LastTransactionController extends GetxController{
         print(transactionVo!.details!.paymentTotal);
         isLoading(false);
       }
-    } finally {
-      //isLoading(false);
+      else {
+        transactionVo = null;
+      }
+    } catch(e) {
+      isLoading(false);
     }
   }
 

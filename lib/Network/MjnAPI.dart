@@ -469,7 +469,8 @@ class MjnAPI {
       Uri.parse( CHECK_REQUIRE_UPDATE_URL +
            APP_VERSION + app_version
       ),
-    );
+
+    ).timeout(const Duration(seconds: 7));
     if (response.statusCode == 200) {
       var json = response.body;
       var result = networkResultFromJson(json);

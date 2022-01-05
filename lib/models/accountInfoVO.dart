@@ -14,11 +14,11 @@ class AccountInfoVo {
     required this.details,
   });
 
-  String status;
-  String responseCode;
-  String description;
-  bool isRequieredUpdate;
-  bool isforceUpdate;
+  String? status;
+  String? responseCode;
+  String? description;
+  bool? isRequieredUpdate;
+  bool? isforceUpdate;
   Details? details;
 
   factory AccountInfoVo.fromJson(Map<String, dynamic> json) => AccountInfoVo(

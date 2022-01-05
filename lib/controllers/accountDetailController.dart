@@ -19,13 +19,15 @@ class AccountDetailController extends GetxController{
       var res = await MjnAPI.fetchAccountInfoData(token,uid,tenantID);
 
       if (res != null) {
-        accountInfoVo = res;
-        print(accountInfoVo!.status);
-        isLoading (false);
-
-        if(accountInfoVo!.status == 'Fail'){
-          AppUtils.showSessionExpireDialog('Session is expired', 'Please login again',context);
+        if(res.status == 'Fail'){
+            AppUtils.showSessionExpireDialog('Session is expired', 'Please login again',context);
         }
+        else{
+          accountInfoVo = res;
+          print(accountInfoVo!.status);
+          isLoading (false);
+        }
+
       }
       else {
         isLoading(false);

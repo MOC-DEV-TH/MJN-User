@@ -6,7 +6,7 @@ String transactionVoToJson(TransactionVo data) => json.encode(data.toJson());
 
 class TransactionVo {
   TransactionVo({
-   required this.status,
+    required this.status,
     required this.responseCode,
     required this.description,
     required this.isRequieredUpdate,
@@ -14,11 +14,11 @@ class TransactionVo {
     required this.details,
   });
 
-  String status;
-  String responseCode;
-  String description;
-  bool isRequieredUpdate;
-  bool isforceUpdate;
+  String? status;
+  String? responseCode;
+  String? description;
+  bool? isRequieredUpdate;
+  bool? isforceUpdate;
   Details? details;
 
   factory TransactionVo.fromJson(Map<String, dynamic> json) => TransactionVo(

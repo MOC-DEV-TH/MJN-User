@@ -149,7 +149,7 @@ class _NewContactUsViewState extends State<NewContactUsView> {
                                   ),
                                   GestureDetector(
                                       onTap: () {
-                                        onPressWidget('https://google.com');
+                                        onPressWidget('https://mojoenet.com/webapp');
                                       },
                                       child: Image(
                                           image: AssetImage(

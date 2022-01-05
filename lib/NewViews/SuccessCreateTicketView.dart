@@ -1,4 +1,5 @@
 import 'package:MJN/NewViews/NewServiceComplainView.dart';
+import 'package:MJN/views/TabView.dart';
 import 'package:flutter/material.dart';
 
 class SuccessCreateTicketView extends StatefulWidget {
@@ -18,7 +19,7 @@ class _SuccessCreateTicketViewState extends State<SuccessCreateTicketView> {
 
   @override
   Widget build(BuildContext context) {
-    return changePageIndex == 1 ? NewServiceComplainView() :Scaffold(
+    return TabScreens.serviceComplainIndex == 1 ? NewServiceComplainView() :Scaffold(
       backgroundColor: Color(0xff188FC5),
       body: Padding(
         padding: const EdgeInsets.only(left: 20,right: 20,top: 60),
@@ -37,7 +38,8 @@ class _SuccessCreateTicketViewState extends State<SuccessCreateTicketView> {
             width: 150,
             child: RaisedButton(onPressed: (){
                 setState(() {
-                  changePageIndex = 1;
+                  TabScreens
+                      .serviceComplainIndex = 1;
                 });
             },
               child: Text('Back'),

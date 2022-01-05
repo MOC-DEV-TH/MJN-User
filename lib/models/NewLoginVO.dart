@@ -27,21 +27,21 @@ class NewLoginVo {
     required this.token,
   });
 
-  String status;
-  String responseCode;
-  String description;
-  bool isRequieredUpdate;
-  bool isforceUpdate;
-  String uid;
-  String tenantId;
-  String building;
-  String unit;
-  String phone;
-  String userName;
-  String email;
-  String firstName;
-  String lastName;
-  String token;
+  String? status;
+  String? responseCode;
+  String? description;
+  bool? isRequieredUpdate;
+  bool? isforceUpdate;
+  String? uid;
+  String? tenantId;
+  String? building;
+  String? unit;
+  String? phone;
+  String? userName;
+  String? email;
+  String? firstName;
+  String? lastName;
+  String? token;
 
   factory NewLoginVo.fromJson(Map<String, dynamic> json) => NewLoginVo(
     status: json["status"],

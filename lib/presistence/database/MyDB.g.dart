@@ -149,6 +149,7 @@ class _$NotificationDao extends NotificationDao {
   Future<List<NotificationModelVO>> fetchAllNotifications() async {
     return _queryAdapter.queryList('SELECT * FROM notification',
         mapper: (Map<String, Object?> row) => NotificationModelVO(
+            row['id'] as int?,
             row['title'] as String,
             row['body'] as String,
             row['message'] as String,
@@ -156,14 +157,14 @@ class _$NotificationDao extends NotificationDao {
             row['action_url'] as String,
             row['created'] as String,
             row['imageUrl'] as String,
-            read: row['read'] as int?,
-            id: row['id'] as int?));
+            read: row['read'] as int?));
   }
 
   @override
   Future<List<NotificationModelVO>> fetchUnreadNotifications() async {
     return _queryAdapter.queryList('SELECT * FROM notification WHERE read = 0',
         mapper: (Map<String, Object?> row) => NotificationModelVO(
+            row['id'] as int?,
             row['title'] as String,
             row['body'] as String,
             row['message'] as String,
@@ -171,8 +172,7 @@ class _$NotificationDao extends NotificationDao {
             row['action_url'] as String,
             row['created'] as String,
             row['imageUrl'] as String,
-            read: row['read'] as int?,
-            id: row['id'] as int?));
+            read: row['read'] as int?));
   }
 
   @override
