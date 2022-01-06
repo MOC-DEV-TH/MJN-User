@@ -213,8 +213,8 @@ class _NewServiceComplainViewState extends State<NewServiceComplainView> {
           ),
           ListView.builder(
             physics: new NeverScrollableScrollPhysics(),
-            reverse: true,
             shrinkWrap: true,
+            reverse: false,
             itemBuilder: (ctx, index) {
               return MyServiceTicketItems(
                   ticketListController.ticketListVo!.details![index]);

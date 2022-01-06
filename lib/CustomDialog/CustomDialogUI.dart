@@ -75,7 +75,7 @@ class _DialogUIState extends State<DialogUI> {
                         });
 
                   },
-                  child: Text('Product and Services',
+                  child: Text('Products and Services',
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 14,
