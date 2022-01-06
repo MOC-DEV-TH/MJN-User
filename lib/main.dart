@@ -100,6 +100,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
   await Firebase.initializeApp();
+
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
     alert: true,
     badge: true,
@@ -107,10 +110,22 @@ void main() async {
   );
   _requestPermissions();
 
+    await FirebaseMessaging.instance.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
+
   await flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin>()
       ?.createNotificationChannel(channel);
+
+
 
   runApp(MyApp());
 }
@@ -221,7 +236,7 @@ class _Splash2State extends State<Splash2> {
                     presentBadge: true)));
       }
     });
-    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+    //FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
     Future.delayed(Duration(seconds: 7), () {
       checkRequireUpdate();
