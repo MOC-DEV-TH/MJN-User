@@ -2,7 +2,6 @@ import 'package:MJN/NewViews/NewCreateServiceTicketView.dart';
 import 'package:MJN/controllers/checkCanCreateTicketController.dart';
 import 'package:MJN/controllers/ticketListController.dart';
 import 'package:MJN/models/ticketListVO.dart';
-import 'package:MJN/models/ticketVO.dart';
 import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/utils/app_utils.dart';
 import 'package:MJN/views/TabView.dart';

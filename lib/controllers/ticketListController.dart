@@ -18,17 +18,18 @@ class TicketListController extends GetxController{
 
       var res = await MjnAPI.fetchTicketList(token,uid,tenantID);
 
-
       if (res != null) {
-        ticketListVo = res;
-        print(ticketListVo!.status);
-        isLoading (false);
-
-        if(ticketListVo!.status == 'Fail'){
+        if(res.status == 'Fail'){
           AppUtils.showSessionExpireDialog('Session is expired', 'Please login again',context);
+        }
+       else {
+          ticketListVo = res;
+          print(ticketListVo!.status);
+          isLoading (false);
         }
       }
       else {
+        print('Fail to get ticket lists');
         isLoading(false);
         ticketListVo = null;
       }

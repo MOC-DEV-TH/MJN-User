@@ -242,7 +242,7 @@ class _MyServiceTicketViewState extends State<MyServiceTicketView> {
           Container(
             width: 40,
             child: Text(
-              ticketDetailVO.serviceRequest ,
+              ticketDetailVO.serviceRequest ?? '' ,
               style: TextStyle(color: Colors.black, fontSize: 8),
               textAlign: TextAlign.center,
             ),

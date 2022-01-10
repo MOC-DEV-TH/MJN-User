@@ -203,7 +203,7 @@ class _NewNotificationViewState extends State<NewNotificationView> with WidgetsB
                         );
                       }),
                       Container(
-                        width: 60,
+                        width: 67,
                         height: 30,
                         alignment: Alignment.centerLeft,
                         margin: EdgeInsets.only(

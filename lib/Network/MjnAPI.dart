@@ -143,6 +143,7 @@ class MjnAPI {
     );
     if (response.statusCode == 200) {
       var json = response.body;
+      print(response.body);
       var ticketList = ticketListVoFromJson(json);
       return ticketList;
     } else {

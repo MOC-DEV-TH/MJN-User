@@ -14,11 +14,11 @@ class TicketListVo {
     required this.details,
   });
 
-  String status;
-  String responseCode;
-  String description;
-  bool isRequieredUpdate;
-  bool isforceUpdate;
+  String? status;
+  String? responseCode;
+  String? description;
+  bool? isRequieredUpdate;
+  bool? isforceUpdate;
   List<TicketDetail>? details;
 
   factory TicketListVo.fromJson(Map<String, dynamic> json) =>
@@ -28,7 +28,7 @@ class TicketListVo {
     description: json["description"],
     isRequieredUpdate: json["is_requiered_update"],
     isforceUpdate: json["isforce_update"],
-    details: List<TicketDetail>.from(json["details"]?.map((x) => TicketDetail.fromJson(x)) ?? []) ,
+        details: List<TicketDetail>.from(json["details"]?.map((x) => TicketDetail.fromJson(x)) ?? []),
   );
 
   Map<String, dynamic> toJson() => {
@@ -47,8 +47,6 @@ class TicketDetail {
     required  this.ticketId,
     required this.serviceRequest,
     required this.serviceRequestOther,
-    required this.topic,
-    required this.topicOther,
     required  this.status,
     required  this.message,
     required  this.resolvedTime,
@@ -56,21 +54,17 @@ class TicketDetail {
   });
 
   String ticketId;
-  String serviceRequest;
-  dynamic serviceRequestOther;
-  String topic;
-  String topicOther;
+  String? serviceRequest;
+  String? serviceRequestOther;
   String status;
   String message;
-  String resolvedTime;
+  String? resolvedTime;
   String creationDate;
 
   factory TicketDetail.fromJson(Map<String, dynamic> json) => TicketDetail(
     ticketId: json["ticket_id"],
     serviceRequest: json["service_request"],
     serviceRequestOther: json["service_request_other"],
-    topic: json["topic"],
-    topicOther: json["topic_other"],
     status: json["status"],
     message: json["message"],
     resolvedTime: json["resolved_time"],
@@ -81,8 +75,6 @@ class TicketDetail {
     "ticket_id": ticketId,
     "service_request": serviceRequest,
     "service_request_other": serviceRequestOther,
-    "topic": topic,
-    "topic_other": topicOther,
     "status": status,
     "message": message,
     "resolved_time": resolvedTime,
