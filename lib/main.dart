@@ -278,6 +278,7 @@ class _Splash2State extends State<Splash2> {
                 Icon(
                   Icons.wifi_off,
                   size: 100,
+                  color: Colors.grey,
                 ),
                 SizedBox(
                   height: 10,

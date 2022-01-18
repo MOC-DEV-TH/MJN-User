@@ -38,8 +38,47 @@ class _NewProductAndServiceViewState extends State<NewProductAndServiceView> {
             if(homeController.isLoading.value){
               return Center(child: CircularProgressIndicator(),);
             }
-
-            else return
+            else if (homeController.promotionAndOfferVo == null) {
+              return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.wifi_off,
+                        size: 100,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        'Network Error!',
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        'Connect to the internet and try again.',
+                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
+                      ),
+                      SizedBox(
+                        height: 50,
+                      ),
+                      RaisedButton(
+                          child: Text('Retry'),
+                          textColor: Colors.white,
+                          color: Colors.grey,
+                          onPressed: () {
+                            Future.delayed(
+                                Duration.zero,
+                                    () =>
+                                    homeController.fetchPromotionAndOfferData(context));
+                          })
+                    ],
+                  ));
+            }
+            else {
+              return
               Container(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -103,6 +142,7 @@ class _NewProductAndServiceViewState extends State<NewProductAndServiceView> {
                     )
                   ],),
               );
+            }
           })
 
 
