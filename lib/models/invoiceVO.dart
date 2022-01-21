@@ -60,6 +60,7 @@ class Details {
     required this.otherTotal,
     required this.activationFee,
     required this.reactivationFee,
+    required this.discount_total,
     required this.amount,
     required this.totalDue,
     required this.transactionDate,
@@ -80,6 +81,7 @@ class Details {
   String otherTotal;
   String activationFee;
   String reactivationFee;
+  String discount_total;
   String amount;
   String totalDue;
   String transactionDate;
@@ -100,6 +102,7 @@ class Details {
     otherTotal: json["other_total"],
     activationFee: json["activation_fee"],
     reactivationFee: json["reactivation_fee"],
+    discount_total: json["discount_total"],
     amount: json["amount"],
     totalDue: json["total_due"],
     transactionDate: json["transaction_date"],

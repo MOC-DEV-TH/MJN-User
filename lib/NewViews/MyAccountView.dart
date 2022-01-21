@@ -21,26 +21,24 @@ class _MyAccountViewState extends State<MyAccountView> {
 
   @override
   void initState() {
+    final LastTransactionController lastTransactionController =
+    Get.put(LastTransactionController());
     super.initState();
 
-    Future.delayed(Duration.zero,
+    Future.delayed(
+        Duration.zero,
         () => accountDetailController
             .fetchAccountInfoData(
-            loginDataStorage.read(TOKEN),
-            loginDataStorage.read(UID),
-            loginDataStorage.read(DATA_TENANT_ID),
-            context)
+                loginDataStorage.read(TOKEN),
+                loginDataStorage.read(UID),
+                loginDataStorage.read(DATA_TENANT_ID),
+                context)
             .then((value) => {
-
-          lastTransactionController.fetchLastTransactionData(
-              loginDataStorage.read(TOKEN),
-              loginDataStorage.read(UID),
-              loginDataStorage.read(DATA_TENANT_ID))
-        }) );
-
-
-
-
+                  lastTransactionController.fetchLastTransactionData(
+                      loginDataStorage.read(TOKEN),
+                      loginDataStorage.read(UID),
+                      loginDataStorage.read(DATA_TENANT_ID))
+                }));
   }
 
   @override
@@ -67,59 +65,59 @@ class _MyAccountViewState extends State<MyAccountView> {
         return Center(
           child: CircularProgressIndicator(),
         );
-      }
-      else if(accountDetailController.accountInfoVo == null){
+      } else if (accountDetailController.accountInfoVo == null) {
         return Center(
             child: Container(
-              margin: EdgeInsets.only(top: 100),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.wifi_off,
-                    size: 100,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    'Network Error!',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    'Connect to the internet and try again.',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
-                  ),
-                  SizedBox(
-                    height: 50,
-                  ),
-                  RaisedButton(
-                      child: Text('Retry'),
-                      textColor: Colors.white,
-                      color: Colors.grey,
-                      onPressed: () {
-                        Future.delayed(Duration.zero,
-                                () => accountDetailController
-                                .fetchAccountInfoData(
+          margin: EdgeInsets.only(top: 100),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.wifi_off,
+                size: 100,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                'Network Error!',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                'Connect to the internet and try again.',
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
+              ),
+              SizedBox(
+                height: 50,
+              ),
+              RaisedButton(
+                  child: Text('Retry'),
+                  textColor: Colors.white,
+                  color: Colors.grey,
+                  onPressed: () {
+                    Future.delayed(
+                        Duration.zero,
+                        () => accountDetailController
+                            .fetchAccountInfoData(
                                 loginDataStorage.read(TOKEN),
                                 loginDataStorage.read(UID),
                                 loginDataStorage.read(DATA_TENANT_ID),
                                 context)
-                                .then((value) => {
-                              lastTransactionController.fetchLastTransactionData(
-                                  loginDataStorage.read(TOKEN),
-                                  loginDataStorage.read(UID),
-                                  loginDataStorage.read(DATA_TENANT_ID))
-                            }) );
-                      })
-                ],
-              ),
-            ));
-      }
-      else {
+                            .then((value) => {
+                                  lastTransactionController
+                                      .fetchLastTransactionData(
+                                          loginDataStorage.read(TOKEN),
+                                          loginDataStorage.read(UID),
+                                          loginDataStorage.read(DATA_TENANT_ID))
+                                }));
+                  })
+            ],
+          ),
+        ));
+      } else {
         return Container(
           child: Padding(
             padding:
@@ -212,7 +210,7 @@ class _MyAccountViewState extends State<MyAccountView> {
                   height: 20,
                 ),
                 Text(
-                  'Subscription Details',
+                  'Payment Subscription Details',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
@@ -221,54 +219,62 @@ class _MyAccountViewState extends State<MyAccountView> {
                 SizedBox(
                   height: 15,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Start date',
-                          style:
-                              TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Text(
-                          'End date',
-                          style:
-                              TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 30),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            child: Text(
-                              ': ${accountDetailController.accountInfoVo!.details!.creationDate}',
-                              style: TextStyle(
-                                  fontSize: 14, color: Color(0xffe9e9e9)),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Container(
-                            child: Text(
-                              ': ${accountDetailController.accountInfoVo!.details!.modifiedDate}',
-                              style: TextStyle(
-                                  fontSize: 14, color: Color(0xffe9e9e9)),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+               Obx((){
+                 if(lastTransactionController.isLoading.value){
+
+                   return Center(child: CircularProgressIndicator());
+                 }
+                 else {
+                   return Row(
+                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                     children: [
+                       Column(
+                         crossAxisAlignment: CrossAxisAlignment.start,
+                         children: [
+                           Text(
+                             'Start date',
+                             style:
+                             TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
+                           ),
+                           SizedBox(
+                             height: 15,
+                           ),
+                           Text(
+                             'End date',
+                             style:
+                             TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
+                           ),
+                         ],
+                       ),
+                       Padding(
+                         padding: const EdgeInsets.only(right: 30),
+                         child: Column(
+                           crossAxisAlignment: CrossAxisAlignment.start,
+                           children: [
+                             Container(
+                               child: Text(
+                                 ': ${lastTransactionController.transactionVo!.details!.startDate}',
+                                 style: TextStyle(
+                                     fontSize: 14, color: Color(0xffe9e9e9)),
+                               ),
+                             ),
+                             SizedBox(
+                               height: 15,
+                             ),
+                             Container(
+                               child: Text(
+                                 ': ${lastTransactionController.transactionVo!.details!.endDate}',
+                                 style: TextStyle(
+                                     fontSize: 14, color: Color(0xffe9e9e9)),
+                               ),
+                             ),
+                           ],
+                         ),
+                       ),
+                     ],
+                   );
+                 }
+               })
               ],
             ),
           ),
@@ -281,8 +287,7 @@ class _MyAccountViewState extends State<MyAccountView> {
     return Obx(() {
       if (lastTransactionController.isLoading.value) {
         return Container();
-      }
-      else if(lastTransactionController.transactionVo!.details != null){
+      } else if (lastTransactionController.transactionVo!.details != null) {
         return Container(
           child: Padding(
             padding:
@@ -299,7 +304,7 @@ class _MyAccountViewState extends State<MyAccountView> {
                   height: 20,
                 ),
                 Text(
-                  'Last Transaction details',
+                  'Last Payment Transaction Details',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
@@ -309,152 +314,125 @@ class _MyAccountViewState extends State<MyAccountView> {
                   height: 15,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-
-                      Text(
-                        'Transaction ID',
-                        style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Transaction ID',
+                            style: TextStyle(
+                                fontSize: 14, color: Color(0xffe9e9e9)),
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Text(
+                            'Transaction Date',
+                            style: TextStyle(
+                                fontSize: 14, color: Color(0xffe9e9e9)),
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Text(
+                            'Package',
+                            style: TextStyle(
+                                fontSize: 14, color: Color(0xffe9e9e9)),
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Text(
+                            'Total',
+                            style: TextStyle(
+                                fontSize: 14, color: Color(0xffe9e9e9)),
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Text(
+                            'Payment',
+                            style: TextStyle(
+                                fontSize: 14, color: Color(0xffe9e9e9)),
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Text(
+                            'Paid date',
+                            style: TextStyle(
+                                fontSize: 14, color: Color(0xffe9e9e9)),
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Text(
+                            'Sales representative',
+                            style: TextStyle(
+                                fontSize: 14, color: Color(0xffe9e9e9)),
+                          ),
+                        ],
                       ),
-
-                      SizedBox(
-                        height: 15,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            ':  ${lastTransactionController.transactionVo!.details!.transactionId}',
+                            style: TextStyle(
+                                fontSize: 14, color: Color(0xffe9e9e9)),
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Text(
+                            ':  ${lastTransactionController.transactionVo!.details!.creationDate}',
+                            style: TextStyle(
+                                fontSize: 14, color: Color(0xffe9e9e9)),
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Text(
+                            ':  20Mbps',
+                            style: TextStyle(
+                                fontSize: 14, color: Color(0xffe9e9e9)),
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Text(
+                            ': ${(lastTransactionController.transactionVo!.details!.paymentTotal) + ' ' + (lastTransactionController.transactionVo!.details!.currencyType)}',
+                            style: TextStyle(
+                                fontSize: 14, color: Color(0xffe9e9e9)),
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Text(
+                            ': ${(lastTransactionController.transactionVo!.details!.paymentTotal) + ' ' + (lastTransactionController.transactionVo!.details!.currencyType)}',
+                            style: TextStyle(
+                                fontSize: 14, color: Color(0xffe9e9e9)),
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Text(
+                            ':  ${lastTransactionController.transactionVo!.details!.creationDate}',
+                            style: TextStyle(
+                                fontSize: 14, color: Color(0xffe9e9e9)),
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Text(
+                            ': Win Htut Oo',
+                            style: TextStyle(
+                                fontSize: 14, color: Color(0xffe9e9e9)),
+                          ),
+                        ],
                       ),
-
-                      Text(
-                        'Transaction Date',
-                        style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
-                      ),
-
-
-                      SizedBox(
-                        height: 15,
-                      ),
-
-                      Text(
-                        'Package',
-                        style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
-                      ),
-
-
-                      SizedBox(
-                        height: 15,
-                      ),
-
-                      Text(
-                        'Total',
-                        style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
-                      ),
-
-                      SizedBox(
-                        height: 15,
-                      ),
-
-                      Text(
-                        'Payment',
-                        style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
-                      ),
-
-                      SizedBox(
-                        height: 15,
-                      ),
-
-                      Text(
-                        'Paid date',
-                        style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
-                      ),
-
-                      SizedBox(
-                        height: 15,
-                      ),
-
-                      Text(
-                        'Sales representative',
-                        style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
-                      ),
-
-
-                    ],),
-
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-
-                        Text(
-                          ':  ${lastTransactionController.transactionVo!.details!.transactionId}',
-                          style: TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
-                        ),
-
-                        SizedBox(
-                          height: 15,
-                        ),
-
-                        Text(
-                          ':  ${lastTransactionController.transactionVo!.details!.creationDate}',
-                          style:
-                          TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
-                        ),
-
-                        SizedBox(
-                          height: 15,
-                        ),
-
-                        Text(
-                          ':  20Mbps',
-                          style:
-                          TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
-                        ),
-
-                        SizedBox(
-                          height: 15,
-                        ),
-
-                        Text(
-                          ': ${(lastTransactionController.transactionVo!.details!.paymentTotal) + ' ' + (lastTransactionController.transactionVo!.details!.currencyType)}',
-                          style:
-                          TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
-                        ),
-
-                        SizedBox(
-                          height: 15,
-                        ),
-
-
-                        Text(
-                          ': ${(lastTransactionController.transactionVo!.details!.paymentTotal) + ' ' + (lastTransactionController.transactionVo!.details!.currencyType)}',
-                          style:
-                          TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
-                        ),
-
-                        SizedBox(
-                          height: 15,
-                        ),
-
-
-                        Text(
-                          ':  ${lastTransactionController.transactionVo!.details!.creationDate}',
-                          style:
-                          TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
-                        ),
-
-                        SizedBox(
-                          height: 15,
-                        ),
-
-                        Text(
-                          ': Win Htut Oo',
-                          style:
-                          TextStyle(fontSize: 14, color: Color(0xffe9e9e9)),
-                        ),
-
-
-                      ],),
-        ]),
-
+                    ]),
                 SizedBox(
                   height: 20,
                 ),
@@ -467,8 +445,7 @@ class _MyAccountViewState extends State<MyAccountView> {
             ),
           ),
         );
-      }
-      else{
+      } else {
         return Container();
       }
     });

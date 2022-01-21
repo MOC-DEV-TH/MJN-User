@@ -222,105 +222,33 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
   }
 
   Widget _buildMiddleText() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            '.....................',
-            style: TextStyle(
-              color: Color(0xffe9e9e9),
-            ),
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Text(
-            '.....................',
-            style: TextStyle(color: Color(0xffe9e9e9)),
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            '.....................',
-            style: TextStyle(color: Color(0xffe9e9e9)),
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildText('.....................',Color(0xffe9e9e9)),
+        _buildText('.....................',Color(0xffe9e9e9)),
+        _buildText('.....................',Color(0xffe9e9e9)),
+        _buildText('.....................',Color(0xffe9e9e9)),
+        _buildText('.....................',Color(0xffe9e9e9)),
+        _buildText('.....................',Color(0xffe9e9e9)),
+        _buildText('.....................',Color(0xffe9e9e9)),
+
+
+        Visibility(
+          visible: widget.paymentStatus == 'Paid' ? true : false,
+          child: Text(
             '.....................',
             style: TextStyle(color: Color(0xffe9e9e9)),
           ),
-          SizedBox(
-            height: 12,
-          ),
-          Text(
-            '.....................',
-            style: TextStyle(color: Color(0xffe9e9e9)),
-          ),
-          SizedBox(
-            height: 9,
-          ),
-          Text(
-            '.....................',
-            style: TextStyle(color: Color(0xffe9e9e9)),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            '.....................',
-            style: TextStyle(color: Color(0xffe9e9e9)),
-          ),
-          Visibility(
-            visible: widget.paymentStatus == 'Paid' ? true : false,
-            child: SizedBox(
-              height: 15,
-            ),
-          ),
-          Visibility(
-            visible: widget.paymentStatus == 'Paid' ? true : false,
-            child: Text(
-              '.....................',
-              style: TextStyle(color: Color(0xffe9e9e9)),
-            ),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Text(
-            '.....................',
-            style: TextStyle(color: Color(0xffe9e9e9)),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Text(
-            '.....................',
-            style: TextStyle(color: Color(0xffe9e9e9)),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Text(
-            '.....................',
-            style: TextStyle(color: Color(0xffe9e9e9)),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            '.....................',
-            style: TextStyle(color: Color(0xffe9e9e9)),
-          ),
-        ],
-      ),
+        ),
+        _buildText('.....................',Color(0xffe9e9e9)),
+        _buildText('.....................',Color(0xffe9e9e9)),
+        _buildText('.....................',Color(0xffe9e9e9)),
+        _buildText('.....................',Color(0xffe9e9e9)),
+        _buildText('.....................',Color(0xffe9e9e9)),
+        _buildText('.....................',Color(0xffe9e9e9)),
+        _buildText('.....................',Color(0xffe9e9e9)),
+      ],
     );
   }
 
@@ -328,59 +256,14 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          invoiceController.invoiceVo.details.name,
-          textAlign: TextAlign.left,
-          style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Text(
-          invoiceController.invoiceVo.details.firstname,
-          style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Text(
-          invoiceController.invoiceVo.details.lastname,
-          style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Text(
-          invoiceController.invoiceVo.details.building,
-          style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Text(
-          invoiceController.invoiceVo.details.unit,
-          style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Text(
-          invoiceController.invoiceVo.details.startDate,
-          style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Text(
-          invoiceController.invoiceVo.details.endDate,
-          style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
-        ),
-        Visibility(
-          visible: widget.paymentStatus == 'Paid' ? true : false,
-          child: SizedBox(
-            height: 15,
-          ),
-        ),
+        _buildText(invoiceController.invoiceVo.details.name,Color(0xffe9e9e9)),
+        _buildText(invoiceController.invoiceVo.details.firstname,Color(0xffe9e9e9)),
+        _buildText(invoiceController.invoiceVo.details.lastname,Color(0xffe9e9e9)),
+        _buildText(invoiceController.invoiceVo.details.building,Color(0xffe9e9e9)),
+        _buildText(invoiceController.invoiceVo.details.unit,Color(0xffe9e9e9)),
+        _buildText(invoiceController.invoiceVo.details.startDate,Color(0xffe9e9e9)),
+        _buildText(invoiceController.invoiceVo.details.endDate,Color(0xffe9e9e9)),
+
         Visibility(
           visible: widget.paymentStatus == 'Paid' ? true : false,
           child: Text(
@@ -388,34 +271,13 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
             style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
           ),
         ),
-        SizedBox(
-          height: 15,
-        ),
-        Text(
-          invoiceController.invoiceVo.details.invoiceId,
-          style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Text(
-          invoiceController.invoiceVo.details.creationDate,
-          style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Text(
-          invoiceController.invoiceVo.details.amount,
-          style: TextStyle(fontSize: 12, color: Colors.black),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Text(
-          invoiceController.invoiceVo.details.tax,
-          style: TextStyle(fontSize: 12, color: Colors.black),
-        ),
+        _buildText(invoiceController.invoiceVo.details.invoiceId,Color(0xffe9e9e9)),
+        _buildText(invoiceController.invoiceVo.details.creationDate,Color(0xffe9e9e9)),
+        _buildText(invoiceController.invoiceVo.details.discount_total,Color(0xffe9e9e9)),
+        _buildText(invoiceController.invoiceVo.details.activationFee,Color(0xffe9e9e9)),
+        _buildText(invoiceController.invoiceVo.details.reactivationFee,Color(0xffe9e9e9)),
+        _buildText(invoiceController.invoiceVo.details.amount,Color(0xffe9e9e9)),
+        _buildText(invoiceController.invoiceVo.details.tax,Color(0xffe9e9e9)),
       ],
     );
   }
@@ -424,58 +286,13 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Account',
-          style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Text(
-          'First Name',
-          style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Text(
-          'Last Name',
-          style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Text(
-          'Building',
-          style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Text(
-          'Unit',
-          style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Text(
-          'Start date',
-          style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Text(
-          'End date',
-          style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
-        ),
-        Visibility(
-          visible: widget.paymentStatus == 'Paid' ? true : false,
-          child: SizedBox(
-            height: 15,
-          ),
-        ),
+        _buildText('Account',Color(0xffe9e9e9)),
+        _buildText('First Name',Color(0xffe9e9e9)),
+        _buildText('Last Name',Color(0xffe9e9e9)),
+        _buildText('Building',Color(0xffe9e9e9)),
+        _buildText('Unit',Color(0xffe9e9e9)),
+        _buildText('Start date',Color(0xffe9e9e9)),
+        _buildText('End date',Color(0xffe9e9e9)),
         Visibility(
           visible: widget.paymentStatus == 'Paid' ? true : false,
           child: Text(
@@ -483,35 +300,25 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
             style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
           ),
         ),
-        SizedBox(
-          height: 15,
-        ),
-        Text(
-          'Invoice ID',
-          style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Text(
-          'Invoice date',
-          style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
-        ),
-        SizedBox(
-          height: 20,
-        ),
-        Text(
-          'Amount',
-          style: TextStyle(fontSize: 12, color: Colors.black),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Text(
-          'Tax',
-          style: TextStyle(fontSize: 12, color: Colors.black),
-        ),
+        _buildText('Invoice ID',Color(0xffe9e9e9)),
+        _buildText('Invoice date',Color(0xffe9e9e9)),
+        _buildText('Discount',Color(0xffe9e9e9)),
+        _buildText('OTC charges amount',Color(0xffe9e9e9)),
+        _buildText('Activation amount',Color(0xffe9e9e9)),
+        _buildText('Amount',Colors.black),
+        _buildText('Tax',Colors.black),
+
       ],
+    );
+  }
+
+ Widget _buildText(String text,Color color){
+    return Padding(
+      padding: const EdgeInsets.only(top: 4),
+      child: Text(
+         text,
+         style: TextStyle(fontSize: 12, color: color),
+       ),
     );
   }
 }

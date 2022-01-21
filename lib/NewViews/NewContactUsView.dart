@@ -2,6 +2,7 @@ import 'package:MJN/controllers/homeController.dart';
 import 'package:MJN/models/promotionAndofferVO.dart';
 import 'package:MJN/utils/app_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:get/get.dart';
@@ -139,7 +140,7 @@ class _NewContactUsViewState extends State<NewContactUsView> {
                                 children: [
                                   GestureDetector(
                                       onTap: () {
-                                        onPressWidget('https://gmail.com');
+                                        openAppMail();
                                       },
                                       child: Image(
                                           image: AssetImage(
@@ -149,7 +150,8 @@ class _NewContactUsViewState extends State<NewContactUsView> {
                                   ),
                                   GestureDetector(
                                       onTap: () {
-                                        onPressWidget('https://mojoenet.com/webapp');
+                                        onPressWidget(
+                                            'https://mojoenet.com/webapp');
                                       },
                                       child: Image(
                                           image: AssetImage(
@@ -159,7 +161,8 @@ class _NewContactUsViewState extends State<NewContactUsView> {
                                   ),
                                   GestureDetector(
                                       onTap: () {
-                                        onPressWidget('https://www.facebook.com/MojoeNet-1570238936409904/');
+                                        onPressWidget(
+                                            'https://www.facebook.com/MojoeNet-1570238936409904/');
                                       },
                                       child: Image(
                                           image: AssetImage(
@@ -247,8 +250,16 @@ class _NewContactUsViewState extends State<NewContactUsView> {
     );
   }
 
-  void onPressWidget(String url){
+  void onPressWidget(String url) {
     launch((url));
   }
 
+  void openAppMail() async {
+    final Email email = Email(
+      recipients: ['sales@mojoenet.com'],
+      isHTML: false,
+    );
+
+    await FlutterEmailSender.send(email);
+  }
 }
