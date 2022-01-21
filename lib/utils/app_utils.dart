@@ -401,7 +401,7 @@ class AppUtils {
                                         fontSize: 16),
                                   ),
                                   onPressed: () {
-                                    StoreRedirect.redirect(androidAppId: 'com.moc.mjninternetapp',iOSAppId: '');
+                                    StoreRedirect.redirect(androidAppId: 'com.moc.mjninternetapp',iOSAppId: '1603638669');
                                   }),
                             ),
                           ),
