@@ -159,7 +159,7 @@ class _NewContactUsViewState extends State<NewContactUsView> {
                                   ),
                                   GestureDetector(
                                       onTap: () {
-                                        onPressWidget('https://facebook.com');
+                                        onPressWidget('https://www.facebook.com/MojoeNet-1570238936409904/');
                                       },
                                       child: Image(
                                           image: AssetImage(
