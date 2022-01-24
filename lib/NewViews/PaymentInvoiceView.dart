@@ -236,9 +236,12 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
 
         Visibility(
           visible: widget.paymentStatus == 'Paid' ? true : false,
-          child: Text(
-            '.....................',
-            style: TextStyle(color: Color(0xffe9e9e9)),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: Text(
+              '..................',
+              style: TextStyle(color: Color(0xffe9e9e9)),
+            ),
           ),
         ),
         _buildText('.....................',Color(0xffe9e9e9)),
@@ -295,9 +298,12 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
         _buildText('End date',Color(0xffe9e9e9)),
         Visibility(
           visible: widget.paymentStatus == 'Paid' ? true : false,
-          child: Text(
-            'Transaction date',
-            style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: Text(
+              'Transaction date',
+              style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
+            ),
           ),
         ),
         _buildText('Invoice ID',Color(0xffe9e9e9)),
@@ -314,7 +320,7 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
 
  Widget _buildText(String text,Color color){
     return Padding(
-      padding: const EdgeInsets.only(top: 4),
+      padding: const EdgeInsets.only(top: 8),
       child: Text(
          text,
          style: TextStyle(fontSize: 12, color: color),
