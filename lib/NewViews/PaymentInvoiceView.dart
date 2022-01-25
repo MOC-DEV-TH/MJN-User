@@ -236,19 +236,41 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
 
         Visibility(
           visible: widget.paymentStatus == 'Paid' ? true : false,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            child: Text(
-              '..................',
-              style: TextStyle(color: Color(0xffe9e9e9)),
-            ),
-          ),
+          child: _buildText('.....................',Color(0xffe9e9e9)),
         ),
+
         _buildText('.....................',Color(0xffe9e9e9)),
         _buildText('.....................',Color(0xffe9e9e9)),
-        _buildText('.....................',Color(0xffe9e9e9)),
-        _buildText('.....................',Color(0xffe9e9e9)),
-        _buildText('.....................',Color(0xffe9e9e9)),
+
+        Visibility(
+          visible: invoiceController.invoiceVo.details.discount_total == '0' ? false : true,
+          child: _buildText('.....................',Color(0xffe9e9e9)),
+        ),
+        Visibility(
+          visible: invoiceController.invoiceVo.details.activationFee == '0' ? false : true,
+          child: _buildText('.....................',Color(0xffe9e9e9)),
+        ),
+        Visibility(
+          visible: invoiceController.invoiceVo.details.reactivationFee == '0' ? false : true,
+          child: _buildText('.....................',Color(0xffe9e9e9)),
+        ),
+        Visibility(
+          visible:invoiceController.invoiceVo.details.equipmentTotal == '0' ? false : true,
+          child: _buildText('.....................',Color(0xffe9e9e9)),
+        ),
+        Visibility(
+          visible:invoiceController.invoiceVo.details.otherTotal == '0' ? false : true,
+          child: _buildText('.....................',Color(0xffe9e9e9)),
+        ),
+        Visibility(
+          visible: invoiceController.invoiceVo.details.fiber_rental == '0' ? false : true,
+          child: _buildText('.....................',Color(0xffe9e9e9)),
+        ),
+        Visibility(
+          visible: invoiceController.invoiceVo.details.ipvpn == '0' ? false : true,
+          child: _buildText('.....................',Color(0xffe9e9e9)),
+        ),
+
         _buildText('.....................',Color(0xffe9e9e9)),
         _buildText('.....................',Color(0xffe9e9e9)),
       ],
@@ -269,16 +291,39 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
 
         Visibility(
           visible: widget.paymentStatus == 'Paid' ? true : false,
-          child: Text(
-            invoiceController.invoiceVo.details.transactionDate,
-            style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
-          ),
+          child: _buildText(invoiceController.invoiceVo.details.transactionDate,Color(0xffe9e9e9)),
         ),
         _buildText(invoiceController.invoiceVo.details.invoiceId,Color(0xffe9e9e9)),
         _buildText(invoiceController.invoiceVo.details.creationDate,Color(0xffe9e9e9)),
-        _buildText(invoiceController.invoiceVo.details.discount_total,Color(0xffe9e9e9)),
-        _buildText(invoiceController.invoiceVo.details.activationFee,Color(0xffe9e9e9)),
-        _buildText(invoiceController.invoiceVo.details.reactivationFee,Color(0xffe9e9e9)),
+
+        Visibility(
+          visible:invoiceController.invoiceVo.details.discount_total == '0' ? false : true,
+          child: _buildText(invoiceController.invoiceVo.details.discount_total,Color(0xffe9e9e9)),
+        ),
+        Visibility(
+          visible:invoiceController.invoiceVo.details.activationFee == '0' ? false : true,
+          child: _buildText(invoiceController.invoiceVo.details.activationFee,Color(0xffe9e9e9)),
+        ),
+        Visibility(
+          visible:invoiceController.invoiceVo.details.reactivationFee == '0' ? false : true,
+          child: _buildText(invoiceController.invoiceVo.details.reactivationFee,Color(0xffe9e9e9)),
+        ),
+        Visibility(
+          visible:invoiceController.invoiceVo.details.equipmentTotal == '0' ? false : true,
+          child: _buildText(invoiceController.invoiceVo.details.equipmentTotal,Color(0xffe9e9e9)),
+        ),
+        Visibility(
+          visible:invoiceController.invoiceVo.details.otherTotal == '0' ? false : true,
+          child: _buildText(invoiceController.invoiceVo.details.otherTotal,Color(0xffe9e9e9)),
+        ),
+        Visibility(
+          visible:invoiceController.invoiceVo.details.fiber_rental == '0' ? false : true,
+          child: _buildText(invoiceController.invoiceVo.details.fiber_rental,Color(0xffe9e9e9)),
+        ),
+        Visibility(
+          visible:invoiceController.invoiceVo.details.ipvpn == '0' ? false : true,
+          child: _buildText(invoiceController.invoiceVo.details.ipvpn,Color(0xffe9e9e9)),
+        ),
         _buildText(invoiceController.invoiceVo.details.amount,Color(0xffe9e9e9)),
         _buildText(invoiceController.invoiceVo.details.tax,Color(0xffe9e9e9)),
       ],
@@ -298,19 +343,41 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
         _buildText('End date',Color(0xffe9e9e9)),
         Visibility(
           visible: widget.paymentStatus == 'Paid' ? true : false,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            child: Text(
-              'Transaction date',
-              style: TextStyle(fontSize: 12, color: Color(0xffe9e9e9)),
-            ),
-          ),
+          child: _buildText('Transaction date',Color(0xffe9e9e9)),
         ),
         _buildText('Invoice ID',Color(0xffe9e9e9)),
         _buildText('Invoice date',Color(0xffe9e9e9)),
-        _buildText('Discount',Color(0xffe9e9e9)),
-        _buildText('OTC charges amount',Color(0xffe9e9e9)),
-        _buildText('Activation amount',Color(0xffe9e9e9)),
+
+        Visibility(
+          visible:invoiceController.invoiceVo.details.discount_total == '0' ? false : true,
+          child: _buildText('Discount',Color(0xffe9e9e9)),
+        ),
+        Visibility(
+          visible:invoiceController.invoiceVo.details.activationFee == '0' ? false : true,
+          child: _buildText('OTC charges amount',Color(0xffe9e9e9)),
+        ),
+        Visibility(
+          visible:invoiceController.invoiceVo.details.reactivationFee == '0' ? false : true,
+          child: _buildText('Re-activation fee',Color(0xffe9e9e9)),
+        ),
+        Visibility(
+          visible:invoiceController.invoiceVo.details.equipmentTotal == '0' ? false : true,
+          child: _buildText('Equipment cost',Color(0xffe9e9e9)),
+        ),
+        Visibility(
+          visible:invoiceController.invoiceVo.details.otherTotal == '0' ? false : true,
+          child: _buildText('Other costs',Color(0xffe9e9e9)),
+        ),
+        Visibility(
+          visible:invoiceController.invoiceVo.details.fiber_rental == '0' ? false : true,
+          child: _buildText('Fiber Rental',Color(0xffe9e9e9)),
+        ),
+        Visibility(
+          visible:invoiceController.invoiceVo.details.ipvpn == '0' ? false : true,
+          child: _buildText('IP Address',Color(0xffe9e9e9)),
+        ),
+
+
         _buildText('Amount',Colors.black),
         _buildText('Tax',Colors.black),
 

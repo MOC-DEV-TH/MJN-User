@@ -30,7 +30,6 @@ class CurrentSubscriptionItems extends StatelessWidget {
             height: 30,
             color: Colors.grey,
           ),
-
           Container(
             width: 55,
             child: Text(
@@ -52,7 +51,6 @@ class CurrentSubscriptionItems extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
           ),
-
         ],
       ),
     );

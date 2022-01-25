@@ -61,6 +61,8 @@ class Details {
     required this.activationFee,
     required this.reactivationFee,
     required this.discount_total,
+    required this.fiber_rental,
+    required this.ipvpn,
     required this.amount,
     required this.totalDue,
     required this.transactionDate,
@@ -83,6 +85,8 @@ class Details {
   String reactivationFee;
   String discount_total;
   String amount;
+  String fiber_rental;
+  String ipvpn;
   String totalDue;
   String transactionDate;
   String taxAmount;
@@ -104,6 +108,8 @@ class Details {
     reactivationFee: json["reactivation_fee"],
     discount_total: json["discount_total"],
     amount: json["amount"],
+    ipvpn: json["ipvpn"],
+    fiber_rental: json["fiber_rental"],
     totalDue: json["total_due"],
     transactionDate: json["transaction_date"],
     taxAmount: json["tax_amount"],

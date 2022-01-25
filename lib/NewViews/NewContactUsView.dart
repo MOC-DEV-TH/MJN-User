@@ -73,156 +73,160 @@ class _NewContactUsViewState extends State<NewContactUsView> {
             ));
           } else {
             return SingleChildScrollView(
-              child: Column(
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(left: 20, right: 20, top: 20),
-                    height: 300,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20),
-                          child: Image(
-                              image:
-                                  AssetImage('assets/images/contact_us.png')),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 30, right: 20),
-                          child: Column(
-                            children: [
-                              Text(
-                                '24/7 Hotline Number :',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.normal),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.phone,
-                                    color: Colors.white,
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      launch(('tel://01-4709977'));
-                                    },
-                                    child: Text(
-                                      '01-4709977',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 22,
-                                        fontWeight: FontWeight.normal,
-                                        decoration: TextDecoration.underline,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(left: 25, right: 20, top: 25),
+                      height: 300,
+                      width: MediaQuery.of(context).size.width,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Image(
+                                image:
+                                    AssetImage('assets/images/contact_us.png')),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 30, right: 20),
+                            child: Column(
+                              children: [
+                                Text(
+                                  '24/7 Hotline Number :',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.normal),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.phone,
+                                      color: Colors.white,
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        launch(('tel://01-4709977'));
+                                      },
+                                      child: Text(
+                                        '01-4709977',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.normal,
+                                          decoration: TextDecoration.underline,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 80,
+                                ),
+                                Text(
+                                  'Visit to us online :',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.normal),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  children: [
+                                    GestureDetector(
+                                        onTap: () {
+                                          openAppMail();
+                                        },
+                                        child: Image(
+                                            image: AssetImage(
+                                                'assets/images/email.png'))),
+                                    SizedBox(
+                                      width: 20,
+                                    ),
+                                    GestureDetector(
+                                        onTap: () {
+                                          onPressWidget(
+                                              'https://mojoenet.com/webapp');
+                                        },
+                                        child: Image(
+                                            image: AssetImage(
+                                                'assets/images/web_icon.png'))),
+                                    SizedBox(
+                                      width: 20,
+                                    ),
+                                    GestureDetector(
+                                        onTap: () {
+                                          onPressWidget(
+                                              'https://www.facebook.com/MojoeNet-1570238936409904/');
+                                        },
+                                        child: Image(
+                                            image: AssetImage(
+                                                'assets/images/fb_icon.png'))),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          color: Color(0xff188FC5),
+                          child: Column(
+                            children: [
                               SizedBox(
-                                height: 80,
+                                height: 10,
                               ),
                               Text(
-                                'Visit to us online :',
+                                "Offers",
+                                textAlign: TextAlign.center,
                                 style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.normal),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
                               ),
                               SizedBox(
                                 height: 10,
                               ),
-                              Row(
-                                children: [
-                                  GestureDetector(
-                                      onTap: () {
-                                        openAppMail();
-                                      },
-                                      child: Image(
-                                          image: AssetImage(
-                                              'assets/images/email.png'))),
-                                  SizedBox(
-                                    width: 25,
-                                  ),
-                                  GestureDetector(
-                                      onTap: () {
-                                        onPressWidget(
-                                            'https://mojoenet.com/webapp');
-                                      },
-                                      child: Image(
-                                          image: AssetImage(
-                                              'assets/images/web_icon.png'))),
-                                  SizedBox(
-                                    width: 25,
-                                  ),
-                                  GestureDetector(
-                                      onTap: () {
-                                        onPressWidget(
-                                            'https://www.facebook.com/MojoeNet-1570238936409904/');
-                                      },
-                                      child: Image(
-                                          image: AssetImage(
-                                              'assets/images/fb_icon.png'))),
-                                ],
-                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 20),
+                                child: GridView(
+                                    shrinkWrap: true,
+                                    physics: ScrollPhysics(),
+                                    primary: false,
+                                    padding: const EdgeInsets.all(10),
+                                    scrollDirection: Axis.vertical,
+                                    children: homeController
+                                        .promotionAndOfferVo!.details.offer
+                                        .map((imgData) =>
+                                            PackageAndServiceItems(imgData))
+                                        .toList(),
+                                    gridDelegate:
+                                        SliverGridDelegateWithMaxCrossAxisExtent(
+                                      maxCrossAxisExtent: 200,
+                                      mainAxisSpacing: 20,
+                                      crossAxisSpacing: 20,
+                                      childAspectRatio: (1 / .8),
+                                    )),
+                              )
                             ],
                           ),
                         )
                       ],
                     ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        color: Color(0xff188FC5),
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              "Offers",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 20),
-                              child: GridView(
-                                  shrinkWrap: true,
-                                  physics: ScrollPhysics(),
-                                  primary: false,
-                                  padding: const EdgeInsets.all(10),
-                                  scrollDirection: Axis.vertical,
-                                  children: homeController
-                                      .promotionAndOfferVo!.details.offer
-                                      .map((imgData) =>
-                                          PackageAndServiceItems(imgData))
-                                      .toList(),
-                                  gridDelegate:
-                                      SliverGridDelegateWithMaxCrossAxisExtent(
-                                    maxCrossAxisExtent: 200,
-                                    mainAxisSpacing: 20,
-                                    crossAxisSpacing: 20,
-                                    childAspectRatio: (1 / .8),
-                                  )),
-                            )
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ],
+                  ],
+                ),
               ),
             );
           }
