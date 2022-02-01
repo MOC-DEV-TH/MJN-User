@@ -19,7 +19,7 @@ class _SuccessCreateTicketViewState extends State<SuccessCreateTicketView> {
 
   @override
   Widget build(BuildContext context) {
-    return TabScreens.serviceComplainIndex == 1 ? NewServiceComplainView() :Scaffold(
+    return TabScreens.serviceComplainIndex == 0 ? NewServiceComplainView() :Scaffold(
       backgroundColor: Color(0xff188FC5),
       body: Padding(
         padding: const EdgeInsets.only(left: 20,right: 20,top: 60),
@@ -39,7 +39,7 @@ class _SuccessCreateTicketViewState extends State<SuccessCreateTicketView> {
             child: RaisedButton(onPressed: (){
                 setState(() {
                   TabScreens
-                      .serviceComplainIndex = 1;
+                      .serviceComplainIndex = 0;
                 });
             },
               child: Text('Back'),
