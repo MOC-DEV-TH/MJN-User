@@ -1,7 +1,6 @@
 import 'package:MJN/controllers/singUpController.dart';
 import 'package:MJN/utils/app_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
 
 class SignUpView extends StatelessWidget {
@@ -169,7 +168,7 @@ class SignUpView extends StatelessWidget {
                         }
                         else {
                           return
-                            NeumorphicButton(
+                            ElevatedButton(
                               onPressed: () {
 
                                 if(buildingText.text == '' || unitText.text == '' || contactNumberText.text == ''){
@@ -199,14 +198,17 @@ class SignUpView extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              style: NeumorphicStyle(
-                                shape: NeumorphicShape.flat,
-                                boxShape:
-                                NeumorphicBoxShape.roundRect(BorderRadius.circular(18)),
-                                color: Colors.blue,
-                                depth: 8,
-//                lightSource: LightSource.topLeft,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.blue
                               ),
+                              // style: NeumorphicStyle(
+                              //   shape: NeumorphicShape.flat,
+                              //   boxShape:
+                              //   NeumorphicBoxShape.roundRect(BorderRadius.circular(18)),
+                              //   color: Colors.blue,
+                              //   depth: 8,
+//                lightSource: LightSource.topLeft,
+
                             );
                         }
                       })

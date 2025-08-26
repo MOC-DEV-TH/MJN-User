@@ -79,10 +79,12 @@ class _NewServiceComplainViewState extends State<NewServiceComplainView> {
                       SizedBox(
                         height: 50,
                       ),
-                      RaisedButton(
+                      ElevatedButton(
                           child: Text('Retry'),
-                          textColor: Colors.white,
-                          color: Colors.grey,
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.grey,
+                              textStyle: TextStyle(color: Colors.white)
+                          ),
                           onPressed: () {
                             Future.delayed(
                                 Duration.zero,

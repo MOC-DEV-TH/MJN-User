@@ -386,7 +386,7 @@ class _ChannelOnlinePaymentViewState extends State<ChannelOnlinePaymentView> {
                       height: 60,
                     ),
                     Container(
-                      child: RaisedButton(
+                      child: ElevatedButton(
                         onPressed: () {
                           if(isChooseCard){
                             AppUtils.showSuccessSnackBar('Success', 'Go to 2c2p Page');
@@ -402,13 +402,15 @@ class _ChannelOnlinePaymentViewState extends State<ChannelOnlinePaymentView> {
 
                         },
                         child: Text('Confirm'),
-                        textColor: Color(0xffe9e9e9),
-                        color: isChooseCard ||
-                                isChooseWallet ||
-                                isChooseCounter ||
-                                isChooseBanking
-                            ? Color(0xffff5f1f)
-                            : Color(0xffaaaaaa),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:isChooseCard ||
+                              isChooseWallet ||
+                              isChooseCounter ||
+                              isChooseBanking
+                              ? Color(0xffff5f1f)
+                              : Color(0xffaaaaaa),
+                          textStyle: TextStyle(color: Color(0xffe9e9e9))
+                        ),
                       ),
                     ),
                   ],

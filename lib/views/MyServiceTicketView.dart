@@ -5,7 +5,6 @@ import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/views/ServiceComplainView.dart';
 import 'package:MJN/views/TicketDetailView.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -67,7 +66,7 @@ class _MyServiceTicketViewState extends State<MyServiceTicketView> {
                               height: 40,
                               alignment: Alignment.centerLeft,
                               margin: EdgeInsets.only(top: 3, left: 10),
-                              child: NeumorphicButton(
+                              child: ElevatedButton(
                                 onPressed: () {},
                                 child: Text(
                                   "My Service Ticket",
@@ -76,13 +75,8 @@ class _MyServiceTicketViewState extends State<MyServiceTicketView> {
                                       fontSize: 14,
                                       color: Colors.white),
                                 ),
-                                style: NeumorphicStyle(
-                                  shape: NeumorphicShape.flat,
-                                  boxShape: NeumorphicBoxShape.roundRect(
-                                      BorderRadius.circular(14)),
-                                  color: Colors.blue,
-                                  depth: 8,
-//                lightSource: LightSource.topLeft,
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.blue
                                 ),
                               ),
                             ),

@@ -3,7 +3,6 @@ import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/views/PaymentView.dart';
 import 'package:MJN/views/SelectPaymentView.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
 
@@ -155,7 +154,7 @@ class _InvoiceDetailViewState extends State<InvoiceDetailView> {
                                     width: MediaQuery.of(context).size.width,
                                     height: 40,
                                     alignment: Alignment.center,
-                                    child: NeumorphicButton(
+                                    child: ElevatedButton(
                                       onPressed: () {
                                         setState(() {
                                           changePageIndex = 2;
@@ -168,13 +167,8 @@ class _InvoiceDetailViewState extends State<InvoiceDetailView> {
                                             fontSize: 14,
                                             color: Colors.white),
                                       ),
-                                      style: NeumorphicStyle(
-                                        shape: NeumorphicShape.flat,
-                                        boxShape: NeumorphicBoxShape.roundRect(
-                                            BorderRadius.circular(14)),
-                                        color: Colors.amber,
-                                        depth: 8,
-//                lightSource: LightSource.topLeft,
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.amber
                                       ),
                                     ),
                                   ),

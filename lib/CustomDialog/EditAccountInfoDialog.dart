@@ -1,7 +1,6 @@
 import 'package:MJN/controllers/updateAccountInfoController.dart';
 import 'package:MJN/utils/app_constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
 
@@ -138,7 +137,7 @@ class _EditAccountInfoDialogState extends State<EditAccountInfoDialog> {
                     }
                     else{
                       return
-                        NeumorphicButton(
+                        ElevatedButton(
                           onPressed: () {
                             Map<String, String> map = {
                               'uid': loginDataStorage.read(UID),
@@ -162,13 +161,8 @@ class _EditAccountInfoDialogState extends State<EditAccountInfoDialog> {
                               ),
                             ),
                           ),
-                          style: NeumorphicStyle(
-                            shape: NeumorphicShape.flat,
-                            boxShape:
-                            NeumorphicBoxShape.roundRect(BorderRadius.circular(18)),
-                            color: Colors.amber,
-                            depth: 8,
-//                lightSource: LightSource.topLeft,
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.amber
                           ),
                         );
                     }

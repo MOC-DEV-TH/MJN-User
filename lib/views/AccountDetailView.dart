@@ -5,7 +5,6 @@ import 'package:MJN/controllers/loginController.dart';
 import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/views/HomeView.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -468,7 +467,7 @@ class _AccountViewState extends State<AccountView> {
                                               margin: EdgeInsets.only(top: 4),
                                               width: 120,
                                               height: 35,
-                                              child: NeumorphicButton(
+                                              child: ElevatedButton(
                                                 onPressed: () {
                                                   showDialog(
                                                       context: context,
@@ -487,11 +486,8 @@ class _AccountViewState extends State<AccountView> {
                                                       fontSize: 12,
                                                       color: Colors.white),
                                                 ),
-                                                style: NeumorphicStyle(
-                                                  shape: NeumorphicShape.flat,
-                                                  color: Colors.blue,
-                                                  depth: 8,
-//                lightSource: LightSource.topLeft,
+                                                style: ElevatedButton.styleFrom(
+                                                    backgroundColor: Colors.blue
                                                 ),
                                               ),
                                             ),

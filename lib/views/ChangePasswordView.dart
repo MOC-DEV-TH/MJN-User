@@ -2,7 +2,6 @@ import 'package:MJN/controllers/changePasswordController.dart';
 import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/utils/app_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -104,7 +103,7 @@ class ChangePasswordView extends StatelessWidget {
                     if (changePasswordController.isLoading.value) {
                       return Center(child: CircularProgressIndicator());
                     } else {
-                      return NeumorphicButton(
+                      return ElevatedButton(
                         onPressed: () {
                           if (currentPasswordText.text == '' ||
                               newPasswordText.text == '' ||
@@ -138,13 +137,8 @@ class ChangePasswordView extends StatelessWidget {
                           ),
 
                         ),
-                        style: NeumorphicStyle(
-                          shape: NeumorphicShape.flat,
-                          boxShape: NeumorphicBoxShape.roundRect(
-                              BorderRadius.circular(18)),
-                          color: Colors.amber,
-                          depth: 8,
-//                lightSource: LightSource.topLeft,
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.amber
                         ),
                       );
                     }

@@ -8,7 +8,6 @@ import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/utils/app_utils.dart';
 import 'package:MJN/views/TabView.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get_storage/get_storage.dart';
@@ -341,21 +340,25 @@ class _NewCreateServiceTicketViewState
                                                 .size
                                                 .width,
                                           ),
-                                          child: Neumorphic(
-                                            style: NeumorphicStyle(
-                                              shape: NeumorphicShape.concave,
-                                              color: Colors.transparent,
-                                              border: NeumorphicBorder(
-                                                color: Color(0xffe9e9e9),
-                                                width: 0.8,
-                                              ),
-                                              boxShape:
-                                                  NeumorphicBoxShape.roundRect(
-                                                      BorderRadius.circular(0)),
-                                              depth: -4,
-                                              lightSource: LightSource.topLeft,
-//                    color: Colors.grey
+                                          child: ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                                backgroundColor: Colors.transparent
                                             ),
+                                           onPressed: (){},
+//                                             style: NeumorphicStyle(
+//                                               shape: NeumorphicShape.concave,
+//                                               color: Colors.transparent,
+//                                               border: NeumorphicBorder(
+//                                                 color: Color(0xffe9e9e9),
+//                                                 width: 0.8,
+//                                               ),
+//                                               boxShape:
+//                                                   NeumorphicBoxShape.roundRect(
+//                                                       BorderRadius.circular(0)),
+//                                               depth: -4,
+//                                               lightSource: LightSource.topLeft,
+// //                    color: Colors.grey
+//                                             ),
                                             child: Padding(
                                               padding: const EdgeInsets.only(
                                                   right: 2),
@@ -454,7 +457,7 @@ class _NewCreateServiceTicketViewState
                                 child: CircularProgressIndicator(),
                               );
                             } else {
-                              return NeumorphicButton(
+                              return ElevatedButton(
                                 onPressed: () {
                                   if (
                                       wifiText.value.text == '' ||
@@ -515,11 +518,8 @@ class _NewCreateServiceTicketViewState
                                         color: Colors.black),
                                   ),
                                 ),
-                                style: NeumorphicStyle(
-                                  shape: NeumorphicShape.flat,
-                                  color: Color(0xffffcc35),
-                                  depth: 0,
-//                lightSource: LightSource.topLeft,
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: Color(0xffffcc35)
                                 ),
                               );
                             }

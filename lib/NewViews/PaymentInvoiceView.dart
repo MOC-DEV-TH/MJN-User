@@ -155,7 +155,7 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
                   height: 20,
                 ),
                 Container(
-                  child: RaisedButton(
+                  child: ElevatedButton(
                     onPressed: () {
                       if (widget.paymentStatus == 'Unpaid') {
                         getPaymentMethodController
@@ -192,8 +192,10 @@ class _PaymentInvoiceViewState extends State<PaymentInvoiceView> {
                           ? 'Make Payment'
                           : 'Paid'),
                     ),
-                    textColor: Color(0xffe9e9e9),
-                    color: Color(0xffff5f1f),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xffff5f1f),
+                      textStyle: TextStyle(color: Color(0xffe9e9e9))
+                    ),
                   ),
                 ),
                 SizedBox(

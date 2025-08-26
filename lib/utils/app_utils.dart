@@ -101,8 +101,10 @@ class AppUtils {
                               child: Container(
                                 width: 100,
                                 height: 40,
-                                child: RaisedButton(
-                                    color: Color(0xff188FC5),
+                                child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Color(0xff188FC5),
+                                    ),
                                     child: Text(
                                       'Cancel',
                                       style: TextStyle(
@@ -123,8 +125,10 @@ class AppUtils {
                               child: Container(
                                 width: 100,
                                 height: 40,
-                                child: RaisedButton(
-                                    color: Color(0xff188FC5),
+                                child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Color(0xff188FC5),
+                                    ),
                                     child: Text(
                                       'OK',
                                       style: TextStyle(
@@ -206,8 +210,10 @@ class AppUtils {
                               child: Container(
                                 width: 100,
                                 height: 40,
-                                child: RaisedButton(
-                                    color: Color(0xff188FC5),
+                                child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Color(0xff188FC5),
+                                    ),
                                     child: Text(
                                       'Cancel',
                                       style: TextStyle(
@@ -228,8 +234,10 @@ class AppUtils {
                               child: Container(
                                 width: 100,
                                 height: 40,
-                                child: RaisedButton(
-                                    color: Color(0xff188FC5),
+                                child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Color(0xff188FC5),
+                                    ),
                                     child: Text(
                                       'OK',
                                       style: TextStyle(
@@ -296,8 +304,10 @@ class AppUtils {
                         child: Container(
                           width: MediaQuery.of(context).size.width * 0.5555,
                           height: MediaQuery.of(context).size.height * 0.0625,
-                          child: RaisedButton(
-                              color: Color(0xff188FC5),
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Color(0xff188FC5),
+                              ),
                               child: Text(
                                 'OK',
                                 style: TextStyle(
@@ -370,8 +380,10 @@ class AppUtils {
                             child: Container(
                               width: 100,
                               height: 40,
-                              child: RaisedButton(
-                                   color: Color(0xff188FC5),
+                              child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Color(0xff188FC5),
+                                  ),
                                   child: Text(
                                     'Ignore',
                                     style: TextStyle(
@@ -391,8 +403,10 @@ class AppUtils {
                             borderRadius: BorderRadius.circular(8),
                             child: Container(
                               height: 40,
-                              child: RaisedButton(
-                                  color: Color(0xff188FC5),
+                              child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Color(0xff188FC5),
+                                  ),
                                   child: Text(
                                     'Update Now',
                                     style: TextStyle(
@@ -438,7 +452,7 @@ class AppUtils {
                           ),
                         ),
                       ),
-                      RaisedButton(
+                      ElevatedButton(
                         child: Padding(
                           padding: const EdgeInsets.only(left: 40, right: 40),
                           child: Text(
@@ -446,14 +460,18 @@ class AppUtils {
                             style: TextStyle(color: Colors.white),
                           ),
                         ),
-                        color: Color(0xff188FC5),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color(0xff188FC5),
+                        ),
                         onPressed: () {
                           launch(
                               'http://mojoenet.myanmaronlinecreations.com/webapp/online_registration/star_city');
                         },
                       ),
-                      RaisedButton(
-                        color: Color(0xff188FC5),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color(0xff188FC5),
+                        ),
                         child: Padding(
                           padding: const EdgeInsets.only(left: 40, right: 40),
                           child: Text(

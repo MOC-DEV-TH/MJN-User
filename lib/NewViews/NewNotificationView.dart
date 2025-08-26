@@ -10,7 +10,6 @@ import 'package:MJN/utils/eventbus_util.dart';
 import 'package:MJN/views/TabView.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get_storage/get_storage.dart';
 
 class NewNotificationView extends StatefulWidget {
@@ -209,7 +208,7 @@ class _NewNotificationViewState extends State<NewNotificationView> with WidgetsB
                         margin: EdgeInsets.only(
                           top: 10,
                         ),
-                        child: NeumorphicButton(
+                        child: ElevatedButton(
                           onPressed: () {
                             retrieveAllUnreadNotifications().then((value) => {
                                   if (value.length > 0)
@@ -227,13 +226,8 @@ class _NewNotificationViewState extends State<NewNotificationView> with WidgetsB
                                 fontSize: 10,
                                 color: Color(0xff188FC5)),
                           ),
-                          style: NeumorphicStyle(
-                            shape: NeumorphicShape.flat,
-                            boxShape: NeumorphicBoxShape.roundRect(
-                                BorderRadius.circular(8)),
-                            color: Colors.white,
-                            depth: -8,
-//                lightSource: LightSource.topLeft,
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white
                           ),
                         ),
                       ),

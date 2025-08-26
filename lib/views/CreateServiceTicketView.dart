@@ -4,7 +4,6 @@ import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/utils/app_utils.dart';
 import 'package:MJN/views/ServiceComplainView.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -255,16 +254,11 @@ class _CreateServiceTicketViewState extends State<CreateServiceTicketView> {
                                         maxWidth:
                                             MediaQuery.of(context).size.width,
                                       ),
-                                      child: Neumorphic(
-                                        style: NeumorphicStyle(
-                                          shape: NeumorphicShape.concave,
-                                          boxShape:
-                                              NeumorphicBoxShape.roundRect(
-                                                  BorderRadius.circular(12)),
-                                          depth: -4,
-                                          lightSource: LightSource.topLeft,
-//                    color: Colors.grey
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+
                                         ),
+                                        onPressed: () {  },
                                         child: DropdownButtonFormField<int>(
                                           onChanged: (value) {
                                             selectServiceRequestIndex = value;
@@ -297,16 +291,10 @@ class _CreateServiceTicketViewState extends State<CreateServiceTicketView> {
                                         maxWidth:
                                             MediaQuery.of(context).size.width,
                                       ),
-                                      child: Neumorphic(
-                                        style: NeumorphicStyle(
-                                          shape: NeumorphicShape.concave,
-                                          boxShape:
-                                              NeumorphicBoxShape.roundRect(
-                                                  BorderRadius.circular(12)),
-                                          depth: -4,
-                                          lightSource: LightSource.topLeft,
-//                    color: Colors.grey
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
                                         ),
+                                        onPressed: (){},
                                         child: DropdownButtonFormField<int>(
                                           onChanged: (value) {
                                             selectIssueIndex = value;
@@ -380,7 +368,7 @@ class _CreateServiceTicketViewState extends State<CreateServiceTicketView> {
 
                                  else {
                                    return
-                                     NeumorphicButton(
+                                     ElevatedButton(
                                        onPressed: () {
                                          if (buildingText.text == '' ||
                                              unitText.text == '' ||
@@ -431,13 +419,8 @@ class _CreateServiceTicketViewState extends State<CreateServiceTicketView> {
                                            ),
                                          ),
                                        ),
-                                       style: NeumorphicStyle(
-                                         shape: NeumorphicShape.flat,
-                                         boxShape: NeumorphicBoxShape.roundRect(
-                                             BorderRadius.circular(18)),
-                                         color: Colors.amber,
-                                         depth: 0,
-//                lightSource: LightSource.topLeft,
+                                       style: ElevatedButton.styleFrom(
+                                           backgroundColor: Colors.amber
                                        ),
                                      );
                                  }

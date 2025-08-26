@@ -36,15 +36,17 @@ class _SuccessCreateTicketViewState extends State<SuccessCreateTicketView> {
 
           Container(
             width: 150,
-            child: RaisedButton(onPressed: (){
+            child: ElevatedButton(onPressed: (){
                 setState(() {
                   TabScreens
                       .serviceComplainIndex = 0;
                 });
             },
               child: Text('Back'),
-              textColor: Colors.black,
-              color: Color(0xffffcc35),
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xffffcc35),
+                  textStyle: TextStyle(color: Colors.black)
+              ),
             ),
           )
         ],),

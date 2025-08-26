@@ -6,7 +6,6 @@ import 'package:MJN/views/AccountDetailView.dart';
 import 'package:MJN/views/PackagePlanDetailView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -76,8 +75,8 @@ class _HomeViewState extends State<HomeView> {
                           alignment: Alignment.center,
                           height: 150,
                           child:Center()),
-                      NeumorphicButton(
-                        margin: EdgeInsets.only(top: 10, left: 10),
+                      ElevatedButton(
+                        //margin: EdgeInsets.only(top: 10, left: 10),
                         onPressed: () {
                           setState(() {
                             changePageIndex = 1;
@@ -90,13 +89,8 @@ class _HomeViewState extends State<HomeView> {
                               fontSize: 14,
                               color: Colors.white),
                         ),
-                        style: NeumorphicStyle(
-                          shape: NeumorphicShape.flat,
-                          boxShape: NeumorphicBoxShape.roundRect(
-                              BorderRadius.circular(12)),
-                          color: Colors.amber,
-                          depth: 8,
-//                lightSource: LightSource.topLeft,
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.amber
                         ),
                       ),
                       Padding(
@@ -292,7 +286,7 @@ class _HomeViewState extends State<HomeView> {
                         alignment: Alignment.centerLeft,
                         height: 33,
                         margin: EdgeInsets.only(top: 10, left: 10),
-                        child: NeumorphicButton(
+                        child: ElevatedButton(
                           onPressed: () {},
                           child: Text(
                             "Package Plan & Other Service",
@@ -302,13 +296,8 @@ class _HomeViewState extends State<HomeView> {
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white),
                           ),
-                          style: NeumorphicStyle(
-                            shape: NeumorphicShape.flat,
-                            boxShape: NeumorphicBoxShape.roundRect(
-                                BorderRadius.circular(12)),
-                            color: Colors.amber,
-                            depth: 8,
-//                lightSource: LightSource.topLeft,
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.amber
                           ),
                         ),
                       ),

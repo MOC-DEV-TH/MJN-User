@@ -2,7 +2,6 @@ import 'package:MJN/Widgets/notification_items.dart';
 import 'package:MJN/models/notificationModelVO.dart';
 import 'package:MJN/presistence/db/database_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 class NotificationView extends StatefulWidget {
   static const routeName = '/notification_screen';
@@ -65,7 +64,7 @@ class _NotificationViewState extends State<NotificationView> {
                   height: 40,
                   alignment: Alignment.centerLeft,
                   margin: EdgeInsets.only(top: 10, left: 27),
-                  child: NeumorphicButton(
+                  child: ElevatedButton(
                     onPressed: () {},
                     child: Text(
                       "Notifications",
@@ -74,13 +73,8 @@ class _NotificationViewState extends State<NotificationView> {
                           fontSize: 14,
                           color: Colors.white),
                     ),
-                    style: NeumorphicStyle(
-                      shape: NeumorphicShape.flat,
-                      boxShape:
-                      NeumorphicBoxShape.roundRect(BorderRadius.circular(14)),
-                      color: Colors.blue,
-                      depth: 8,
-//                lightSource: LightSource.topLeft,
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue
                     ),
                   ),
                 ),

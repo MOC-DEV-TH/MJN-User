@@ -18,7 +18,6 @@ import 'package:MJN/utils/eventbus_util.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
 
@@ -146,14 +145,14 @@ class _TabScreensState extends State<TabScreens>  with WidgetsBindingObserver {
 
     WidgetsBinding.instance!.addObserver(this);
 
-    var initializeAndroid =
-        new AndroidInitializationSettings('@mipmap/ic_launcher');
-    var initializeIOS = new IOSInitializationSettings();
-    var initializeSetting = new InitializationSettings(
-        android: initializeAndroid, iOS: initializeIOS);
-
-    flutterLocalNotificationsPlugin.initialize(initializeSetting,
-        onSelectNotification: onSelectNotification);
+    // var initializeAndroid =
+    //     new AndroidInitializationSettings('@mipmap/ic_launcher');
+    // var initializeIOS = new IOSInitializationSettings();
+    // var initializeSetting = new InitializationSettings(
+    //     android: initializeAndroid, iOS: initializeIOS);
+    //
+    // flutterLocalNotificationsPlugin.initialize(initializeSetting,
+    //     onSelectNotification: onSelectNotification);
 
 
     changePageIndex = 0;
@@ -543,11 +542,8 @@ class _TabScreensState extends State<TabScreens>  with WidgetsBindingObserver {
                     }))
               ],
             ),
-            title: Text(
-              'Notifications',
-              style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold),
-            ),
-          ),
+            label:
+              'Notifications',),
           BottomNavigationBarItem(
               backgroundColor: Colors.white,
               activeIcon: Image.asset(
@@ -560,13 +556,7 @@ class _TabScreensState extends State<TabScreens>  with WidgetsBindingObserver {
                 width: 20,
                 height: 20,
               ),
-              title: Padding(
-                padding: const EdgeInsets.only(top: 2),
-                child: Text(
-                  'Payment',
-                  style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold),
-                ),
-              )),
+              label: 'Payment',),
           BottomNavigationBarItem(
               backgroundColor: Colors.white,
               icon: Icon(
@@ -574,10 +564,7 @@ class _TabScreensState extends State<TabScreens>  with WidgetsBindingObserver {
                 size: 5.0,
                 color: Color(0x00FFFFFF),
               ),
-              title: Text(
-                '',
-                style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold),
-              )),
+              label: ''),
           BottomNavigationBarItem(
               backgroundColor: Colors.white,
               activeIcon: Image.asset(
@@ -590,15 +577,7 @@ class _TabScreensState extends State<TabScreens>  with WidgetsBindingObserver {
                 width: 20,
                 height: 20,
               ),
-              title: Container(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 2),
-                  child: Text(
-                    'Service Complain',
-                    style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold),
-                  ),
-                ),
-              )),
+              label: 'Service Complain',),
           BottomNavigationBarItem(
               backgroundColor: Colors.white,
               activeIcon: Image.asset(
@@ -611,13 +590,7 @@ class _TabScreensState extends State<TabScreens>  with WidgetsBindingObserver {
                 width: 20,
                 height: 20,
               ),
-              title: Padding(
-                padding: const EdgeInsets.only(top: 2),
-                child: Text(
-                  'Contact Us',
-                  style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold),
-                ),
-              )),
+              label:'Contact Us',)
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

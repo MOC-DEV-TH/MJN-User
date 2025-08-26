@@ -5,7 +5,7 @@ import 'package:MJN/NewViews/LoginView1.dart';
 import 'package:MJN/controllers/checkRequireUpdateController.dart';
 import 'package:MJN/models/notificationModelVO.dart';
 import 'package:MJN/presistence/database/MyAppDatabase.dart';
-import 'package:MJN/presistence/database/MyDB.dart';
+import 'package:MJN/presistence/database/MyDB.dart' hide NotificationModelVO;
 import 'package:MJN/utils/app_utils.dart';
 import 'package:MJN/utils/eventbus_util.dart';
 import 'package:MJN/views/ChangePasswordView.dart';
@@ -33,39 +33,39 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   final notificationDao = database!.notiDao;
   RemoteNotification? notification = message.notification;
 
-  if (notification != null) {
-    flutterLocalNotificationsPlugin.show(
-        notification.hashCode,
-        notification.title,
-        notification.body,
-        NotificationDetails(
-            android: AndroidNotificationDetails(
-              channel.id,
-              channel.name,
-              channel.description,
-              //      one that already exists in example app.
-              icon: 'launch_background',
-            ),
-            iOS: IOSNotificationDetails(
-                presentAlert: true, presentSound: true, presentBadge: true)));
-
-    EventBusUtils.getInstance().fire(notiModel);
-    print(message.data);
-
-    notificationDao
-        .insertNotification(notificationModelVO)
-        .then((value) => print('Success'));
-  }
+  // if (notification != null) {
+  //   flutterLocalNotificationsPlugin.show(
+  //       notification.hashCode,
+  //       notification.title,
+  //       notification.body,
+  //       NotificationDetails(
+  //           android: AndroidNotificationDetails(
+  //             channel.id,
+  //             channel.name,
+  //             channel.description,
+  //             //      one that already exists in example app.
+  //             icon: 'launch_background',
+  //           ),
+  //           iOS: IOSNotificationDetails(
+  //               presentAlert: true, presentSound: true, presentBadge: true)));
+  //
+  //   EventBusUtils.getInstance().fire(notiModel);
+  //   print(message.data);
+  //
+  //   notificationDao
+  //       .insertNotification(notificationModelVO)
+  //       .then((value) => print('Success'));
+  // }
 
   flutterLocalNotificationsPlugin.cancel(message.notification.hashCode);
 }
 
-const AndroidNotificationChannel channel = const AndroidNotificationChannel(
-  'high_importance_channel', // id
-  'High Importance Notifications', // title
-  'This channel is used for important notifications.', // description
-  importance: Importance.high,
-);
+// const AndroidNotificationChannel channel = const AndroidNotificationChannel(
+//   'high_importance_channel', // id
+//   'High Importance Notifications', // title
+//   'This channel is used for important notifications.', // description
+//   importance: Importance.high,
+// );
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -120,11 +120,10 @@ void main() async {
     sound: true,
   );
 
-  await flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin>()
-      ?.createNotificationChannel(channel);
-
+  // await flutterLocalNotificationsPlugin
+  //     .resolvePlatformSpecificImplementation<
+  //         AndroidFlutterLocalNotificationsPlugin>()
+  //     ?.createNotificationChannel(channel);
 
 
   runApp(MyApp());
@@ -175,10 +174,7 @@ class _MyAppState extends State<MyApp> {
         locale: Locale('en', 'US'),
         theme: ThemeData(
             primarySwatch: Colors.blue,
-            accentColor: Colors.amber,
-            textTheme: ThemeData.light().textTheme.copyWith(
-                  button: TextStyle(color: Colors.white),
-                )),
+        ),
         debugShowCheckedModeBanner: false,
         routes: {
           TabScreens.routeName: (ctx) => TabScreens(0),
@@ -211,31 +207,31 @@ class _Splash2State extends State<Splash2> {
   void initState() {
     checkRequireUpdateController.checkRequireUpdate(context);
 
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      onReceivedFirebaseMsg(message);
-      NotificationModelVO notificationModelVO =
-          NotificationModelVO.fromJson(message.data);
-      RemoteNotification? notification = message.notification;
-      AndroidNotification? android = message.notification?.android;
-      if (notification != null && android != null) {
-        flutterLocalNotificationsPlugin.show(
-            notification.hashCode,
-            notification.title,
-            notification.body,
-            NotificationDetails(
-                android: AndroidNotificationDetails(
-                  channel.id,
-                  channel.name,
-                  channel.description,
-                  //      one that already exists in example app.
-                  icon: 'launch_background',
-                ),
-                iOS: IOSNotificationDetails(
-                    presentAlert: true,
-                    presentSound: true,
-                    presentBadge: true)));
-      }
-    });
+    // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    //   onReceivedFirebaseMsg(message);
+    //   NotificationModelVO notificationModelVO =
+    //       NotificationModelVO.fromJson(message.data);
+    //   RemoteNotification? notification = message.notification;
+    //   AndroidNotification? android = message.notification?.android;
+    //   if (notification != null && android != null) {
+    //     flutterLocalNotificationsPlugin.show(
+    //         notification.hashCode,
+    //         notification.title,
+    //         notification.body,
+    //         NotificationDetails(
+    //             android: AndroidNotificationDetails(
+    //               channel.id,
+    //               channel.name,
+    //               channel.description,
+    //               //      one that already exists in example app.
+    //               icon: 'launch_background',
+    //             ),
+    //             iOS: IOSNotificationDetails(
+    //                 presentAlert: true,
+    //                 presentSound: true,
+    //                 presentBadge: true)));
+    //   }
+    // });
     //FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
     Future.delayed(Duration(seconds: 7), () {
@@ -305,17 +301,20 @@ class _Splash2State extends State<Splash2> {
                 SizedBox(
                   height: 50,
                 ),
-                RaisedButton(
-                    child: Text('Retry'),
-                    textColor: Colors.white,
-                    color: Colors.grey,
-                    onPressed: () {
-                      setState(() {
-                        isLoading.value = false;
-                        Future.delayed(
-                            Duration.zero, () => checkRequireUpdate());
-                      });
-                    })
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.grey,
+                    foregroundColor: Colors.white,
+                  ),
+                  child: Text('Retry'),
+                  onPressed: () {
+                    setState(() {
+                      isLoading.value = false;
+                      Future.delayed(Duration.zero, () => checkRequireUpdate());
+                    });
+                  },
+                )
+
               ],
             ))
           : Column(

@@ -1,10 +1,10 @@
 const app_version = '1.0';
 
 // staging url
-const BASE_URL = 'http://mojoenet.myanmaronlinecreations.com/';
+//const BASE_URL = 'http://mojoenet.myanmaronlinecreations.com/';
 
 // live url
-//const BASE_URL = 'https://mojoenet.com/';
+const BASE_URL = 'https://mojoenet.com/';
 
 
 const UID = 'uid=';

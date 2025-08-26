@@ -471,7 +471,7 @@ class MjnAPI {
            APP_VERSION + app_version
       ),
 
-    ).timeout(const Duration(seconds: 7));
+    ).timeout(const Duration(seconds: 100));
     if (response.statusCode == 200) {
       var json = response.body;
       var result = networkResultFromJson(json);

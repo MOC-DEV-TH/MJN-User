@@ -18,11 +18,11 @@ class NotificationService {
     final NotificationAppLaunchDetails? notificationAppLaunchDetails =
     await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
 
-    if (notificationAppLaunchDetails!.didNotificationLaunchApp) {
-      NotificationModelVO notiModel = getNotificationModelFromPayload(notificationAppLaunchDetails.payload);
-      cancelNotification(notiModel);
-
-    }
+    // if (notificationAppLaunchDetails!.didNotificationLaunchApp) {
+    //   NotificationModelVO notiModel = getNotificationModelFromPayload(notificationAppLaunchDetails.payload);
+    //   cancelNotification(notiModel);
+    //
+    // }
   }
 
   NotificationModelVO getNotificationModelFromPayload(String? payload) {

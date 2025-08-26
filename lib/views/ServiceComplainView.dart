@@ -1,7 +1,6 @@
 import 'package:MJN/views/CreateServiceTicketView.dart';
 import 'package:MJN/views/MyServiceTicketView.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 class ServiceComplainView extends StatefulWidget {
   static const routeName = '/service_complain';
@@ -39,7 +38,7 @@ class _ServiceComplainViewState extends State<ServiceComplainView> {
                       height: 40,
                       alignment: Alignment.centerLeft,
                       margin: EdgeInsets.only(top: 10, left: 27),
-                      child: NeumorphicButton(
+                      child: ElevatedButton(
                         onPressed: () {},
                         child: Text(
                           "Service Complain",
@@ -48,13 +47,8 @@ class _ServiceComplainViewState extends State<ServiceComplainView> {
                               fontSize: 14,
                               color: Colors.white),
                         ),
-                        style: NeumorphicStyle(
-                          shape: NeumorphicShape.flat,
-                          boxShape: NeumorphicBoxShape.roundRect(
-                              BorderRadius.circular(14)),
-                          color: Colors.blue,
-                          depth: 8,
-//                lightSource: LightSource.topLeft,
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue
                         ),
                       ),
                     ),

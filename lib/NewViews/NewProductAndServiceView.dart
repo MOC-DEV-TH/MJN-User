@@ -3,7 +3,6 @@ import 'package:MJN/controllers/homeController.dart';
 import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/utils/app_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -64,10 +63,12 @@ class _NewProductAndServiceViewState extends State<NewProductAndServiceView> {
                       SizedBox(
                         height: 50,
                       ),
-                      RaisedButton(
+                      ElevatedButton(
                           child: Text('Retry'),
-                          textColor: Colors.white,
-                          color: Colors.grey,
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.grey,
+                              textStyle: TextStyle(color: Colors.white)
+                          ),
                           onPressed: () {
                             Future.delayed(
                                 Duration.zero,
@@ -116,7 +117,7 @@ class _NewProductAndServiceViewState extends State<NewProductAndServiceView> {
                             height: 40,
                             alignment: Alignment.centerLeft,
                             margin: EdgeInsets.only(top: 10, left: 27),
-                            child: NeumorphicButton(
+                            child: ElevatedButton(
                               onPressed: () {
                                 AppUtils.showOnlineRegistrationDialog(context);
                               },
@@ -127,13 +128,8 @@ class _NewProductAndServiceViewState extends State<NewProductAndServiceView> {
                                     fontSize: 14,
                                     color: Colors.white),
                               ),
-                              style: NeumorphicStyle(
-                                shape: NeumorphicShape.flat,
-                                boxShape: NeumorphicBoxShape.roundRect(
-                                    BorderRadius.circular(8)),
-                                color: Colors.deepOrangeAccent,
-                                depth: -8,
-//                lightSource: LightSource.topLeft,
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.deepOrangeAccent
                               ),
                             ),
                           ),

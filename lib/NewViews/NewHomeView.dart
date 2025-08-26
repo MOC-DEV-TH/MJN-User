@@ -1,4 +1,3 @@
-import 'package:MJN/Widgets/promotion_items.dart';
 import 'package:MJN/controllers/homeController.dart';
 import 'package:MJN/models/promotionAndofferVO.dart';
 import 'package:MJN/utils/app_constants.dart';
@@ -6,7 +5,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -20,7 +18,7 @@ class NewHomeView extends StatefulWidget {
 
 class _NewHomeViewState extends State<NewHomeView> {
   final HomeController homeController = Get.put(HomeController());
-  final controller = CarouselController();
+  final controller = CarouselSliderController();
   int changePageIndex = 0;
 
   final loginDataStorage = GetStorage();
@@ -79,10 +77,12 @@ class _NewHomeViewState extends State<NewHomeView> {
               SizedBox(
                 height: 50,
               ),
-              RaisedButton(
+              ElevatedButton(
                   child: Text('Retry'),
-                  textColor: Colors.white,
-                  color: Colors.grey,
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.grey,
+                      textStyle: TextStyle(color: Colors.white)
+                  ),
                   onPressed: () {
                     Future.delayed(
                         Duration.zero,

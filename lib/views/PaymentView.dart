@@ -5,7 +5,6 @@ import 'package:MJN/utils/app_utils.dart';
 import 'package:MJN/views/InvoiceDetailView.dart';
 import 'package:MJN/views/TransactionDetailView.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -71,7 +70,7 @@ class _PaymentViewState extends State<PaymentView> {
                         height: 40,
                         alignment: Alignment.centerLeft,
                         margin: EdgeInsets.only(top: 10, left: 27),
-                        child: NeumorphicButton(
+                        child: ElevatedButton(
                           onPressed: () {},
                           child: Text(
                             "Payment",
@@ -80,13 +79,8 @@ class _PaymentViewState extends State<PaymentView> {
                                 fontSize: 14,
                                 color: Colors.white),
                           ),
-                          style: NeumorphicStyle(
-                            shape: NeumorphicShape.flat,
-                            boxShape: NeumorphicBoxShape.roundRect(
-                                BorderRadius.circular(14)),
-                            color: Colors.blue,
-                            depth: 8,
-//                lightSource: LightSource.topLeft,
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blue
                           ),
                         ),
                       ),

@@ -7,7 +7,6 @@ import 'package:MJN/views/SecondLoginView.dart';
 import 'package:MJN/views/SignUpView.dart';
 import 'package:MJN/views/TabView.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -142,7 +141,7 @@ class _LoginViewState extends State<LoginView> {
                 if (loginController.isLoading.value) {
                   return Center(child: CircularProgressIndicator());
                 } else {
-                  return NeumorphicButton(
+                  return ElevatedButton(
                     onPressed: () {
 
                       if(emailText.text == '' && passwordText.text == ''){
@@ -178,13 +177,8 @@ class _LoginViewState extends State<LoginView> {
                         ),
                       ),
                     ),
-                    style: NeumorphicStyle(
-                      shape: NeumorphicShape.flat,
-                      boxShape: NeumorphicBoxShape.roundRect(
-                          BorderRadius.circular(18)),
-                      color: Colors.blue,
-                      depth: 8,
-//                lightSource: LightSource.topLeft,
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue
                     ),
                   );
                 }
@@ -228,9 +222,11 @@ class _LoginViewState extends State<LoginView> {
               width: 75,
               margin: EdgeInsets.only(bottom: 37, right: 30, top: 33),
               padding: EdgeInsets.all(3),
-              child: Neumorphic(
-                style: NeumorphicStyle(
-                    color: Colors.white, lightSource: LightSource.topLeft),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white
+                ),
+                onPressed: (){},
                 child: DropdownButtonFormField<String>(
                   isExpanded: true,
                   value: selectedLang,

@@ -169,7 +169,7 @@ class _OnlinePaymentViewState extends State<OnlinePaymentView> {
                         } else {
                           return Container(
                             width: 110,
-                            child: RaisedButton(
+                            child: ElevatedButton(
                               onPressed: () {
                                 if (contactNumberController.value.text == '') {
                                   AppUtils.showErrorSnackBar(
@@ -230,8 +230,10 @@ class _OnlinePaymentViewState extends State<OnlinePaymentView> {
                                 }
                               },
                               child: Text('Next'),
-                              textColor: Color(0xffe9e9e9),
-                              color: Color(0xffff5f1f),
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Color(0xffff5f1f),
+                                  textStyle: TextStyle(color: Color(0xffe9e9e9))
+                              ),
                             ),
                           );
                         }

@@ -3,7 +3,6 @@ import 'package:MJN/controllers/loginController.dart';
 import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/utils/app_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -167,7 +166,7 @@ class _LoginView1State extends State<LoginView1> {
                 if (loginController.isLoading.value) {
                   return Center(child: CircularProgressIndicator());
                 } else {
-                  return NeumorphicButton(
+                  return ElevatedButton(
                     onPressed: () {
                       if (buildingText.text == '' || unitText.text == '') {
                         AppUtils.showErrorSnackBar(
@@ -193,13 +192,8 @@ class _LoginView1State extends State<LoginView1> {
                         ),
                       ),
                     ),
-                    style: NeumorphicStyle(
-                      shape: NeumorphicShape.flat,
-                      boxShape: NeumorphicBoxShape.roundRect(
-                          BorderRadius.circular(8)),
-                      color: Colors.deepOrangeAccent,
-                      depth: 0,
-//                lightSource: LightSource.topLeft,
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.deepOrangeAccent
                     ),
                   );
                 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ContactUsView extends StatelessWidget {
@@ -20,7 +19,7 @@ class ContactUsView extends StatelessWidget {
               height: 40,
               alignment: Alignment.centerLeft,
               margin: EdgeInsets.only(top: 10, left: 27),
-              child: NeumorphicButton(
+              child: ElevatedButton(
                 onPressed: () {},
                 child: Text(
                   "Contact Us",
@@ -29,13 +28,8 @@ class ContactUsView extends StatelessWidget {
                       fontSize: 14,
                       color: Colors.white),
                 ),
-                style: NeumorphicStyle(
-                  shape: NeumorphicShape.flat,
-                  boxShape:
-                      NeumorphicBoxShape.roundRect(BorderRadius.circular(14)),
-                  color: Colors.blue,
-                  depth: 8,
-//                lightSource: LightSource.topLeft,
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue
                 ),
               ),
             ),
