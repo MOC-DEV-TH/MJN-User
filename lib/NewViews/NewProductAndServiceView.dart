@@ -92,8 +92,8 @@ class _NewProductAndServiceViewState extends State<NewProductAndServiceView> {
                           padding: const EdgeInsets.all(10),
                           scrollDirection: Axis.vertical,
                           children: homeController.promotionAndOfferVo!.details.offer
-                              .map((imgData) => ProductAndServiceItems(imgData))
-                              .toList(),
+                              ?.map((imgData) => ProductAndServiceItems(imgData))
+                              .toList() ?? [],
                           gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                             maxCrossAxisExtent: 200,
                             mainAxisSpacing: 20,

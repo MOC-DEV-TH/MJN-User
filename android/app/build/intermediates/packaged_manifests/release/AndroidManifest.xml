@@ -30,7 +30,7 @@
         android:name="io.flutter.app.FlutterApplication"
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
         android:icon="@mipmap/launcher_icon"
-        android:label="Mojoenet"
+        android:label="Mojoenet-Client"
         android:usesCleartextTraffic="true" >
         <activity
             android:name="com.moc.mjninternetapp.MainActivity"

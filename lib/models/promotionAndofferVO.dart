@@ -58,23 +58,30 @@ class PromotionAndOfferVo {
 
 class Details {
   Details({
-    required this.promotion,
-    required this.offer,
+    this.promotion,
+    this.offer,
   });
 
-  List<Offer> promotion;
-  List<Offer> offer;
+  List<Offer>? promotion;
+  List<Offer>? offer;
 
   factory Details.fromJson(Map<String, dynamic> json) => Details(
-    promotion: List<Offer>.from(json["promotion"].map((x) => Offer.fromJson(x))),
-    offer: List<Offer>.from(json["offer"].map((x) => Offer.fromJson(x))),
+    promotion: json["promotion"] != null
+        ? List<Offer>.from(json["promotion"].map((x) => Offer.fromJson(x)))
+        : null,
+    offer: json["offer"] != null
+        ? List<Offer>.from(json["offer"].map((x) => Offer.fromJson(x)))
+        : null,
   );
 
   Map<String, dynamic> toJson() => {
-    "promotion": List<dynamic>.from(promotion.map((x) => x.toJson())),
-    "offer": List<dynamic>.from(offer.map((x) => x.toJson())),
+    if (promotion != null)
+      "promotion": List<dynamic>.from(promotion!.map((x) => x.toJson())),
+    if (offer != null)
+      "offer": List<dynamic>.from(offer!.map((x) => x.toJson())),
   };
 }
+
 
 class Offer {
   Offer({

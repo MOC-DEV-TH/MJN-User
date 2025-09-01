@@ -15,6 +15,7 @@ import 'package:MJN/models/ticketVO.dart';
 import 'package:MJN/models/transactionListVO.dart';
 import 'package:MJN/models/transactionVO.dart';
 import 'package:MJN/utils/app_constants.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
 
@@ -366,6 +367,7 @@ class MjnAPI {
       var json = response.body;
 
       var result = promotionAndOfferVoFromJson(json);
+      debugPrint("PromotionNetworkResult>>>>>>>$result");
       return result;
     }
     else if(response.statusCode == 500){

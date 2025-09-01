@@ -51,47 +51,47 @@ class _NewHomeViewState extends State<NewHomeView> {
           return Center(
             child: CircularProgressIndicator(),
           );
-        } else if (homeController.promotionAndOfferVo == null) {
-          return Center(
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.wifi_off,
-                size: 100,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                'Network Error!',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                'Connect to the internet and try again.',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
-              ),
-              SizedBox(
-                height: 50,
-              ),
-              ElevatedButton(
-                  child: Text('Retry'),
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey,
-                      textStyle: TextStyle(color: Colors.white)
-                  ),
-                  onPressed: () {
-                    Future.delayed(
-                        Duration.zero,
-                        () =>
-                            homeController.fetchPromotionAndOfferData(context));
-                  })
-            ],
-          ));
-        } else {
+        // } else if (homeController.promotionAndOfferVo == null) {
+        //   return Center(
+        //       child: Column(
+        //     mainAxisAlignment: MainAxisAlignment.center,
+        //     children: [
+        //       Icon(
+        //         Icons.wifi_off,
+        //         size: 100,
+        //       ),
+        //       SizedBox(
+        //         height: 10,
+        //       ),
+        //       Text(
+        //         'Network Error!',
+        //         style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        //       ),
+        //       SizedBox(
+        //         height: 10,
+        //       ),
+        //       Text(
+        //         'Connect to the internet and try again.',
+        //         style: TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
+        //       ),
+        //       SizedBox(
+        //         height: 50,
+        //       ),
+        //       ElevatedButton(
+        //           child: Text('Retry'),
+        //           style: ElevatedButton.styleFrom(
+        //               backgroundColor: Colors.grey,
+        //               textStyle: TextStyle(color: Colors.white)
+        //           ),
+        //           onPressed: () {
+        //             Future.delayed(
+        //                 Duration.zero,
+        //                 () =>
+        //                     homeController.fetchPromotionAndOfferData(context));
+        //           })
+        //     ],
+        //   ));
+         } else {
           return SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -129,9 +129,9 @@ class _NewHomeViewState extends State<NewHomeView> {
                           primary: false,
                           padding: const EdgeInsets.all(10),
                           children: homeController
-                              .promotionAndOfferVo!.details.offer
-                              .map((imgData) => PackageAndServiceItems(imgData))
-                              .toList(),
+                              .promotionAndOfferVo?.details.offer
+                              ?.map((imgData) => PackageAndServiceItems(imgData))
+                              .toList() ?? [],
                           gridDelegate:
                               SliverGridDelegateWithMaxCrossAxisExtent(
                             maxCrossAxisExtent: 200,
@@ -185,11 +185,11 @@ class _NewHomeViewState extends State<NewHomeView> {
                   onPageChanged: (index, reason) =>
                       setState(() => activeIndex = index)),
               itemCount:
-                  homeController.promotionAndOfferVo!.details.promotion.length,
+                  homeController.promotionAndOfferVo?.details.promotion?.length ?? 0,
               itemBuilder: (context, index, realIndex) {
                 final urlImage = homeController
-                    .promotionAndOfferVo!.details.promotion[index].image;
-                return _buildImage(urlImage, index);
+                    .promotionAndOfferVo?.details.promotion?[index].image;
+                return _buildImage(urlImage ?? '', index);
               }),
         ),
         Positioned(
@@ -228,7 +228,7 @@ class _NewHomeViewState extends State<NewHomeView> {
 
   Widget buildIndicator() => AnimatedSmoothIndicator(
         activeIndex: activeIndex,
-        count: homeController.promotionAndOfferVo!.details.promotion.length,
+        count: homeController.promotionAndOfferVo?.details.promotion?.length ?? 1,
         effect: SlideEffect(
             dotHeight: 10,
             dotWidth: 10,

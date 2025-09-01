@@ -3,7 +3,7 @@ import 'package:MJN/models/NewLoginVO.dart';
 import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/utils/app_utils.dart';
 import 'package:MJN/views/TabView.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+//import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'package:get_storage/get_storage.dart';
@@ -26,17 +26,17 @@ class LoginController extends GetxController {
 
         if (loginVo.status == 'Success') {
 
-          String? fToken = await FirebaseMessaging.instance.getToken();
-
-          print('FToken :'+fToken.toString());
-
-          Map<String, String> map = {
-            'tenant_id': loginVo.tenantId.toString(),
-            'firebase_token': fToken.toString(),
-            'app_version': app_version,
-          };
-
-          MjnAPI.saveFirebaseToken(map,loginVo.token.toString());
+          // String? fToken = await FirebaseMessaging.instance.getToken();
+          //
+          // print('FToken :'+fToken.toString());
+          //
+          // Map<String, String> map = {
+          //   'tenant_id': loginVo.tenantId.toString(),
+          //   'firebase_token': fToken.toString(),
+          //   'app_version': app_version,
+          // };
+          //
+          // MjnAPI.saveFirebaseToken(map,loginVo.token.toString());
 
           loginDataStorage.write(PHONE_NO, loginVo.phone);
           loginDataStorage.write(UID, loginVo.uid);

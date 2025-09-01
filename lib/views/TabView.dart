@@ -15,9 +15,7 @@ import 'package:MJN/presistence/database/MyAppDatabase.dart';
 import 'package:MJN/utils/app_constants.dart';
 import 'package:MJN/utils/app_utils.dart';
 import 'package:MJN/utils/eventbus_util.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
 
@@ -69,43 +67,43 @@ class _TabScreensState extends State<TabScreens>  with WidgetsBindingObserver {
   late StreamSubscription notiSub;
   late int _selectedPageIndex = 2;
 
-  Future<void> setUpInteractMessage() async {
-    FirebaseMessaging.onMessageOpenedApp.listen((event) {
-      _handleMessage(event);
-    });
-
-    RemoteMessage? initialMessage =
-        await FirebaseMessaging.instance.getInitialMessage();
-    if (initialMessage != null && langStorage.read('nextInit') == null) {
-      _handleMessage(initialMessage);
-    } else {
-      langStorage.remove('nextInit');
-      if (initialMessage != null && langStorage.read(TOKEN) != null) {
-        _handleMessage(initialMessage);
-      }
-    }
-  }
-
-  void _handleMessage(RemoteMessage message) {
-    if (message.messageId != null) {
-      MyAppDatabase.notificationDao!
-          .fetchUnreadNotifications()
-          .then((value) => {notiCount.value = value.length});
-      if (langStorage.read(TOKEN) == null) {
-        AppUtils.showLoginDialog(
-            'Login', 'Please sign in to unlock all\naccount features', context);
-      } else {
-        langStorage.write('nextInit', false);
-        setState(() {
-          _selectedPageIndex = 0;
-          changePageIndex = 0;
-        });
-
-      }
-    } else {
-      _selectedPageIndex = 2;
-    }
-  }
+  // Future<void> setUpInteractMessage() async {
+  //   FirebaseMessaging.onMessageOpenedApp.listen((event) {
+  //     _handleMessage(event);
+  //   });
+  //
+  //   RemoteMessage? initialMessage =
+  //       await FirebaseMessaging.instance.getInitialMessage();
+  //   if (initialMessage != null && langStorage.read('nextInit') == null) {
+  //     _handleMessage(initialMessage);
+  //   } else {
+  //     langStorage.remove('nextInit');
+  //     if (initialMessage != null && langStorage.read(TOKEN) != null) {
+  //       _handleMessage(initialMessage);
+  //     }
+  //   }
+  // }
+  //
+  // void _handleMessage(RemoteMessage message) {
+  //   if (message.messageId != null) {
+  //     MyAppDatabase.notificationDao!
+  //         .fetchUnreadNotifications()
+  //         .then((value) => {notiCount.value = value.length});
+  //     if (langStorage.read(TOKEN) == null) {
+  //       AppUtils.showLoginDialog(
+  //           'Login', 'Please sign in to unlock all\naccount features', context);
+  //     } else {
+  //       langStorage.write('nextInit', false);
+  //       setState(() {
+  //         _selectedPageIndex = 0;
+  //         changePageIndex = 0;
+  //       });
+  //
+  //     }
+  //   } else {
+  //     _selectedPageIndex = 2;
+  //   }
+  // }
 
   Future onSelectNotification(String? payload) async {
     if (payload != null) {
@@ -160,7 +158,7 @@ class _TabScreensState extends State<TabScreens>  with WidgetsBindingObserver {
     isSelected = [true, false];
 
 
-      setUpInteractMessage();
+      //setUpInteractMessage();
 
 
     super.initState();

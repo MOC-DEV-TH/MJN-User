@@ -211,9 +211,9 @@ class _NewContactUsViewState extends State<NewContactUsView> {
                                     scrollDirection: Axis.vertical,
                                     children: homeController
                                         .promotionAndOfferVo!.details.offer
-                                        .map((imgData) =>
+                                        ?.map((imgData) =>
                                             PackageAndServiceItems(imgData))
-                                        .toList(),
+                                        .toList() ?? [],
                                     gridDelegate:
                                         SliverGridDelegateWithMaxCrossAxisExtent(
                                       maxCrossAxisExtent: 200,

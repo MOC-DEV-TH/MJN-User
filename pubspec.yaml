@@ -14,7 +14,6 @@ dependencies:
   http: ^1.5.0
   floor: ^1.5.0
   analyzer: ^2.2.0
-  flutter_local_notifications: ^18.0.1
   url_launcher: ^6.3.2
   readmore: ^2.1.0
   event_bus: ^2.0.0
@@ -23,17 +22,16 @@ dependencies:
   carousel_slider: ^5.1.1
   smooth_page_indicator: ^1.0.0+2
   store_redirect: ^2.0.0
-
   plugin_platform_interface: ^2.0.0
-  firebase_core: ^4.0.0
-  firebase_messaging: ^16.0.0
-  firebase_core_platform_interface: ^6.0.0
-  firebase_messaging_platform_interface: ^4.7.0
   cupertino_icons: ^1.0.2
   lottie: ^1.1.0
   android_intent_plus: ^5.3.1
   flutter_email_sender: ^7.0.0
   file: ^7.0.1
+#  firebase_messaging: ^15.1.6
+#  //flutter_local_notifications: ^18.0.1
+#  firebase_core: ^3.1.1
+#  firebase_analytics: ^11.2.0
 
 
 

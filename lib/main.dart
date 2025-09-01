@@ -14,138 +14,15 @@ import 'package:MJN/views/NewLoginView.dart';
 import 'package:MJN/views/SecondLoginView.dart';
 import 'package:MJN/views/ServiceComplainView.dart';
 import 'package:MJN/views/TabView.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp();
-  print('Handling a background message ${message.messageId}');
-
-  NotificationModelVO notiModel = NotificationModelVO.fromJson(message.data);
-
-  NotificationModelVO notificationModelVO =
-      NotificationModelVO.fromJson(message.data);
-  MyDatabase? database = await MyAppDatabase.instance.database;
-  final notificationDao = database!.notiDao;
-  RemoteNotification? notification = message.notification;
-
-  // if (notification != null) {
-  //   flutterLocalNotificationsPlugin.show(
-  //       notification.hashCode,
-  //       notification.title,
-  //       notification.body,
-  //       NotificationDetails(
-  //           android: AndroidNotificationDetails(
-  //             channel.id,
-  //             channel.name,
-  //             channel.description,
-  //             //      one that already exists in example app.
-  //             icon: 'launch_background',
-  //           ),
-  //           iOS: IOSNotificationDetails(
-  //               presentAlert: true, presentSound: true, presentBadge: true)));
-  //
-  //   EventBusUtils.getInstance().fire(notiModel);
-  //   print(message.data);
-  //
-  //   notificationDao
-  //       .insertNotification(notificationModelVO)
-  //       .then((value) => print('Success'));
-  // }
-
-  flutterLocalNotificationsPlugin.cancel(message.notification.hashCode);
-}
-
-// const AndroidNotificationChannel channel = const AndroidNotificationChannel(
-//   'high_importance_channel', // id
-//   'High Importance Notifications', // title
-//   'This channel is used for important notifications.', // description
-//   importance: Importance.high,
-// );
-
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
-
-void onReceivedFirebaseMsg(RemoteMessage message) async {
-  if (message.data != null) {
-    print('Message also contained a notification: ${message.data}');
-    print('notification.body' +
-        message.notification!.body.toString() +
-        ', notification.body' +
-        message.notification!.title.toString());
-  }
-
-  if (message.data != null) {
-    print('Message also contained a data: ' + jsonEncode(message.data));
-  }
-
-  NotificationModelVO notiModel = NotificationModelVO.fromJson(message.data);
-  MyDatabase? database = await MyAppDatabase.instance.database;
-  final notificationDao = database!.notiDao;
-
-  if (notiModel != null) {
-    print(message.data);
-    EventBusUtils.getInstance().fire(notiModel);
-    notificationDao
-        .insertNotification(notiModel)
-        .then((value) => print('Success'));
-  }
-}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
-  await Firebase.initializeApp();
-
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-
-  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-    alert: true,
-    badge: true,
-    sound: true,
-  );
-  _requestPermissions();
-
-    await FirebaseMessaging.instance.requestPermission(
-    alert: true,
-    announcement: false,
-    badge: true,
-    carPlay: false,
-    criticalAlert: false,
-    provisional: false,
-    sound: true,
-  );
-
-  // await flutterLocalNotificationsPlugin
-  //     .resolvePlatformSpecificImplementation<
-  //         AndroidFlutterLocalNotificationsPlugin>()
-  //     ?.createNotificationChannel(channel);
-
-
   runApp(MyApp());
-}
-
-void _requestPermissions() {
-  flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<
-          IOSFlutterLocalNotificationsPlugin>()
-      ?.requestPermissions(
-        alert: true,
-        badge: true,
-        sound: true,
-      );
-  flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<
-          MacOSFlutterLocalNotificationsPlugin>()
-      ?.requestPermissions(
-        alert: true,
-        badge: true,
-        sound: true,
-      );
 }
 
 class MyApp extends StatefulWidget {
@@ -160,9 +37,6 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     MyAppDatabase.builder()
         .then((value) => MyAppDatabase.notificationDao = value);
-    FirebaseMessaging.instance.subscribeToTopic('mjn');
-
-    getFirebaseToken();
 
     super.initState();
   }
@@ -347,12 +221,6 @@ class _Splash2State extends State<Splash2> {
             ),
     );
   }
-}
-
-getFirebaseToken() async {
-  String? token = await FirebaseMessaging.instance.getToken();
-  print(token);
-  return token;
 }
 
 class AfterSplash extends StatelessWidget {

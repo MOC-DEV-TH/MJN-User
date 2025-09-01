@@ -19,8 +19,8 @@ class HomeController extends GetxController {
 
       if (res != null) {
         promotionAndOfferVo = res;
-        print(promotionAndOfferVo!.status);
-        if (promotionAndOfferVo!.status == 'Success') {
+        debugPrint("PromotionAndOfferNetworkResult>>>>$res");
+        if (promotionAndOfferVo?.status == 'Success') {
           dataStorage.write(LOGIN_MANUAL, promotionAndOfferVo!.loginManual);
           dataStorage.write(
               SERVICE_TICKET_MANUAL, promotionAndOfferVo!.serviceTicketManual);
