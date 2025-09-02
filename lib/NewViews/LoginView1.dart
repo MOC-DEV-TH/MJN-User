@@ -120,8 +120,6 @@ class _LoginView1State extends State<LoginView1> {
                         color: Colors.white,
                         borderRadius: BorderRadius.all(Radius.circular(5.0)),
                       ),
-                      height: 40,
-                      padding: EdgeInsets.only(bottom: 6),
                       margin: EdgeInsets.only(right: 27),
                       child: TextField(
                         textAlign: TextAlign.center,
@@ -132,7 +130,7 @@ class _LoginView1State extends State<LoginView1> {
                       ),
                     ),
                     SizedBox(
-                      height: 30,
+                      height: 35,
                     ),
                     Container(
                       margin: EdgeInsets.only(right: 27),
@@ -140,7 +138,6 @@ class _LoginView1State extends State<LoginView1> {
                         color: Colors.white,
                         borderRadius: BorderRadius.all(Radius.circular(5.0)),
                       ),
-                      height: 40,
                       child: Padding(
                         padding: const EdgeInsets.only(bottom: 4),
                         child: TextField(

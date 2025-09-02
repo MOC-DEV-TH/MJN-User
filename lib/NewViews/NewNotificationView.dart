@@ -202,9 +202,8 @@ class _NewNotificationViewState extends State<NewNotificationView> with WidgetsB
                         );
                       }),
                       Container(
-                        width: 67,
                         height: 30,
-                        alignment: Alignment.centerLeft,
+                        alignment: Alignment.center,
                         margin: EdgeInsets.only(
                           top: 10,
                         ),
@@ -243,8 +242,6 @@ class _NewNotificationViewState extends State<NewNotificationView> with WidgetsB
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(5.0)),
                               ),
-                              height: 40,
-                              padding: EdgeInsets.only(bottom: 6),
                               child: TextField(
                                 controller: searchTextController,
                                 textAlign: TextAlign.center,

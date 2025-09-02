@@ -208,7 +208,6 @@ class AppUtils {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(8),
                               child: Container(
-                                width: 100,
                                 height: 40,
                                 child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(

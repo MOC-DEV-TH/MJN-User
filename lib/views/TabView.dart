@@ -320,7 +320,7 @@ class _TabScreensState extends State<TabScreens>  with WidgetsBindingObserver {
       toolbarHeight: 90,
       elevation: 2,
       backgroundColor: Color(0xff242527),
-      iconTheme: IconThemeData(color: Colors.grey),
+      iconTheme: IconThemeData(color: Colors.white),
       title: Container(
         width: MediaQuery.of(context).size.width,
         child: Row(
@@ -378,7 +378,7 @@ class _TabScreensState extends State<TabScreens>  with WidgetsBindingObserver {
                     //padding: EdgeInsets.only( top: 5,left: 40),
                     child: Text(
                       'Notification',
-                      style: TextStyle(fontSize: 14),
+                      style: TextStyle(fontSize: 14,color: Colors.white),
                     ),
                   )
                 : navSelectPage == 1
@@ -386,7 +386,7 @@ class _TabScreensState extends State<TabScreens>  with WidgetsBindingObserver {
                         //padding: EdgeInsets.only( top: 5,left: 60),
                         child: Text(
                           'Payment',
-                          style: TextStyle(fontSize: 14),
+                          style: TextStyle(fontSize: 14,color: Colors.white),
                         ),
                       )
                     : navSelectPage == 3
@@ -394,14 +394,14 @@ class _TabScreensState extends State<TabScreens>  with WidgetsBindingObserver {
                             //padding: EdgeInsets.only( top: 5,left: 40),
                             child: Text(
                               'Service Complain',
-                              style: TextStyle(fontSize: 14),
+                              style: TextStyle(fontSize: 14,color: Colors.white),
                             ),
                           )
                         : navSelectPage == 4
                             ? Container(
                                 child: Text(
                                   'Contact Us',
-                                  style: TextStyle(fontSize: 14),
+                                  style: TextStyle(fontSize: 14,color: Colors.white),
                                 ),
                               )
                             : Container(

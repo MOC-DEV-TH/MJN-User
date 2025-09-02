@@ -54,7 +54,7 @@ class _OnlinePaymentViewState extends State<OnlinePaymentView> {
                         height: 100,
                       ),
                       Container(
-                        height: 40,
+                        alignment: Alignment.center,
                         decoration: BoxDecoration(
                           color: Color(0xffe9e9e9),
                           border: Border.all(color: Color(0xffe9e9e9)),
@@ -71,17 +71,14 @@ class _OnlinePaymentViewState extends State<OnlinePaymentView> {
                                     Text('Building : ',
                                         style: TextStyle(color: Colors.grey)),
                                     Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(bottom: 5),
-                                        child: TextFormField(
-                                          enabled: false,
-                                          initialValue: loginDataStorage.read(BUILDING).toString(),
-                                          decoration: InputDecoration(
-                                              border: InputBorder.none,
-                                              hintStyle:
-                                                  TextStyle(color: Colors.grey)),
-                                          style: TextStyle(color: Colors.grey),
-                                        ),
+                                      child: TextFormField(
+                                        enabled: false,
+                                        initialValue: loginDataStorage.read(BUILDING).toString(),
+                                        decoration: InputDecoration(
+                                            border: InputBorder.none,
+                                            hintStyle:
+                                                TextStyle(color: Colors.grey)),
+                                        style: TextStyle(color: Colors.grey),
                                       ),
                                     ),
                                   ],
@@ -103,19 +100,15 @@ class _OnlinePaymentViewState extends State<OnlinePaymentView> {
                                       style: TextStyle(color: Colors.grey),
                                     ),
                                     Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(bottom: 5),
-                                        child: TextFormField(
-                                          enabled: false,
-                                          initialValue: loginDataStorage.read(UNIT).toString(),
-                                          decoration: InputDecoration(
-                                              border: InputBorder.none,
+                                      child: TextFormField(
+                                        enabled: false,
+                                        initialValue: loginDataStorage.read(UNIT).toString(),
+                                        decoration: InputDecoration(
+                                            border: InputBorder.none,
 
-                                              hintStyle:
-                                                  TextStyle(color: Colors.grey)),
-                                          style: TextStyle(color: Colors.grey),
-                                        ),
-
+                                            hintStyle:
+                                                TextStyle(color: Colors.grey)),
+                                        style: TextStyle(color: Colors.grey),
                                       ),
                                     ),
                                   ],
@@ -143,15 +136,11 @@ class _OnlinePaymentViewState extends State<OnlinePaymentView> {
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(5.0)),
                               ),
-                              height: 40,
-                              child: Padding(
-                                padding: const EdgeInsets.only(bottom: 4),
-                                child: TextField(
-                                  textAlign: TextAlign.center,
-                                  controller: contactNumberController,
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                  ),
+                              child: TextField(
+                                textAlign: TextAlign.center,
+                                controller: contactNumberController,
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
                                 ),
                               ),
                             ),
